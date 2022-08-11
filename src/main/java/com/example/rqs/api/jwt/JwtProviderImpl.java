@@ -2,9 +2,7 @@ package com.example.rqs.api.jwt;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -43,13 +41,9 @@ public class JwtProviderImpl implements JwtProvider {
     }
 
     @Override
-    public Subject getSubject(String atk) {
-        try {
-            String subjectStr = Jwts.parser().setSigningKey(key).parseClaimsJws(atk).getBody().getSubject();
-            return objectMapper.readValue(subjectStr, Subject.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e); // TODO: 어떻게 예외처리할까..?
-        }
+    public Subject getSubject(String atk) throws JwtException, JsonProcessingException {
+        String subjectStr = Jwts.parser().setSigningKey(key).parseClaimsJws(atk).getBody().getSubject();
+        return objectMapper.readValue(subjectStr, Subject.class);
     }
 
     private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException {
