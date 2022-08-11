@@ -1,5 +1,6 @@
 package com.example.rqs.api.jwt;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,7 +40,7 @@ public class JwtProviderImplTest {
 
     @Test
     @DisplayName("jwtProvider 토큰 Payload Subject 확인 테스트")
-    void jwtPayloadSubjectTest() {
+    void jwtPayloadSubjectTest() throws JsonProcessingException {
         String atk = jwtProviderImpl.createAccessToken("sol@sol.com", "sol", "USER");
         Subject subject = jwtProviderImpl.getSubject(atk);
         assertAll(
