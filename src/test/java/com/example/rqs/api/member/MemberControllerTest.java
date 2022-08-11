@@ -1,7 +1,5 @@
-package com.example.rqs.core.member;
+package com.example.rqs.api.member;
 
-import com.example.rqs.api.member.MemberController;
-import com.example.rqs.api.member.SignUpValidator;
 import com.example.rqs.core.member.service.MemberService;
 import com.example.rqs.core.member.service.dtos.SignUpDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
