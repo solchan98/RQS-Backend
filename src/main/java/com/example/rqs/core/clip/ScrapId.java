@@ -1,4 +1,4 @@
-package com.example.random_question_study.core.clip;
+package com.example.rqs.core.clip;
 
 import lombok.EqualsAndHashCode;
 

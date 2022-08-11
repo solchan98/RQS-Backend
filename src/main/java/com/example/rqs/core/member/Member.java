@@ -1,4 +1,4 @@
-package com.example.random_question_study.core.member;
+package com.example.rqs.core.member;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

@@ -1,7 +1,7 @@
-package com.example.random_question_study.core.item;
+package com.example.rqs.core.item;
 
-import com.example.random_question_study.core.space.Space;
-import com.example.random_question_study.core.space.SpaceMember;
+import com.example.rqs.core.space.Space;
+import com.example.rqs.core.space.SpaceMember;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
