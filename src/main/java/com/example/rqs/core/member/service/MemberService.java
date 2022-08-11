@@ -1,7 +1,12 @@
 package com.example.rqs.core.member.service;
+
+import com.example.rqs.core.member.service.dtos.MemberDto;
+import com.example.rqs.core.member.service.dtos.SignUpDto;
+import com.example.rqs.core.common.exception.BadRequestException;
+
 public interface MemberService {
 
-    MemberDto signUp(SignUpDto signUpDto);
+    MemberDto signUp(SignUpDto signUpDto) throws BadRequestException;
 
     MemberDto login();
 

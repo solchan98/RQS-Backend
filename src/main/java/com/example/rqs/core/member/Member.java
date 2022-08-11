@@ -1,9 +1,12 @@
 package com.example.rqs.core.member;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Member {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,4 +21,18 @@ public class Member {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    protected Member() {}
+
+    private Member(String email, String password, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Member newMember(String email, String password, String nickname) {
+        return new Member(email, password, nickname);
+    }
 }
