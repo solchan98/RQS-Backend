@@ -29,4 +29,17 @@ public class SpaceController {
                 createSpaceDto.isVisibility());
         return spaceService.createSpace(createSpace);
     }
+
+    @PatchMapping("")
+    public SpaceResponse updateSpaceTitle(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateSpaceDto updateSpaceDto
+    ) {
+        if (updateSpaceDto.getTitle().isEmpty()) throw new BadRequestException();
+        UpdateSpace updateSpace = UpdateSpace.of(
+                updateSpaceDto.getSpaceId(),
+                memberDetails.getMember(),
+                updateSpaceDto.getTitle());
+        return spaceService.updateTitle(updateSpace);
+    }
 }

@@ -14,7 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -40,6 +40,24 @@ public class SpaceControllerTest {
 
         ResultActions perform = mockMvc.perform(
                 post("/api/v1/space")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(req)
+                        .with(csrf()));
+
+        perform
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("요청 데이터를 확인하세요."));
+    }
+
+    @Test
+    @WithMockUser
+    @DisplayName("스페이스 타이틀 업데이트 시, 타이틀이 비어있는 경우 예외 400")
+    void updateSpaceFailByEmptyTitle() throws Exception {
+        UpdateSpaceDto updateSpaceDto = new UpdateSpaceDto(1L, "");
+        String req = objectMapper.writeValueAsString(updateSpaceDto);
+
+        ResultActions perform = mockMvc.perform(
+                patch("/api/v1/space")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
