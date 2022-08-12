@@ -1,24 +1,45 @@
 package com.example.rqs.core.space;
 
 import com.example.rqs.core.member.Member;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class SpaceMember {
 
-    @Id
-    private String spaceMemberId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long spaceMemberId;
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")
     private Member member;
 
     @ManyToOne
+    @JoinColumn(name = "space_id", referencedColumnName = "spaceId")
     private Space space;
 
     private LocalDateTime joinedAt;
 
     private String role;
+
+    protected SpaceMember() {}
+
+    private SpaceMember(Member member, Space space, String role) {
+        this.member = member;
+        this.space = space;
+        space.addMember(this);
+        this.joinedAt = LocalDateTime.now();
+        this.role = role;
+    }
+
+    public static SpaceMember newSpaceAdmin(Member member, Space space) {
+        return new SpaceMember(member, space, "ADMIN");
+    }
+
+    public static SpaceMember newSpaceMember(Member member, Space space) {
+        return new SpaceMember(member, space, "MEMBER");
+    }
 }

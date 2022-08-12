@@ -1,12 +1,14 @@
 package com.example.rqs.core.space;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
+@Getter
 public class Space {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,4 +21,24 @@ public class Space {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "space")
+    private final List<SpaceMember> spaceMemberList = new ArrayList<>();
+
+    protected Space(){}
+
+    private Space(String title, boolean visibility) {
+        this.title = title;
+        this.visibility = visibility;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Space newSpace(String title, boolean visibility) {
+        return new Space(title, visibility);
+    }
+
+    public void addMember(SpaceMember spaceMember) {
+        this.spaceMemberList.add(spaceMember);
+    }
 }

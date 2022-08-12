@@ -1,7 +1,10 @@
 package com.example.rqs.core.space.service;
 
+import com.example.rqs.core.space.service.dtos.SpaceResponse;
+import com.example.rqs.core.space.service.dtos.CreateSpace;
+
 public interface SpaceService {
-    void createSpace();
+    SpaceResponse createSpace(CreateSpace createSpace);
 
     void updateTitle();
 
