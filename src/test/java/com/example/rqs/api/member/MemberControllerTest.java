@@ -34,7 +34,7 @@ public class MemberControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("회원가입_필드가_비어있는_경우_예외_처리_400")
+    @DisplayName("회원가입 필드가 비어있는 경우 예외 처리 400")
     void signUpFailByNullData() throws Exception {
         SignUpDto signUpDto = new SignUpDto("", "", "터저랏");
         String req = objectMapper.writeValueAsString(signUpDto);
@@ -52,7 +52,7 @@ public class MemberControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("이메일 정규식 미충족_400")
+    @DisplayName("이메일 정규식 미충족 400")
     void signUpFailByEmail() throws Exception {
         SignUpDto signUpDto = new SignUpDto("이메일틀렷", "1234", "터저랏");
         String req = objectMapper.writeValueAsString(signUpDto);
@@ -73,7 +73,7 @@ public class MemberControllerTest {
 
     @Test
     @WithMockUser
-    @DisplayName("비밀번호 정규식 미충족_400")
+    @DisplayName("비밀번호 정규식 미충족 400")
     void signUpFailByPassword() throws Exception {
         SignUpDto signUpDto = new SignUpDto("sol@sol.com", "1234땡!", "터저랏");
         String req = objectMapper.writeValueAsString(signUpDto);
