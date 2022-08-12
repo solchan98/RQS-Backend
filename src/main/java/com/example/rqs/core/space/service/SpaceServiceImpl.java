@@ -1,7 +1,7 @@
 package com.example.rqs.core.space.service;
 
-import com.example.rqs.core.space.Space;
-import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.common.exception.*;
+import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,16 @@ public class SpaceServiceImpl implements SpaceService{
         return SpaceResponse.of(space);
     }
 
+    @Transactional
     @Override
-    public void updateTitle() {
-
+    public SpaceResponse updateTitle(UpdateSpace updateSpace) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(updateSpace.getMember().getMemberId(), updateSpace.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        boolean updatable = spaceMember.isUpdatable();
+        if (!updatable) throw new ForbiddenException();
+        Space space = spaceMember.updateSpaceTitle(updateSpace.getTitle());
+        return SpaceResponse.of(space);
     }
 
     @Override

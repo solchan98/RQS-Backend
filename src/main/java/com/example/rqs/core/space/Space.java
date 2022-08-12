@@ -41,4 +41,9 @@ public class Space {
     public void addMember(SpaceMember spaceMember) {
         this.spaceMemberList.add(spaceMember);
     }
+
+    protected void updateTitle(String title) {
+        this.title = title;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

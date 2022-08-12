@@ -5,7 +5,7 @@ import com.example.rqs.core.space.service.dtos.*;
 public interface SpaceService {
     SpaceResponse createSpace(CreateSpace createSpace);
 
-    void updateTitle();
+    SpaceResponse updateTitle(UpdateSpace updateSpace);
 
     void changeVisibility();
 

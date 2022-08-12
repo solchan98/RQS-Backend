@@ -42,4 +42,13 @@ public class SpaceMember {
     public static SpaceMember newSpaceMember(Member member, Space space) {
         return new SpaceMember(member, space, "MEMBER");
     }
+
+    public boolean isUpdatable() {
+        return this.role.equals("ADMIN");
+    }
+
+    public Space updateSpaceTitle(String title) {
+        this.space.updateTitle(title);
+        return this.space;
+    }
 }
