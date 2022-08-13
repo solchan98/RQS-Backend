@@ -7,6 +7,9 @@ import com.example.rqs.core.space.service.dtos.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class SpaceServiceImpl implements SpaceService{
 
@@ -18,8 +21,19 @@ public class SpaceServiceImpl implements SpaceService{
         this.spaceMemberRepository = spaceMemberRepository;
     }
 
-    @Transactional
     @Override
+    @Transactional(readOnly = true)
+    public List<SpaceResponse> getMySpaceList(ReadSpace readSpace) {
+        List<SpaceMember> spaceMemberList = spaceMemberRepository
+                .getAllSpaceMember(readSpace.getMember().getMemberId(), readSpace.getVisibility());
+        return spaceMemberList
+                .stream()
+                .map(spaceMember -> SpaceResponse.of(spaceMember.getSpace()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
     public SpaceResponse createSpace(CreateSpace createSpace) {
         Space space = Space.newSpace(createSpace.getTitle(), createSpace.isVisibility());
         spaceRepository.save(space);
@@ -28,8 +42,8 @@ public class SpaceServiceImpl implements SpaceService{
         return SpaceResponse.of(space);
     }
 
-    @Transactional
     @Override
+    @Transactional
     public SpaceResponse updateTitle(UpdateSpace updateSpace) {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(updateSpace.getMember().getMemberId(), updateSpace.getSpaceId())
