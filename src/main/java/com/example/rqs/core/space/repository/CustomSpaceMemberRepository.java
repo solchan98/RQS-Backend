@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.repository;
 
 import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.space.service.dtos.SpaceResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,5 +11,5 @@ public interface CustomSpaceMemberRepository {
 
     Optional<SpaceMember> getSpaceMember(Long memberId, Long spaceId);
 
-    List<SpaceMember> getSpaceMemberList(Long memberId, LocalDateTime lastJoinedAt, Boolean isVisibility);
+    List<SpaceResponse> getSpaceResponseList(Long memberId, LocalDateTime lastJoinedAt, Boolean isVisibility);
 }

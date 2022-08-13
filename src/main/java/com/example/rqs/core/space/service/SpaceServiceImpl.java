@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SpaceServiceImpl implements SpaceService{
@@ -24,14 +23,10 @@ public class SpaceServiceImpl implements SpaceService{
     @Override
     @Transactional(readOnly = true)
     public List<SpaceResponse> getMySpaceList(ReadSpace readSpace) {
-        List<SpaceMember> spaceMemberList = spaceMemberRepository.getSpaceMemberList(
+        return spaceMemberRepository.getSpaceResponseList(
                 readSpace.getMember().getMemberId(),
                 readSpace.getLastJoinedAt(),
                 readSpace.getVisibility());
-        return spaceMemberList
-                .stream()
-                .map(spaceMember -> SpaceResponse.of(spaceMember.getSpace()))
-                .collect(Collectors.toList());
     }
 
     @Override

@@ -2,21 +2,23 @@ package com.example.rqs.core.space.service.dtos;
 
 import com.example.rqs.core.space.SpaceMember;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class SpaceMemberResponse {
 
-    private final Long spaceMemberId;
+    private Long spaceMemberId;
 
-    private final String email;
+    private String email;
 
-    private final String nickname;
+    private String nickname;
 
-    private final LocalDateTime joinedAt;
+    private LocalDateTime joinedAt;
 
-    private final String role;
+    private String role;
 
     private SpaceMemberResponse(Long spaceMemberId, LocalDateTime joinedAt, String role, String email, String nickname) {
         this.spaceMemberId = spaceMemberId;

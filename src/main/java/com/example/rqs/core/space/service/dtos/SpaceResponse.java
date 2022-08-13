@@ -3,25 +3,27 @@ package com.example.rqs.core.space.service.dtos;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.SpaceMember;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@NoArgsConstructor
 public class SpaceResponse {
 
-    private final Long spaceId;
+    private Long spaceId;
 
-    private final String title;
+    private String title;
 
-    private final boolean visibility;
+    private boolean visibility;
 
-    private final List<SpaceMemberResponse> spaceMemberList;
+    private List<SpaceMemberResponse> spaceMemberList;
 
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
-    private final LocalDateTime updatedAt;
+    private LocalDateTime updatedAt;
 
     private SpaceResponse(Long spaceId, String title, boolean visibility, List<SpaceMember> spaceMemberList, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.spaceId = spaceId;
@@ -40,5 +42,9 @@ public class SpaceResponse {
                 space.getSpaceMemberList(),
                 space.getCreatedAt(),
                 space.getUpdatedAt());
+    }
+
+    public void setSpaceMemberList(List<SpaceMemberResponse> spaceMemberList) {
+        this.spaceMemberList = spaceMemberList;
     }
 }
