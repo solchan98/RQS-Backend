@@ -1,10 +1,10 @@
 package com.example.rqs.core.item.service;
 
-import com.example.rqs.core.item.service.dtos.ItemResponse;
+import com.example.rqs.core.item.service.dtos.*;
 
 public interface ItemService {
 
-    ItemResponse createNewItem();
+    ItemResponse createNewItem(CreateItem createItem);
 
     void updateQuestion();
 

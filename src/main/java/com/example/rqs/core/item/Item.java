@@ -2,11 +2,13 @@ package com.example.rqs.core.item;
 
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.SpaceMember;
+import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Item {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,4 +34,19 @@ public class Item {
 
     private LocalDateTime updatedAt;
 
+    protected Item() {}
+
+    private Item(Space space, SpaceMember spaceMember, String question, String answer, String hint) {
+        this.space = space;
+        this.spaceMember = spaceMember;
+        this.question = question;
+        this.answer = answer;
+        this.hint = hint;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Item newItem(Space space, SpaceMember spaceMember, String question, String answer, String hint) {
+        return new Item(space, spaceMember, question, answer, hint);
+    }
 }

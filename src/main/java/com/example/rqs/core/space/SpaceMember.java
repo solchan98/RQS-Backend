@@ -51,4 +51,8 @@ public class SpaceMember {
         this.space.updateTitle(title);
         return this.space;
     }
+
+    public boolean isCreatableItem() {
+        return this.role.equals("ADMIN");
+    }
 }
