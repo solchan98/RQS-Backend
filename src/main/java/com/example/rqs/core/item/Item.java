@@ -17,7 +17,7 @@ public class Item {
     private Space space;
 
     @ManyToOne
-    @JoinColumn(name = "space__member_id", referencedColumnName = "spaceMemberId")
+    @JoinColumn(name = "space_member_id", referencedColumnName = "spaceMemberId")
     private SpaceMember spaceMember;
 
     @Column(columnDefinition = "TEXT")
@@ -25,6 +25,8 @@ public class Item {
 
     @Column(columnDefinition = "TEXT")
     private String answer;
+
+    private String hint; // TODO: will table
 
     private LocalDateTime createdAt;
 
