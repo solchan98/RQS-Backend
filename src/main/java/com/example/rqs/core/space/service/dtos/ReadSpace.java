@@ -1,14 +1,27 @@
 package com.example.rqs.core.space.service.dtos;
 
 import com.example.rqs.core.member.Member;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
+import java.util.Objects;
+
 @Getter
-@AllArgsConstructor // TODO: DELETE!
 public class ReadSpace {
 
-    private Member member;
+    private final Member member;
 
-    private Boolean visibility;
+    private final LocalDateTime lastJoinedAt;
+
+    private final Boolean visibility;
+
+    private ReadSpace(Member member, String lastJoinedAt, Boolean visibility) {
+        this.member = member;
+        this.lastJoinedAt = Objects.isNull(lastJoinedAt) ? null : LocalDateTime.parse(lastJoinedAt);
+        this.visibility = visibility;
+    }
+
+    public static ReadSpace of(Member member, String lastJoinedAt, Boolean visibility) {
+        return new ReadSpace(member, lastJoinedAt, visibility);
+    }
 }

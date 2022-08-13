@@ -7,6 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import static com.example.rqs.core.space.QSpace.space;
 import static com.example.rqs.core.space.QSpaceMember.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -36,23 +37,30 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
     }
 
     @Override
-    public List<SpaceMember> getAllSpaceMember(Long memberId, Boolean isVisibility) {
+    public List<SpaceMember> getSpaceMemberList(Long memberId, LocalDateTime lastJoinedAt, Boolean isVisibility) {
         return queryFactory
                 .selectFrom(spaceMember)
                 .where(
                         spaceMember.member.memberId.eq(memberId),
+                        lastJoinedAt(lastJoinedAt),
                         isVisibility(isVisibility)
                 )
                 .innerJoin(spaceMember.space, space)
                 .fetchJoin()
                 .innerJoin(space.spaceMemberList)
                 .fetchJoin()
+                .limit(20)
+                .orderBy(spaceMember.joinedAt.desc())
                 .fetch();
     }
 
     private BooleanExpression isVisibility(Boolean isVisibility) {
         if (Objects.isNull(isVisibility)) return null;
         return isVisibility ? space.visibility.isTrue() : space.visibility.isFalse();
+    }
+
+    private BooleanExpression lastJoinedAt(LocalDateTime lastJoinedAt) {
+        return Objects.isNull(lastJoinedAt) ? null : spaceMember.joinedAt.before(lastJoinedAt);
     }
 
 

@@ -24,8 +24,10 @@ public class SpaceServiceImpl implements SpaceService{
     @Override
     @Transactional(readOnly = true)
     public List<SpaceResponse> getMySpaceList(ReadSpace readSpace) {
-        List<SpaceMember> spaceMemberList = spaceMemberRepository
-                .getAllSpaceMember(readSpace.getMember().getMemberId(), readSpace.getVisibility());
+        List<SpaceMember> spaceMemberList = spaceMemberRepository.getSpaceMemberList(
+                readSpace.getMember().getMemberId(),
+                readSpace.getLastJoinedAt(),
+                readSpace.getVisibility());
         return spaceMemberList
                 .stream()
                 .map(spaceMember -> SpaceResponse.of(spaceMember.getSpace()))
