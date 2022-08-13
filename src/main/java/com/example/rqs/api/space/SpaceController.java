@@ -4,8 +4,11 @@ import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
+import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/space")
@@ -41,5 +44,15 @@ public class SpaceController {
                 memberDetails.getMember(),
                 updateSpaceDto.getTitle());
         return spaceService.updateTitle(updateSpace);
+    }
+
+    @GetMapping("/all")
+    public List<SpaceResponse> getAllMySpace(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @Nullable @RequestParam("visibility") Boolean visibility,
+            @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt
+    ) {
+        ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), lastJoinedAt, visibility);
+        return spaceService.getMySpaceList(readSpace);
     }
 }
