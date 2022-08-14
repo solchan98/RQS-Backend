@@ -2,19 +2,21 @@ package com.example.rqs.core.item.service.dtos;
 
 import com.example.rqs.core.item.Item;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class ItemResponse {
 
-    private final Long itemId;
+    private Long itemId;
 
-    private final Long spaceId;
+    private Long spaceId;
 
-    private final String question;
+    private String question;
 
-    private final String answer;
+    private String answer;
 
-    private final String hint;
+    private String hint;
 
     private ItemResponse(Long itemId, Long spaceId, String question, String answer, String hint) {
         this.itemId = itemId;

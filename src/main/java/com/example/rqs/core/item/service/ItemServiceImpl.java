@@ -4,19 +4,24 @@ import com.example.rqs.core.common.exception.*;
 import com.example.rqs.core.item.Item;
 import com.example.rqs.core.item.repository.ItemRepository;
 import com.example.rqs.core.item.service.dtos.*;
-import com.example.rqs.core.space.SpaceMember;
-import com.example.rqs.core.space.repository.SpaceMemberRepository;
+import com.example.rqs.core.space.*;
+import com.example.rqs.core.space.repository.*;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
+    private final SpaceRepository spaceRepository;
     private final SpaceMemberRepository spaceMemberRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, SpaceMemberRepository spaceMemberRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, SpaceRepository spaceRepository, SpaceMemberRepository spaceMemberRepository) {
         this.itemRepository = itemRepository;
+        this.spaceRepository = spaceRepository;
         this.spaceMemberRepository = spaceMemberRepository;
     }
 
@@ -36,6 +41,28 @@ public class ItemServiceImpl implements ItemService {
                 createItem.getHint());
         itemRepository.save(item);
         return ItemResponse.of(item);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ItemResponse> getItemList(ReadItem readItem) {
+        Space space = spaceRepository
+                .findById(readItem.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        return space.isVisibility()
+                ? this.getPublicSpaceItemList(readItem)
+                : this.getPrivateSpaceItemList(readItem);
+    }
+
+    private List<ItemResponse> getPublicSpaceItemList(ReadItem readItem) {
+        return itemRepository.getItemList(readItem.getSpaceId(), readItem.getLastId());
+    }
+
+    private List<ItemResponse> getPrivateSpaceItemList(ReadItem readItem) {
+        boolean exist = spaceMemberRepository
+                .existSpaceMember(readItem.getMember().getMemberId(), readItem.getSpaceId());
+        if (!exist) throw new ForbiddenException();
+        return this.getPublicSpaceItemList(readItem);
     }
 
     @Override
