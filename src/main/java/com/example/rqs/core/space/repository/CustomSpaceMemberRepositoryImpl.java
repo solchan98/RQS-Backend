@@ -82,6 +82,20 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
         return spaceResponseList;
     }
 
+    @Override
+    public boolean existSpaceMember(Long memberId, Long spaceId) {
+        SpaceMember member = queryFactory
+                .selectFrom(spaceMember)
+                .where(
+                        spaceMember.member.memberId.eq(memberId),
+                        spaceMember.space.spaceId.eq(spaceId)
+                )
+                .limit(1)
+                .fetchOne();
+
+        return !Objects.isNull(member);
+    }
+
     private BooleanExpression isVisibility(Boolean isVisibility) {
         if (Objects.isNull(isVisibility)) return null;
         return isVisibility ? space.visibility.isTrue() : space.visibility.isFalse();
