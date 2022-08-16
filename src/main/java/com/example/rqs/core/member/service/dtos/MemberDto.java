@@ -5,15 +5,17 @@ import lombok.Getter;
 
 @Getter
 public class MemberDto {
+    private final Long memberId;
     private final String email;
     private final String nickname;
 
-    private MemberDto(String email, String nickname) {
+    private MemberDto(Long memberId, String email, String nickname) {
+        this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;
     }
 
     public static MemberDto of(Member member) {
-        return new MemberDto(member.getEmail(), member.getNickname());
+        return new MemberDto(member.getMemberId(), member.getEmail(), member.getNickname());
     }
 }
