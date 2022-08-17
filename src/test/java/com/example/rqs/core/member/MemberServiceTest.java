@@ -57,7 +57,7 @@ public class MemberServiceTest {
     }
 
     @Test
-    @DisplayName("존재하지 않는 이메일로 로그인 테스트")
+    @DisplayName("다른 비밀번호로 로그인 테스트")
     void loginByInvalidPassword() {
         LoginDto loginDto = new LoginDto("sol@sol.com", "sol1234!");
         Member sol = Member.newMember("sol@sol.com", "1234sol!", "sol");
