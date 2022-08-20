@@ -55,4 +55,15 @@ public class ItemController {
                 spaceId);
         return itemService.getItemList(readItem);
     }
+
+    @GetMapping("/random")
+    public ItemResponse getRandomItem(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        ReadItem readItem = ReadItem.of(
+                memberDetails.getMember(),
+                spaceId);
+        return itemService.getRandomItem(readItem);
+    }
 }
