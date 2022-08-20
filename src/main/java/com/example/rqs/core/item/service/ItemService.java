@@ -8,6 +8,8 @@ public interface ItemService {
 
     ItemResponse createNewItem(CreateItem createItem);
 
+    ItemResponse getRandomItem(ReadItem readItem);
+
     List<ItemResponse> getItemList(ReadItem readItem);
 
     void updateQuestion();

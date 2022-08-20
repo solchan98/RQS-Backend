@@ -21,4 +21,8 @@ public class ReadItem {
     public static ReadItem of(Member member, Long lastId, Long spaceId) {
         return new ReadItem(member, lastId, spaceId);
     }
+
+    public static ReadItem of(Member member, Long spaceId) {
+        return new ReadItem(member, null, spaceId);
+    }
 }

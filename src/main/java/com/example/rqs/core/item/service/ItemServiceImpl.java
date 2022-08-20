@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -41,6 +42,31 @@ public class ItemServiceImpl implements ItemService {
                 createItem.getHint());
         itemRepository.save(item);
         return ItemResponse.of(item);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ItemResponse getRandomItem(ReadItem readItem) {
+        Space space = spaceRepository
+                .findById(readItem.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
+        Random random = new Random();
+        int randomIndex = random.nextInt(itemCnt.intValue());
+        return space.isVisibility()
+                ? this.getPublicSpaceRandomItem(readItem, randomIndex)
+                : this.getPrivateSpaceRandomItem(readItem, randomIndex);
+    }
+
+    private ItemResponse getPublicSpaceRandomItem(ReadItem readItem, int randomIndex) {
+        return itemRepository.getItem(readItem.getSpaceId(), randomIndex);
+    }
+
+    private ItemResponse getPrivateSpaceRandomItem(ReadItem readItem, int randomIndex) {
+        boolean exist = spaceMemberRepository
+                .existSpaceMember(readItem.getMember().getMemberId(), readItem.getSpaceId());
+        if (!exist) throw new ForbiddenException();
+        return this.getPublicSpaceRandomItem(readItem, randomIndex);
     }
 
     @Override

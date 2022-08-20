@@ -42,6 +42,39 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
                 .fetch();
     }
 
+    @Override
+    public Long countBySpaceId(Long spaceId) {
+        return queryFactory
+                .select(item.count())
+                .from(item)
+                .where(item.space.spaceId.eq(spaceId))
+                .fetchOne();
+    }
+
+    @Override
+    public ItemResponse getItem(Long spaceId, int randomIndex) {
+        return queryFactory
+                .select(
+                        Projections.fields(
+                            ItemResponse.class,
+                            item.itemId,
+                            item.space.spaceId,
+                            item.question,
+                            item.answer,
+                            item.hint
+                ))
+                .from(item)
+                .where(item.space.spaceId.eq(spaceId))
+                .offset(randomIndex)
+                .limit(1)
+                .fetchOne();
+    }
+
+    @Override
+    public ItemResponse getItem(Long itemId) {
+        return null;
+    }
+
     private BooleanExpression lastItemId(Long lastItemId) {
         return Objects.isNull(lastItemId) ? null : item.itemId.lt(lastItemId);
     }
