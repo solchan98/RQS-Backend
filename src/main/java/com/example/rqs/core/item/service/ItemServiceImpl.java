@@ -51,6 +51,7 @@ public class ItemServiceImpl implements ItemService {
                 .findById(readItem.getSpaceId())
                 .orElseThrow(BadRequestException::new);
         Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
+        if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
         Random random = new Random();
         int randomIndex = random.nextInt(itemCnt.intValue());
         return space.isVisibility()
