@@ -1,6 +1,7 @@
 package com.example.rqs.core.item.repository;
 
 import com.example.rqs.core.item.service.dtos.*;
+import com.querydsl.core.types.FactoryExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -22,16 +23,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
     @Override
     public List<ItemResponse> getItemList(Long spaceId, Long lastItemId) {
         return queryFactory
-                .select(
-                        Projections.fields(
-                                ItemResponse.class,
-                                item.itemId,
-                                item.space.spaceId,
-                                item.question,
-                                item.answer,
-                                item.hint
-                        )
-                )
+                .select(itemResponseConstructor())
                 .from(item)
                 .innerJoin(item.space).on(item.space.spaceId.eq(spaceId))
                 .where(
@@ -54,15 +46,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
     @Override
     public ItemResponse getItem(Long spaceId, int randomIndex) {
         return queryFactory
-                .select(
-                        Projections.fields(
-                            ItemResponse.class,
-                            item.itemId,
-                            item.space.spaceId,
-                            item.question,
-                            item.answer,
-                            item.hint
-                ))
+                .select(itemResponseConstructor())
                 .from(item)
                 .where(item.space.spaceId.eq(spaceId))
                 .offset(randomIndex)
@@ -77,5 +61,18 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
 
     private BooleanExpression lastItemId(Long lastItemId) {
         return Objects.isNull(lastItemId) ? null : item.itemId.lt(lastItemId);
+    }
+
+    private FactoryExpression<ItemResponse> itemResponseConstructor () {
+        return Projections.constructor(
+                ItemResponse.class,
+                item.itemId,
+                item.space.spaceId,
+                item.question,
+                item.spaceMember,
+                item.answer,
+                item.hint,
+                item.createdAt
+        );
     }
 }
