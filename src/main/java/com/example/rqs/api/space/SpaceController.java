@@ -55,4 +55,23 @@ public class SpaceController {
         ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), lastJoinedAt, visibility);
         return spaceService.getMySpaceList(readSpace);
     }
+
+    @PatchMapping("/spaceMember/role")
+    public SpaceMemberResponse updateSpaceMemberRole(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("spaceMemberId") Long spaceMemberId,
+            @RequestParam("role") String role
+    ) {
+        // TODO: role을 String -> Enum으로 변경하면서 제거됳 검증 조건임. 따라서 이에 대한 테스트 케이스는 추후에 작성 예정
+        if (!(role.equals("ADMIN") || role.equals("MEMBER"))) {
+            throw new BadRequestException("변경하려는 권한이 올바르지 않습니다.");
+        }
+        UpdateSpaceMemberRole updateSpaceMemberRole = UpdateSpaceMemberRole.of(
+                memberDetails.getMember(),
+                spaceId,
+                spaceMemberId,
+                role);
+        return spaceService.changeMemberRole(updateSpaceMemberRole);
+    }
 }
