@@ -1,10 +1,13 @@
 package com.example.rqs.core.space;
 
+import com.example.rqs.core.item.Item;
 import com.example.rqs.core.member.Member;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -12,6 +15,9 @@ public class SpaceMember {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long spaceMemberId;
+
+    @OneToMany(mappedBy = "spaceMember", cascade = CascadeType.ALL)
+    private final List<Item> itemList = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")

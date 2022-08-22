@@ -86,8 +86,13 @@ public class SpaceServiceImpl implements SpaceService{
         if (!isDeletable) throw new ForbiddenException();
         boolean isSelfDelete = spaceMember.getSpaceMemberId().equals(deleteSpaceMember.getSpaceMemberId());
         if (isSelfDelete) throw new BadRequestException();
+        SpaceMember willDeletedSpaceMember = spaceMemberRepository
+                .findById(deleteSpaceMember.getSpaceMemberId())
+                .orElseThrow(() -> new BadRequestException(RQSError.SPACE_MEMBER_NOT_FOUND));
+        boolean isSpaceMember = willDeletedSpaceMember.getSpace().getSpaceId().equals(deleteSpaceMember.getSpaceId());
+        if (!isSpaceMember) throw new BadRequestException(RQSError.SPACE_MEMBER_NOT_FOUND);
         spaceMemberRepository
-                .deleteById(deleteSpaceMember.getSpaceMemberId());
+                .delete(willDeletedSpaceMember);
     }
 
     @Override
