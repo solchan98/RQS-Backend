@@ -75,6 +75,16 @@ public class SpaceController {
         return spaceService.changeMemberRole(updateSpaceMemberRole);
     }
 
+    @GetMapping("/spaceMemberList")
+    public List<SpaceMemberResponse> getSpaceMemberList(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        return spaceService.getSpaceMemberList(
+                memberDetails.getMember().getMemberId(),
+                spaceId);
+    }
+
     @DeleteMapping("/spaceMember")
     public DeleteSpaceMemberResponse deleteSpaceMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
