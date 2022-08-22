@@ -30,6 +30,18 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<SpaceMemberResponse> getSpaceMemberList(Long memberId, Long spaceId) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(memberId, spaceId)
+                .orElseThrow(BadRequestException::new);
+        boolean readable = spaceMember.isReadableSpaceMemberList();
+        if (!readable) throw new ForbiddenException();
+        return spaceMemberRepository
+                .getSpaceMemberResponseList(spaceId);
+    }
+
+    @Override
     @Transactional
     public SpaceResponse createSpace(CreateSpace createSpace) {
         Space space = Space.newSpace(createSpace.getTitle(), createSpace.isVisibility());

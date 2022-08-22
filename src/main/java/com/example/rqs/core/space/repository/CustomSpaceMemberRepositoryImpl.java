@@ -83,6 +83,24 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
     }
 
     @Override
+    public List<SpaceMemberResponse> getSpaceMemberResponseList(Long spaceId) {
+        return queryFactory
+                .select(
+                        Projections.fields(
+                                SpaceMemberResponse.class,
+                                spaceMember.spaceMemberId,
+                                member.email,
+                                member.nickname,
+                                spaceMember.joinedAt,
+                                spaceMember.role)
+                )
+                .from(spaceMember)
+                .innerJoin(spaceMember.member, member)
+                .where(spaceMember.space.spaceId.eq(spaceId))
+                .fetch();
+    }
+
+    @Override
     public boolean existSpaceMember(Long memberId, Long spaceId) {
         SpaceMember member = queryFactory
                 .selectFrom(spaceMember)

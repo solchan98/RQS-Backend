@@ -7,6 +7,9 @@ import java.util.List;
 public interface SpaceService {
 
     List<SpaceResponse> getMySpaceList(ReadSpace readSpace);
+
+    List<SpaceMemberResponse> getSpaceMemberList(Long memberId, Long spaceId);
+
     SpaceResponse createSpace(CreateSpace createSpace);
 
     SpaceResponse updateTitle(UpdateSpace updateSpace);

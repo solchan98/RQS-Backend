@@ -69,4 +69,6 @@ public class SpaceMember {
     }
 
     public boolean isDeletableSpaceMember() { return this.role.equals("ADMIN"); }
+
+    public boolean isReadableSpaceMemberList() { return this.role.equals("ADMIN"); }
 }
