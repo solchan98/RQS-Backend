@@ -74,7 +74,7 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public SpaceMemberResponse changeMemberRole(UpdateSpaceMemberRole updateSpaceMemberRole) {
         SpaceMember spaceAdmin = spaceMemberRepository
                 .getSpaceMember(updateSpaceMemberRole.getAdmin().getMemberId(), updateSpaceMemberRole.getSpaceId())
