@@ -74,4 +74,19 @@ public class SpaceController {
                 role);
         return spaceService.changeMemberRole(updateSpaceMemberRole);
     }
+
+    @DeleteMapping("/spaceMember")
+    public DeleteSpaceMemberResponse deleteSpaceMember(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("spaceMemberId") Long spaceMemberId
+    ) {
+        DeleteSpaceMember deleteSpaceMember = DeleteSpaceMember.of(
+                memberDetails.getMember(),
+                spaceId,
+                spaceMemberId);
+
+        spaceService.deleteMember(deleteSpaceMember);
+        return DeleteSpaceMemberResponse.of(spaceMemberId, true);
+    }
 }
