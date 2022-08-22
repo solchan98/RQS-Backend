@@ -1,5 +1,6 @@
 package com.example.rqs.api.member;
 
+import com.example.rqs.api.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.member.service.MemberService;
 import com.example.rqs.core.member.service.dtos.SignUpDto;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 
@@ -19,12 +21,15 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest({MemberController.class, SignUpValidator.class, JwtProvider.class})
+@WebMvcTest({MemberController.class, SignUpValidator.class, JwtProvider.class, RedisDao.class})
 @DisplayName("멤버 컨트롤러 테스트")
 public class MemberControllerTest {
 
     @MockBean
     private MemberService memberService;
+
+    @MockBean
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private MockMvc mockMvc;

@@ -43,4 +43,22 @@ public class SpaceMemberTest {
                 () -> assertThat(adminCreatableItem).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("스페이스 멤버 권한 변경 권한 여부 확인 테스트")
+    void testIsUpdatableSpaceMemberRole() {
+        Member member = Member.newMember("sol@sol.com", "abcd1234!", "sol");
+        Space space = Space.newSpace("임시 스페이스", false);
+        SpaceMember spaceMember = SpaceMember.newSpaceMember(member, space);
+        SpaceMember spaceAdmin = SpaceMember.newSpaceAdmin(member, space);
+
+        boolean memberUpdatableSpaceMemberRole = spaceMember.isUpdatableMemberRole();
+        boolean adminUpdatableSpaceMemberRole = spaceAdmin.isUpdatableMemberRole();
+
+        assertAll(
+                () -> assertThat(memberUpdatableSpaceMemberRole).isFalse(),
+                () -> assertThat(adminUpdatableSpaceMemberRole).isTrue()
+        );
+    }
+
 }

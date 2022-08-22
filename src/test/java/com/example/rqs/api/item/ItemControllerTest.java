@@ -1,5 +1,6 @@
 package com.example.rqs.api.item;
 
+import com.example.rqs.api.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.item.service.ItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,12 +20,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({ItemController.class, CreateItemValidator.class, JwtProvider.class})
+@WebMvcTest({ItemController.class, CreateItemValidator.class, JwtProvider.class, RedisDao.class})
 @DisplayName("아이템 컨트롤러 테스트")
 public class ItemControllerTest {
 
     @MockBean
     private ItemService itemService;
+
+    @MockBean
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     private MockMvc mockMvc;

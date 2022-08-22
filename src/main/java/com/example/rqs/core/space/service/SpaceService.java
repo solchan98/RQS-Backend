@@ -15,7 +15,7 @@ public interface SpaceService {
 
     void addNewMember();
 
-    void changeMemberRole();
+    SpaceMemberResponse changeMemberRole(UpdateSpaceMemberRole updateSpaceMemberRole);
 
     void deleteMember();
 

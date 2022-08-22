@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.service;
 
 import com.example.rqs.core.common.exception.*;
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
@@ -62,8 +63,18 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    public void changeMemberRole() {
-
+    @Transactional(readOnly = true)
+    public SpaceMemberResponse changeMemberRole(UpdateSpaceMemberRole updateSpaceMemberRole) {
+        SpaceMember spaceAdmin = spaceMemberRepository
+                .getSpaceMember(updateSpaceMemberRole.getAdmin().getMemberId(), updateSpaceMemberRole.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        boolean updatable = spaceAdmin.isUpdatableMemberRole();
+        if (!updatable)  throw new ForbiddenException();
+        SpaceMember spaceMember = spaceMemberRepository
+                .findById(updateSpaceMemberRole.getChangedSpaceMemberId())
+                .orElseThrow(BadRequestException::new);
+        spaceMember.updateRole(updateSpaceMemberRole.getNewRole());
+        return SpaceMemberResponse.of(spaceMember);
     }
 
     @Override

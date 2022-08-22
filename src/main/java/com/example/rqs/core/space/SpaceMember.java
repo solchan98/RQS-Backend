@@ -55,4 +55,10 @@ public class SpaceMember {
     public boolean isCreatableItem() {
         return this.role.equals("ADMIN");
     }
+
+    public boolean isUpdatableMemberRole() { return this.role.equals("ADMIN"); }
+
+    public void updateRole(String newRole) {
+        this.role = newRole;
+    }
 }
