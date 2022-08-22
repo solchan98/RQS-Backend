@@ -1,7 +1,6 @@
 package com.example.rqs.core.space.service;
 
 import com.example.rqs.core.common.exception.*;
-import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
