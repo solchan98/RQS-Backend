@@ -71,7 +71,7 @@ public class SpaceServiceImpl implements SpaceService{
         if (!updatable)  throw new ForbiddenException();
         SpaceMember spaceMember = spaceMemberRepository
                 .findById(updateSpaceMemberRole.getChangedSpaceMemberId())
-                .orElseThrow(BadRequestException::new);
+                .orElseThrow(() -> new BadRequestException(RQSError.SPACE_MEMBER_NOT_FOUND));
         spaceMember.updateRole(updateSpaceMemberRole.getNewRole());
         return SpaceMemberResponse.of(spaceMember);
     }
