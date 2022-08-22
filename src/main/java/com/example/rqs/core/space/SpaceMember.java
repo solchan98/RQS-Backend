@@ -61,4 +61,6 @@ public class SpaceMember {
     public void updateRole(String newRole) {
         this.role = newRole;
     }
+
+    public boolean isDeletableSpaceMember() { return this.role.equals("ADMIN"); }
 }

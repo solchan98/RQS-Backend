@@ -61,4 +61,21 @@ public class SpaceMemberTest {
         );
     }
 
+    @Test
+    @DisplayName("스페이스 멤버 삭제 권한 여부 확인 테스트")
+    void testIsDeletableSpaceMember() {
+        Member member = Member.newMember("sol@sol.com", "abcd1234!", "sol");
+        Space space = Space.newSpace("임시 스페이스", false);
+        SpaceMember spaceMember = SpaceMember.newSpaceMember(member, space);
+        SpaceMember spaceAdmin = SpaceMember.newSpaceAdmin(member, space);
+
+        boolean memberUpdatableSpaceMemberRole = spaceMember.isDeletableSpaceMember();
+        boolean adminUpdatableSpaceMemberRole = spaceAdmin.isDeletableSpaceMember();
+
+        assertAll(
+                () -> assertThat(memberUpdatableSpaceMemberRole).isFalse(),
+                () -> assertThat(adminUpdatableSpaceMemberRole).isTrue()
+        );
+    }
+
 }

@@ -77,8 +77,17 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    public void deleteMember() {
-
+    @Transactional
+    public void deleteMember(DeleteSpaceMember deleteSpaceMember) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(deleteSpaceMember.getMember().getMemberId(), deleteSpaceMember.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        boolean isDeletable = spaceMember.isDeletableSpaceMember();
+        if (!isDeletable) throw new ForbiddenException();
+        boolean isSelfDelete = spaceMember.getSpaceMemberId().equals(deleteSpaceMember.getSpaceMemberId());
+        if (isSelfDelete) throw new BadRequestException();
+        spaceMemberRepository
+                .deleteById(deleteSpaceMember.getSpaceMemberId());
     }
 
     @Override
