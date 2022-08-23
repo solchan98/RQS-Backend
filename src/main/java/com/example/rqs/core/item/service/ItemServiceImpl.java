@@ -86,7 +86,7 @@ public class ItemServiceImpl implements ItemService {
                 .getSpaceMember(updateItem.getMember().getMemberId(), item.getSpace().getSpaceId())
                 .orElseThrow(BadRequestException::new);
         boolean isCreator = item.isCreator(itemCreator);
-        if (isCreator) throw new ForbiddenException();
+        if (!isCreator) throw new ForbiddenException();
         item.updateContent(
                 updateItem.getQuestion(),
                 updateItem.getAnswer(),
