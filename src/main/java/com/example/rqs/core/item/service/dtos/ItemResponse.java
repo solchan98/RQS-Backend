@@ -36,21 +36,15 @@ public class ItemResponse {
         this.createdAt = createdAt;
     }
 
-    private ItemResponse(Long itemId, Long spaceId, String question, String answer, String hint) {
-        this.itemId = itemId;
-        this.spaceId = spaceId;
-        this.question = question;
-        this.answer = answer;
-        this.hint = hint;
-    }
-
     public static ItemResponse of(Item item) {
         return new ItemResponse(
                 item.getItemId(),
                 item.getSpace().getSpaceId(),
                 item.getQuestion(),
+                item.getSpaceMember(),
                 item.getAnswer(),
-                item.getHint()
+                item.getHint(),
+                item.getCreatedAt()
         );
     }
 
