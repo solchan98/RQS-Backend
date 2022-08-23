@@ -77,18 +77,21 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void updateQuestion() {
-
-    }
-
-    @Override
-    public void updateAnswer() {
-
-    }
-
-    @Override
-    public void updateHint() {
-
+    @Transactional
+    public ItemResponse updateItem(UpdateItem updateItem) {
+        Item item = itemRepository
+                .findById(updateItem.getItemId())
+                .orElseThrow(BadRequestException::new);
+        SpaceMember itemCreator = spaceMemberRepository
+                .getSpaceMember(updateItem.getMember().getMemberId(), item.getSpace().getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        boolean isCreator = item.isCreator(itemCreator);
+        if (isCreator) throw new ForbiddenException();
+        item.updateContent(
+                updateItem.getQuestion(),
+                updateItem.getAnswer(),
+                updateItem.getHint());
+        return ItemResponse.of(item);
     }
 
     @Override

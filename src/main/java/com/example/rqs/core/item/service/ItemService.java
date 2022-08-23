@@ -12,11 +12,7 @@ public interface ItemService {
 
     List<ItemResponse> getItemList(ReadItem readItem);
 
-    void updateQuestion();
-
-    void updateAnswer();
-
-    void updateHint();
+    ItemResponse updateItem(UpdateItem updateItem);
 
     void deleteItem();
 }

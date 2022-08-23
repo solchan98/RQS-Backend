@@ -49,4 +49,15 @@ public class Item {
     public static Item newItem(Space space, SpaceMember spaceMember, String question, String answer, String hint) {
         return new Item(space, spaceMember, question, answer, hint);
     }
+
+    public void updateContent(String question, String answer, String hint) {
+        this.question = question;
+        this.answer = answer;
+        this.hint = hint;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public boolean isCreator(SpaceMember spaceMember) {
+        return this.spaceMember.getSpaceMemberId().equals(spaceMember.getSpaceMemberId());
+    }
 }
