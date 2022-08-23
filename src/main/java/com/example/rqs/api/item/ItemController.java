@@ -18,15 +18,22 @@ public class ItemController {
 
     private final ItemService itemService;
     private final CreateItemValidator createItemValidator;
+    private final UpdateItemValidator updateItemValidator;
 
-    @InitBinder
+    @InitBinder("createItemDto")
     public void initCreateItemBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(createItemValidator);
     }
 
-    public ItemController(ItemService itemService, CreateItemValidator createItemValidator) {
+    @InitBinder("updateItemDto")
+    public void initUpdateItemBinder(WebDataBinder webDataBinder) {
+        webDataBinder.addValidators(updateItemValidator);
+    }
+
+    public ItemController(ItemService itemService, CreateItemValidator createItemValidator, UpdateItemValidator updateItemValidator) {
         this.itemService = itemService;
         this.createItemValidator = createItemValidator;
+        this.updateItemValidator = updateItemValidator;
     }
 
     @PostMapping("")
@@ -65,5 +72,19 @@ public class ItemController {
                 memberDetails.getMember(),
                 spaceId);
         return itemService.getRandomItem(readItem);
+    }
+
+    @PutMapping("")
+    public ItemResponse updateItem(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @Validated @RequestBody UpdateItemDto updateItemDto
+    ) {
+        UpdateItem updateItem = UpdateItem.of(
+                memberDetails.getMember(),
+                updateItemDto.getItemId(),
+                updateItemDto.getQuestion(),
+                updateItemDto.getAnswer(),
+                updateItemDto.getHint());
+        return itemService.updateItem(updateItem);
     }
 }
