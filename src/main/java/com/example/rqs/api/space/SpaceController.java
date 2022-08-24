@@ -86,7 +86,7 @@ public class SpaceController {
     }
 
     @DeleteMapping("/spaceMember")
-    public DeleteSpaceMemberResponse deleteSpaceMember(
+    public DeleteResponse deleteSpaceMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
             @RequestParam("spaceMemberId") Long spaceMemberId
@@ -97,6 +97,16 @@ public class SpaceController {
                 spaceMemberId);
 
         spaceService.deleteMember(deleteSpaceMember);
-        return DeleteSpaceMemberResponse.of(spaceMemberId, true);
+        return DeleteResponse.of(spaceMemberId, true);
+    }
+
+    @DeleteMapping("")
+    public DeleteResponse deleteSpace(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        DeleteSpace deleteSpace = DeleteSpace.of(memberDetails.getMember(), spaceId);
+        spaceService.deleteSpace(deleteSpace);
+        return DeleteResponse.of(spaceId, true);
     }
 }
