@@ -108,7 +108,14 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    public void deleteSpace() {
-
+    @Transactional
+    public void deleteSpace(DeleteSpace deleteSpace) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(deleteSpace.getMember().getMemberId(), deleteSpace.getSpaceId())
+                .orElseThrow(ForbiddenException::new);
+        boolean isDeletable = spaceMember.isDeletableSpace();
+        if (!isDeletable) throw new ForbiddenException();
+        spaceRepository
+                .deleteById(deleteSpace.getSpaceId());
     }
 }

@@ -22,5 +22,5 @@ public interface SpaceService {
 
     void deleteMember(DeleteSpaceMember deleteSpaceMember);
 
-    void deleteSpace();
+    void deleteSpace(DeleteSpace deleteSpace);
 }
