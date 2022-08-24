@@ -22,7 +22,7 @@ public class Space {
 
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "space")
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private final List<SpaceMember> spaceMemberList = new ArrayList<>();
 
     protected Space(){}
