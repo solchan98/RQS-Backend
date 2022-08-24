@@ -14,5 +14,5 @@ public interface ItemService {
 
     ItemResponse updateItem(UpdateItem updateItem);
 
-    void deleteItem();
+    void deleteItem(DeleteItem deleteItem);
 }

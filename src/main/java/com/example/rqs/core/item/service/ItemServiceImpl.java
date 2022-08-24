@@ -4,6 +4,7 @@ import com.example.rqs.core.common.exception.*;
 import com.example.rqs.core.item.Item;
 import com.example.rqs.core.item.repository.ItemRepository;
 import com.example.rqs.core.item.service.dtos.*;
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 
@@ -82,10 +83,7 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository
                 .findById(updateItem.getItemId())
                 .orElseThrow(BadRequestException::new);
-        SpaceMember itemCreator = spaceMemberRepository
-                .getSpaceMember(updateItem.getMember().getMemberId(), item.getSpace().getSpaceId())
-                .orElseThrow(BadRequestException::new);
-        boolean isCreator = item.isCreator(itemCreator);
+        boolean isCreator = isItemCreator(updateItem.getMember(), item);
         if (!isCreator) throw new ForbiddenException();
         item.updateContent(
                 updateItem.getQuestion(),
@@ -95,7 +93,20 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void deleteItem() {
+    @Transactional
+    public void deleteItem(DeleteItem deleteItem) {
+        Item item = itemRepository
+                .findById(deleteItem.getItemId())
+                .orElseThrow(BadRequestException::new);
+        boolean isCreator = isItemCreator(deleteItem.getMember(), item);
+        if (!isCreator) throw new ForbiddenException();
+        itemRepository.delete(item);
+    }
 
+    private boolean isItemCreator(Member member, Item item) {
+        SpaceMember itemCreator = spaceMemberRepository
+                .getSpaceMember(member.getMemberId(), item.getSpace().getSpaceId())
+                .orElseThrow(BadRequestException::new);
+        return item.isCreator(itemCreator);
     }
 }
