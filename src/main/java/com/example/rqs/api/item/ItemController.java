@@ -87,4 +87,14 @@ public class ItemController {
                 updateItemDto.getHint());
         return itemService.updateItem(updateItem);
     }
+
+    @DeleteMapping("")
+    public DeleteResponse deleteItem(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("itemId") Long itemId
+    ) {
+        DeleteItem deleteItem = DeleteItem.of(memberDetails.getMember(), itemId);
+        itemService.deleteItem(deleteItem);
+        return DeleteResponse.of(itemId, true);
+    }
 }
