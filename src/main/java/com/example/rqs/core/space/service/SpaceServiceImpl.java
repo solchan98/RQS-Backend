@@ -22,6 +22,20 @@ public class SpaceServiceImpl implements SpaceService{
 
     @Override
     @Transactional(readOnly = true)
+    public SpaceResponse getSpace(Long memberId, Long spaceId) {
+        Space space = spaceRepository
+                .findById(spaceId)
+                .orElseThrow(BadRequestException::new);
+        if (!space.isVisibility()) {
+            boolean exist = spaceMemberRepository
+                    .existSpaceMember(memberId, spaceId);
+            if (!exist) throw new ForbiddenException();
+        }
+        return SpaceResponse.of(space);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<SpaceResponse> getMySpaceList(ReadSpace readSpace) {
         return spaceMemberRepository.getSpaceResponseList(
                 readSpace.getMember().getMemberId(),
