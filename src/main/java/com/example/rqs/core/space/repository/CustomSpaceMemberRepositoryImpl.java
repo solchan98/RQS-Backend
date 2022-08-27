@@ -48,6 +48,7 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
                         SpaceResponse.class,
                         space.spaceId,
                         space.title,
+                        space.itemList.size().as("itemCount"),
                         space.visibility,
                         space.createdAt,
                         space.updatedAt))
