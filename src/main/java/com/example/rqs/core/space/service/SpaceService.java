@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface SpaceService {
 
+    SpaceResponse getSpace(Long memberId, Long spaceId);
     List<SpaceResponse> getMySpaceList(ReadSpace readSpace);
 
     List<SpaceMemberResponse> getSpaceMemberList(Long memberId, Long spaceId);

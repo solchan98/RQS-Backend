@@ -1,5 +1,6 @@
 package com.example.rqs.core.space;
 
+import com.example.rqs.core.item.Item;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -21,6 +22,9 @@ public class Space {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
+    private final List<Item> itemList = new ArrayList<>();
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
     private final List<SpaceMember> spaceMemberList = new ArrayList<>();

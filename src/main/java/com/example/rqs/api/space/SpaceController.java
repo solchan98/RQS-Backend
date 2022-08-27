@@ -46,6 +46,16 @@ public class SpaceController {
         return spaceService.updateTitle(updateSpace);
     }
 
+    @GetMapping("")
+    public SpaceResponse getSpace(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        return spaceService.getSpace(
+                memberDetails.getMember().getMemberId(),
+                spaceId);
+    }
+
     @GetMapping("/all")
     public List<SpaceResponse> getAllMySpace(
             @AuthenticationPrincipal MemberDetails memberDetails,

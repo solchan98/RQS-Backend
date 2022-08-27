@@ -21,14 +21,17 @@ public class SpaceResponse {
 
     private List<SpaceMemberResponse> spaceMemberList;
 
+    private Integer itemCount;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
-    private SpaceResponse(Long spaceId, String title, boolean visibility, List<SpaceMember> spaceMemberList, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    private SpaceResponse(Long spaceId, String title, boolean visibility, Integer itemCount, List<SpaceMember> spaceMemberList, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.spaceId = spaceId;
         this.title = title;
         this.visibility = visibility;
+        this.itemCount = itemCount;
         this.spaceMemberList = spaceMemberList.stream().map(SpaceMemberResponse::of).collect(Collectors.toList());
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
@@ -39,6 +42,7 @@ public class SpaceResponse {
                 space.getSpaceId(),
                 space.getTitle(),
                 space.isVisibility(),
+                space.getItemList().size(),
                 space.getSpaceMemberList(),
                 space.getCreatedAt(),
                 space.getUpdatedAt());

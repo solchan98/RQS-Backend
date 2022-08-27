@@ -24,4 +24,8 @@ public class ReadSpace {
     public static ReadSpace of(Member member, String lastJoinedAt, Boolean visibility) {
         return new ReadSpace(member, lastJoinedAt, visibility);
     }
+
+    public static ReadSpace of(Member member, Boolean visibility) {
+        return new ReadSpace(member, null, visibility);
+    }
 }
