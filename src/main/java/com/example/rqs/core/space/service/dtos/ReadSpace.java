@@ -3,29 +3,19 @@ package com.example.rqs.core.space.service.dtos;
 import com.example.rqs.core.member.Member;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
-import java.util.Objects;
-
 @Getter
 public class ReadSpace {
 
     private final Member member;
 
-    private final LocalDateTime lastJoinedAt;
+    private final Long spaceId;
 
-    private final Boolean visibility;
-
-    private ReadSpace(Member member, String lastJoinedAt, Boolean visibility) {
+    private ReadSpace(Member member, Long spaceId) {
         this.member = member;
-        this.lastJoinedAt = Objects.isNull(lastJoinedAt) ? null : LocalDateTime.parse(lastJoinedAt);
-        this.visibility = visibility;
+        this.spaceId = spaceId;
     }
 
-    public static ReadSpace of(Member member, String lastJoinedAt, Boolean visibility) {
-        return new ReadSpace(member, lastJoinedAt, visibility);
-    }
-
-    public static ReadSpace of(Member member, Boolean visibility) {
-        return new ReadSpace(member, null, visibility);
+    public static ReadSpace of(Member member, Long spaceId) {
+        return new ReadSpace(member, spaceId);
     }
 }

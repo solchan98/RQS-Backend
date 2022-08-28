@@ -51,16 +51,25 @@ public class ItemController {
     }
 
     @GetMapping("")
+    public ItemResponse getItem(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("itemId") Long itemId
+    ) {
+        ReadItem readItem = ReadItem.of(memberDetails.getMember(), itemId);
+        return itemService.getItem(readItem);
+    }
+
+    @GetMapping("/all")
     public List<ItemResponse> getItemList(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
             @Nullable @RequestParam("lastItemId") Long lastItemId
     ) {
-        ReadItem readItem = ReadItem.of(
+        ReadItemList readItemList = ReadItemList.of(
                 memberDetails.getMember(),
                 lastItemId,
                 spaceId);
-        return itemService.getItemList(readItem);
+        return itemService.getItemList(readItemList);
     }
 
     @GetMapping("/random")
@@ -68,10 +77,7 @@ public class ItemController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        ReadItem readItem = ReadItem.of(
-                memberDetails.getMember(),
-                spaceId);
-        return itemService.getRandomItem(readItem);
+        return itemService.getRandomItem(memberDetails.getMember(), spaceId);
     }
 
     @PutMapping("")

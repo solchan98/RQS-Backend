@@ -47,9 +47,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public ItemResponse getRandomItem(ReadItem readItem) {
+    public ItemResponse getRandomItem(Member member, Long spaceId) {
         Space space = spaceRepository
-                .findById(readItem.getSpaceId())
+                .findById(spaceId)
                 .orElseThrow(BadRequestException::new);
         Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
         if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
@@ -57,24 +57,37 @@ public class ItemServiceImpl implements ItemService {
         int randomIndex = random.nextInt(itemCnt.intValue());
         if (!space.isVisibility()) {
             boolean exist = spaceMemberRepository
-                    .existSpaceMember(readItem.getMember().getMemberId(), readItem.getSpaceId());
+                    .existSpaceMember(member.getMemberId(), spaceId);
             if (!exist) throw new ForbiddenException();
         }
-        return itemRepository.getItem(readItem.getSpaceId(), randomIndex);
+        return itemRepository.getItem(spaceId, randomIndex);
+    }
+
+    @Override
+    public ItemResponse getItem(ReadItem readItem) {
+        Item item = itemRepository
+                .findById(readItem.getItemId())
+                .orElseThrow(BadRequestException::new);
+        if (!item.getSpace().isVisibility()) {
+            boolean exist = spaceMemberRepository
+                    .existSpaceMember(readItem.getMember().getMemberId(), item.getSpace().getSpaceId());
+            if (!exist) throw new ForbiddenException();
+        }
+        return ItemResponse.of(item);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ItemResponse> getItemList(ReadItem readItem) {
+    public List<ItemResponse> getItemList(ReadItemList readItemList) {
         Space space = spaceRepository
-                .findById(readItem.getSpaceId())
+                .findById(readItemList.getSpaceId())
                 .orElseThrow(BadRequestException::new);
         if (!space.isVisibility()) {
             boolean exist = spaceMemberRepository
-                    .existSpaceMember(readItem.getMember().getMemberId(), readItem.getSpaceId());
+                    .existSpaceMember(readItemList.getMember().getMemberId(), readItemList.getSpaceId());
             if (!exist) throw new ForbiddenException();
         }
-        return itemRepository.getItemList(readItem.getSpaceId(), readItem.getLastId());
+        return itemRepository.getItemList(readItemList.getSpaceId(), readItemList.getLastId());
     }
 
     @Override

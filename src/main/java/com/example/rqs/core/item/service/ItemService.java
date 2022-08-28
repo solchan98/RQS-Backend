@@ -1,6 +1,7 @@
 package com.example.rqs.core.item.service;
 
 import com.example.rqs.core.item.service.dtos.*;
+import com.example.rqs.core.member.Member;
 
 import java.util.List;
 
@@ -8,9 +9,10 @@ public interface ItemService {
 
     ItemResponse createNewItem(CreateItem createItem);
 
-    ItemResponse getRandomItem(ReadItem readItem);
+    ItemResponse getRandomItem(Member member, Long spaceId);
 
-    List<ItemResponse> getItemList(ReadItem readItem);
+    ItemResponse getItem(ReadItem readItem);
+    List<ItemResponse> getItemList(ReadItemList readItemList);
 
     ItemResponse updateItem(UpdateItem updateItem);
 
