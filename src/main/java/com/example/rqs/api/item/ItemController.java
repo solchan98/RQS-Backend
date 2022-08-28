@@ -50,7 +50,7 @@ public class ItemController {
         return itemService.createNewItem(createItem);
     }
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<ItemResponse> getItemList(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
