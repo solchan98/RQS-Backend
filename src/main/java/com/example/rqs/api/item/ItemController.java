@@ -50,6 +50,15 @@ public class ItemController {
         return itemService.createNewItem(createItem);
     }
 
+    @GetMapping("")
+    public ItemResponse getItem(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("itemId") Long itemId
+    ) {
+        ReadItem readItem = ReadItem.of(memberDetails.getMember(), itemId);
+        return itemService.getItem(readItem);
+    }
+
     @GetMapping("/all")
     public List<ItemResponse> getItemList(
             @AuthenticationPrincipal MemberDetails memberDetails,
