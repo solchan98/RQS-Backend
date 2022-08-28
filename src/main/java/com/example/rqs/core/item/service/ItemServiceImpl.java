@@ -65,7 +65,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemResponse getItem(ReadItem readItem) {
-        return null;
+        Item item = itemRepository
+                .findById(readItem.getItemId())
+                .orElseThrow(BadRequestException::new);
+        if (!item.getSpace().isVisibility()) {
+            boolean exist = spaceMemberRepository
+                    .existSpaceMember(readItem.getMember().getMemberId(), item.getSpace().getSpaceId());
+            if (!exist) throw new ForbiddenException();
+        }
+        return ItemResponse.of(item);
     }
 
     @Override
