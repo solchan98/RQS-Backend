@@ -22,13 +22,13 @@ public class SpaceServiceImpl implements SpaceService{
 
     @Override
     @Transactional(readOnly = true)
-    public SpaceResponse getSpace(Long memberId, Long spaceId) {
+    public SpaceResponse getSpace(ReadSpace readSpace) {
         Space space = spaceRepository
-                .findById(spaceId)
+                .findById(readSpace.getSpaceId())
                 .orElseThrow(BadRequestException::new);
         if (!space.isVisibility()) {
             boolean exist = spaceMemberRepository
-                    .existSpaceMember(memberId, spaceId);
+                    .existSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
             if (!exist) throw new ForbiddenException();
         }
         return SpaceResponse.of(space);
@@ -36,11 +36,11 @@ public class SpaceServiceImpl implements SpaceService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<SpaceResponse> getMySpaceList(ReadSpace readSpace) {
+    public List<SpaceResponse> getMySpaceList(ReadSpaceList readSpaceList) {
         return spaceMemberRepository.getSpaceResponseList(
-                readSpace.getMember().getMemberId(),
-                readSpace.getLastJoinedAt(),
-                readSpace.getVisibility());
+                readSpaceList.getMember().getMemberId(),
+                readSpaceList.getLastJoinedAt(),
+                readSpaceList.getVisibility());
     }
 
     @Override

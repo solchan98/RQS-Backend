@@ -51,9 +51,11 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        return spaceService.getSpace(
-                memberDetails.getMember().getMemberId(),
+
+        ReadSpace readSpace = ReadSpace.of(
+                memberDetails.getMember(),
                 spaceId);
+        return spaceService.getSpace(readSpace);
     }
 
     @GetMapping("/all")
@@ -62,8 +64,8 @@ public class SpaceController {
             @Nullable @RequestParam("visibility") Boolean visibility,
             @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt
     ) {
-        ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), lastJoinedAt, visibility);
-        return spaceService.getMySpaceList(readSpace);
+        ReadSpaceList readSpaceList = ReadSpaceList.of(memberDetails.getMember(), lastJoinedAt, visibility);
+        return spaceService.getMySpaceList(readSpaceList);
     }
 
     @PatchMapping("/spaceMember/role")
