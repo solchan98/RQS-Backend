@@ -8,21 +8,14 @@ public class ReadItem {
 
     private final Member member;
 
-    private final Long lastId;
+    private final Long itemId;
 
-    private final Long spaceId;
-
-    private ReadItem(Member member, Long lastId, Long spaceId) {
+    private ReadItem(Member member, Long itemId) {
         this.member = member;
-        this.lastId = lastId;
-        this.spaceId = spaceId;
+        this.itemId = itemId;
     }
 
-    public static ReadItem of(Member member, Long lastId, Long spaceId) {
-        return new ReadItem(member, lastId, spaceId);
-    }
-
-    public static ReadItem of(Member member, Long spaceId) {
-        return new ReadItem(member, null, spaceId);
+    public static ReadItem of(Member member, Long itemId) {
+        return new ReadItem(member, itemId);
     }
 }
