@@ -31,6 +31,11 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    public boolean existEmail(String email) throws BadRequestException {
+        return memberRepository.existsByEmail(email);
+    }
+
+    @Override
     public MemberDto login(LoginDto loginDto) throws BadRequestException {
         Member member = memberRepository
                 .findByEmail(loginDto.getEmail())

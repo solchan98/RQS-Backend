@@ -42,7 +42,7 @@ public class ApiConfig {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/api/v1/member/sign-up", "/api/v1/member/login").permitAll()
+                        "/api/v1/member/sign-up", "/api/v1/member/login", "/api/v1/member/check").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, memberDetailsService),

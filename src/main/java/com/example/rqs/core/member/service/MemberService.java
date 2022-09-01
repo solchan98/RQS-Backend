@@ -12,6 +12,8 @@ public interface MemberService {
 
     MemberDto signUp(SignUpDto signUpDto) throws BadRequestException;
 
+    boolean existEmail(String email);
+
     MemberDto login(LoginDto loginDto) throws BadRequestException;
 
     boolean logout(); // 실패 시, 예외 혹은 불리언 아직 미정
