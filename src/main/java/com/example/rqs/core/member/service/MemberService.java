@@ -12,7 +12,7 @@ public interface MemberService {
 
     MemberDto signUp(SignUpDto signUpDto) throws BadRequestException;
 
-    boolean existEmail(String email) throws BadRequestException;
+    boolean existEmail(String email);
 
     MemberDto login(LoginDto loginDto) throws BadRequestException;
 
