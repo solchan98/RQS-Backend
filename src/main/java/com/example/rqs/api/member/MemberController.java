@@ -55,8 +55,18 @@ public class MemberController {
     }
 
     @GetMapping("")
-    public ResponseEntity<MemberDto> getMemberInfo(@AuthenticationPrincipal MemberDetails memberDetails) {
+    public ResponseEntity<MemberDto> getMemberInfo(
+            @AuthenticationPrincipal MemberDetails memberDetails
+    ) {
         MemberDto memberDto = MemberDto.of(memberDetails.getMember());
         return ResponseEntity.ok(memberDto);
+    }
+
+    @GetMapping("/check")
+    public ResponseEntity<CheckEmailResponse> checkEmail(
+            @RequestParam("email") String email
+    ) {
+        boolean isExist = memberService.existEmail(email);
+        return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
     }
 }
