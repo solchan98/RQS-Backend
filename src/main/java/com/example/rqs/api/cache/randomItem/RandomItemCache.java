@@ -13,5 +13,5 @@ public class RandomItemCache {
 
     private Long totalCnt;
 
-    private List<Long> indexList;
+    private List<Long> selectableIndexList;
 }

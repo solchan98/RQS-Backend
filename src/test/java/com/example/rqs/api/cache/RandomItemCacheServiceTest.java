@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest(classes = {RedisConfig.class, RedisDao.class, ObjectMapper.class, RandomItemCacheService.class})
 @DisplayName("RandomRandomItemCacheService 테스트")
-public class RandomRandomItemCacheServiceTest {
+public class RandomItemCacheServiceTest {
 
     @Autowired
     private RandomItemCacheService randomItemCacheService;
@@ -46,7 +46,7 @@ public class RandomRandomItemCacheServiceTest {
         assertThat(optionalRandomItemCache.isEmpty()).isFalse();
         assertAll(
                 () -> assertThat(optionalRandomItemCache.get().getTotalCnt()).isEqualTo(3L),
-                () -> assertThat(optionalRandomItemCache.get().getIndexList().size()).isEqualTo(3L)
+                () -> assertThat(optionalRandomItemCache.get().getSelectableIndexList().size()).isEqualTo(3L)
         );
     }
 }
