@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,16 +36,15 @@ public class RandomItemCacheServiceTest {
     @Test
     @DisplayName("스페이스 아이템 캐시가 있는 경우")
     void getRandomItemCacheWhenIsExist() throws JsonProcessingException {
-        Long spaceId = 1L; Long spaceMemberId = 2L;
-        RandomItemCache randomItemCache = new RandomItemCache(3L, List.of(1L, 4L, 12L));
+        Long spaceId = 1L; Long memberId = 2L; Long spaceItemSize = 5L;
 
-        randomItemCacheService.addCache(spaceId, spaceMemberId, randomItemCache);
-        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache(spaceId, spaceMemberId);
+        randomItemCacheService.addNewCache(spaceId, memberId, spaceItemSize, 3);
+        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache(spaceId, memberId);
 
         assertThat(optionalRandomItemCache.isEmpty()).isFalse();
         assertAll(
-                () -> assertThat(optionalRandomItemCache.get().getTotalCnt()).isEqualTo(3L),
-                () -> assertThat(optionalRandomItemCache.get().getSelectableIndexList().size()).isEqualTo(3L)
+                () -> assertThat(optionalRandomItemCache.get().getTotalCnt()).isEqualTo(spaceItemSize),
+                () -> assertThat(optionalRandomItemCache.get().getSelectableIndexList().size()).isEqualTo(4L)
         );
     }
 }
