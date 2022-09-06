@@ -1,6 +1,6 @@
 package com.example.rqs.api.member;
 
-import com.example.rqs.api.RedisDao;
+import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.member.service.MemberService;
 import com.example.rqs.core.member.service.dtos.SignUpDto;

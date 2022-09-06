@@ -1,6 +1,6 @@
 package com.example.rqs.api.item;
 
-import com.example.rqs.api.RedisDao;
+import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.item.service.ItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
