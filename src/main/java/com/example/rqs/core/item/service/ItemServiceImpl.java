@@ -47,23 +47,51 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
+    public RandomItemResponse getRandomItem(ReadRandomItem readRandomItem) {
+        Space space = spaceRepository
+                .findById(readRandomItem.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+
+        if (!space.isVisibility()) {
+            boolean exist = spaceMemberRepository.existSpaceMember(readRandomItem.getSpaceMemberId());
+            if (!exist) throw new ForbiddenException();
+        }
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(readRandomItem.getSelectableIndexList().size());
+        Long randomItemIndex = readRandomItem.getSelectableIndexList().get(randomIndex);
+
+        ItemResponse itemResponse = itemRepository.getItem(
+                readRandomItem.getSpaceId(),
+                randomItemIndex.intValue());
+
+        return RandomItemResponse.of(
+                (long) randomIndex,
+                itemResponse);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public ItemResponse getRandomItem(Member member, Long spaceId) {
         Space space = spaceRepository
                 .findById(spaceId)
                 .orElseThrow(BadRequestException::new);
-        Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
-        if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
-        Random random = new Random();
-        int randomIndex = random.nextInt(itemCnt.intValue());
+
         if (!space.isVisibility()) {
             boolean exist = spaceMemberRepository
                     .existSpaceMember(member.getMemberId(), spaceId);
             if (!exist) throw new ForbiddenException();
         }
+
+        Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
+        if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
+        Random random = new Random();
+        int randomIndex = random.nextInt(itemCnt.intValue());
         return itemRepository.getItem(spaceId, randomIndex);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ItemResponse getItem(ReadItem readItem) {
         Item item = itemRepository
                 .findById(readItem.getItemId())

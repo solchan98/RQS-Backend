@@ -115,6 +115,18 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
         return !Objects.isNull(member);
     }
 
+    @Override
+    public boolean existSpaceMember(Long spaceMemberId) {
+        SpaceMember member = queryFactory
+                .selectFrom(spaceMember)
+                .where(
+                        spaceMember.spaceMemberId.eq(spaceMemberId)
+                )
+                .limit(1)
+                .fetchOne();
+        return !Objects.isNull(member);
+    }
+
     private BooleanExpression isVisibility(Boolean isVisibility) {
         if (Objects.isNull(isVisibility)) return null;
         return isVisibility ? space.visibility.isTrue() : space.visibility.isFalse();

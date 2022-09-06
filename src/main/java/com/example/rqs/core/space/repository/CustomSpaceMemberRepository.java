@@ -17,4 +17,6 @@ public interface CustomSpaceMemberRepository {
     List<SpaceMemberResponse> getSpaceMemberResponseList(Long spaceId);
 
     boolean existSpaceMember(Long memberId, Long spaceId);
+
+    boolean existSpaceMember(Long spaceMemberId);
 }
