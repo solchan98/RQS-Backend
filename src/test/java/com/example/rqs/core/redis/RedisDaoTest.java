@@ -1,4 +1,4 @@
-package com.example.rqs.api.redis;
+package com.example.rqs.core.redis;
 
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.redis.RedisConfig;
