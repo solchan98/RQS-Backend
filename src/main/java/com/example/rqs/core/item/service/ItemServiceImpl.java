@@ -53,7 +53,8 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(BadRequestException::new);
 
         if (!space.isVisibility()) {
-            boolean exist = spaceMemberRepository.existSpaceMember(readRandomItem.getSpaceMemberId());
+            boolean exist = spaceMemberRepository
+                    .existSpaceMember(readRandomItem.getMember().getMemberId(), readRandomItem.getSpaceId());
             if (!exist) throw new ForbiddenException();
         }
 
@@ -72,7 +73,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public ItemResponse getRandomItem(Member member, Long spaceId) {
+    public RandomItemResponse getRandomItem(Member member, Long spaceId) {
         Space space = spaceRepository
                 .findById(spaceId)
                 .orElseThrow(BadRequestException::new);
@@ -85,9 +86,12 @@ public class ItemServiceImpl implements ItemService {
 
         Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
         if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
+
         Random random = new Random();
         int randomIndex = random.nextInt(itemCnt.intValue());
-        return itemRepository.getItem(spaceId, randomIndex);
+        ItemResponse itemResponse = itemRepository.getItem(spaceId, randomIndex);
+
+        return RandomItemResponse.of((long) randomIndex, itemResponse, itemCnt);
     }
 
     @Override

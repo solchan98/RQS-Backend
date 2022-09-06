@@ -11,7 +11,7 @@ public interface ItemService {
 
     RandomItemResponse getRandomItem(ReadRandomItem readRandomItem);
 
-    ItemResponse getRandomItem(Member member, Long spaceId);
+    RandomItemResponse getRandomItem(Member member, Long spaceId);
 
     ItemResponse getItem(ReadItem readItem);
     List<ItemResponse> getItemList(ReadItemList readItemList);
