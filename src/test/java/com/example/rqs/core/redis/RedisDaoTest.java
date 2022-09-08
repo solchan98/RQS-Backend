@@ -1,7 +1,7 @@
-package com.example.rqs.api.redis;
+package com.example.rqs.core.redis;
 
-import com.example.rqs.api.RedisDao;
-import com.example.rqs.api.config.RedisConfig;
+import com.example.rqs.core.common.redis.RedisDao;
+import com.example.rqs.core.common.redis.RedisConfig;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

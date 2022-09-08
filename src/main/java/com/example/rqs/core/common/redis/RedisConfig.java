@@ -1,4 +1,4 @@
-package com.example.rqs.api.config;
+package com.example.rqs.core.common.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

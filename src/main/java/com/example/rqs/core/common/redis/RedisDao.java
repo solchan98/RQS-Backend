@@ -1,4 +1,4 @@
-package com.example.rqs.api;
+package com.example.rqs.core.common.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;

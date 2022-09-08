@@ -9,7 +9,9 @@ public interface ItemService {
 
     ItemResponse createNewItem(CreateItem createItem);
 
-    ItemResponse getRandomItem(Member member, Long spaceId);
+    RandomItemResponse getRandomItem(ReadRandomItem readRandomItem);
+
+    RandomItemResponse getRandomItem(Member member, Long spaceId);
 
     ItemResponse getItem(ReadItem readItem);
     List<ItemResponse> getItemList(ReadItemList readItemList);
