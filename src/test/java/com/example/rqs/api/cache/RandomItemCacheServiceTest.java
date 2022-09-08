@@ -26,7 +26,7 @@ public class RandomItemCacheServiceTest {
     @Test
     @DisplayName("스페이스 아이템 캐시가 없는 경우")
     void getRandomItemCacheWhenIsEmpty() throws JsonProcessingException {
-        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache(1L, 1L);
+        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache("1_1");
 
         assertAll(
                 () -> assertThat(optionalRandomItemCache).isEmpty()
@@ -36,14 +36,14 @@ public class RandomItemCacheServiceTest {
     @Test
     @DisplayName("스페이스 아이템 캐시가 있는 경우")
     void getRandomItemCacheWhenIsExist() throws JsonProcessingException {
-        Long spaceId = 1L; Long memberId = 2L; Long spaceItemSize = 5L;
+        Long spaceId = 1L; long memberId = 2L; Long spaceItemSize = 5L;
+        String key = spaceId + "_" + memberId;
 
-        randomItemCacheService.addNewCache(spaceId, memberId, spaceItemSize, 3);
-        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache(spaceId, memberId);
+        randomItemCacheService.addNewCache(key, spaceItemSize, 3);
+        Optional<RandomItemCache> optionalRandomItemCache = randomItemCacheService.getCache(key);
 
         assertThat(optionalRandomItemCache.isEmpty()).isFalse();
         assertAll(
-                () -> assertThat(optionalRandomItemCache.get().getTotalCnt()).isEqualTo(spaceItemSize),
                 () -> assertThat(optionalRandomItemCache.get().getSelectableIndexList().size()).isEqualTo(4L)
         );
     }
