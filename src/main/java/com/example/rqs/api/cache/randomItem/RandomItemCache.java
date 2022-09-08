@@ -11,7 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class RandomItemCache {
 
-    private Long totalCnt;
-
     private List<Long> selectableIndexList;
 }

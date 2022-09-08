@@ -83,29 +83,24 @@ public class ItemController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) throws JsonProcessingException {
-        Optional<RandomItemCache> randomItemCache = randomItemCacheService.getCache(
-                spaceId,
-                memberDetails.getMember().getMemberId());
+        Optional<RandomItemCache> randomItemCache = randomItemCacheService
+                .getCache(spaceId + "_" + memberDetails.getMember().getMemberId());
+        boolean invalidCache = randomItemCache.isEmpty() || randomItemCache.get().getSelectableIndexList().size() == 0;
 
         RandomItemResponse randomItemResponse;
-        if (randomItemCache.isEmpty() || randomItemCache.get().getSelectableIndexList().size() == 0) {
+        if (invalidCache) {
             randomItemResponse = itemService.getRandomItem(memberDetails.getMember(), spaceId);
             randomItemCacheService.addNewCache(
-                    spaceId,
-                    memberDetails.getMember().getMemberId(),
+                    spaceId + "_" + memberDetails.getMember().getMemberId(),
                     randomItemResponse.getTotalCnt(),
                     randomItemResponse.getSelectedCacheListIndex().intValue());
         } else {
             RandomItemCache itemCache = randomItemCache.get();
-            randomItemResponse = itemService.getRandomItem(ReadRandomItem.of(
-                    memberDetails.getMember(),
-                    spaceId,
-                    itemCache.getTotalCnt(),
-                    itemCache.getSelectableIndexList()));
+            ReadRandomItem readRandomItem = ReadRandomItem.of(
+                    memberDetails.getMember(), spaceId, itemCache.getSelectableIndexList());
+            randomItemResponse = itemService.getRandomItem(readRandomItem);
             randomItemCacheService.updateCache(
-                    spaceId,
-                    memberDetails.getMember().getMemberId(),
-                    itemCache,
+                    spaceId + "_" + memberDetails.getMember().getMemberId(),
                     randomItemResponse.getSelectedCacheListIndex().intValue());
         }
         return randomItemResponse.getItemResponse();

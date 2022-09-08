@@ -23,30 +23,30 @@ public class RandomItemCacheService {
         this.redisDao = redisDao;
     }
 
-    private void addCache(Long spaceId, Long memberId, RandomItemCache randomItemCache) throws JsonProcessingException {
+    private void addCache(String key, RandomItemCache randomItemCache) throws JsonProcessingException {
         String objectAsString = objectMapper.writeValueAsString(randomItemCache);
-        String key = spaceId + "_" + memberId;
         redisDao.setValues(key, objectAsString, Duration.ofMinutes(5));
     }
 
-    public void addNewCache(Long spaceId, Long memberId, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
+    public void addNewCache(String key, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
         List<Long> itemIndexList = new ArrayList<>(spaceItemSize.intValue());
         for (long i = 0L; i < spaceItemSize; i++) itemIndexList.add(i);
-        RandomItemCache randomItemCache = new RandomItemCache(spaceItemSize, itemIndexList);
+        RandomItemCache randomItemCache = new RandomItemCache(itemIndexList);
         randomItemCache.getSelectableIndexList().remove(selectedCacheIndex);
-        this.addCache(spaceId, memberId, randomItemCache);
+        this.addCache(key, randomItemCache);
     }
 
-    public Optional<RandomItemCache> getCache(Long spaceId, Long memberId) throws JsonProcessingException {
-        String key = spaceId + "_" + memberId;
+    public Optional<RandomItemCache> getCache(String key) throws JsonProcessingException {
         String stringObject = redisDao.getValues(key);
         return Objects.isNull(stringObject)
                 ? Optional.empty()
                 : Optional.of(objectMapper.readValue(stringObject, RandomItemCache.class));
     }
 
-    public void updateCache(Long spaceId, Long memberId, RandomItemCache randomItemCache, int selectedCacheIndex) throws JsonProcessingException {
-        randomItemCache.getSelectableIndexList().remove(selectedCacheIndex);
-        this.addCache(spaceId, memberId, randomItemCache);
+    public void updateCache(String key, int selectedCacheIndex) throws JsonProcessingException {
+        String values = redisDao.getValues(key);
+        RandomItemCache itemCache = objectMapper.readValue(values, RandomItemCache.class);
+        itemCache.getSelectableIndexList().remove(selectedCacheIndex);
+        this.addCache(key, itemCache);
     }
 }
