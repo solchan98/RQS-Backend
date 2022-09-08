@@ -3,6 +3,7 @@ package com.example.rqs.api.cache.randomItem;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
@@ -18,6 +19,9 @@ public class RandomItemCacheService {
 
     private final RedisDao redisDao;
 
+    @Value("${spring.item.live}")
+    private Long itemCacheTime;
+
     public RandomItemCacheService(ObjectMapper objectMapper, RedisDao redisDao) {
         this.objectMapper = objectMapper;
         this.redisDao = redisDao;
@@ -25,7 +29,7 @@ public class RandomItemCacheService {
 
     private void addCache(String key, RandomItemCache randomItemCache) throws JsonProcessingException {
         String objectAsString = objectMapper.writeValueAsString(randomItemCache);
-        redisDao.setValues(key, objectAsString, Duration.ofMinutes(5));
+        redisDao.setValues(key, objectAsString, Duration.ofMinutes(itemCacheTime));
     }
 
     public void addNewCache(String key, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
