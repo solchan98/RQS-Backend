@@ -47,4 +47,30 @@ public class RandomItemCacheServiceTest {
                 () -> assertThat(optionalRandomItemCache.get().getSelectableIndexList().size()).isEqualTo(4L)
         );
     }
+
+    @Test
+    @DisplayName("(존재할 때,) 스페이스 아이템 존재유무 조회 테스트")
+    void existRandomItemCacheByKeyPatternWhenNotExist() throws JsonProcessingException {
+        Long spaceId = 1L;
+        String key = "1_1";
+        Long spaceItemSize = 4L;
+        randomItemCacheService.addNewCache(key, spaceItemSize, 3);
+
+        boolean exist = randomItemCacheService.existCacheByKeyPattern(spaceId + "_*");
+
+        assertThat(exist).isTrue();
+    }
+
+    @Test
+    @DisplayName("(존재하지 않을 ,) 스페이스 아이템 존재유무 조회 테스트")
+    void existRandomItemCacheByKeyPatternWhenExist() throws JsonProcessingException {
+        Long spaceId = 2L;
+        String key = "1_1";
+        Long spaceItemSize = 4L;
+        randomItemCacheService.addNewCache(key, spaceItemSize, 3);
+
+        boolean exist = randomItemCacheService.existCacheByKeyPattern(spaceId + "_*");
+
+        assertThat(exist).isFalse();
+    }
 }
