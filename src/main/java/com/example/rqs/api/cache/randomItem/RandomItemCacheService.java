@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class RandomItemCacheService {
@@ -52,5 +49,10 @@ public class RandomItemCacheService {
         RandomItemCache itemCache = objectMapper.readValue(values, RandomItemCache.class);
         itemCache.getSelectableIndexList().remove(selectedCacheIndex);
         this.addCache(key, itemCache);
+    }
+
+    public boolean existCacheByKeyPattern(String keyPattern) {
+        Set<String> keySet = redisDao.getKeys(keyPattern);
+        return keySet.size() > 0;
     }
 }
