@@ -2,6 +2,7 @@ package com.example.rqs.core.redis;
 
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.redis.RedisConfig;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,12 @@ public class RedisDaoTest {
 
     @Autowired
     private RedisDao redisDao;
+
+    @AfterEach
+    void clearCache() {
+        Set<String> keySet = redisDao.getKeys("*");
+        keySet.forEach(redisDao::deleteValues);
+    }
 
     @Test
     @DisplayName("Redis 값 저장 및 조회 테스트")

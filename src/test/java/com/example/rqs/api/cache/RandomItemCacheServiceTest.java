@@ -6,12 +6,12 @@ import com.example.rqs.core.common.redis.RedisConfig;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.Optional;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,6 +22,15 @@ public class RandomItemCacheServiceTest {
 
     @Autowired
     private RandomItemCacheService randomItemCacheService;
+
+    @Autowired
+    private RedisDao redisDao;
+
+    @AfterEach
+    void clearCache() {
+        Set<String> keySet = redisDao.getKeys("*");
+        keySet.forEach(redisDao::deleteValues);
+    }
 
     @Test
     @DisplayName("스페이스 아이템 캐시가 없는 경우")
