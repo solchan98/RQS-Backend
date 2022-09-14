@@ -148,6 +148,15 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.delete(item);
     }
 
+    @Override
+    public int getItemIndex(Long spaceId, Long itemId) {
+        List<Long> itemIdList = itemRepository
+                .getItemIdList(spaceId);
+        int index = itemIdList.indexOf(itemId);
+        if (index == -1) throw new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE);
+        return index;
+    }
+
     private boolean isItemCreator(Member member, Item item) {
         SpaceMember itemCreator = spaceMemberRepository
                 .getSpaceMember(member.getMemberId(), item.getSpace().getSpaceId())

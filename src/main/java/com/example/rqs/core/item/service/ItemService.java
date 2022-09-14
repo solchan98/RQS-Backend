@@ -19,4 +19,6 @@ public interface ItemService {
     ItemResponse updateItem(UpdateItem updateItem);
 
     void deleteItem(DeleteItem deleteItem);
+
+    int getItemIndex(Long spaceId, Long itemId);
 }
