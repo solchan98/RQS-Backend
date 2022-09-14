@@ -3,7 +3,6 @@ package com.example.rqs.api.item;
 import com.example.rqs.api.cache.randomItem.RandomItemCache;
 import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
 import com.example.rqs.api.jwt.MemberDetails;
-import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.item.service.ItemService;
 import com.example.rqs.core.item.service.dtos.*;
 
@@ -126,9 +125,11 @@ public class ItemController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
             @RequestParam("itemId") Long itemId
-    ) {
-        boolean exist = randomItemCacheService.existCacheByKeyPattern(spaceId + "_*");
-        if (exist) throw new BadRequestException("현재 아이템을 삭제할 수 없습니다. 5분 뒤에 다시 시도해보세요.");
+    ) throws JsonProcessingException {
+        int itemIndex = itemService.getItemIndex(spaceId, itemId);
+        randomItemCacheService.deleteIndexInCache(
+                spaceId,
+                itemIndex);
         DeleteItem deleteItem = DeleteItem.of(memberDetails.getMember(), itemId);
         itemService.deleteItem(deleteItem);
         return DeleteResponse.of(itemId, true);
