@@ -123,13 +123,12 @@ public class ItemController {
     @DeleteMapping("")
     public DeleteResponse deleteItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("spaceId") Long spaceId,
             @RequestParam("itemId") Long itemId
     ) throws JsonProcessingException {
-        int itemIndex = itemService.getItemIndex(spaceId, itemId);
+        DeleteItemCacheData deleteItemCacheData = itemService.getDeleteItemCacheData(itemId);
         randomItemCacheService.deleteIndexInCache(
-                spaceId,
-                itemIndex);
+                deleteItemCacheData.getSpaceId(),
+                deleteItemCacheData.getItemIndex());
         DeleteItem deleteItem = DeleteItem.of(memberDetails.getMember(), itemId);
         itemService.deleteItem(deleteItem);
         return DeleteResponse.of(itemId, true);
