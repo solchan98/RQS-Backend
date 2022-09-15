@@ -64,6 +64,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
         return queryFactory
                 .select(item.itemId)
                 .from(item)
+                .where(item.space.spaceId.eq(spaceId))
                 .fetch();
     }
 
