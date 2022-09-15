@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 public class RandomItemCacheService {
@@ -29,7 +26,7 @@ public class RandomItemCacheService {
 
     private void addCache(String key, RandomItemCache randomItemCache) throws JsonProcessingException {
         String objectAsString = objectMapper.writeValueAsString(randomItemCache);
-        redisDao.setValues(key, objectAsString, Duration.ofMinutes(itemCacheTime));
+        redisDao.setValues(key, objectAsString, Duration.ofMillis(itemCacheTime));
     }
 
     public void addNewCache(String key, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
@@ -52,5 +49,27 @@ public class RandomItemCacheService {
         RandomItemCache itemCache = objectMapper.readValue(values, RandomItemCache.class);
         itemCache.getSelectableIndexList().remove(selectedCacheIndex);
         this.addCache(key, itemCache);
+    }
+
+    public boolean existCacheByKeyPattern(String keyPattern) {
+        Set<String> keySet = redisDao.getKeys(keyPattern);
+        return keySet.size() > 0;
+    }
+
+    public void deleteIndexInCache(Long spaceId, int deleteIdIndexInItemList) throws JsonProcessingException {
+        Set<String> keySet = redisDao.getKeys(spaceId + "_*");
+        for (String key: keySet) {
+            String values = redisDao.getValues(key);
+            RandomItemCache randomItemCache = objectMapper.readValue(values, RandomItemCache.class);
+            List<Long> selectableIndexList = randomItemCache.getSelectableIndexList();
+            int deleteIndex = selectableIndexList.indexOf((long) deleteIdIndexInItemList);
+            if (deleteIndex != -1) selectableIndexList.remove(deleteIndex);
+            for (int index = 0; index < selectableIndexList.size(); index++) {
+                if (selectableIndexList.get(index) > deleteIdIndexInItemList) {
+                    selectableIndexList.set(index, selectableIndexList.get(index) - 1);
+                }
+            }
+            addCache(key, randomItemCache);
+        }
     }
 }

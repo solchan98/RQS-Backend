@@ -148,6 +148,19 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.delete(item);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public DeleteItemCacheData getDeleteItemCacheData(Long itemId) {
+        Item item = itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
+        List<Long> itemIdList = itemRepository
+                .getItemIdList(item.getSpace().getSpaceId());
+        int index = itemIdList.indexOf(itemId);
+        if (index == -1) throw new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE);
+        return DeleteItemCacheData.of(item.getSpace().getSpaceId(), index);
+    }
+
     private boolean isItemCreator(Member member, Item item) {
         SpaceMember itemCreator = spaceMemberRepository
                 .getSpaceMember(member.getMemberId(), item.getSpace().getSpaceId())
