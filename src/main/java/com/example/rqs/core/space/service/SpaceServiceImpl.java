@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SpaceServiceImpl implements SpaceService{
@@ -26,12 +27,12 @@ public class SpaceServiceImpl implements SpaceService{
         Space space = spaceRepository
                 .findById(readSpace.getSpaceId())
                 .orElseThrow(BadRequestException::new);
-        if (!space.isVisibility()) {
-            boolean exist = spaceMemberRepository
-                    .existSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
-            if (!exist) throw new ForbiddenException();
-        }
-        return SpaceResponse.of(space);
+        Optional<SpaceMember> spaceMember = spaceMemberRepository
+                .getSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
+        if (!space.isVisibility() && spaceMember.isEmpty()) throw new ForbiddenException();
+        return spaceMember
+                .map(member -> SpaceResponse.createBySpaceMember(space, member))
+                .orElseGet(() -> SpaceResponse.createByGuest(space));
     }
 
     @Override
@@ -62,7 +63,7 @@ public class SpaceServiceImpl implements SpaceService{
         spaceRepository.save(space);
         SpaceMember spaceMember = SpaceMember.newSpaceAdmin(createSpace.getCreator(), space);
         spaceMemberRepository.save(spaceMember);
-        return SpaceResponse.of(space);
+        return SpaceResponse.createBySpaceMember(space, spaceMember);
     }
 
     @Override
@@ -74,7 +75,7 @@ public class SpaceServiceImpl implements SpaceService{
         boolean updatable = spaceMember.isUpdatable();
         if (!updatable) throw new ForbiddenException();
         Space space = spaceMember.updateSpaceTitle(updateSpace.getTitle());
-        return SpaceResponse.of(space);
+        return SpaceResponse.createBySpaceMember(space, spaceMember);
     }
 
     @Override
