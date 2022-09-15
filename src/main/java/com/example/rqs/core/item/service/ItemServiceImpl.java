@@ -149,12 +149,16 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public int getItemIndex(Long spaceId, Long itemId) {
+    @Transactional(readOnly = true)
+    public DeleteItemCacheData getDeleteItemCacheData(Long itemId) {
+        Item item = itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
         List<Long> itemIdList = itemRepository
-                .getItemIdList(spaceId);
+                .getItemIdList(item.getSpace().getSpaceId());
         int index = itemIdList.indexOf(itemId);
         if (index == -1) throw new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE);
-        return index;
+        return DeleteItemCacheData.of(item.getSpace().getSpaceId(), index);
     }
 
     private boolean isItemCreator(Member member, Item item) {

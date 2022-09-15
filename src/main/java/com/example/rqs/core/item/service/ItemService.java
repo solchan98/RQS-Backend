@@ -20,5 +20,5 @@ public interface ItemService {
 
     void deleteItem(DeleteItem deleteItem);
 
-    int getItemIndex(Long spaceId, Long itemId);
+    DeleteItemCacheData getDeleteItemCacheData(Long itemId);
 }
