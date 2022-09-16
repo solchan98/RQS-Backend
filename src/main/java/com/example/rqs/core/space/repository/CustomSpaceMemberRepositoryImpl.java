@@ -49,6 +49,7 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
                         space.itemList.size().as("itemCount"),
                         space.spaceMemberList.size().as("spaceMemberCount"),
                         spaceMember.role.as("authority"),
+                        spaceMember.joinedAt.as("memberJoinedAt"),
                         space.createdAt,
                         space.updatedAt))
                 .from(spaceMember)
