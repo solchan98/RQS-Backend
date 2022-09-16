@@ -59,7 +59,7 @@ public class SpaceMember {
     }
 
     public boolean isCreatableItem() {
-        return this.role.equals("ADMIN");
+        return this.role.equals("ADMIN") || this.role.equals("MEMBER");
     }
 
     public boolean isUpdatableMemberRole() { return this.role.equals("ADMIN"); }
