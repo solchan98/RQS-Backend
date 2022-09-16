@@ -39,7 +39,7 @@ public class SpaceMemberTest {
         boolean adminCreatableItem = spaceAdmin.isCreatableItem();
 
         assertAll(
-                () -> assertThat(memberCreatableItem).isFalse(),
+                () -> assertThat(memberCreatableItem).isTrue(),
                 () -> assertThat(adminCreatableItem).isTrue()
         );
     }
