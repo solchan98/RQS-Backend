@@ -13,4 +13,6 @@ public interface CustomItemRepository {
     ItemResponse getItem(Long spaceId, int randomIndex);
 
     ItemResponse getItem(Long itemId);
+
+    List<Long> getItemIdList(Long spaceId);
 }

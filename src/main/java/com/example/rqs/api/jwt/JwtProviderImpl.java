@@ -1,6 +1,6 @@
 package com.example.rqs.api.jwt;
 
-import com.example.rqs.api.RedisDao;
+import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.exception.ForbiddenException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

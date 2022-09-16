@@ -1,6 +1,7 @@
 package com.example.rqs.api.item;
 
-import com.example.rqs.api.RedisDao;
+import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
+import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.item.service.ItemService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({ItemController.class, CreateItemValidator.class, UpdateItemValidator.class, JwtProvider.class, RedisDao.class})
+@WebMvcTest({ItemController.class, CreateItemValidator.class, UpdateItemValidator.class, JwtProvider.class, RedisDao.class, RandomItemCacheService.class})
 @DisplayName("아이템 컨트롤러 테스트")
 public class ItemControllerTest {
 

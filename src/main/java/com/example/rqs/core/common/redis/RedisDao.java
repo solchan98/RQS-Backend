@@ -1,10 +1,11 @@
-package com.example.rqs.api;
+package com.example.rqs.core.common.redis;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Set;
 
 @Component
 public class RedisDao {
@@ -28,6 +29,10 @@ public class RedisDao {
     public String getValues(String key) {
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         return values.get(key);
+    }
+
+    public Set<String> getKeys(String pattern) {
+        return redisTemplate.keys(pattern);
     }
 
     public void deleteValues(String key) {

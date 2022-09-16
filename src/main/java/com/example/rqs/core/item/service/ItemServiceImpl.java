@@ -47,23 +47,55 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     @Transactional(readOnly = true)
-    public ItemResponse getRandomItem(Member member, Long spaceId) {
+    public RandomItemResponse getRandomItem(ReadRandomItem readRandomItem) {
+        Space space = spaceRepository
+                .findById(readRandomItem.getSpaceId())
+                .orElseThrow(BadRequestException::new);
+
+        if (!space.isVisibility()) {
+            boolean exist = spaceMemberRepository
+                    .existSpaceMember(readRandomItem.getMember().getMemberId(), readRandomItem.getSpaceId());
+            if (!exist) throw new ForbiddenException();
+        }
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(readRandomItem.getSelectableIndexList().size());
+        Long randomItemIndex = readRandomItem.getSelectableIndexList().get(randomIndex);
+
+        ItemResponse itemResponse = itemRepository.getItem(
+                readRandomItem.getSpaceId(),
+                randomItemIndex.intValue());
+
+        return RandomItemResponse.of(
+                (long) randomIndex,
+                itemResponse);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public RandomItemResponse getRandomItem(Member member, Long spaceId) {
         Space space = spaceRepository
                 .findById(spaceId)
                 .orElseThrow(BadRequestException::new);
-        Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
-        if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
-        Random random = new Random();
-        int randomIndex = random.nextInt(itemCnt.intValue());
+
         if (!space.isVisibility()) {
             boolean exist = spaceMemberRepository
                     .existSpaceMember(member.getMemberId(), spaceId);
             if (!exist) throw new ForbiddenException();
         }
-        return itemRepository.getItem(spaceId, randomIndex);
+
+        Long itemCnt = itemRepository.countBySpaceId(space.getSpaceId());
+        if (itemCnt == 0) throw new BadRequestException(RQSError.SPACE_IS_EMPTY);
+
+        Random random = new Random();
+        int randomIndex = random.nextInt(itemCnt.intValue());
+        ItemResponse itemResponse = itemRepository.getItem(spaceId, randomIndex);
+
+        return RandomItemResponse.of((long) randomIndex, itemResponse, itemCnt);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ItemResponse getItem(ReadItem readItem) {
         Item item = itemRepository
                 .findById(readItem.getItemId())
@@ -114,6 +146,19 @@ public class ItemServiceImpl implements ItemService {
         boolean isCreator = isItemCreator(deleteItem.getMember(), item);
         if (!isCreator) throw new ForbiddenException();
         itemRepository.delete(item);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public DeleteItemCacheData getDeleteItemCacheData(Long itemId) {
+        Item item = itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
+        List<Long> itemIdList = itemRepository
+                .getItemIdList(item.getSpace().getSpaceId());
+        int index = itemIdList.indexOf(itemId);
+        if (index == -1) throw new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE);
+        return DeleteItemCacheData.of(item.getSpace().getSpaceId(), index);
     }
 
     private boolean isItemCreator(Member member, Item item) {

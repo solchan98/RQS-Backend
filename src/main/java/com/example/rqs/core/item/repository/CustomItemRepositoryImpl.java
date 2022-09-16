@@ -59,6 +59,15 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
         return null;
     }
 
+    @Override
+    public List<Long> getItemIdList(Long spaceId) {
+        return queryFactory
+                .select(item.itemId)
+                .from(item)
+                .where(item.space.spaceId.eq(spaceId))
+                .fetch();
+    }
+
     private BooleanExpression lastItemId(Long lastItemId) {
         return Objects.isNull(lastItemId) ? null : item.itemId.lt(lastItemId);
     }
