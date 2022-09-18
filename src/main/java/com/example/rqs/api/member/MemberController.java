@@ -40,7 +40,7 @@ public class MemberController {
     public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
         MemberDto memberDto = memberService.login(loginDto);
         TokenResponse tokenList = jwtProvider.createTokenList(memberDto.getEmail(), memberDto.getNickname(), "USER");
-        LoginResponse loginResponse = LoginResponse.of(memberDto, tokenList);
+        LoginResponse loginResponse = LoginResponse.of(tokenList);
         return ResponseEntity.ok(loginResponse);
     }
 
