@@ -11,4 +11,6 @@ public interface JwtProvider {
     Subject getSubject(String atk) throws JwtException, JsonProcessingException;
 
     InviteSpaceTokenResponse createInviteToken(InviteSpaceSubject inviteSpaceSubject);
+
+    InviteSpaceSubject getInviteSpaceSubject(String itk) throws JsonProcessingException;
 }

@@ -96,6 +96,12 @@ public class JwtProviderImpl implements JwtProvider {
 
     }
 
+    @Override
+    public InviteSpaceSubject getInviteSpaceSubject(String itk) throws JsonProcessingException {
+        String subjectStr = Jwts.parser().setSigningKey(key).parseClaimsJws(itk).getBody().getSubject();
+        return objectMapper.readValue(subjectStr, InviteSpaceSubject.class);
+    }
+
     private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException {
         String subjectStr = objectMapper.writeValueAsString(subject);
         Claims claims = Jwts.claims()
