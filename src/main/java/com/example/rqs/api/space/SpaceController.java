@@ -1,12 +1,10 @@
 package com.example.rqs.api.space;
 
-import com.example.rqs.api.jwt.InviteSpaceSubject;
-import com.example.rqs.api.jwt.InviteSpaceTokenResponse;
-import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.api.jwt.MemberDetails;
+import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +17,12 @@ public class SpaceController {
 
     private final SpaceService spaceService;
     private final JwtProvider jwtProvider;
+    private final JoinSpaceValidator joinSpaceValidator;
 
-    public SpaceController(SpaceService spaceService, JwtProvider jwtProvider) {
+    public SpaceController(SpaceService spaceService, JwtProvider jwtProvider, JoinSpaceValidator joinSpaceValidator) {
         this.spaceService = spaceService;
         this.jwtProvider = jwtProvider;
+        this.joinSpaceValidator = joinSpaceValidator;
     }
 
     @PostMapping("")
@@ -116,6 +116,16 @@ public class SpaceController {
                 memberDetails.getMember().getMemberId(),
                 memberDetails.getMember().getNickname());
         return jwtProvider.createInviteToken(inviteSpaceSubject);
+    }
+
+    @GetMapping("/join")
+    public SpaceMemberResponse joinSpace(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("itk") String itk
+    ) throws JsonProcessingException {
+        joinSpaceValidator.validate(itk);
+        InviteSpaceSubject inviteSpaceSubject = jwtProvider.getInviteSpaceSubject(itk);
+        return spaceService.addNewMember(inviteSpaceSubject.getSpaceId(), memberDetails.getMember());
     }
 
     @DeleteMapping("/spaceMember")
