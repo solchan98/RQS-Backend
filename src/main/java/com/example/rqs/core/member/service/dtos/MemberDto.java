@@ -15,7 +15,7 @@ public class MemberDto {
     private final String role;
 
 
-    private MemberDto(Long memberId, String email, String nickname) {
+    public MemberDto(Long memberId, String email, String nickname) {
         this.memberId = memberId;
         this.email = email;
         this.nickname = nickname;

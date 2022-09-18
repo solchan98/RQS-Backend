@@ -2,6 +2,7 @@ package com.example.rqs.api.jwt;
 
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.exception.ForbiddenException;
+import com.example.rqs.core.member.service.dtos.MemberDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -42,7 +43,7 @@ public class JwtProviderImplTest {
     @Test
     @DisplayName("jwtProvider 토큰 생성 테스트")
     void jwtCreateTokenTest() {
-        TokenResponse tokenList = jwtProviderImpl.createTokenList("sol@sol.com", "sol", "USER");
+        TokenResponse tokenList = jwtProviderImpl.createTokenList(new MemberDto(1L, "sol@sol.com", "sol"));
         assertAll(
                 () -> assertThat(tokenList.getAtk()).isNotEmpty(),
                 () -> assertThat(tokenList.getRtk()).isNotEmpty()
@@ -52,7 +53,7 @@ public class JwtProviderImplTest {
     @Test
     @DisplayName("jwtProvider 토큰 Payload Subject 확인 테스트")
     void jwtPayloadSubjectTest() throws JsonProcessingException {
-        TokenResponse tokenList = jwtProviderImpl.createTokenList("sol@sol.com", "sol", "USER");
+        TokenResponse tokenList = jwtProviderImpl.createTokenList(new MemberDto(1L, "sol@sol.com", "sol"));
         Subject subject = jwtProviderImpl.getSubject(tokenList.getAtk());
         assertAll(
                 () -> assertThat(subject.getEmail()).isEqualTo("sol@sol.com"),
@@ -68,7 +69,7 @@ public class JwtProviderImplTest {
 
         ForbiddenException exception = assertThrows(
                 ForbiddenException.class,
-                () -> jwtProviderImpl.reissueAtk("sol@sol.com", "sol", "USER"));
+                () -> jwtProviderImpl.reissueAtk(new MemberDto(1L, "sol@sol.com", "sol")));
 
         assertAll(
                 () -> assertEquals("인증 정보가 만료되었습니다.", exception.getMessage())
