@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.service;
 
 import com.example.rqs.core.common.exception.*;
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
@@ -94,8 +95,13 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    public void addNewMember() {
-
+    @Transactional
+    public SpaceMemberResponse addNewMember(Long spaceId, Member member) {
+        Space space = spaceRepository.findById(spaceId)
+                .orElseThrow(() -> new BadRequestException(RQSError.SPACE_IS_NOT_EXIST));
+        SpaceMember spaceMember = SpaceMember.newSpaceAdmin(member, space);
+        spaceMemberRepository.save(spaceMember);
+        return SpaceMemberResponse.of(spaceMember);
     }
 
     @Override
