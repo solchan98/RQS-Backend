@@ -37,11 +37,10 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginDto loginDto) {
         MemberDto memberDto = memberService.login(loginDto);
         TokenResponse tokenList = jwtProvider.createTokenList(memberDto.getEmail(), memberDto.getNickname(), "USER");
-        LoginResponse loginResponse = LoginResponse.of(tokenList);
-        return ResponseEntity.ok(loginResponse);
+        return ResponseEntity.ok(tokenList);
     }
 
     @GetMapping("/reissue")
