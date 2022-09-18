@@ -1,5 +1,8 @@
 package com.example.rqs.api.space;
 
+import com.example.rqs.api.jwt.InviteSpaceSubject;
+import com.example.rqs.api.jwt.InviteSpaceTokenResponse;
+import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.space.service.SpaceService;
@@ -15,9 +18,11 @@ import java.util.List;
 public class SpaceController {
 
     private final SpaceService spaceService;
+    private final JwtProvider jwtProvider;
 
-    public SpaceController(SpaceService spaceService) {
+    public SpaceController(SpaceService spaceService, JwtProvider jwtProvider) {
         this.spaceService = spaceService;
+        this.jwtProvider = jwtProvider;
     }
 
     @PostMapping("")
@@ -95,6 +100,22 @@ public class SpaceController {
         return spaceService.getSpaceMemberList(
                 memberDetails.getMember().getMemberId(),
                 spaceId);
+    }
+
+    @GetMapping("/invite")
+    public InviteSpaceTokenResponse createInviteSpaceLink(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        spaceService.checkIsCreatableInviteLink(memberDetails.getMember().getMemberId(), spaceId);
+        ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), spaceId);
+        SpaceResponse space = spaceService.getSpace(readSpace);
+        InviteSpaceSubject inviteSpaceSubject = InviteSpaceSubject.of(
+                spaceId,
+                space.getTitle(),
+                memberDetails.getMember().getMemberId(),
+                memberDetails.getMember().getNickname());
+        return jwtProvider.createInviteToken(inviteSpaceSubject);
     }
 
     @DeleteMapping("/spaceMember")
