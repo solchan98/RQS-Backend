@@ -67,6 +67,16 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public void checkIsCreatableInviteLink(Long spaceId, Long memberId) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(memberId, spaceId)
+                .orElseThrow(ForbiddenException::new);
+        boolean updatableMemberRole = spaceMember.isUpdatableMemberRole();
+        if (!updatableMemberRole) throw new ForbiddenException();
+    }
+
+    @Override
     @Transactional
     public SpaceResponse updateTitle(UpdateSpace updateSpace) {
         SpaceMember spaceMember = spaceMemberRepository

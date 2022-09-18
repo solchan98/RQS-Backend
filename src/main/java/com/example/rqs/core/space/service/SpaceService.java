@@ -13,6 +13,8 @@ public interface SpaceService {
 
     SpaceResponse createSpace(CreateSpace createSpace);
 
+    void checkIsCreatableInviteLink(Long spaceId, Long memberId);
+
     SpaceResponse updateTitle(UpdateSpace updateSpace);
 
     void changeVisibility();
