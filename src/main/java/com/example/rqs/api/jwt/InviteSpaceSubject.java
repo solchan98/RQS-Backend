@@ -1,17 +1,20 @@
 package com.example.rqs.api.jwt;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class InviteSpaceSubject {
 
-    private final Long spaceId;
+    private Long spaceId;
 
-    private final String spaceTitle;
+    private String spaceTitle;
 
-    private final Long inviterId;
+    private Long inviterId;
 
-    private final String inviterNickname;
+    private String inviterNickname;
 
     private InviteSpaceSubject(Long spaceId, String spaceTitle, Long inviterId, String inviterNickname) {
         this.spaceId = spaceId;
