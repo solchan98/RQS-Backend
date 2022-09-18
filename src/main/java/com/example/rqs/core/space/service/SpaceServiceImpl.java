@@ -99,7 +99,7 @@ public class SpaceServiceImpl implements SpaceService{
     public SpaceMemberResponse addNewMember(Long spaceId, Member member) {
         Space space = spaceRepository.findById(spaceId)
                 .orElseThrow(() -> new BadRequestException(RQSError.SPACE_IS_NOT_EXIST));
-        SpaceMember spaceMember = SpaceMember.newSpaceAdmin(member, space);
+        SpaceMember spaceMember = SpaceMember.newSpaceMember(member, space);
         spaceMemberRepository.save(spaceMember);
         return SpaceMemberResponse.of(spaceMember);
     }
