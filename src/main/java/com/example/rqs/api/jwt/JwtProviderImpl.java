@@ -2,6 +2,7 @@ package com.example.rqs.api.jwt;
 
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.exception.ForbiddenException;
+import com.example.rqs.core.member.service.dtos.MemberDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
@@ -41,12 +42,16 @@ public class JwtProviderImpl implements JwtProvider {
     }
 
     @Override
-    public TokenResponse createTokenList(String email, String nickname, String role) {
+    public TokenResponse createTokenList(MemberDto memberDto) {
         try {
-            Subject subject = new Subject(email, nickname, role);
+            Subject subject = new Subject(
+                    memberDto.getMemberId(),
+                    memberDto.getEmail(),
+                    memberDto.getNickname(),
+                    memberDto.getRole());
             String atk = this.createToken(subject, atkLive);
             String rtk = this.createToken(subject, rtkLive);
-            redisDao.setValues(email, rtk, Duration.ofMillis(rtkLive));
+            redisDao.setValues(memberDto.getEmail(), rtk, Duration.ofMillis(rtkLive));
             return TokenResponse.of(atk, rtk);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
@@ -54,10 +59,10 @@ public class JwtProviderImpl implements JwtProvider {
     }
 
     @Override
-    public String reissueAtk(String email, String nickname, String role) {
-        String rtkInRedis = redisDao.getValues(email);
+    public String reissueAtk(MemberDto memberDto) {
+        String rtkInRedis = redisDao.getValues(memberDto.getEmail());
         if (Objects.isNull(rtkInRedis)) throw new ForbiddenException("인증 정보가 만료되었습니다.");
-        TokenResponse tokenList = this.createTokenList(email, nickname, role);
+        TokenResponse tokenList = this.createTokenList(memberDto);
         return tokenList.getAtk();
     }
 

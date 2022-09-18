@@ -37,11 +37,10 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginDto loginDto) {
         MemberDto memberDto = memberService.login(loginDto);
-        TokenResponse tokenList = jwtProvider.createTokenList(memberDto.getEmail(), memberDto.getNickname(), "USER");
-        LoginResponse loginResponse = LoginResponse.of(memberDto, tokenList);
-        return ResponseEntity.ok(loginResponse);
+        TokenResponse tokenList = jwtProvider.createTokenList(memberDto);
+        return ResponseEntity.ok(tokenList);
     }
 
     @GetMapping("/reissue")
@@ -49,7 +48,7 @@ public class MemberController {
             @AuthenticationPrincipal MemberDetails memberDetails
     ) {
         MemberDto memberDto = MemberDto.of(memberDetails.getMember());
-        String atk = jwtProvider.reissueAtk(memberDto.getEmail(), memberDto.getNickname(), "USER");
+        String atk = jwtProvider.reissueAtk(memberDto);
         TokenResponse atkResponse = TokenResponse.of(atk, null);
         return ResponseEntity.ok(atkResponse);
     }

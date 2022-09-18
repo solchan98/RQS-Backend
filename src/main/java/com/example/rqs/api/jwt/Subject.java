@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Subject {
 
+    private Long memberId;
+
     private String email;
 
     private String nickname;
