@@ -9,4 +9,8 @@ public interface JwtProvider {
 
     String reissueAtk(MemberDto memberDto);
     Subject getSubject(String atk) throws JwtException, JsonProcessingException;
+
+    InviteSpaceTokenResponse createInviteToken(InviteSpaceSubject inviteSpaceSubject);
+
+    InviteSpaceSubject getInviteSpaceSubject(String itk) throws JsonProcessingException;
 }

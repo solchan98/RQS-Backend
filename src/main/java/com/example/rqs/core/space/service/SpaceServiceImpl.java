@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.service;
 
 import com.example.rqs.core.common.exception.*;
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
@@ -67,6 +68,16 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public void checkIsCreatableInviteLink(Long spaceId, Long memberId) {
+        SpaceMember spaceMember = spaceMemberRepository
+                .getSpaceMember(memberId, spaceId)
+                .orElseThrow(ForbiddenException::new);
+        boolean updatableMemberRole = spaceMember.isUpdatableMemberRole();
+        if (!updatableMemberRole) throw new ForbiddenException();
+    }
+
+    @Override
     @Transactional
     public SpaceResponse updateTitle(UpdateSpace updateSpace) {
         SpaceMember spaceMember = spaceMemberRepository
@@ -84,8 +95,16 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
-    public void addNewMember() {
-
+    @Transactional
+    public SpaceMemberResponse addNewMember(Long spaceId, Member member) {
+        Space space = spaceRepository.findById(spaceId)
+                .orElseThrow(() -> new BadRequestException(RQSError.SPACE_IS_NOT_EXIST));
+        boolean existSpaceMember = spaceMemberRepository
+                .existSpaceMember(member.getMemberId(), spaceId);
+        if (existSpaceMember) throw new BadRequestException(RQSError.SPACE_MEMBER_ALREADY_EXIST);
+        SpaceMember spaceMember = SpaceMember.newSpaceMember(member, space);
+        spaceMemberRepository.save(spaceMember);
+        return SpaceMemberResponse.of(spaceMember);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.rqs.core.space.service;
 
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.service.dtos.*;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public interface SpaceService {
 
     SpaceResponse createSpace(CreateSpace createSpace);
 
+    void checkIsCreatableInviteLink(Long spaceId, Long memberId);
+
     SpaceResponse updateTitle(UpdateSpace updateSpace);
 
     void changeVisibility();
 
-    void addNewMember();
+    SpaceMemberResponse addNewMember(Long spaceId, Member member);
 
     SpaceMemberResponse changeMemberRole(UpdateSpaceMemberRole updateSpaceMemberRole);
 
