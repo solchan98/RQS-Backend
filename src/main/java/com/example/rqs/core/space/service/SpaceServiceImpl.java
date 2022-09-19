@@ -69,7 +69,7 @@ public class SpaceServiceImpl implements SpaceService{
 
     @Override
     @Transactional(readOnly = true)
-    public void checkIsCreatableInviteLink(Long spaceId, Long memberId) {
+    public void checkIsCreatableInviteLink(Long memberId, Long spaceId) {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(memberId, spaceId)
                 .orElseThrow(ForbiddenException::new);
