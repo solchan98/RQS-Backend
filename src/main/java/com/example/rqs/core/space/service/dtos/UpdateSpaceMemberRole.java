@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.service.dtos;
 
 import com.example.rqs.core.member.Member;
+import com.example.rqs.core.space.SpaceRole;
 import lombok.Getter;
 
 @Getter
@@ -12,16 +13,16 @@ public class UpdateSpaceMemberRole {
 
     private final Long changedSpaceMemberId;
 
-    private final String newRole;
+    private final SpaceRole newRole;
 
-    private UpdateSpaceMemberRole(Member admin, Long spaceId, Long changedSpaceMemberId, String newRole) {
+    private UpdateSpaceMemberRole(Member admin, Long spaceId, Long changedSpaceMemberId, SpaceRole newRole) {
         this.admin = admin;
         this.spaceId = spaceId;
         this.changedSpaceMemberId = changedSpaceMemberId;
         this.newRole = newRole;
     }
 
-    public static UpdateSpaceMemberRole of(Member admin, Long spaceId, Long changedSpaceMemberId, String newRole) {
+    public static UpdateSpaceMemberRole of(Member admin, Long spaceId, Long changedSpaceMemberId, SpaceRole newRole) {
         return new UpdateSpaceMemberRole(admin, spaceId, changedSpaceMemberId, newRole);
     }
 }

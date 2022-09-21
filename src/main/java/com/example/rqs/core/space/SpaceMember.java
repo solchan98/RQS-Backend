@@ -29,11 +29,12 @@ public class SpaceMember {
 
     private LocalDateTime joinedAt;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private SpaceRole role;
 
     protected SpaceMember() {}
 
-    private SpaceMember(Member member, Space space, String role) {
+    private SpaceMember(Member member, Space space, SpaceRole role) {
         this.member = member;
         this.space = space;
         space.addMember(this);
@@ -42,15 +43,15 @@ public class SpaceMember {
     }
 
     public static SpaceMember newSpaceAdmin(Member member, Space space) {
-        return new SpaceMember(member, space, "ADMIN");
+        return new SpaceMember(member, space, SpaceRole.ADMIN);
     }
 
     public static SpaceMember newSpaceMember(Member member, Space space) {
-        return new SpaceMember(member, space, "MEMBER");
+        return new SpaceMember(member, space, SpaceRole.MEMBER);
     }
 
     public boolean isUpdatable() {
-        return this.role.equals("ADMIN");
+        return this.role.goe(SpaceRole.ADMIN);
     }
 
     public Space updateSpaceTitle(String title) {
@@ -59,18 +60,26 @@ public class SpaceMember {
     }
 
     public boolean isCreatableItem() {
-        return this.role.equals("ADMIN") || this.role.equals("MEMBER");
+        return this.role.goe(SpaceRole.MEMBER);
     }
 
-    public boolean isUpdatableMemberRole() { return this.role.equals("ADMIN"); }
-
-    public void updateRole(String newRole) {
-        this.role = newRole;
+    public boolean isUpdatableMemberRole() {
+        return this.role.goe(SpaceRole.ADMIN);
     }
 
-    public boolean isDeletableSpaceMember() { return this.role.equals("ADMIN"); }
+    public void updateRole(SpaceRole role) {
+        this.role = role;
+    }
 
-    public boolean isReadableSpaceMemberList() { return this.role.equals("ADMIN"); }
+    public boolean isDeletableSpaceMember() {
+        return this.role.goe(SpaceRole.ADMIN);
+    }
 
-    public boolean isDeletableSpace() { return this.role.equals("ADMIN"); }
+    public boolean isReadableSpaceMemberList() {
+        return this.role.goe(SpaceRole.ADMIN);
+    }
+
+    public boolean isDeletableSpace() {
+        return this.role.goe(SpaceRole.ADMIN);
+    }
 }
