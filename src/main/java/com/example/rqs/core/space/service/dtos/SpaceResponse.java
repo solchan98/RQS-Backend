@@ -22,7 +22,7 @@ public class SpaceResponse {
 
     private LocalDateTime memberJoinedAt;
 
-    private String authority;
+    private SpaceRole authority;
 
     private LocalDateTime createdAt;
 
@@ -36,7 +36,7 @@ public class SpaceResponse {
                 space.getSpaceMemberList().size(),
                 space.getItemList().size(),
                 null,
-                "GUEST",
+                SpaceRole.GUEST,
                 space.getCreatedAt(),
                 space.getUpdatedAt());
     }

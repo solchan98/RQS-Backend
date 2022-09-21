@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.service.dtos;
 
 import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.space.SpaceRole;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -18,9 +19,9 @@ public class SpaceMemberResponse {
 
     private LocalDateTime joinedAt;
 
-    private String role;
+    private SpaceRole role;
 
-    private SpaceMemberResponse(Long spaceMemberId, LocalDateTime joinedAt, String role, String email, String nickname) {
+    private SpaceMemberResponse(Long spaceMemberId, LocalDateTime joinedAt, SpaceRole role, String email, String nickname) {
         this.spaceMemberId = spaceMemberId;
         this.email = email;
         this.nickname = nickname;

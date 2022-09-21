@@ -2,6 +2,7 @@ package com.example.rqs.api.space;
 
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
+import com.example.rqs.core.space.SpaceRole;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -78,12 +79,12 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
             @RequestParam("spaceMemberId") Long spaceMemberId,
-            @RequestParam("role") String role
+            @RequestParam("role") SpaceRole role
     ) {
-        // TODO: role을 String -> Enum으로 변경하면서 제거됳 검증 조건임. 따라서 이에 대한 테스트 케이스는 추후에 작성 예정
-        if (!(role.equals("ADMIN") || role.equals("MEMBER"))) {
-            throw new BadRequestException("변경하려는 권한이 올바르지 않습니다.");
-        }
+//        // TODO: role을 String -> Enum으로 변경하면서 제거됳 검증 조건임. 따라서 이에 대한 테스트 케이스는 추후에 작성 예정
+//        if (!(role.equals("ADMIN") || role.equals("MEMBER"))) {
+//            throw new BadRequestException("변경하려는 권한이 올바르지 않습니다.");
+//        }
         UpdateSpaceMemberRole updateSpaceMemberRole = UpdateSpaceMemberRole.of(
                 memberDetails.getMember(),
                 spaceId,

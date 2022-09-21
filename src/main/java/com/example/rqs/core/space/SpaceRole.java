@@ -2,7 +2,8 @@ package com.example.rqs.core.space;
 
 public enum SpaceRole {
     ADMIN(999),
-    MEMBER(998);
+    MEMBER(998),
+    GUEST(0);
 
     private final int seq;
 
