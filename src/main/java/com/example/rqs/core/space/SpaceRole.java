@@ -14,7 +14,7 @@ public enum SpaceRole {
         return this.seq > role.seq;
     }
 
-    public boolean gte(SpaceRole role) {
+    public boolean goe(SpaceRole role) {
         return this.seq >= role.seq;
     }
 }
