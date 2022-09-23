@@ -14,5 +14,7 @@ public class Image {
 
     private String name;
 
+    private String url;
+
     private String type; // TODO: Type을 지정한다면 Enum으로 변경
 }
