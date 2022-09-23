@@ -39,4 +39,9 @@ public class Member {
     public static Member newMember(String email, String password, String nickname) {
         return new Member(email, password, nickname);
     }
+
+    public void updateMember(String nickname) {
+        this.nickname = nickname;
+    }
+
 }

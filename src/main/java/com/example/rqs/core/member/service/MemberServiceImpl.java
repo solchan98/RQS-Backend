@@ -6,6 +6,7 @@ import com.example.rqs.core.member.service.dtos.*;
 import com.example.rqs.core.common.exception.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -51,7 +52,16 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public MemberDto updateMember() {
+    @Transactional
+    public MemberDto updateMember(UpdateMemberDto updateMemberDto) {
+        Member member = updateMemberDto.getMember();
+        member.updateMember(updateMemberDto.getNickname());
+        return MemberDto.of(member);
+    }
+
+    @Override
+    @Transactional
+    public MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) {
         return null;
     }
 
