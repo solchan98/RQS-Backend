@@ -1,6 +1,6 @@
 package com.example.rqs.core.member;
 
-import com.example.rqs.core.Image.Image;
+import com.example.rqs.core.image.Image;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -44,4 +44,7 @@ public class Member {
         this.nickname = nickname;
     }
 
+    public void updateAvatar(Image avatar) {
+        this.avatar = avatar;
+    }
 }
