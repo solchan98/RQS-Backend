@@ -1,5 +1,8 @@
 package com.example.rqs.core.member.service;
 
+import com.example.rqs.core.image.Image;
+import com.example.rqs.core.common.cloud.StorageService;
+import com.example.rqs.core.image.ImageRepository;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.member.service.dtos.*;
@@ -8,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -15,10 +19,15 @@ public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final StorageService storageService;
 
-    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
+    private final ImageRepository imageRepository; // NOTE: 이미지 도메인에 대한 기능이 추가된다면 ImageService 생성
+
+    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder, StorageService storageService, ImageRepository imageRepository) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
+        this.storageService = storageService;
+        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -61,8 +70,14 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) {
-        return null;
+    public MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException {
+        Member member = updateAvatarDto.getMember();
+        String path = "avatar/" + member.getEmail();
+        String url = storageService.upload(updateAvatarDto.getImage(), path);
+        Image avatar = Image.of(updateAvatarDto.getImage().getOriginalFilename(), member.getEmail(), url);
+        avatar = imageRepository.save(avatar);
+        member.updateAvatar(avatar);
+        return MemberDto.of(member);
     }
 
     @Override

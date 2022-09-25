@@ -4,6 +4,7 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.service.dtos.*;
 import com.example.rqs.core.common.exception.BadRequestException;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public interface MemberService {
@@ -18,7 +19,7 @@ public interface MemberService {
 
     MemberDto updateMember(UpdateMemberDto updateMemberDto);
 
-    MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto);
+    MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException;
 
     Optional<Member> getMemberByEmail(String email);
 }
