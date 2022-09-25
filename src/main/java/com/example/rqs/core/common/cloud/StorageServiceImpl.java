@@ -33,8 +33,8 @@ public class StorageServiceImpl implements StorageService {
         BlobInfo blobInfo = storage.create(
                 BlobInfo.newBuilder(BUCKET, path + "/" + filename)
                         .build(),
-                filename.getBytes());
-        return BASE_URI + blobInfo.getBucket() + blobInfo.getName();
+                file.getBytes());
+        return BASE_URI + blobInfo.getBucket() + "/" + blobInfo.getName();
     }
 
     private String makeFilename(MultipartFile file) {

@@ -65,6 +65,7 @@ public class MemberServiceImpl implements MemberService{
     public MemberDto updateMember(UpdateMemberDto updateMemberDto) {
         Member member = updateMemberDto.getMember();
         member.updateMember(updateMemberDto.getNickname());
+        memberRepository.save(member);
         return MemberDto.of(member);
     }
 
@@ -77,6 +78,7 @@ public class MemberServiceImpl implements MemberService{
         Image avatar = Image.of(updateAvatarDto.getImage().getOriginalFilename(), member.getEmail(), url);
         avatar = imageRepository.save(avatar);
         member.updateAvatar(avatar);
+        memberRepository.save(member);
         return MemberDto.of(member);
     }
 
