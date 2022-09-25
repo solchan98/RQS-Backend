@@ -78,8 +78,8 @@ public class MemberController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             UpdateAvatar updateAvatar
     ) throws IOException {
-        boolean hasImage = Objects.isNull(updateAvatar.getImage());
-        if (!hasImage) throw new BadRequestException();
+        boolean imageIsNull = Objects.isNull(updateAvatar.getImage());
+        if (imageIsNull) throw new BadRequestException();
         UpdateAvatarDto updateAvatarDto = UpdateAvatarDto.of(memberDetails.getMember(), updateAvatar.getImage());
         return memberService.updateAvatar(updateAvatarDto);
     }
