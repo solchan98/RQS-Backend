@@ -1,5 +1,6 @@
 package com.example.rqs.api.member;
 
+import com.example.rqs.api.config.member.TestMember;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.member.service.MemberService;
@@ -36,6 +37,8 @@ public class MemberControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
 
     @Test
     @WithMockUser
@@ -94,6 +97,29 @@ public class MemberControllerTest {
                 .andExpectAll(
                         status().isBadRequest(),
                         jsonPath("$.message").value("비밀번호는 영문과 특수문자 숫자를 포함하며 8자 이상이어야 합니다.")
+                );
+    }
+
+    @Test
+    @TestMember
+    @DisplayName("아바타 변경 시, 파일이 없는 경우 400")
+    void updateAvatarFailByNullFile() throws Exception {
+        UpdateAvatar updateAvatar = new UpdateAvatar();
+        updateAvatar.setImage(null);
+
+        String req = objectMapper.writeValueAsString(updateAvatar);
+
+        ResultActions perform = mockMvc.perform(
+                patch("/api/v1/member/avatar")
+                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                        .content(req)
+                        .with(csrf())
+        );
+
+        perform
+                .andExpectAll(
+                        status().isBadRequest(),
+                        jsonPath("$.message").value("요청 데이터를 확인하세요.")
                 );
     }
 }
