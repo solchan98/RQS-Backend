@@ -84,7 +84,7 @@ public class MemberController {
         return memberService.updateAvatar(updateAvatarDto);
     }
 
-    @PatchMapping("/member")
+    @PatchMapping("")
     public MemberDto updateMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody UpdateMember updateMember

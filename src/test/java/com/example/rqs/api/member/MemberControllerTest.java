@@ -122,4 +122,26 @@ public class MemberControllerTest {
                         jsonPath("$.message").value("요청 데이터를 확인하세요.")
                 );
     }
+
+    @Test
+    @TestMember
+    @DisplayName("멤버 프로필 변경 시, 닉네임이 비어있는 경우 400")
+    void updateProfileFailByNullNickname() throws Exception {
+        UpdateMember updateMember = new UpdateMember(null);
+
+        String req = objectMapper.writeValueAsString(updateMember);
+
+        ResultActions perform = mockMvc.perform(
+                patch("/api/v1/member")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(req)
+                        .with(csrf())
+        );
+
+        perform
+                .andExpectAll(
+                        status().isBadRequest(),
+                        jsonPath("$.message").value("요청 데이터를 확인하세요.")
+                );
+    }
 }
