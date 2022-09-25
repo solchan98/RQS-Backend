@@ -42,6 +42,9 @@ dependencies {
 	// QueryDSL
 	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
 	implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+
+	// [Cloud Storage]
+	implementation 'com.google.cloud:google-cloud-storage'
 }
 
 tasks.named('test') {
