@@ -3,6 +3,7 @@ package com.example.rqs.api.member;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.api.jwt.TokenResponse;
+import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.member.service.MemberService;
 import com.example.rqs.core.member.service.dtos.*;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/member")
@@ -67,5 +71,27 @@ public class MemberController {
     ) {
         boolean isExist = memberService.existEmail(email);
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
+    }
+
+    @PatchMapping("/avatar")
+    public MemberDto updateAvatar(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            UpdateAvatar updateAvatar
+    ) throws IOException {
+        boolean imageIsNull = Objects.isNull(updateAvatar.getImage());
+        if (imageIsNull) throw new BadRequestException();
+        UpdateAvatarDto updateAvatarDto = UpdateAvatarDto.of(memberDetails.getMember(), updateAvatar.getImage());
+        return memberService.updateAvatar(updateAvatarDto);
+    }
+
+    @PatchMapping("")
+    public MemberDto updateMember(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateMember updateMember
+    ) {
+        boolean nicknameIsNull = Objects.isNull(updateMember.getNickname());
+        if(nicknameIsNull) throw new BadRequestException();
+        UpdateMemberDto updateMemberDto = UpdateMemberDto.of(memberDetails.getMember(), updateMember.getNickname());
+        return memberService.updateMember(updateMemberDto);
     }
 }

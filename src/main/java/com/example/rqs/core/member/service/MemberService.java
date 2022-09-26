@@ -1,11 +1,10 @@
 package com.example.rqs.core.member.service;
 
 import com.example.rqs.core.member.Member;
-import com.example.rqs.core.member.service.dtos.LoginDto;
-import com.example.rqs.core.member.service.dtos.MemberDto;
-import com.example.rqs.core.member.service.dtos.SignUpDto;
+import com.example.rqs.core.member.service.dtos.*;
 import com.example.rqs.core.common.exception.BadRequestException;
 
+import java.io.IOException;
 import java.util.Optional;
 
 public interface MemberService {
@@ -18,7 +17,9 @@ public interface MemberService {
 
     boolean logout(); // 실패 시, 예외 혹은 불리언 아직 미정
 
-    MemberDto updateMember();
+    MemberDto updateMember(UpdateMemberDto updateMemberDto);
+
+    MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException;
 
     Optional<Member> getMemberByEmail(String email);
 }

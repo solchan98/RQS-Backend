@@ -1,5 +1,6 @@
 package com.example.rqs.core.member;
 
+import com.example.rqs.core.image.Image;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -18,6 +19,9 @@ public class Member {
 
     private String nickname;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image avatar;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -34,5 +38,13 @@ public class Member {
 
     public static Member newMember(String email, String password, String nickname) {
         return new Member(email, password, nickname);
+    }
+
+    public void updateMember(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateAvatar(Image avatar) {
+        this.avatar = avatar;
     }
 }

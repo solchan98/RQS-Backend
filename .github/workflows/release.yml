@@ -22,6 +22,8 @@ jobs:
         run: |
           mkdir ./src/main/resources
           echo "${{ secrets.APP_PROPERTIES_RELEASE }}" > ./src/main/resources/application.yml
+          mkdir ./src/main/resources/cloud
+          echo "${{ secrets.APP_CLOUD_BUCKET_KEY_RELEASE }}" > ./src/main/resources/cloud/google_cloud_bucket_key.json
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
@@ -65,7 +67,7 @@ jobs:
         id: 'compute-ssh'
         uses: 'google-github-actions/ssh-compute@v0'
         with:
-          instance_name: 'quiz-box'
+          instance_name: 'quiz-box-release'
           zone: 'asia-northeast3-a'
           ssh_private_key: ${{ secrets.GCP_SSH_PRIVATE_KEY_RELEASE }}
           script: "./deploy-release.sh"
