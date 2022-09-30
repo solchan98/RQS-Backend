@@ -45,19 +45,16 @@ public class JwtProviderImpl implements JwtProvider {
     }
 
     @Override
-    public TokenResponse createTokenList(MemberDto memberDto) {
+    public TokenResponse createTokensByLogin(MemberDto memberDto) {
+        Subject atkSubject = Subject.atk(memberDto);
+        Subject rtkSubject = Subject.rtk(memberDto);
         try {
-            Subject subject = new Subject(
-                    memberDto.getMemberId(),
-                    memberDto.getEmail(),
-                    memberDto.getNickname(),
-                    memberDto.getRole());
-            String atk = this.createToken(subject, atkLive);
-            String rtk = this.createToken(subject, rtkLive);
+            String atk = this.createToken(atkSubject, atkLive);
+            String rtk = this.createToken(rtkSubject, rtkLive);
             redisDao.setValues(memberDto.getEmail(), rtk, Duration.ofMillis(rtkLive));
             return TokenResponse.of(atk, rtk);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e); // Todo: CustomException
         }
     }
 
@@ -65,7 +62,7 @@ public class JwtProviderImpl implements JwtProvider {
     public String reissueAtk(MemberDto memberDto) {
         String rtkInRedis = redisDao.getValues(memberDto.getEmail());
         if (Objects.isNull(rtkInRedis)) throw new ForbiddenException("인증 정보가 만료되었습니다.");
-        TokenResponse tokenList = this.createTokenList(memberDto);
+        TokenResponse tokenList = this.createTokensByLogin(memberDto);
         return tokenList.getAtk();
     }
 
