@@ -61,9 +61,13 @@ public class JwtProviderImpl implements JwtProvider {
     @Override
     public String reissueAtk(MemberDto memberDto) {
         String rtkInRedis = redisDao.getValues(memberDto.getEmail());
+        Subject atkSubject = Subject.atk(memberDto);
         if (Objects.isNull(rtkInRedis)) throw new ForbiddenException("인증 정보가 만료되었습니다.");
-        TokenResponse tokenList = this.createTokensByLogin(memberDto);
-        return tokenList.getAtk();
+        try {
+            return this.createToken(atkSubject, atkLive);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e); // Todo: CustomException
+        }
     }
 
     @Override
