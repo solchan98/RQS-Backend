@@ -53,7 +53,7 @@ public class JwtProviderImplTest {
     @Test
     @DisplayName("jwtProvider 토큰 생성 테스트")
     void jwtCreateTokenTest() {
-        TokenResponse tokenList = jwtProviderImpl.createTokenList(new MemberDto(1L, "sol@sol.com", "sol", ""));
+        TokenResponse tokenList = jwtProviderImpl.createTokensByLogin(new MemberDto(1L, "sol@sol.com", "sol", ""));
         assertAll(
                 () -> assertThat(tokenList.getAtk()).isNotEmpty(),
                 () -> assertThat(tokenList.getRtk()).isNotEmpty()
@@ -63,7 +63,7 @@ public class JwtProviderImplTest {
     @Test
     @DisplayName("jwtProvider 토큰 Payload Subject 확인 테스트")
     void jwtPayloadSubjectTest() throws JsonProcessingException {
-        TokenResponse tokenList = jwtProviderImpl.createTokenList(new MemberDto(1L, "sol@sol.com", "sol", ""));
+        TokenResponse tokenList = jwtProviderImpl.createTokensByLogin(new MemberDto(1L, "sol@sol.com", "sol", ""));
         Subject subject = jwtProviderImpl.getSubject(tokenList.getAtk());
         assertAll(
                 () -> assertThat(subject.getEmail()).isEqualTo("sol@sol.com"),
