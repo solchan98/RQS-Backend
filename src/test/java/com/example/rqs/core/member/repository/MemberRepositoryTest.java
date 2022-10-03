@@ -46,7 +46,7 @@ public class MemberRepositoryTest {
     @DisplayName("findByEmail - 존재하지 않는 경우")
     void findByEmailTestWhenNotExist() {
 
-        Optional<Member> memberByEmail = memberRepository.findByEmail("sol@sol.com");
+        Optional<Member> memberByEmail = memberRepository.findByEmail("sol2@sol.com");
 
         assertThat(memberByEmail).isEmpty();
     }
@@ -65,7 +65,7 @@ public class MemberRepositoryTest {
     @Test
     @DisplayName("existsByEmail - 존재하지 않는 경우")
     void existsByEmailTestWhenNotExist() {
-        boolean none = memberRepository.existsByEmail("none");
+        boolean none = memberRepository.existsByEmail("not@exist.con");
 
         assertThat(none).isFalse();
     }

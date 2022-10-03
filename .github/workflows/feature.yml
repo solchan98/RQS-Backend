@@ -8,17 +8,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      mysql:
-        image: mysql:latest
-        env:
-          MYSQL_ROOT_PASSWORD: 1234
-          MYSQL_DATABASE: rqs
-        ports:
-          - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,6 +28,14 @@ jobs:
 
       - name: Set up Redis With Docker
         run: docker run --name redis -d -p 6379:6379 redis:latest
+
+      - name: Set up MySQL
+        uses: mirromutth/mysql-action@v1.1
+        with:
+          host port: 3306
+          container port: 3306
+          mysql database: 'rqs'
+          mysql root password: '1234'
 
       - name: Test With Gradle
         uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
