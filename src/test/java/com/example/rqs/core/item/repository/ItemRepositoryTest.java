@@ -9,10 +9,7 @@ import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.*;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -67,6 +64,14 @@ public class ItemRepositoryTest {
     void init() {
         setUpSpaceMember();
         createItems(spaceMember);
+    }
+
+    @AfterAll
+    void clear() {
+        itemRepository.deleteAllInBatch();
+        spaceMemberRepository.deleteAllInBatch();
+        spaceRepository.deleteAllInBatch();
+        memberRepository.deleteAllInBatch();
     }
 
 

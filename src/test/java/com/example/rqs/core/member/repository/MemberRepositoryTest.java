@@ -2,8 +2,10 @@ package com.example.rqs.core.member.repository;
 
 import com.example.rqs.core.config.DataTestConfig;
 import com.example.rqs.core.member.Member;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -16,12 +18,18 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DataJpaTest
 @Import(DataTestConfig.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("멤버 레포지토리 테스트")
 public class MemberRepositoryTest {
 
     @Autowired
     private MemberRepository memberRepository;
+
+    @AfterAll
+    void clear() {
+        memberRepository.deleteAllInBatch();
+    }
 
     Member createMember(String email, String password, String nickname) {
         Member member = Member.newMember(email, password, nickname);
@@ -45,7 +53,6 @@ public class MemberRepositoryTest {
     @Test
     @DisplayName("findByEmail - 존재하지 않는 경우")
     void findByEmailTestWhenNotExist() {
-
         Optional<Member> memberByEmail = memberRepository.findByEmail("sol2@sol.com");
 
         assertThat(memberByEmail).isEmpty();
