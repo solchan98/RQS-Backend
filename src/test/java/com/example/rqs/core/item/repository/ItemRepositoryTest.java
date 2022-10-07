@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -74,7 +75,6 @@ public class ItemRepositoryTest {
         memberRepository.deleteAllInBatch();
     }
 
-
     @Test
     @DisplayName("getItemList - 첫 조회 시")
     void getItemListTestWhenFirstRead() {
@@ -115,6 +115,29 @@ public class ItemRepositoryTest {
         Long itemCount = itemRepository.countBySpaceId(999L);
 
         assertThat(itemCount).isEqualTo(0L);
+    }
+
+    @Test
+    @DisplayName("getItem(spaceId, randomIndex) - 정상 조회")
+    void getItemBySpaceIdAndRandomIdxTest() {
+        Space space = spaceMember.getSpace();
+        Long size = itemRepository.countBySpaceId(space.getSpaceId());
+        Random random = new Random();
+        int randomIndex = random.nextInt(size.intValue());
+
+        ItemResponse item = itemRepository.getItem(space.getSpaceId(), randomIndex);
+
+        assertThat(item).isNotNull();
+    }
+
+    @Test
+    @DisplayName("getItemIdList(spaceId) - 정상 조회")
+    void getItemIdListTest() {
+        Space space = spaceMember.getSpace();
+
+        List<Long> itemIdList = itemRepository.getItemIdList(space.getSpaceId());
+
+        assertThat(itemIdList.size()).isEqualTo(30L);
     }
 
 }
