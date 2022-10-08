@@ -55,7 +55,10 @@ public class SpaceMemberRepositoryTest {
     @Test
     @DisplayName("getSpaceMember - 정상 조회")
     void getSpaceMemberTest() {
-        Optional<SpaceMember> spaceMemberOptional = spaceMemberRepository.getSpaceMember(1L, 1L);
+        Member member = spaceMemberList.get(0).getMember();
+        Space space = spaceMemberList.get(0).getSpace();
+        Optional<SpaceMember> spaceMemberOptional = spaceMemberRepository.getSpaceMember(
+                member.getMemberId(), space.getSpaceId());
 
         assertThat(spaceMemberOptional.isPresent()).isTrue();
         SpaceMember spaceMember = spaceMemberOptional.get();
@@ -81,7 +84,9 @@ public class SpaceMemberRepositoryTest {
     @Test
     @DisplayName("getSpaceMemberResponseList - 정상 조회")
     void getSpaceMemberResponseListTest() {
-        List<SpaceMemberResponse> spaceMemberResponseList = spaceMemberRepository.getSpaceMemberResponseList(1L);
+        Space space = spaceMemberList.get(0).getSpace();
+        List<SpaceMemberResponse> spaceMemberResponseList = spaceMemberRepository
+                .getSpaceMemberResponseList(space.getSpaceId());
 
         assertAll(
                 () -> assertThat(spaceMemberResponseList.size()).isEqualTo(2),
