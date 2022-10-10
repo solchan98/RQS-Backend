@@ -32,8 +32,9 @@ public class MemberDto {
                 member.getMemberId(),
                 member.getEmail(),
                 member.getNickname(),
-                Objects.isNull(member.getAvatar()) ? "" : member.getAvatar().getUrl()
-                // TODO: avatar가 없는 경우, 기본 이미지 경로 첨부하도록 수정 예정
+                Objects.isNull(member.getAvatar())
+                        ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                        : member.getAvatar().getUrl()
         );
     }
 }
