@@ -17,6 +17,8 @@ public class Subject {
 
     private String nickname;
 
+    private String avatar;
+
     private String role;
 
     private String type;
@@ -25,6 +27,7 @@ public class Subject {
         return new Subject(
                 memberDto.getMemberId(),
                 memberDto.getEmail(),
+                memberDto.getAvatar(),
                 memberDto.getNickname(),
                 memberDto.getRole(),
                 "ATK");
@@ -34,6 +37,7 @@ public class Subject {
         return new Subject(
                 memberDto.getMemberId(),
                 memberDto.getEmail(),
+                memberDto.getAvatar(),
                 memberDto.getNickname(),
                 memberDto.getRole(),
                 "RTK");
