@@ -67,7 +67,7 @@ jobs:
         id: 'compute-ssh'
         uses: 'google-github-actions/ssh-compute@v0'
         with:
-          instance_name: 'quiz-box-release'
+          instance_name: 'quizbox'
           zone: 'asia-northeast3-a'
           ssh_private_key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
           script: "./deploy.sh"
