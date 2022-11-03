@@ -2,11 +2,13 @@ package com.example.rqs.api.item;
 
 import com.example.rqs.api.cache.randomItem.RandomItemCache;
 import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
+import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.item.service.ItemService;
 import com.example.rqs.core.item.service.dtos.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -104,6 +106,17 @@ public class ItemController {
                     randomItemResponse.getSelectedCacheListIndex().intValue());
         }
         return randomItemResponse.getItemResponse();
+    }
+
+    @GetMapping("/creator")
+    public Message checkIsCreator(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("itemId") Long itemId
+    ) {
+        boolean isItemCreator = itemService.isItemCreator(memberDetails.getMember(), itemId);
+        return isItemCreator
+                ? new Message("200", HttpStatus.OK)
+                : new Message("403", HttpStatus.FORBIDDEN);
     }
 
     @PutMapping("")
