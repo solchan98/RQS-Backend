@@ -78,6 +78,16 @@ public class SpaceServiceImpl implements SpaceService{
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public boolean isSpaceCreator(Member member, Long spaceId) {
+        Optional<SpaceMember> spaceMemberOptional = spaceMemberRepository
+                .getSpaceMember(member.getMemberId(), spaceId);
+        if (spaceMemberOptional.isEmpty()) return false;
+        SpaceMember spaceMember = spaceMemberOptional.get();
+        return spaceMember.isCreator();
+    }
+
+    @Override
     @Transactional
     public SpaceResponse updateTitle(UpdateSpace updateSpace) {
         SpaceMember spaceMember = spaceMemberRepository
