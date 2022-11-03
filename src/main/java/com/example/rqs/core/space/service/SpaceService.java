@@ -16,9 +16,12 @@ public interface SpaceService {
 
     void checkIsCreatableInviteLink(Long spaceId, Long memberId);
 
+    boolean isSpaceCreator(Member member, Long spaceId);
+
     SpaceResponse updateTitle(UpdateSpace updateSpace);
 
     void changeVisibility();
+
 
     SpaceMemberResponse addNewMember(Long spaceId, Member member);
 

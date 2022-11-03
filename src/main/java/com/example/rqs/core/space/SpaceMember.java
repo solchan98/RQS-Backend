@@ -59,6 +59,10 @@ public class SpaceMember {
         return this.space;
     }
 
+    public boolean isCreator() {
+        return this.role.goe(SpaceRole.ADMIN);
+    }
+
     public boolean isCreatableItem() {
         return this.role.goe(SpaceRole.MEMBER);
     }

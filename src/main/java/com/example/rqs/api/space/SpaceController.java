@@ -1,11 +1,13 @@
 package com.example.rqs.api.space;
 
+import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.space.SpaceRole;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -127,6 +129,17 @@ public class SpaceController {
         joinSpaceValidator.validate(itk);
         InviteSpaceSubject inviteSpaceSubject = jwtProvider.getInviteSpaceSubject(itk);
         return spaceService.addNewMember(inviteSpaceSubject.getSpaceId(), memberDetails.getMember());
+    }
+
+    @GetMapping("/creator")
+    public Message isSpaceCreator(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        boolean isCreator = spaceService.isSpaceCreator(memberDetails.getMember(), spaceId);
+        return isCreator
+                ? new Message("200", HttpStatus.OK)
+                : new Message("403", HttpStatus.FORBIDDEN);
     }
 
     @DeleteMapping("/spaceMember")

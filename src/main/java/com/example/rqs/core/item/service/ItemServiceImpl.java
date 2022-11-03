@@ -161,7 +161,16 @@ public class ItemServiceImpl implements ItemService {
         return DeleteItemCacheData.of(item.getSpace().getSpaceId(), index);
     }
 
-    private boolean isItemCreator(Member member, Item item) {
+    @Override
+    public boolean isItemCreator(Member requester, Long itemId) {
+        Item item = itemRepository
+                .findById(itemId)
+                .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
+        return isItemCreator(requester, item);
+    }
+
+    @Override
+    public boolean isItemCreator(Member member, Item item) {
         SpaceMember itemCreator = spaceMemberRepository
                 .getSpaceMember(member.getMemberId(), item.getSpace().getSpaceId())
                 .orElseThrow(BadRequestException::new);
