@@ -47,7 +47,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .groupBy(space.spaceId)
-                .orderBy(spaceMember.count().desc(), space.createdAt.desc())
+                .orderBy(spaceMember.countDistinct().desc(), space.createdAt.desc())
                 .limit(limit)
                 .offset(offset)
                 .fetch();
@@ -68,8 +68,8 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 space.spaceId,
                 space.title,
                 space.visibility,
-                item.count().as("itemCount"),
-                spaceMember.count().as("spaceMemberCount"),
+                item.countDistinct().as("itemCount"),
+                spaceMember.countDistinct().as("spaceMemberCount"),
                 space.createdAt,
                 space.updatedAt
         );
