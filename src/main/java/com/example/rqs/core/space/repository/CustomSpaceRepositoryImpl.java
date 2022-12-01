@@ -34,6 +34,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .orderBy(space.createdAt.desc())
                 .groupBy(space.spaceId)
+                .limit(limit)
                 .fetch();
     }
 
