@@ -74,7 +74,7 @@ public class SpaceRepositoryTest {
     }
 
     @Test
-    @DisplayName("getSpaceList - 특정 기준 페이징")
+    @DisplayName("getSpaceList - 특정 기준 cursor 페이징")
     void getSpaceListWithCursorPagingTest() {
         List<TSpaceResponse> spaceList = spaceRepository.getSpaceList(testCursorLocalDateTime);
 
@@ -84,6 +84,29 @@ public class SpaceRepositoryTest {
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
                 () -> assertThat(spaceList.get(1).getTitle()).isEqualTo("space0"),
                 () -> assertThat(spaceList.get(1).getSpaceMemberCount()).isEqualTo(1L)
+        );
+    }
+
+    @Test
+    @DisplayName("getSpaceListByTrending - 정상 조회")
+    void getSpaceListByTrendingTest() {
+        List<TSpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0);
+
+        assertAll(
+                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(5),
+                () -> assertThat(spaceListByTrending.get(4).getSpaceMemberCount()).isEqualTo(1)
+        );
+    }
+
+    @Test
+    @DisplayName("getSpaceListByTrending - 특정 기준 offset 페이징")
+    void getSpaceListByTrendingWithOffsetPagingTest() {
+        List<TSpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3);
+
+        assertAll(
+                () -> assertThat(spaceListByTrending.size()).isEqualTo(2),
+                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2),
+                () -> assertThat(spaceListByTrending.get(1).getSpaceMemberCount()).isEqualTo(1)
         );
     }
 }

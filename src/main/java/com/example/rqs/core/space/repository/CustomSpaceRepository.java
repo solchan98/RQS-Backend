@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface CustomSpaceRepository {
 
+    long limit = 20;
+
     List<TSpaceResponse> getSpaceList(LocalDateTime lastCreatedAt);
 
     List<TSpaceResponse> getSpaceListByTrending(long offset);
