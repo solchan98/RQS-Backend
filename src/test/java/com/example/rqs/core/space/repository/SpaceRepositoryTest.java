@@ -23,14 +23,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @Import(DataTestConfig.class)
-@DataJpaTest(showSql = false)
+@DataJpaTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("스페이스 레포지토리 테스트")
 public class SpaceRepositoryTest {
-
-    @Autowired
-    private SpaceMemberRepository spaceMemberRepository;
+    
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
@@ -42,21 +40,23 @@ public class SpaceRepositoryTest {
     void init() {
         List<Space> testSpaceList = new ArrayList<>();
         List<Member> testMemberList = new ArrayList<>();
-        List<SpaceMember> testSpaceMemberList = new ArrayList<>();
+
         for (int idx = 0; idx < 5; idx++) {
+            Member member = Member.newMember("member" + idx, "1234", "nickname" + idx);
             Space space = Space.newSpace("space" + idx, true);
+            SpaceMember.newSpaceAdmin(member, space);
             testSpaceList.add(space);
+            testMemberList.add(member);
             if (idx == 2) testCursorLocalDateTime = space.getCreatedAt();
-            for (int jdx = 0; jdx < idx + 1; jdx++) {
-                Member member = Member.newMember("member" + jdx, "1234", "nickname" + jdx);
-                testMemberList.add(member);
-                SpaceMember spaceMember = SpaceMember.newSpaceAdmin(member, space);
-                testSpaceMemberList.add(spaceMember);
-            }
+        }
+
+        for (int idx = 1; idx < testSpaceList.size(); idx++) {
+            Member member = testMemberList.get(0);
+            Space space = testSpaceList.get(idx);
+            SpaceMember.newSpaceMember(member, space);
         }
         memberRepository.saveAll(testMemberList);
         spaceRepository.saveAll(testSpaceList);
-        spaceMemberRepository.saveAll(testSpaceMemberList);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class SpaceRepositoryTest {
         assertAll(
                 () -> assertThat(spaceList.size()).isEqualTo(5),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space4"),
-                () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(5L),
+                () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
                 () -> assertThat(spaceList.get(4).getTitle()).isEqualTo("space0"),
                 () -> assertThat(spaceList.get(4).getSpaceMemberCount()).isEqualTo(1L)
         );
@@ -93,8 +93,8 @@ public class SpaceRepositoryTest {
         List<TSpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0);
 
         assertAll(
-                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(5),
-                () -> assertThat(spaceListByTrending.get(4).getSpaceMemberCount()).isEqualTo(1)
+                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(spaceListByTrending.get(4).getSpaceMemberCount()).isEqualTo(1L)
         );
     }
 
