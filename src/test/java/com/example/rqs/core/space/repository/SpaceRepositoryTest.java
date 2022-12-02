@@ -38,6 +38,7 @@ public class SpaceRepositoryTest {
 
     private LocalDateTime testCursorLocalDateTime; // 3번째 스페이스의 createdAt
     private LocalDateTime testCursorLocalDateTimeTheFirstMember; // 1번째 멤버의 테스트 스페이스 joinedAt
+    private Long firstMemberId;
 
     @BeforeAll
     void init() {
@@ -73,6 +74,7 @@ public class SpaceRepositoryTest {
             }
         }
         memberRepository.saveAll(testMemberList);
+        firstMemberId = testMemberList.get(0).getMemberId();
         spaceRepository.saveAll(testSpaceList);
     }
 
@@ -136,7 +138,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMySpaceList - 정상 조회")
     void getMySpaceListTest() {
-        long firstMemberId = 1L; // 첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
 
         List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, null);
 
@@ -153,7 +155,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMySpaceList - 특정 기준 offset 페이징")
     void getMySpaceListWithOffsetPagingTest() {
-        long firstMemberId = 1L; // 첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
 
         List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
