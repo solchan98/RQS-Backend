@@ -6,6 +6,7 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.space.SpaceRole;
 import com.example.rqs.core.space.service.dtos.TSpaceResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -143,6 +144,7 @@ public class SpaceRepositoryTest {
                 () -> assertThat(mySpaceList.size()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
                 () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(4).getItemCount()).isEqualTo(1L)
         );
@@ -159,8 +161,10 @@ public class SpaceRepositoryTest {
                 () -> assertThat(mySpaceList.size()).isEqualTo(2L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
                 () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(1).getItemCount()).isEqualTo(1L)
+                () -> assertThat(mySpaceList.get(1).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(1).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
 }

@@ -57,15 +57,16 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
     @Override
     public List<TSpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt) {
         List<TSpaceResponse> fetch = queryFactory
-                .select(getSpaceResponseSelect())
+                .select(getMySpaceResponseSelect())
                 .from(space)
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
+                .fetchJoin()
                 .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
                 .where(
                         spaceMember.member.memberId.eq(memberId),
                         joinedAtBefore(lastJoinedAt))
                 .orderBy(space.createdAt.desc())
-                .groupBy(space.spaceId)
+                .groupBy(space.spaceId, spaceMember.role, spaceMember.joinedAt)
                 .limit(limit)
                 .fetch();
 
@@ -106,6 +107,21 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 spaceMember.countDistinct().as("spaceMemberCount"),
                 space.createdAt,
                 space.updatedAt
+        );
+    }
+
+    private QBean<TSpaceResponse> getMySpaceResponseSelect() {
+        return Projections.fields(
+                TSpaceResponse.class,
+                space.spaceId,
+                space.title,
+                space.visibility,
+                item.countDistinct().as("itemCount"),
+                spaceMember.countDistinct().as("spaceMemberCount"),
+                space.createdAt,
+                space.updatedAt,
+                spaceMember.role.as("authority"),
+                spaceMember.joinedAt.as("memberJoinedAt")
         );
     }
 }
