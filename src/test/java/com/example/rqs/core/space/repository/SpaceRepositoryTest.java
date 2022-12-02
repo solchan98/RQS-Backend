@@ -1,6 +1,7 @@
 package com.example.rqs.core.space.repository;
 
 import com.example.rqs.core.config.DataTestConfig;
+import com.example.rqs.core.item.Item;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
@@ -28,19 +29,21 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DisplayName("스페이스 레포지토리 테스트")
 public class SpaceRepositoryTest {
-    
+
     @Autowired
     private MemberRepository memberRepository;
     @Autowired
     private SpaceRepository spaceRepository;
 
     private LocalDateTime testCursorLocalDateTime; // 3번째 스페이스의 createdAt
+    private LocalDateTime testCursorLocalDateTimeTheFirstMember; // 1번째 멤버의 테스트 스페이스 joinedAt
 
     @BeforeAll
     void init() {
         List<Space> testSpaceList = new ArrayList<>();
         List<Member> testMemberList = new ArrayList<>();
 
+        // 초기 스페이스 및 스페이스 멤버 설정
         for (int idx = 0; idx < 5; idx++) {
             Member member = Member.newMember("member" + idx, "1234", "nickname" + idx);
             Space space = Space.newSpace("space" + idx, true);
@@ -50,10 +53,23 @@ public class SpaceRepositoryTest {
             if (idx == 2) testCursorLocalDateTime = space.getCreatedAt();
         }
 
+        // 2 ~ 5번째 스페이스에 1번째 멤버 추가
         for (int idx = 1; idx < testSpaceList.size(); idx++) {
             Member member = testMemberList.get(0);
             Space space = testSpaceList.get(idx);
-            SpaceMember.newSpaceMember(member, space);
+            SpaceMember spaceMember = SpaceMember.newSpaceMember(member, space);
+            if (idx == 2) testCursorLocalDateTimeTheFirstMember = spaceMember.getJoinedAt();
+        }
+
+        // 각 스페이스에 1 * (해당 스페이스 idx + 1) 만큼 퀴즈(아이템 추가
+        for (int idx = 0; idx < testSpaceList.size(); idx++) {
+            Space space = testSpaceList.get(idx);
+            SpaceMember spaceMember = space.getSpaceMemberList().get(0);
+            List<Item> itemList = space.getItemList();
+            for (int jdx = 0; jdx < idx + 1; jdx++) {
+                Item item = Item.newItem(space, spaceMember, "Q" + jdx, "A" + jdx, "");
+                itemList.add(item);
+            }
         }
         memberRepository.saveAll(testMemberList);
         spaceRepository.saveAll(testSpaceList);
@@ -68,8 +84,10 @@ public class SpaceRepositoryTest {
                 () -> assertThat(spaceList.size()).isEqualTo(5),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space4"),
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(5),
                 () -> assertThat(spaceList.get(4).getTitle()).isEqualTo("space0"),
-                () -> assertThat(spaceList.get(4).getSpaceMemberCount()).isEqualTo(1L)
+                () -> assertThat(spaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(spaceList.get(4).getItemCount()).isEqualTo(1L)
         );
     }
 
@@ -82,8 +100,10 @@ public class SpaceRepositoryTest {
                 () -> assertThat(spaceList.size()).isEqualTo(2),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space1"),
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(2),
                 () -> assertThat(spaceList.get(1).getTitle()).isEqualTo("space0"),
-                () -> assertThat(spaceList.get(1).getSpaceMemberCount()).isEqualTo(1L)
+                () -> assertThat(spaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(spaceList.get(1).getItemCount()).isEqualTo(1)
         );
     }
 
@@ -106,7 +126,41 @@ public class SpaceRepositoryTest {
         assertAll(
                 () -> assertThat(spaceListByTrending.size()).isEqualTo(2),
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2),
-                () -> assertThat(spaceListByTrending.get(1).getSpaceMemberCount()).isEqualTo(1)
+                () -> assertThat(spaceListByTrending.get(0).getItemCount()).isEqualTo(2),
+                () -> assertThat(spaceListByTrending.get(1).getSpaceMemberCount()).isEqualTo(1),
+                () -> assertThat(spaceListByTrending.get(1).getItemCount()).isEqualTo(1)
+        );
+    }
+
+    @Test
+    @DisplayName("getMySpaceList - 정상 조회")
+    void getMySpaceListTest() {
+        long firstMemberId = 1L; // 첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+
+        List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, null);
+
+        assertAll(
+                () -> assertThat(mySpaceList.size()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(4).getItemCount()).isEqualTo(1L)
+        );
+    }
+
+    @Test
+    @DisplayName("getMySpaceList - 특정 기준 offset 페이징")
+    void getMySpaceListWithOffsetPagingTest() {
+        long firstMemberId = 1L; // 첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+
+        List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, testCursorLocalDateTimeTheFirstMember);
+
+        assertAll(
+                () -> assertThat(mySpaceList.size()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(1).getItemCount()).isEqualTo(1L)
         );
     }
 }

@@ -56,4 +56,8 @@ public class TSpaceResponse {
                 space.getCreatedAt(),
                 space.getUpdatedAt());
     }
+
+    public void setSpaceMemberCount(Long spaceMemberCount) {
+        this.spaceMemberCount = spaceMemberCount;
+    }
 }

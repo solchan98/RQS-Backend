@@ -9,6 +9,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.example.rqs.core.space.QSpace.space;
 import static com.example.rqs.core.item.QItem.item;
@@ -29,7 +30,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 .from(space)
                 .where(
                         space.visibility.isTrue(),
-                        lastAt(lastCreatedAt))
+                        spaceCreatedAtBefore(lastCreatedAt))
                 .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .orderBy(space.createdAt.desc())
@@ -55,11 +56,44 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
 
     @Override
     public List<TSpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt) {
-        return null;
+        List<TSpaceResponse> fetch = queryFactory
+                .select(getSpaceResponseSelect())
+                .from(space)
+                .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
+                .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
+                .where(
+                        spaceMember.member.memberId.eq(memberId),
+                        joinedAtBefore(lastJoinedAt))
+                .orderBy(space.createdAt.desc())
+                .groupBy(space.spaceId)
+                .limit(limit)
+                .fetch();
+
+        List<Long> spaceIdList = fetch.stream().map(TSpaceResponse::getSpaceId).collect(Collectors.toList());
+        List<Long> spaceMemberCountList = queryFactory
+                .select(spaceMember.count())
+                .from(spaceMember)
+                .where(
+                        spaceMember.space.spaceId.in(spaceIdList)
+                )
+                .groupBy(spaceMember.space.spaceId)
+                .orderBy(spaceMember.space.createdAt.desc())
+                .fetch();
+
+        for (int idx = 0; idx < spaceMemberCountList.size(); idx++) {
+            fetch.get(idx).setSpaceMemberCount(spaceMemberCountList.get(idx));
+        }
+
+        return fetch;
     }
 
-    private BooleanExpression lastAt(LocalDateTime lastAt) {
-        return Objects.isNull(lastAt) ? null : space.createdAt.before(lastAt);
+
+    private BooleanExpression joinedAtBefore(LocalDateTime joinedAt) {
+        return Objects.isNull(joinedAt) ? null : spaceMember.joinedAt.before(joinedAt);
+    }
+
+    private BooleanExpression spaceCreatedAtBefore(LocalDateTime createdAt) {
+        return Objects.isNull(createdAt) ? null : space.createdAt.before(createdAt);
     }
 
     private QBean<TSpaceResponse> getSpaceResponseSelect() {
