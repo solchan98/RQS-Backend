@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @Service
-public class MemberServiceImpl implements MemberService{
+public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -80,6 +80,11 @@ public class MemberServiceImpl implements MemberService{
         member.updateAvatar(avatar);
         memberRepository.save(member);
         return MemberDto.of(member);
+    }
+
+    @Override
+    public Optional<Member> getMemberById(Long memberId) {
+        return memberRepository.findById(memberId);
     }
 
     @Override

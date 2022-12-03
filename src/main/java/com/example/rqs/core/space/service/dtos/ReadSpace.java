@@ -18,4 +18,8 @@ public class ReadSpace {
     public static ReadSpace of(Member member, Long spaceId) {
         return new ReadSpace(member, spaceId);
     }
+
+    public static ReadSpace of(Long spaceId) {
+        return new ReadSpace(null, spaceId);
+    }
 }

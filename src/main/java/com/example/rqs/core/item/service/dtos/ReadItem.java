@@ -18,4 +18,7 @@ public class ReadItem {
     public static ReadItem of(Member member, Long itemId) {
         return new ReadItem(member, itemId);
     }
+    public static ReadItem of(Long itemId) {
+        return new ReadItem(null, itemId);
+    }
 }

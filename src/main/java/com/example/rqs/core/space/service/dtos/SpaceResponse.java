@@ -1,6 +1,8 @@
 package com.example.rqs.core.space.service.dtos;
 
-import com.example.rqs.core.space.*;
+import com.example.rqs.core.space.Space;
+import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.space.SpaceRole;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -8,6 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@ToString
 public class SpaceResponse {
 
     private Long spaceId;
@@ -16,13 +19,13 @@ public class SpaceResponse {
 
     private boolean visibility;
 
-    private Integer spaceMemberCount;
+    private Long spaceMemberCount;
 
-    private Integer itemCount;
+    private Long itemCount;
 
     private LocalDateTime memberJoinedAt;
 
-    private SpaceRole authority;
+    private SpaceRole authority = SpaceRole.GUEST;
 
     private LocalDateTime createdAt;
 
@@ -33,8 +36,8 @@ public class SpaceResponse {
                 space.getSpaceId(),
                 space.getTitle(),
                 space.isVisibility(),
-                space.getSpaceMemberList().size(),
-                space.getItemList().size(),
+                (long) space.getSpaceMemberList().size(),
+                (long) space.getItemList().size(),
                 null,
                 SpaceRole.GUEST,
                 space.getCreatedAt(),
@@ -46,11 +49,21 @@ public class SpaceResponse {
                 space.getSpaceId(),
                 space.getTitle(),
                 space.isVisibility(),
-                space.getSpaceMemberList().size(),
-                space.getItemList().size(),
+                (long) space.getSpaceMemberList().size(),
+                (long) space.getItemList().size(),
                 reader.getJoinedAt(),
                 reader.getRole(),
                 space.getCreatedAt(),
                 space.getUpdatedAt());
+    }
+
+    public void setSpaceMemberCount(Long spaceMemberCount) {
+        this.spaceMemberCount = spaceMemberCount;
+    }
+
+    public void setMemberData(SpaceRole spaceRole, LocalDateTime memberJoinedAt) {
+        this.authority = spaceRole;
+        this.memberJoinedAt = memberJoinedAt;
+
     }
 }

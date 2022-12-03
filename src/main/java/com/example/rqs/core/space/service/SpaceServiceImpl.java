@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
-public class SpaceServiceImpl implements SpaceService{
+public class SpaceServiceImpl implements SpaceService {
 
     private final SpaceRepository spaceRepository;
     private final SpaceMemberRepository spaceMemberRepository;
@@ -25,24 +26,35 @@ public class SpaceServiceImpl implements SpaceService{
     @Override
     @Transactional(readOnly = true)
     public SpaceResponse getSpace(ReadSpace readSpace) {
-        Space space = spaceRepository
-                .findById(readSpace.getSpaceId())
-                .orElseThrow(BadRequestException::new);
-        Optional<SpaceMember> spaceMember = spaceMemberRepository
-                .getSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
-        if (!space.isVisibility() && spaceMember.isEmpty()) throw new ForbiddenException();
-        return spaceMember
-                .map(member -> SpaceResponse.createBySpaceMember(space, member))
-                .orElseGet(() -> SpaceResponse.createByGuest(space));
+        Space space = spaceRepository.findById(readSpace.getSpaceId()).orElseThrow(BadRequestException::new);
+        boolean isGuest = Objects.isNull(readSpace.getMember());
+
+        if (!isGuest) {
+            Optional<SpaceMember> spaceMember = spaceMemberRepository
+                    .getSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
+            if (spaceMember.isPresent()) {
+                return SpaceResponse.createBySpaceMember(space, spaceMember.get());
+            }
+        }
+
+        if (!space.isVisibility()) throw new ForbiddenException();
+        return SpaceResponse.createByGuest(space);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList) {
+        return readSpaceList.getType().equals("TRENDING")
+                ? this.spaceRepository.getSpaceListByTrending(readSpaceList.getOffset())
+                : this.spaceRepository.getSpaceList(readSpaceList.getLastJoinedAt());
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<SpaceResponse> getMySpaceList(ReadSpaceList readSpaceList) {
-        return spaceMemberRepository.getSpaceResponseList(
+        return spaceRepository.getMySpaceList(
                 readSpaceList.getMember().getMemberId(),
-                readSpaceList.getLastJoinedAt(),
-                readSpaceList.getVisibility());
+                readSpaceList.getLastJoinedAt());
     }
 
     @Override

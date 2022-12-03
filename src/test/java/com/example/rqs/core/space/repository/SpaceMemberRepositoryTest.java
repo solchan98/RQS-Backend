@@ -6,7 +6,6 @@ import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.SpaceMember;
 import com.example.rqs.core.space.service.dtos.SpaceMemberResponse;
-import com.example.rqs.core.space.service.dtos.SpaceResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -66,19 +65,6 @@ public class SpaceMemberRepositoryTest {
                 () -> assertThat(spaceMember.getMember().getEmail()).isEqualTo(firstSpaceMemberEmail),
                 () -> assertThat(spaceMember.getMember().getNickname()).isEqualTo("0sol")
         );
-    }
-
-    @Test
-    @DisplayName("getSpaceResponseList(memberId, lastJoinedAt, isVisibility) - 정상 조회")
-    void getSpaceResponseListTestWithMemberIdAndLastJoinedAtAndIsVisibility() {
-        Member member = spaceMemberList.get(0).getMember();
-
-        List<SpaceResponse> spaceResponseList = spaceMemberRepository.getSpaceResponseList(
-                member.getMemberId(),
-                null,
-                false);
-
-        assertThat(spaceResponseList.size()).isEqualTo(1);
     }
 
     @Test

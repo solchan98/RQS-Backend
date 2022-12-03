@@ -2,6 +2,7 @@ package com.example.rqs.api.item;
 
 import com.example.rqs.api.cache.randomItem.RandomItemCache;
 import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
+import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.item.service.ItemService;
@@ -15,17 +16,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/item")
+@RequestMapping("/api/v1")
 public class ItemController {
+
+    private static final String AUTH = "/my";
+    private static final String DOMAIN = "/item";
 
     private final ItemService itemService;
     private final CreateItemValidator createItemValidator;
     private final UpdateItemValidator updateItemValidator;
     private final RandomItemCacheService randomItemCacheService;
+    private final CommonAPIAuthChecker commonAPIAuthChecker;
 
     @InitBinder("createItemDto")
     public void initCreateItemBinder(WebDataBinder webDataBinder) {
@@ -37,14 +44,15 @@ public class ItemController {
         webDataBinder.addValidators(updateItemValidator);
     }
 
-    public ItemController(ItemService itemService, CreateItemValidator createItemValidator, UpdateItemValidator updateItemValidator, RandomItemCacheService randomItemCacheService) {
+    public ItemController(ItemService itemService, CreateItemValidator createItemValidator, UpdateItemValidator updateItemValidator, RandomItemCacheService randomItemCacheService, CommonAPIAuthChecker commonAPIAuthChecker) {
         this.itemService = itemService;
         this.createItemValidator = createItemValidator;
         this.updateItemValidator = updateItemValidator;
         this.randomItemCacheService = randomItemCacheService;
+        this.commonAPIAuthChecker = commonAPIAuthChecker;
     }
 
-    @PostMapping("")
+    @PostMapping(AUTH + DOMAIN)
     public ItemResponse createNewItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @Validated @RequestBody CreateItemDto createItemDto
@@ -58,29 +66,30 @@ public class ItemController {
         return itemService.createNewItem(createItem);
     }
 
-    @GetMapping("")
+    @GetMapping(DOMAIN)
     public ItemResponse getItem(
-            @AuthenticationPrincipal MemberDetails memberDetails,
+            HttpServletRequest request,
             @RequestParam("itemId") Long itemId
     ) {
-        ReadItem readItem = ReadItem.of(memberDetails.getMember(), itemId);
-        return itemService.getItem(readItem);
+        MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
+        return Objects.nonNull(memberDetails)
+                ? itemService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
+                : itemService.getItem(ReadItem.of(itemId));
     }
 
-    @GetMapping("/all")
+    @GetMapping(DOMAIN + "/all")
     public List<ItemResponse> getItemList(
-            @AuthenticationPrincipal MemberDetails memberDetails,
+            HttpServletRequest request,
             @RequestParam("spaceId") Long spaceId,
             @Nullable @RequestParam("lastItemId") Long lastItemId
     ) {
-        ReadItemList readItemList = ReadItemList.of(
-                memberDetails.getMember(),
-                lastItemId,
-                spaceId);
-        return itemService.getItemList(readItemList);
+        MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
+        return Objects.nonNull(memberDetails)
+                ? itemService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
+                : itemService.getItemList(ReadItemList.of(lastItemId, spaceId));
     }
 
-    @GetMapping("/random")
+    @GetMapping(AUTH + DOMAIN + "/random")
     public ItemResponse getRandomItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
@@ -108,7 +117,7 @@ public class ItemController {
         return randomItemResponse.getItemResponse();
     }
 
-    @GetMapping("/creator")
+    @GetMapping(AUTH + DOMAIN + "/creator")
     public Message checkIsCreator(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("itemId") Long itemId
@@ -119,7 +128,7 @@ public class ItemController {
                 : new Message("403", HttpStatus.FORBIDDEN);
     }
 
-    @PutMapping("")
+    @PutMapping(AUTH + DOMAIN)
     public ItemResponse updateItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @Validated @RequestBody UpdateItemDto updateItemDto
@@ -133,7 +142,7 @@ public class ItemController {
         return itemService.updateItem(updateItem);
     }
 
-    @DeleteMapping("")
+    @DeleteMapping(AUTH + DOMAIN)
     public DeleteResponse deleteItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("itemId") Long itemId

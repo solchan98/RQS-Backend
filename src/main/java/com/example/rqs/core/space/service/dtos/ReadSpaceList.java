@@ -13,19 +13,26 @@ public class ReadSpaceList {
 
     private final LocalDateTime lastJoinedAt;
 
-    private final Boolean visibility;
+    private final Long offset;
 
-    private ReadSpaceList(Member member, String lastJoinedAt, Boolean visibility) {
+    private final String type;
+
+    private ReadSpaceList(Member member, String lastJoinedAt, Long offset, String type) {
         this.member = member;
         this.lastJoinedAt = Objects.isNull(lastJoinedAt) ? null : LocalDateTime.parse(lastJoinedAt);
-        this.visibility = visibility;
+        this.offset = offset;
+        this.type = type;
     }
 
-    public static ReadSpaceList of(Member member, String lastJoinedAt, Boolean visibility) {
-        return new ReadSpaceList(member, lastJoinedAt, visibility);
+    public static ReadSpaceList auth(Member member, String lastJoinedAt) {
+        return new ReadSpaceList(member, lastJoinedAt, null, "DEFAULT");
     }
 
-    public static ReadSpaceList of(Member member, Boolean visibility) {
-        return new ReadSpaceList(member, null, visibility);
+    public static ReadSpaceList guest(Long offset) {
+        return new ReadSpaceList(null, null, offset, "TRENDING");
+    }
+
+    public static ReadSpaceList guest(String lastJoinedAt) {
+        return new ReadSpaceList(null, lastJoinedAt, null, "DEFAULT");
     }
 }
