@@ -128,7 +128,7 @@ public class ItemController {
                 : new Message("403", HttpStatus.FORBIDDEN);
     }
 
-    @PutMapping(DOMAIN)
+    @PutMapping(AUTH + DOMAIN)
     public ItemResponse updateItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @Validated @RequestBody UpdateItemDto updateItemDto

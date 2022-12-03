@@ -1,9 +1,11 @@
 package com.example.rqs.api.item;
 
 import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
+import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.item.service.ItemService;
+import com.example.rqs.core.member.service.MemberService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,12 +23,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({ItemController.class, CreateItemValidator.class, UpdateItemValidator.class, JwtProvider.class, RedisDao.class, RandomItemCacheService.class})
+@WebMvcTest({ItemController.class, CreateItemValidator.class, UpdateItemValidator.class, JwtProvider.class, RedisDao.class, RandomItemCacheService.class, CommonAPIAuthChecker.class})
 @DisplayName("아이템 컨트롤러 테스트")
 public class ItemControllerTest {
 
     @MockBean
     private ItemService itemService;
+
+    @MockBean
+    private MemberService memberService;
 
     @MockBean
     private RedisTemplate<String, String> redisTemplate;
@@ -45,7 +50,7 @@ public class ItemControllerTest {
         String req = objectMapper.writeValueAsString(createItemDto);
 
         ResultActions perform = mockMvc.perform(
-                post("/api/v1/item")
+                post("/api/v1/my/item")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
@@ -64,7 +69,7 @@ public class ItemControllerTest {
         String req = objectMapper.writeValueAsString(createItemDto);
 
         ResultActions perform = mockMvc.perform(
-                post("/api/v1/item")
+                post("/api/v1/my/item")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
@@ -82,7 +87,7 @@ public class ItemControllerTest {
         String req = objectMapper.writeValueAsString(createItemDto);
 
         ResultActions perform = mockMvc.perform(
-                put("/api/v1/item")
+                put("/api/v1/my/item")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
@@ -101,7 +106,7 @@ public class ItemControllerTest {
         String req = objectMapper.writeValueAsString(createItemDto);
 
         ResultActions perform = mockMvc.perform(
-                put("/api/v1/item")
+                put("/api/v1/my/item")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
