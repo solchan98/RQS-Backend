@@ -7,7 +7,7 @@ import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.SpaceMember;
 import com.example.rqs.core.space.SpaceRole;
-import com.example.rqs.core.space.service.dtos.TSpaceResponse;
+import com.example.rqs.core.space.service.dtos.SpaceResponse;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,7 +81,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceList - 정상 조회")
     void getSpaceListTest() {
-        List<TSpaceResponse> spaceList = spaceRepository.getSpaceList(null);
+        List<SpaceResponse> spaceList = spaceRepository.getSpaceList(null);
 
         assertAll(
                 () -> assertThat(spaceList.size()).isEqualTo(5),
@@ -97,7 +97,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceList - 특정 기준 cursor 페이징")
     void getSpaceListWithCursorPagingTest() {
-        List<TSpaceResponse> spaceList = spaceRepository.getSpaceList(testCursorLocalDateTime);
+        List<SpaceResponse> spaceList = spaceRepository.getSpaceList(testCursorLocalDateTime);
 
         assertAll(
                 () -> assertThat(spaceList.size()).isEqualTo(2),
@@ -113,7 +113,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceListByTrending - 정상 조회")
     void getSpaceListByTrendingTest() {
-        List<TSpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2L),
@@ -124,7 +124,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceListByTrending - 특정 기준 offset 페이징")
     void getSpaceListByTrendingWithOffsetPagingTest() {
-        List<TSpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.size()).isEqualTo(2),
@@ -140,7 +140,7 @@ public class SpaceRepositoryTest {
     void getMySpaceListTest() {
         // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
 
-        List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(5L),
@@ -157,7 +157,7 @@ public class SpaceRepositoryTest {
     void getMySpaceListWithOffsetPagingTest() {
         // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
 
-        List<TSpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, testCursorLocalDateTimeTheFirstMember);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(2L),

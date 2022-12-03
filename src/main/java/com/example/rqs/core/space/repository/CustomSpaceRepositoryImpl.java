@@ -1,6 +1,6 @@
 package com.example.rqs.core.space.repository;
 
-import com.example.rqs.core.space.service.dtos.TSpaceResponse;
+import com.example.rqs.core.space.service.dtos.SpaceResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -24,7 +24,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
     }
 
     @Override
-    public List<TSpaceResponse> getSpaceList(LocalDateTime lastCreatedAt) {
+    public List<SpaceResponse> getSpaceList(LocalDateTime lastCreatedAt) {
         return queryFactory
                 .select(getSpaceResponseSelect())
                 .from(space)
@@ -40,7 +40,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
     }
 
     @Override
-    public List<TSpaceResponse> getSpaceListByTrending(long offset) {
+    public List<SpaceResponse> getSpaceListByTrending(long offset) {
         return queryFactory
                 .select(getSpaceResponseSelect())
                 .from(space)
@@ -55,8 +55,8 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
     }
 
     @Override
-    public List<TSpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt) {
-        List<TSpaceResponse> fetch = queryFactory
+    public List<SpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt) {
+        List<SpaceResponse> fetch = queryFactory
                 .select(getMySpaceResponseSelect())
                 .from(space)
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
@@ -70,7 +70,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 .limit(limit)
                 .fetch();
 
-        List<Long> spaceIdList = fetch.stream().map(TSpaceResponse::getSpaceId).collect(Collectors.toList());
+        List<Long> spaceIdList = fetch.stream().map(SpaceResponse::getSpaceId).collect(Collectors.toList());
         List<Long> spaceMemberCountList = queryFactory
                 .select(spaceMember.count())
                 .from(spaceMember)
@@ -97,9 +97,9 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
         return Objects.isNull(createdAt) ? null : space.createdAt.before(createdAt);
     }
 
-    private QBean<TSpaceResponse> getSpaceResponseSelect() {
+    private QBean<SpaceResponse> getSpaceResponseSelect() {
         return Projections.fields(
-                TSpaceResponse.class,
+                SpaceResponse.class,
                 space.spaceId,
                 space.title,
                 space.visibility,
@@ -110,9 +110,9 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
         );
     }
 
-    private QBean<TSpaceResponse> getMySpaceResponseSelect() {
+    private QBean<SpaceResponse> getMySpaceResponseSelect() {
         return Projections.fields(
-                TSpaceResponse.class,
+                SpaceResponse.class,
                 space.spaceId,
                 space.title,
                 space.visibility,

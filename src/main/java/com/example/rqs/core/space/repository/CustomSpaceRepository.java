@@ -1,6 +1,6 @@
 package com.example.rqs.core.space.repository;
 
-import com.example.rqs.core.space.service.dtos.TSpaceResponse;
+import com.example.rqs.core.space.service.dtos.SpaceResponse;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,9 +9,9 @@ public interface CustomSpaceRepository {
 
     long limit = 20;
 
-    List<TSpaceResponse> getSpaceList(LocalDateTime lastCreatedAt);
+    List<SpaceResponse> getSpaceList(LocalDateTime lastCreatedAt);
 
-    List<TSpaceResponse> getSpaceListByTrending(long offset);
+    List<SpaceResponse> getSpaceListByTrending(long offset);
 
-    List<TSpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt);
+    List<SpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt);
 }
