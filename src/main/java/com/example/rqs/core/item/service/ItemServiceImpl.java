@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -97,13 +98,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public ItemResponse getItem(ReadItem readItem) {
-        Item item = itemRepository
-                .findById(readItem.getItemId())
-                .orElseThrow(BadRequestException::new);
+        Item item = itemRepository.findById(readItem.getItemId()).orElseThrow(BadRequestException::new);
+        boolean isGuest = Objects.isNull(readItem.getMember());
+        boolean isSpaceMember = !isGuest && spaceMemberRepository.existSpaceMember(readItem.getMember().getMemberId(), item.getSpace().getSpaceId());
         if (!item.getSpace().isVisibility()) {
-            boolean exist = spaceMemberRepository
-                    .existSpaceMember(readItem.getMember().getMemberId(), item.getSpace().getSpaceId());
-            if (!exist) throw new ForbiddenException();
+            if (!isSpaceMember) throw new ForbiddenException();
         }
         return ItemResponse.of(item);
     }
@@ -111,13 +110,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional(readOnly = true)
     public List<ItemResponse> getItemList(ReadItemList readItemList) {
-        Space space = spaceRepository
-                .findById(readItemList.getSpaceId())
-                .orElseThrow(BadRequestException::new);
+        Space space = spaceRepository.findById(readItemList.getSpaceId()).orElseThrow(BadRequestException::new);
+        boolean isGuest = Objects.isNull(readItemList.getMember());
+        boolean isSpaceMember = !isGuest && spaceMemberRepository.existSpaceMember(readItemList.getMember().getMemberId(), readItemList.getSpaceId());
         if (!space.isVisibility()) {
-            boolean exist = spaceMemberRepository
-                    .existSpaceMember(readItemList.getMember().getMemberId(), readItemList.getSpaceId());
-            if (!exist) throw new ForbiddenException();
+            if (!isSpaceMember) throw new ForbiddenException();
         }
         return itemRepository.getItemList(readItemList.getSpaceId(), readItemList.getLastId());
     }
