@@ -113,7 +113,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceListByTrending - 정상 조회")
     void getSpaceListByTrendingTest() {
-        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0L);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2L),
@@ -124,7 +124,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceListByTrending - 특정 기준 offset 페이징")
     void getSpaceListByTrendingWithOffsetPagingTest() {
-        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3L);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.size()).isEqualTo(2),
