@@ -21,5 +21,7 @@ public interface MemberService {
 
     MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException;
 
+    Optional<Member> getMemberById(Long memberId);
+
     Optional<Member> getMemberByEmail(String email);
 }

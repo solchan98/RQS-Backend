@@ -37,32 +37,6 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
         return Optional.ofNullable(res);
     }
 
-//    @Override
-//    public List<SpaceResponse> getSpaceResponseList(Long memberId, LocalDateTime lastJoinedAt, Boolean isVisibility) {
-//        return queryFactory
-//                .select(Projections.fields(
-//                        SpaceResponse.class,
-//                        space.spaceId,
-//                        space.title,
-//                        space.visibility,
-//                        space.itemList.size().as("itemCount"),
-//                        space.spaceMemberList.size().as("spaceMemberCount"),
-//                        spaceMember.role.as("authority"),
-//                        spaceMember.joinedAt.as("memberJoinedAt"),
-//                        space.createdAt,
-//                        space.updatedAt))
-//                .from(spaceMember)
-//                .where(
-//                        spaceMember.member.memberId.eq(memberId),
-//                        lastJoinedAt(lastJoinedAt),
-//                        isVisibility(isVisibility)
-//                )
-//                .leftJoin(spaceMember.space, space)
-//                .limit(20)
-//                .orderBy(spaceMember.joinedAt.desc())
-//                .fetch();
-//    }
-
     @Override
     public List<SpaceMemberResponse> getSpaceMemberResponseList(Long spaceId) {
         return queryFactory

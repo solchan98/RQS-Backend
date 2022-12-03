@@ -11,7 +11,7 @@ public interface CustomSpaceRepository {
 
     List<SpaceResponse> getSpaceList(LocalDateTime lastCreatedAt);
 
-    List<SpaceResponse> getSpaceListByTrending(long offset);
+    List<SpaceResponse> getSpaceListByTrending(Long offset);
 
     List<SpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt);
 }

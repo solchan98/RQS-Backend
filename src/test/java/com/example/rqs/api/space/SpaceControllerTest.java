@@ -1,7 +1,9 @@
 package com.example.rqs.api.space;
 
+import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
+import com.example.rqs.core.member.service.MemberService;
 import com.example.rqs.core.space.service.SpaceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -20,12 +22,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({SpaceController.class, JoinSpaceValidator.class, JwtProvider.class, RedisDao.class})
+@WebMvcTest({SpaceController.class, JoinSpaceValidator.class, JwtProvider.class, CommonAPIAuthChecker.class, RedisDao.class})
 @DisplayName("스페이스 컨트롤러 테스트")
 public class SpaceControllerTest {
 
     @MockBean
     private SpaceService spaceService;
+
+    @MockBean
+    private MemberService memberService;
 
     @MockBean
     private RedisTemplate<String, String> redisTemplate;
@@ -44,7 +49,7 @@ public class SpaceControllerTest {
         String req = objectMapper.writeValueAsString(createSpaceDto);
 
         ResultActions perform = mockMvc.perform(
-                post("/api/v1/space")
+                post("/api/v1/my/space")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
@@ -62,7 +67,7 @@ public class SpaceControllerTest {
         String req = objectMapper.writeValueAsString(updateSpaceDto);
 
         ResultActions perform = mockMvc.perform(
-                patch("/api/v1/space")
+                patch("/api/v1/my/space")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));

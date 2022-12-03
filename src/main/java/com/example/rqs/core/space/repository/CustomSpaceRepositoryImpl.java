@@ -15,7 +15,7 @@ import static com.example.rqs.core.space.QSpace.space;
 import static com.example.rqs.core.item.QItem.item;
 import static com.example.rqs.core.space.QSpaceMember.spaceMember;
 
-public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
+public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -40,7 +40,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
     }
 
     @Override
-    public List<SpaceResponse> getSpaceListByTrending(long offset) {
+    public List<SpaceResponse> getSpaceListByTrending(Long offset) {
         return queryFactory
                 .select(getSpaceResponseSelect())
                 .from(space)
@@ -50,7 +50,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
                 .groupBy(space.spaceId)
                 .orderBy(spaceMember.countDistinct().desc(), space.createdAt.desc())
                 .limit(limit)
-                .offset(offset)
+                .offset(getOffset(offset))
                 .fetch();
     }
 
@@ -91,6 +91,10 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository{
 
     private BooleanExpression joinedAtBefore(LocalDateTime joinedAt) {
         return Objects.isNull(joinedAt) ? null : spaceMember.joinedAt.before(joinedAt);
+    }
+
+    private long getOffset(Long offset) {
+        return Objects.isNull(offset) ? 0L : offset;
     }
 
     private BooleanExpression spaceCreatedAtBefore(LocalDateTime createdAt) {

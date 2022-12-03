@@ -60,4 +60,10 @@ public class SpaceResponse {
     public void setSpaceMemberCount(Long spaceMemberCount) {
         this.spaceMemberCount = spaceMemberCount;
     }
+
+    public void setMemberData(SpaceRole spaceRole, LocalDateTime memberJoinedAt) {
+        this.authority = spaceRole;
+        this.memberJoinedAt = memberJoinedAt;
+
+    }
 }
