@@ -11,28 +11,24 @@ public class ReadSpaceList {
 
     private final Member member;
 
-    private final LocalDateTime lastJoinedAt;
+    private final LocalDateTime lastAt;
 
     private final Long offset;
 
     private final String type;
 
-    private ReadSpaceList(Member member, String lastJoinedAt, Long offset, String type) {
+    private ReadSpaceList(Member member, String lastAt, Long offset, String type) {
         this.member = member;
-        this.lastJoinedAt = Objects.isNull(lastJoinedAt) ? null : LocalDateTime.parse(lastJoinedAt);
+        this.lastAt = Objects.isNull(lastAt) ? null : LocalDateTime.parse(lastAt);
         this.offset = offset;
         this.type = type;
-    }
-
-    public static ReadSpaceList auth(Member member, String lastJoinedAt) {
-        return new ReadSpaceList(member, lastJoinedAt, null, "DEFAULT");
     }
 
     public static ReadSpaceList guest(Long offset) {
         return new ReadSpaceList(null, null, offset, "TRENDING");
     }
 
-    public static ReadSpaceList guest(String lastJoinedAt) {
-        return new ReadSpaceList(null, lastJoinedAt, null, "DEFAULT");
+    public static ReadSpaceList guest(String lastAt) {
+        return new ReadSpaceList(null, lastAt, null, "DEFAULT");
     }
 }

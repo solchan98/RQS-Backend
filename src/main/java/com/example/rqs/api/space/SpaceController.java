@@ -75,9 +75,9 @@ public class SpaceController {
 
     @GetMapping(DOMAIN + "/all")
     public List<SpaceResponse> getAllSpace(
-            @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt
+            @Nullable @RequestParam("lastCreatedAt") String lastCreatedAt
     ) {
-        return this.spaceService.getSpaceList(ReadSpaceList.guest(lastJoinedAt));
+        return this.spaceService.getSpaceList(ReadSpaceList.guest(lastCreatedAt));
     }
 
     @GetMapping(DOMAIN + "/all/trending")

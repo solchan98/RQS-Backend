@@ -46,7 +46,7 @@ public class SpaceServiceImpl implements SpaceService {
     public List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList) {
         return readSpaceList.getType().equals("TRENDING")
                 ? this.spaceRepository.getSpaceListByTrending(readSpaceList.getOffset())
-                : this.spaceRepository.getSpaceList(readSpaceList.getLastJoinedAt());
+                : this.spaceRepository.getSpaceList(readSpaceList.getLastAt());
     }
 
     @Override
