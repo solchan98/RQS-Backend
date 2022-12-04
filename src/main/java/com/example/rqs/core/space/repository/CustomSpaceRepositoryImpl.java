@@ -55,7 +55,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
     }
 
     @Override
-    public List<SpaceResponse> getMySpaceList(Long memberId, LocalDateTime lastJoinedAt) {
+    public List<SpaceResponse> getMemberSpaceList(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt) {
         List<SpaceResponse> fetch = queryFactory
                 .select(getMySpaceResponseSelect())
                 .from(space)
@@ -63,8 +63,9 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
                 .fetchJoin()
                 .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
                 .where(
-                        spaceMember.member.memberId.eq(memberId),
-                        joinedAtBefore(lastJoinedAt))
+                        spaceMember.member.memberId.eq(targetMemberId),
+                        joinedAtBefore(lastJoinedAt),
+                        isVisibilityByMemberAndTargetMember(memberId, targetMemberId))
                 .orderBy(space.createdAt.desc())
                 .groupBy(space.spaceId, spaceMember.role, spaceMember.joinedAt)
                 .limit(limit)
@@ -86,6 +87,10 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
         }
 
         return fetch;
+    }
+
+    private BooleanExpression isVisibilityByMemberAndTargetMember(Long memberId, Long targetMemberId) {
+        return Objects.equals(memberId, targetMemberId) ? null : space.visibility.isTrue();
     }
 
 
