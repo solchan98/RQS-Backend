@@ -57,11 +57,13 @@ public class MemberController {
         return ResponseEntity.ok(atkResponse);
     }
 
-    @GetMapping("")
+    @GetMapping("info")
     public ResponseEntity<MemberDto> getMemberInfo(
-            @AuthenticationPrincipal MemberDetails memberDetails
+            @RequestParam("memberId") Long memberId
     ) {
-        MemberDto memberDto = MemberDto.of(memberDetails.getMember());
+        MemberDto memberDto = MemberDto.of(
+                memberService.getMemberById(memberId)
+                        .orElseThrow(BadRequestException::new));
         return ResponseEntity.ok(memberDto);
     }
 
