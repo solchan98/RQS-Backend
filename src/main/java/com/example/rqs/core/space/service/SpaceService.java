@@ -9,7 +9,8 @@ public interface SpaceService {
 
     SpaceResponse getSpace(ReadSpace readSpace);
     List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList);
-    List<SpaceResponse> getMySpaceList(ReadSpaceList readSpaceList);
+
+    List<SpaceResponse> getMemberSpaceList(ReadMembersSpaceList readMembersSpaceList);
 
     List<SpaceMemberResponse> getSpaceMemberList(Long memberId, Long spaceId);
 

@@ -87,13 +87,17 @@ public class SpaceController {
         return this.spaceService.getSpaceList(ReadSpaceList.guest(offset));
     }
 
-    @GetMapping(AUTH + DOMAIN + "/all")
+    @GetMapping( DOMAIN + "/{targetMemberId}/all")
     public List<SpaceResponse> getAllMySpace(
-            @AuthenticationPrincipal MemberDetails memberDetails,
+            HttpServletRequest request,
+            @PathVariable("targetMemberId") Long targetMemberId,
             @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt
     ) {
-        ReadSpaceList readSpaceList = ReadSpaceList.auth(memberDetails.getMember(), lastJoinedAt);
-        return spaceService.getMySpaceList(readSpaceList);
+        MemberDetails memberDetails = this.commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
+        ReadMembersSpaceList readMembersSpaceList = Objects.nonNull(memberDetails)
+                        ? ReadMembersSpaceList.of(memberDetails.getMember().getMemberId(), targetMemberId, lastJoinedAt)
+                        : ReadMembersSpaceList.of(targetMemberId, lastJoinedAt);
+        return spaceService.getMemberSpaceList(readMembersSpaceList);
     }
 
     @PatchMapping(AUTH + DOMAIN + "/spaceMember/role")

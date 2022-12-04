@@ -37,8 +37,9 @@ public class SpaceRepositoryTest {
     private SpaceRepository spaceRepository;
 
     private LocalDateTime testCursorLocalDateTime; // 3번째 스페이스의 createdAt
-    private LocalDateTime testCursorLocalDateTimeTheFirstMember; // 1번째 멤버의 테스트 스페이스 joinedAt
+    private LocalDateTime testCursorLocalDateTimeTheFirstMember; // 첫번재 멤버가 세번째 스페이스에 참여한 시간
     private Long firstMemberId;
+    private Long secondMemberId;
 
     @BeforeAll
     void init() {
@@ -48,7 +49,7 @@ public class SpaceRepositoryTest {
         // 초기 스페이스 및 스페이스 멤버 설정
         for (int idx = 0; idx < 5; idx++) {
             Member member = Member.newMember("member" + idx, "1234", "nickname" + idx);
-            Space space = Space.newSpace("space" + idx, true);
+            Space space = Space.newSpace("space" + idx, idx % 2 == 0); // idx 홀수 면 비공개, 짝수 면 공개 스페이스
             SpaceMember.newSpaceAdmin(member, space);
             testSpaceList.add(space);
             testMemberList.add(member);
@@ -63,7 +64,7 @@ public class SpaceRepositoryTest {
             if (idx == 2) testCursorLocalDateTimeTheFirstMember = spaceMember.getJoinedAt();
         }
 
-        // 각 스페이스에 1 * (해당 스페이스 idx + 1) 만큼 퀴즈(아이템 추가
+        // 각 스페이스에 1 * (해당 스페이스 idx + 1) 만큼 퀴즈(아이템) 추가
         for (int idx = 0; idx < testSpaceList.size(); idx++) {
             Space space = testSpaceList.get(idx);
             SpaceMember spaceMember = space.getSpaceMemberList().get(0);
@@ -75,6 +76,7 @@ public class SpaceRepositoryTest {
         }
         memberRepository.saveAll(testMemberList);
         firstMemberId = testMemberList.get(0).getMemberId();
+        secondMemberId = testMemberList.get(1).getMemberId();
         spaceRepository.saveAll(testSpaceList);
     }
 
@@ -84,13 +86,13 @@ public class SpaceRepositoryTest {
         List<SpaceResponse> spaceList = spaceRepository.getSpaceList(null);
 
         assertAll(
-                () -> assertThat(spaceList.size()).isEqualTo(5),
+                () -> assertThat(spaceList.size()).isEqualTo(3),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space4"),
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
                 () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(5),
-                () -> assertThat(spaceList.get(4).getTitle()).isEqualTo("space0"),
-                () -> assertThat(spaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(spaceList.get(4).getItemCount()).isEqualTo(1L)
+                () -> assertThat(spaceList.get(2).getTitle()).isEqualTo("space0"),
+                () -> assertThat(spaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(spaceList.get(2).getItemCount()).isEqualTo(1L)
         );
     }
 
@@ -100,13 +102,10 @@ public class SpaceRepositoryTest {
         List<SpaceResponse> spaceList = spaceRepository.getSpaceList(testCursorLocalDateTime);
 
         assertAll(
-                () -> assertThat(spaceList.size()).isEqualTo(2),
-                () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space1"),
-                () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(2),
-                () -> assertThat(spaceList.get(1).getTitle()).isEqualTo("space0"),
-                () -> assertThat(spaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(spaceList.get(1).getItemCount()).isEqualTo(1)
+                () -> assertThat(spaceList.size()).isEqualTo(1),
+                () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space0"),
+                () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(1)
         );
     }
 
@@ -117,30 +116,26 @@ public class SpaceRepositoryTest {
 
         assertAll(
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(spaceListByTrending.get(4).getSpaceMemberCount()).isEqualTo(1L)
+                () -> assertThat(spaceListByTrending.get(2).getSpaceMemberCount()).isEqualTo(1L)
         );
     }
 
     @Test
     @DisplayName("getSpaceListByTrending - 특정 기준 offset 페이징")
     void getSpaceListByTrendingWithOffsetPagingTest() {
-        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(3L);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(2L);
 
         assertAll(
-                () -> assertThat(spaceListByTrending.size()).isEqualTo(2),
-                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2),
-                () -> assertThat(spaceListByTrending.get(0).getItemCount()).isEqualTo(2),
-                () -> assertThat(spaceListByTrending.get(1).getSpaceMemberCount()).isEqualTo(1),
-                () -> assertThat(spaceListByTrending.get(1).getItemCount()).isEqualTo(1)
+                () -> assertThat(spaceListByTrending.size()).isEqualTo(1),
+                () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(1),
+                () -> assertThat(spaceListByTrending.get(0).getItemCount()).isEqualTo(1)
         );
     }
 
     @Test
-    @DisplayName("getMySpaceList - 정상 조회")
+    @DisplayName("getMembersSpaceList - memberId == targetMemberId")
     void getMySpaceListTest() {
-        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
-
-        List<SpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(firstMemberId, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(5L),
@@ -148,16 +143,51 @@ public class SpaceRepositoryTest {
                 () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(4).getItemCount()).isEqualTo(1L)
+                () -> assertThat(mySpaceList.get(4).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(4).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
 
     @Test
-    @DisplayName("getMySpaceList - 특정 기준 offset 페이징")
-    void getMySpaceListWithOffsetPagingTest() {
-        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+    @DisplayName("getMembersSpaceList - 다른 사림이 조회")
+    void getMySpaceListByAnotherTest() {
+        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(secondMemberId, firstMemberId, null);
 
-        List<SpaceResponse> mySpaceList = spaceRepository.getMySpaceList(firstMemberId, testCursorLocalDateTimeTheFirstMember);
+        assertAll(
+                () -> assertThat(mySpaceList.size()).isEqualTo(3L),
+                () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
+                () -> assertThat(mySpaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getAuthority()).isEqualTo(SpaceRole.ADMIN)
+        );
+    }
+
+    @Test
+    @DisplayName("getMembersSpaceList - 게스트가 조회")
+    void getMySpaceListByGuestTest() {
+        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(null, firstMemberId, null);
+
+        assertAll(
+                () -> assertThat(mySpaceList.size()).isEqualTo(3L),
+                () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
+                () -> assertThat(mySpaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getAuthority()).isEqualTo(SpaceRole.ADMIN)
+        );
+    }
+
+    @Test
+    @DisplayName("getMySpaceList - (본인 타켓) 특정 기준 cursor 페이징")
+    void getMySpaceListWithCursorPagingTest() {
+        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+    // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
+
+        List<SpaceResponse> mySpaceList = spaceRepository
+                .getMemberSpaceList(firstMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(2L),
@@ -167,6 +197,22 @@ public class SpaceRepositoryTest {
                 () -> assertThat(mySpaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(1).getItemCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(1).getAuthority()).isEqualTo(SpaceRole.ADMIN)
+        );
+    }
+
+    @Test
+    @DisplayName("getMySpaceList - (다른 사람 타겟) 특정 기준 cursor 페이징")
+    void getMySpaceListWithCursorPagingByAnotherTest() {
+        // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
+        // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
+        List<SpaceResponse> mySpaceList = spaceRepository
+                .getMemberSpaceList(secondMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
+
+        assertAll(
+                () -> assertThat(mySpaceList.size()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
 }

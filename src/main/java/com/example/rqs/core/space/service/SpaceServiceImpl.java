@@ -51,10 +51,11 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<SpaceResponse> getMySpaceList(ReadSpaceList readSpaceList) {
-        return spaceRepository.getMySpaceList(
-                readSpaceList.getMember().getMemberId(),
-                readSpaceList.getLastJoinedAt());
+    public List<SpaceResponse> getMemberSpaceList(ReadMembersSpaceList readMembersSpaceList) {
+        return spaceRepository.getMemberSpaceList(
+                readMembersSpaceList.getMemberId(),
+                readMembersSpaceList.getTargetMemberId(),
+                readMembersSpaceList.getLastJoinedAt());
     }
 
     @Override
