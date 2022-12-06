@@ -73,7 +73,7 @@ public class SpaceServiceImpl implements SpaceService {
     @Override
     @Transactional
     public SpaceResponse createSpace(CreateSpace createSpace) {
-        Space space = Space.newSpace(createSpace.getTitle(), createSpace.isVisibility());
+        Space space = Space.newSpace(createSpace.getTitle(), createSpace.getContent(), createSpace.getUrl(), createSpace.isVisibility());
         spaceRepository.save(space);
         SpaceMember spaceMember = SpaceMember.newSpaceAdmin(createSpace.getCreator(), space);
         spaceMemberRepository.save(spaceMember);

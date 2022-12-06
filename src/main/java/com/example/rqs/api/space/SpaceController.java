@@ -45,6 +45,8 @@ public class SpaceController {
         CreateSpace createSpace = CreateSpace.of(
                 memberDetails.getMember(),
                 createSpaceDto.getTitle(),
+                createSpaceDto.getContent(),
+                createSpaceDto.getUrl(),
                 createSpaceDto.isVisibility());
         return spaceService.createSpace(createSpace);
     }

@@ -17,6 +17,10 @@ public class Space {
 
     private String title;
 
+    private String content;
+
+    private String url;
+
     private boolean visibility;
 
     private LocalDateTime createdAt;
@@ -31,15 +35,26 @@ public class Space {
 
     protected Space(){}
 
-    private Space(String title, boolean visibility) {
+    private Space(String title, String content, String url, boolean visibility) {
         this.title = title;
+        this.content = content;
+        this.url = url;
         this.visibility = visibility;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
+
     public static Space newSpace(String title, boolean visibility) {
-        return new Space(title, visibility);
+        return new Space(title, null, null, visibility);
+    }
+
+    public static Space newSpace(String title, String content, boolean visibility) {
+        return new Space(title, content, null, visibility);
+    }
+
+    public static Space newSpace(String title, String content, String url, boolean visibility) {
+        return new Space(title, content, url, visibility);
     }
 
     public void addMember(SpaceMember spaceMember) {
