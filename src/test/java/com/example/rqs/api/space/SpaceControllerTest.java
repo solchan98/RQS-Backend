@@ -45,7 +45,7 @@ public class SpaceControllerTest {
     @WithMockUser
     @DisplayName("스페이스 생성 시, 타이틀이 비어있는 경우 예외 400")
     void createSpaceFailByEmptyTitle() throws Exception {
-        CreateSpaceDto createSpaceDto = new CreateSpaceDto("", false);
+        CreateSpaceDto createSpaceDto = new CreateSpaceDto("", "", "", false);
         String req = objectMapper.writeValueAsString(createSpaceDto);
 
         ResultActions perform = mockMvc.perform(
