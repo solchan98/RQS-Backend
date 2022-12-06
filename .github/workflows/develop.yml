@@ -23,7 +23,14 @@ jobs:
           mkdir ./src/main/resources
           echo "${{ secrets.APP_PROPERTIES }}" > ./src/main/resources/application.yml
           mkdir ./src/main/resources/cloud
-          echo "${{ secrets.APP_CLOUD_BUCKET }}" > ./src/main/resources/cloud/google_cloud_bucket_key.json
+
+      - name: create-json
+        id: create-json
+        uses: jsdaniell/create-json@v1.2.1
+        with:
+          name: "google_cloud_bucket_key.json"
+          json: ${{ secrets.APP_CLOUD_BUCKET }}
+          dir: 'src/main/resources/cloud'
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
