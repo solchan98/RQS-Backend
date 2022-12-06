@@ -10,15 +10,29 @@ public class CreateSpace {
 
     private final String title;
 
+    private final String content;
+
+    private final String url;
+
     private final boolean visibility;
 
-    private CreateSpace(Member creator, String title, boolean visibility) {
+    private CreateSpace(Member creator, String title, String content, String url, boolean visibility) {
         this.creator = creator;
         this.title = title;
+        this.content = content;
+        this.url = url;
         this.visibility = visibility;
     }
 
     public static CreateSpace of(Member creator, String title, boolean visibility) {
-        return new CreateSpace(creator, title, visibility);
+        return new CreateSpace(creator, title, null, null, visibility);
+    }
+
+    public static CreateSpace of(Member creator, String title,  String content, boolean visibility) {
+        return new CreateSpace(creator, title, content, null, visibility);
+    }
+
+    public static CreateSpace of(Member creator, String title,  String content, String url, boolean visibility) {
+        return new CreateSpace(creator, title, content, url, visibility);
     }
 }

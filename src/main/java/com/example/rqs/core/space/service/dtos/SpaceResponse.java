@@ -17,6 +17,10 @@ public class SpaceResponse {
 
     private String title;
 
+    private String content;
+
+    private String imageUrl;
+
     private boolean visibility;
 
     private Long spaceMemberCount;
@@ -35,6 +39,8 @@ public class SpaceResponse {
         return new SpaceResponse(
                 space.getSpaceId(),
                 space.getTitle(),
+                space.getContent(),
+                space.getUrl(),
                 space.isVisibility(),
                 (long) space.getSpaceMemberList().size(),
                 (long) space.getItemList().size(),
@@ -48,6 +54,8 @@ public class SpaceResponse {
         return new SpaceResponse(
                 space.getSpaceId(),
                 space.getTitle(),
+                space.getContent(),
+                space.getUrl(),
                 space.isVisibility(),
                 (long) space.getSpaceMemberList().size(),
                 (long) space.getItemList().size(),

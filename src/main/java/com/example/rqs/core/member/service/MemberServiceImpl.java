@@ -1,8 +1,6 @@
 package com.example.rqs.core.member.service;
 
-import com.example.rqs.core.image.Image;
 import com.example.rqs.core.common.cloud.StorageService;
-import com.example.rqs.core.image.ImageRepository;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.member.service.dtos.*;
@@ -21,13 +19,10 @@ public class MemberServiceImpl implements MemberService {
     private final PasswordEncoder passwordEncoder;
     private final StorageService storageService;
 
-    private final ImageRepository imageRepository; // NOTE: 이미지 도메인에 대한 기능이 추가된다면 ImageService 생성
-
-    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder, StorageService storageService, ImageRepository imageRepository) {
+    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder, StorageService storageService) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
         this.storageService = storageService;
-        this.imageRepository = imageRepository;
     }
 
     @Override
@@ -75,9 +70,7 @@ public class MemberServiceImpl implements MemberService {
         Member member = updateAvatarDto.getMember();
         String path = "avatar/" + member.getEmail();
         String url = storageService.upload(updateAvatarDto.getImage(), path);
-        Image avatar = Image.of(updateAvatarDto.getImage().getOriginalFilename(), member.getEmail(), url);
-        avatar = imageRepository.save(avatar);
-        member.updateAvatar(avatar);
+        member.updateAvatar(url);
         memberRepository.save(member);
         return MemberDto.of(member);
     }
