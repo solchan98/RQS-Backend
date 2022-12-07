@@ -4,7 +4,6 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.service.dtos.*;
 import com.example.rqs.core.common.exception.BadRequestException;
 
-import java.io.IOException;
 import java.util.Optional;
 
 public interface MemberService {
@@ -17,9 +16,11 @@ public interface MemberService {
 
     boolean logout(); // 실패 시, 예외 혹은 불리언 아직 미정
 
-    MemberDto updateMember(UpdateMemberDto updateMemberDto);
+    MemberDto updateNickname(Member member, String updateNickname);
 
-    MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException;
+    MemberDto updateDescription(Member member, String updateDescription);
+
+    MemberDto updateAvatar(Member member, String updateUrl);
 
     Optional<Member> getMemberById(Long memberId);
 

@@ -1,6 +1,5 @@
 package com.example.rqs.core.member.service;
 
-import com.example.rqs.core.common.cloud.StorageService;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.member.service.dtos.*;
@@ -9,7 +8,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -17,12 +15,10 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final StorageService storageService;
 
-    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder, StorageService storageService) {
+    public MemberServiceImpl(MemberRepository memberRepository, PasswordEncoder passwordEncoder) {
         this.memberRepository = memberRepository;
         this.passwordEncoder = passwordEncoder;
-        this.storageService = storageService;
     }
 
     @Override
@@ -57,21 +53,20 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     @Transactional
-    public MemberDto updateMember(UpdateMemberDto updateMemberDto) {
-        Member member = updateMemberDto.getMember();
-        member.updateMember(updateMemberDto.getNickname());
-        memberRepository.save(member);
+    public MemberDto updateNickname(Member member, String updateNickname) {
+        member.updateNickname(updateNickname);
         return MemberDto.of(member);
     }
 
     @Override
+    public MemberDto updateDescription(Member member, String updateDescription) {
+        return null;
+    }
+
+    @Override
     @Transactional
-    public MemberDto updateAvatar(UpdateAvatarDto updateAvatarDto) throws IOException {
-        Member member = updateAvatarDto.getMember();
-        String path = "avatar/" + member.getEmail();
-        String url = storageService.upload(updateAvatarDto.getImage(), path);
-        member.updateAvatar(url);
-        memberRepository.save(member);
+    public MemberDto updateAvatar(Member member, String updateUrl) {
+        member.updateAvatar(updateUrl);
         return MemberDto.of(member);
     }
 

@@ -18,6 +18,8 @@ public class Member {
 
     private String nickname;
 
+    private String description;
+
     private String avatar;
 
     private LocalDateTime createdAt;
@@ -38,8 +40,12 @@ public class Member {
         return new Member(email, password, nickname);
     }
 
-    public void updateMember(String nickname) {
+    public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void updateDescription(String description) {
+        this.description = description;
     }
 
     public void updateAvatar(String avatar) {

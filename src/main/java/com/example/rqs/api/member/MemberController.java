@@ -74,14 +74,13 @@ public class MemberController {
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
     }
 
-    @PatchMapping("")
+    @PatchMapping("/nickname")
     public MemberDto updateMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody UpdateMember updateMember
     ) {
         boolean nicknameIsNull = Objects.isNull(updateMember.getNickname());
         if(nicknameIsNull) throw new BadRequestException();
-        UpdateMemberDto updateMemberDto = UpdateMemberDto.of(memberDetails.getMember(), updateMember.getNickname());
-        return memberService.updateMember(updateMemberDto);
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
     }
 }
