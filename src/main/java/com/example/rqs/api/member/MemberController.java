@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @RestController
@@ -73,17 +72,6 @@ public class MemberController {
     ) {
         boolean isExist = memberService.existEmail(email);
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
-    }
-
-    @PatchMapping("/avatar")
-    public MemberDto updateAvatar(
-            @AuthenticationPrincipal MemberDetails memberDetails,
-            UpdateAvatar updateAvatar
-    ) throws IOException {
-        boolean imageIsNull = Objects.isNull(updateAvatar.getImage());
-        if (imageIsNull) throw new BadRequestException();
-        UpdateAvatarDto updateAvatarDto = UpdateAvatarDto.of(memberDetails.getMember(), updateAvatar.getImage());
-        return memberService.updateAvatar(updateAvatarDto);
     }
 
     @PatchMapping("")
