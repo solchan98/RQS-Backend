@@ -102,29 +102,6 @@ public class MemberControllerTest {
 
     @Test
     @TestMember
-    @DisplayName("아바타 변경 시, 파일이 없는 경우 400")
-    void updateAvatarFailByNullFile() throws Exception {
-        UpdateAvatar updateAvatar = new UpdateAvatar();
-        updateAvatar.setImage(null);
-
-        String req = objectMapper.writeValueAsString(updateAvatar);
-
-        ResultActions perform = mockMvc.perform(
-                patch("/api/v1/member/avatar")
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
-                        .content(req)
-                        .with(csrf())
-        );
-
-        perform
-                .andExpectAll(
-                        status().isBadRequest(),
-                        jsonPath("$.message").value("요청 데이터를 확인하세요.")
-                );
-    }
-
-    @Test
-    @TestMember
     @DisplayName("멤버 프로필 변경 시, 닉네임이 비어있는 경우 400")
     void updateProfileFailByNullNickname() throws Exception {
         UpdateMember updateMember = new UpdateMember(null);
