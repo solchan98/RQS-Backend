@@ -102,16 +102,15 @@ public class MemberControllerTest {
 
     @Test
     @TestMember
-    @DisplayName("아바타 변경 시, 파일이 없는 경우 400")
-    void updateAvatarFailByNullFile() throws Exception {
-        UpdateAvatar updateAvatar = new UpdateAvatar();
-        updateAvatar.setImage(null);
+    @DisplayName("멤버 프로필 변경 시, 닉네임이 비어있는 경우 400")
+    void updateProfileFailByNullNickname() throws Exception {
+        UpdateMember updateMember = new UpdateMember();
 
-        String req = objectMapper.writeValueAsString(updateAvatar);
+        String req = objectMapper.writeValueAsString(updateMember);
 
         ResultActions perform = mockMvc.perform(
-                patch("/api/v1/member/avatar")
-                        .contentType(MediaType.MULTIPART_FORM_DATA)
+                patch("/api/v1/member/nickname")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf())
         );
@@ -125,14 +124,14 @@ public class MemberControllerTest {
 
     @Test
     @TestMember
-    @DisplayName("멤버 프로필 변경 시, 닉네임이 비어있는 경우 400")
-    void updateProfileFailByNullNickname() throws Exception {
-        UpdateMember updateMember = new UpdateMember(null);
+    @DisplayName("멤버 아바타 변경 시, 이미지 URL 비어있는 경우 400")
+    void updateProfileFailByNullAvatarUrl() throws Exception {
+        UpdateMember updateMember = new UpdateMember();
 
         String req = objectMapper.writeValueAsString(updateMember);
 
         ResultActions perform = mockMvc.perform(
-                patch("/api/v1/member")
+                patch("/api/v1/member/avatar")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf())

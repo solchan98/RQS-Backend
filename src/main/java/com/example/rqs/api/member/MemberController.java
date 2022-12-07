@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.Objects;
 
 @RestController
@@ -75,25 +74,31 @@ public class MemberController {
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
     }
 
-    @PatchMapping("/avatar")
-    public MemberDto updateAvatar(
-            @AuthenticationPrincipal MemberDetails memberDetails,
-            UpdateAvatar updateAvatar
-    ) throws IOException {
-        boolean imageIsNull = Objects.isNull(updateAvatar.getImage());
-        if (imageIsNull) throw new BadRequestException();
-        UpdateAvatarDto updateAvatarDto = UpdateAvatarDto.of(memberDetails.getMember(), updateAvatar.getImage());
-        return memberService.updateAvatar(updateAvatarDto);
-    }
-
-    @PatchMapping("")
+    @PatchMapping("/nickname")
     public MemberDto updateMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody UpdateMember updateMember
     ) {
         boolean nicknameIsNull = Objects.isNull(updateMember.getNickname());
         if(nicknameIsNull) throw new BadRequestException();
-        UpdateMemberDto updateMemberDto = UpdateMemberDto.of(memberDetails.getMember(), updateMember.getNickname());
-        return memberService.updateMember(updateMemberDto);
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
+    }
+
+    @PatchMapping("/description")
+    public MemberDto updateDescription(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateMember updateMember
+    ) {
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getDescription());
+    }
+
+    @PatchMapping("/avatar")
+    public MemberDto updateAvatar(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateMember updateMember
+    ) {
+        boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
+        if(avatarIsNull) throw new BadRequestException();
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getUpdateUrl());
     }
 }
