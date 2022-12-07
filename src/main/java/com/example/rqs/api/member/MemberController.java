@@ -83,4 +83,22 @@ public class MemberController {
         if(nicknameIsNull) throw new BadRequestException();
         return memberService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
     }
+
+    @PatchMapping("/description")
+    public MemberDto updateDescription(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateMember updateMember
+    ) {
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getDescription());
+    }
+
+    @PatchMapping("/avatar")
+    public MemberDto updateAvatar(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestBody UpdateMember updateMember
+    ) {
+        boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
+        if(avatarIsNull) throw new BadRequestException();
+        return memberService.updateNickname(memberDetails.getMember(), updateMember.getUpdateUrl());
+    }
 }

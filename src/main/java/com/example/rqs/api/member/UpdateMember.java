@@ -12,4 +12,6 @@ import lombok.Setter;
 public class UpdateMember {
 
     private String nickname;
+    private String description;
+    private String updateUrl;
 }

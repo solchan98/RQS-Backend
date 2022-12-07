@@ -60,7 +60,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberDto updateDescription(Member member, String updateDescription) {
-        return null;
+        member.updateDescription(updateDescription);
+        return MemberDto.of(member);
     }
 
     @Override
