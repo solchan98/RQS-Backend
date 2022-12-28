@@ -9,11 +9,13 @@ import com.example.rqs.core.member.service.dtos.MemberDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MemberAuthServiceImpl implements MemberAuthService {
 
     private final MemberRepository memberRepository;
