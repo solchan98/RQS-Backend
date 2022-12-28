@@ -51,40 +51,12 @@ public class SpaceMember {
         return new SpaceMember(member, space, SpaceRole.MEMBER);
     }
 
-    public boolean isUpdatable() {
-        return this.role.goe(SpaceRole.ADMIN);
-    }
-
     public Space updateSpaceTitle(String title) {
         this.space.updateTitle(title);
         return this.space;
     }
 
-    public boolean isCreator() {
-        return this.role.goe(SpaceRole.ADMIN);
-    }
-
-    public boolean isCreatableItem() {
-        return this.role.goe(SpaceRole.MEMBER);
-    }
-
-    public boolean isUpdatableMemberRole() {
-        return this.role.goe(SpaceRole.ADMIN);
-    }
-
     public void updateRole(SpaceRole role) {
         this.role = role;
-    }
-
-    public boolean isDeletableSpaceMember() {
-        return this.role.goe(SpaceRole.ADMIN);
-    }
-
-    public boolean isReadableSpaceMemberList() {
-        return this.role.goe(SpaceRole.ADMIN);
-    }
-
-    public boolean isDeletableSpace() {
-        return this.role.goe(SpaceRole.ADMIN);
     }
 }

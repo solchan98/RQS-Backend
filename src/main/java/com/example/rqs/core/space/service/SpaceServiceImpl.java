@@ -7,21 +7,21 @@ import com.example.rqs.core.space.repository.*;
 import com.example.rqs.core.space.service.dtos.*;
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.repository.SpaceMemberRepository;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SpaceServiceImpl implements SpaceService {
+
+    private final SpaceMemberAuthService spaceMemberAuthService;
 
     private final SpaceRepository spaceRepository;
     private final SpaceMemberRepository spaceMemberRepository;
-
-    public SpaceServiceImpl (SpaceRepository spaceRepository, SpaceMemberRepository spaceMemberRepository) {
-        this.spaceRepository = spaceRepository;
-        this.spaceMemberRepository = spaceMemberRepository;
-    }
 
     @Override
     @Transactional
@@ -35,22 +35,23 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     @Transactional(readOnly = true)
+    // TODO: reatrn type을 void가 아닌 boolean으로 변경하기
     public void checkIsCreatableInviteLink(Long memberId, Long spaceId) {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(memberId, spaceId)
                 .orElseThrow(ForbiddenException::new);
-        boolean updatableMemberRole = spaceMember.isUpdatableMemberRole();
+        boolean updatableMemberRole = spaceMemberAuthService.isUpdatableSpaceMemberRole(spaceMember);
         if (!updatableMemberRole) throw new ForbiddenException();
     }
 
     @Override
     @Transactional(readOnly = true)
+    // TODO: 메서드 명 변경 필요
     public boolean isSpaceCreator(Member member, Long spaceId) {
         Optional<SpaceMember> spaceMemberOptional = spaceMemberRepository
                 .getSpaceMember(member.getMemberId(), spaceId);
         if (spaceMemberOptional.isEmpty()) return false;
-        SpaceMember spaceMember = spaceMemberOptional.get();
-        return spaceMember.isCreator();
+        return spaceMemberAuthService.isSpaceCreator(spaceMemberOptional.get());
     }
 
     @Override
@@ -59,7 +60,7 @@ public class SpaceServiceImpl implements SpaceService {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(updateSpace.getMember().getMemberId(), updateSpace.getSpaceId())
                 .orElseThrow(BadRequestException::new);
-        boolean updatable = spaceMember.isUpdatable();
+        boolean updatable = spaceMemberAuthService.isUpdatableSpace(spaceMember);
         if (!updatable) throw new ForbiddenException();
         Space space = spaceMember.updateSpaceTitle(updateSpace.getTitle());
         return SpaceResponse.createBySpaceMember(space, spaceMember);
@@ -89,7 +90,7 @@ public class SpaceServiceImpl implements SpaceService {
         SpaceMember spaceAdmin = spaceMemberRepository
                 .getSpaceMember(updateSpaceMemberRole.getAdmin().getMemberId(), updateSpaceMemberRole.getSpaceId())
                 .orElseThrow(BadRequestException::new);
-        boolean updatable = spaceAdmin.isUpdatableMemberRole();
+        boolean updatable = spaceMemberAuthService.isUpdatableSpaceMemberRole(spaceAdmin);
         if (!updatable)  throw new ForbiddenException();
         SpaceMember spaceMember = spaceMemberRepository
                 .findById(updateSpaceMemberRole.getChangedSpaceMemberId())
@@ -104,7 +105,7 @@ public class SpaceServiceImpl implements SpaceService {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(deleteSpaceMember.getMember().getMemberId(), deleteSpaceMember.getSpaceId())
                 .orElseThrow(BadRequestException::new);
-        boolean isDeletable = spaceMember.isDeletableSpaceMember();
+        boolean isDeletable = spaceMemberAuthService.isDeletableSpace(spaceMember);
         if (!isDeletable) throw new ForbiddenException();
         boolean isSelfDelete = spaceMember.getSpaceMemberId().equals(deleteSpaceMember.getSpaceMemberId());
         if (isSelfDelete) throw new BadRequestException();
@@ -123,9 +124,8 @@ public class SpaceServiceImpl implements SpaceService {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(deleteSpace.getMember().getMemberId(), deleteSpace.getSpaceId())
                 .orElseThrow(ForbiddenException::new);
-        boolean isDeletable = spaceMember.isDeletableSpace();
+        boolean isDeletable = spaceMemberAuthService.isDeletableSpace(spaceMember);
         if (!isDeletable) throw new ForbiddenException();
-        spaceRepository
-                .deleteById(deleteSpace.getSpaceId());
+        spaceRepository.deleteById(deleteSpace.getSpaceId());
     }
 }

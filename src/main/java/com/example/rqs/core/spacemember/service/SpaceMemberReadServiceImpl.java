@@ -17,6 +17,7 @@ import java.util.Optional;
 public class SpaceMemberReadServiceImpl implements SpaceMemberReadService {
 
     private final SpaceMemberRepository spaceMemberRepository;
+    private final SpaceMemberAuthService spaceMemberAuthService;
 
     @Override
     public Optional<SpaceMember> getSpaceMember(long memberId, long spaceId) {
@@ -29,7 +30,7 @@ public class SpaceMemberReadServiceImpl implements SpaceMemberReadService {
                 .getSpaceMember(memberId, spaceId)
                 .orElseThrow(ForbiddenException::new);
 
-        boolean readable = spaceMember.isReadableSpaceMemberList();
+        boolean readable = spaceMemberAuthService.isReadableSpaceMemberList(spaceMember);
 
         if (!readable) throw new ForbiddenException();
         return spaceMemberRepository.getSpaceMemberResponseList(spaceId);

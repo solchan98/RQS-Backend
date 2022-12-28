@@ -2,6 +2,7 @@ package com.example.rqs.core.spacemember;
 
 import com.example.rqs.core.common.exception.ForbiddenException;
 import com.example.rqs.core.spacemember.repository.SpaceMemberRepository;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,6 +27,9 @@ public class SpaceMemberReadServiceTest {
     @Mock
     SpaceMemberRepository smRepository;
 
+    @Mock
+    SpaceMemberAuthService spaceMemberAuthService;
+
     @Test
     @DisplayName("getSpaceMemberList() - 스페이스 멤버가 아닌 경우")
     void getSpaceMemberListWhenIsNotSpaceMember() {
@@ -45,7 +49,7 @@ public class SpaceMemberReadServiceTest {
         long memberId = 1L;
         long spaceId = 1L;
         SpaceMember mockSM = mock(SpaceMember.class);
-        given(mockSM.isReadableSpaceMemberList()).willReturn(Boolean.FALSE);
+        given(spaceMemberAuthService.isReadableSpaceMemberList(mockSM)).willReturn(Boolean.FALSE);
         given(smRepository.getSpaceMember(memberId, spaceId)).willReturn(Optional.of(mockSM));
 
         // when then

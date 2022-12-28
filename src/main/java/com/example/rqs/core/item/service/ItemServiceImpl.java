@@ -10,6 +10,8 @@ import com.example.rqs.core.space.repository.*;
 
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.repository.SpaceMemberRepository;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,17 +20,14 @@ import java.util.Objects;
 import java.util.Random;
 
 @Service
+@RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
+
+    private final SpaceMemberAuthService spaceMemberAuthService;
 
     private final ItemRepository itemRepository;
     private final SpaceRepository spaceRepository;
     private final SpaceMemberRepository spaceMemberRepository;
-
-    public ItemServiceImpl(ItemRepository itemRepository, SpaceRepository spaceRepository, SpaceMemberRepository spaceMemberRepository) {
-        this.itemRepository = itemRepository;
-        this.spaceRepository = spaceRepository;
-        this.spaceMemberRepository = spaceMemberRepository;
-    }
 
     @Override
     @Transactional
@@ -36,7 +35,7 @@ public class ItemServiceImpl implements ItemService {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(createItem.getMember().getMemberId(), createItem.getSpaceId())
                 .orElseThrow(BadRequestException::new);
-        boolean isCreatable = spaceMember.isCreatableItem();
+        boolean isCreatable = spaceMemberAuthService.isCreatableItem(spaceMember);
         if(!isCreatable) throw new ForbiddenException();
         Item item = Item.newItem(
                 spaceMember.getSpace(),
