@@ -3,7 +3,7 @@ package com.example.rqs.api.space;
 import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.core.member.service.MemberService;
+import com.example.rqs.core.member.service.MemberAuthService;
 import com.example.rqs.core.space.service.SpaceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +30,7 @@ public class SpaceControllerTest {
     private SpaceService spaceService;
 
     @MockBean
-    private MemberService memberService;
+    private MemberAuthService memberService;
 
     @MockBean
     private RedisTemplate<String, String> redisTemplate;

@@ -3,7 +3,9 @@ package com.example.rqs.api.member;
 import com.example.rqs.api.config.member.TestMember;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.core.member.service.MemberService;
+import com.example.rqs.core.member.service.MemberAuthService;
+import com.example.rqs.core.member.service.MemberRegisterService;
+import com.example.rqs.core.member.service.MemberUpdateService;
 import com.example.rqs.core.member.service.dtos.SignUpDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -23,11 +25,17 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest({MemberController.class, SignUpValidator.class, JwtProvider.class, RedisDao.class})
-@DisplayName("멤버 컨트롤러 테스트")
+@DisplayName("Member Controller Test")
 public class MemberControllerTest {
 
     @MockBean
-    private MemberService memberService;
+    private MemberAuthService memberAuthService;
+
+    @MockBean
+    private MemberRegisterService memberRegisterService;
+
+    @MockBean
+    private MemberUpdateService memberUpdateService;
 
     @MockBean
     private RedisTemplate<String, String> redisTemplate;
@@ -37,8 +45,6 @@ public class MemberControllerTest {
 
     @Autowired
     private ObjectMapper objectMapper;
-
-
 
     @Test
     @WithMockUser
