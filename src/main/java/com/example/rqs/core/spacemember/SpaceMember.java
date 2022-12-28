@@ -43,6 +43,10 @@ public class SpaceMember {
         this.role = role;
     }
 
+    public static SpaceMember of(Member member, Space space, SpaceRole spaceRole) {
+        return new SpaceMember(member, space, spaceRole);
+    }
+
     public static SpaceMember newSpaceAdmin(Member member, Space space) {
         return new SpaceMember(member, space, SpaceRole.ADMIN);
     }

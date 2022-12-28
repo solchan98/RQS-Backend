@@ -4,12 +4,17 @@ import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
-import com.example.rqs.core.space.service.SpaceInviteService;
-import com.example.rqs.core.space.service.SpaceReadService;
-import com.example.rqs.core.spacemember.SpaceRole;
-import com.example.rqs.core.space.service.SpaceService;
+import com.example.rqs.core.space.service.*;
 import com.example.rqs.core.space.service.dtos.*;
+import com.example.rqs.core.spacemember.SpaceRole;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
+
+import com.example.rqs.core.spacemember.service.SpaceMemberRegisterService;
+import com.example.rqs.core.spacemember.service.SpaceMemberUpdateService;
+import com.example.rqs.core.spacemember.service.dtos.DeleteSpaceMember;
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
+import com.example.rqs.core.spacemember.service.dtos.UpdateSpaceMemberRole;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -30,11 +35,15 @@ public class SpaceController {
     private static final String DOMAIN = "/space";
 
     private final SpaceReadService spaceReadService;
+    private final SpaceRegisterService spaceRegisterService;
     private final SpaceInviteService spaceInviteService;
+    private final SpaceUpdateService spaceUpdateService;
 
     private final SpaceMemberReadService spaceMemberReadService;
+    private final SpaceMemberRegisterService spaceMemberRegisterService;
+    private final SpaceMemberUpdateService spaceMemberUpdateService;
+    private final SpaceMemberAuthService spaceMemberAuthService;
 
-    private final SpaceService spaceService;
     private final JwtProvider jwtProvider;
     private final JoinSpaceValidator joinSpaceValidator;
     private final CommonAPIAuthChecker commonAPIAuthChecker;
@@ -51,7 +60,7 @@ public class SpaceController {
                 createSpaceDto.getContent(),
                 createSpaceDto.getUrl(),
                 createSpaceDto.isVisibility());
-        return spaceService.createSpace(createSpace);
+        return spaceRegisterService.createSpace(createSpace);
     }
 
     @PatchMapping(AUTH + DOMAIN)
@@ -60,11 +69,10 @@ public class SpaceController {
             @RequestBody UpdateSpaceDto updateSpaceDto
     ) {
         if (updateSpaceDto.getTitle().isEmpty()) throw new BadRequestException();
-        UpdateSpace updateSpace = UpdateSpace.of(
-                updateSpaceDto.getSpaceId(),
+        return spaceUpdateService.updateTitle(
                 memberDetails.getMember(),
+                updateSpaceDto.getSpaceId(),
                 updateSpaceDto.getTitle());
-        return spaceService.updateTitle(updateSpace);
     }
 
     @GetMapping(DOMAIN)
@@ -117,7 +125,7 @@ public class SpaceController {
                 spaceId,
                 spaceMemberId,
                 role);
-        return spaceService.changeMemberRole(updateSpaceMemberRole);
+        return spaceMemberUpdateService.changeSpaceMemberRole(updateSpaceMemberRole);
     }
 
     @GetMapping(AUTH + DOMAIN + "/spaceMemberList")
@@ -144,16 +152,18 @@ public class SpaceController {
     ) throws JsonProcessingException {
         joinSpaceValidator.validate(itk);
         InviteSpaceSubject inviteSpaceSubject = jwtProvider.getInviteSpaceSubject(itk);
-        return spaceService.addNewMember(inviteSpaceSubject.getSpaceId(), memberDetails.getMember());
+        return spaceMemberRegisterService.addNewMember(memberDetails.getMember(), inviteSpaceSubject.getSpaceId());
     }
 
+    // TODO: /creator -> updatable
     @GetMapping(AUTH + DOMAIN + "/creator")
-    public Message isSpaceCreator(
+    public Message isUpdatable(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        boolean isCreator = spaceService.isSpaceCreator(memberDetails.getMember(), spaceId);
-        return isCreator
+        boolean isUpdatable = spaceMemberAuthService
+                .isUpdatableSpace(memberDetails.getMember().getMemberId(), spaceId);
+        return isUpdatable
                 ? new Message("200", HttpStatus.OK)
                 : new Message("403", HttpStatus.FORBIDDEN);
     }
@@ -169,7 +179,7 @@ public class SpaceController {
                 spaceId,
                 spaceMemberId);
 
-        spaceService.deleteMember(deleteSpaceMember);
+        spaceMemberUpdateService.deleteSpaceMember(deleteSpaceMember);
         return DeleteResponse.of(spaceMemberId, true);
     }
 
@@ -178,8 +188,7 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        DeleteSpace deleteSpace = DeleteSpace.of(memberDetails.getMember(), spaceId);
-        spaceService.deleteSpace(deleteSpace);
+        spaceUpdateService.deleteSpace(memberDetails.getMember(), spaceId);
         return DeleteResponse.of(spaceId, true);
     }
 }

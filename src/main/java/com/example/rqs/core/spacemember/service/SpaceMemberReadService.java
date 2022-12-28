@@ -1,6 +1,6 @@
 package com.example.rqs.core.spacemember.service;
 
-import com.example.rqs.core.space.service.dtos.SpaceMemberResponse;
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.example.rqs.core.spacemember.SpaceMember;
 
 import java.util.List;

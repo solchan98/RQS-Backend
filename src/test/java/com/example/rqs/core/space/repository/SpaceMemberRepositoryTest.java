@@ -5,7 +5,7 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.spacemember.SpaceMember;
-import com.example.rqs.core.space.service.dtos.SpaceMemberResponse;
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.example.rqs.core.spacemember.repository.SpaceMemberRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;

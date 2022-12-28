@@ -1,4 +1,4 @@
-package com.example.rqs.core.space.service.dtos;
+package com.example.rqs.core.spacemember.service.dtos;
 
 import com.example.rqs.core.member.Member;
 import lombok.Getter;

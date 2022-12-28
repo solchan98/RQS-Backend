@@ -1,7 +1,7 @@
 package com.example.rqs.core.spacemember.repository;
 
 import com.example.rqs.core.spacemember.SpaceMember;
-import com.example.rqs.core.space.service.dtos.SpaceMemberResponse;
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;

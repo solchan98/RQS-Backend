@@ -1,4 +1,4 @@
-package com.example.rqs.core.space.service.dtos;
+package com.example.rqs.core.spacemember.service.dtos;
 
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.SpaceRole;

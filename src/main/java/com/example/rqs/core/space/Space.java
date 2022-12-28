@@ -66,4 +66,8 @@ public class Space {
         this.title = title;
         this.updatedAt = LocalDateTime.now();
     }
+
+    public void changeVisibility(boolean visibility) {
+        this.visibility = visibility;
+    }
 }
