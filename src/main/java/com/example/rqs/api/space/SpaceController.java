@@ -4,10 +4,13 @@ import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
+import com.example.rqs.core.space.service.SpaceReadService;
 import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
+import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,22 +22,20 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class SpaceController {
 
     private static final String AUTH = "/my";
     private static final String DOMAIN = "/space";
 
+    private final SpaceReadService spaceReadService;
+
+    private final SpaceMemberReadService spaceMemberReadService;
+
     private final SpaceService spaceService;
     private final JwtProvider jwtProvider;
     private final JoinSpaceValidator joinSpaceValidator;
     private final CommonAPIAuthChecker commonAPIAuthChecker;
-
-    public SpaceController(SpaceService spaceService, JwtProvider jwtProvider, JoinSpaceValidator joinSpaceValidator, CommonAPIAuthChecker commonAPIAuthChecker) {
-        this.spaceService = spaceService;
-        this.jwtProvider = jwtProvider;
-        this.joinSpaceValidator = joinSpaceValidator;
-        this.commonAPIAuthChecker = commonAPIAuthChecker;
-    }
 
     @PostMapping(AUTH + DOMAIN)
     public SpaceResponse createNewSpace(
@@ -71,22 +72,22 @@ public class SpaceController {
     ) {
         MemberDetails memberDetails = this.commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? this.spaceService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId))
-                : this.spaceService.getSpace(ReadSpace.of(spaceId));
+                ? spaceReadService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId))
+                : spaceReadService.getSpace(ReadSpace.of(spaceId));
     }
 
     @GetMapping(DOMAIN + "/all")
     public List<SpaceResponse> getAllSpace(
             @Nullable @RequestParam("lastCreatedAt") String lastCreatedAt
     ) {
-        return this.spaceService.getSpaceList(ReadSpaceList.lastAt(lastCreatedAt));
+        return this.spaceReadService.getSpaceList(ReadSpaceList.lastAt(lastCreatedAt));
     }
 
     @GetMapping(DOMAIN + "/all/trending")
     public List<SpaceResponse> getAllSpaceByTrending(
             @Nullable @RequestParam("offset") long offset
     ) {
-        return this.spaceService.getSpaceList(ReadSpaceList.offset(offset));
+        return this.spaceReadService.getSpaceList(ReadSpaceList.offset(offset));
     }
 
     @GetMapping( DOMAIN + "/{targetMemberId}/all")
@@ -99,7 +100,7 @@ public class SpaceController {
         ReadMembersSpaceList readMembersSpaceList = Objects.nonNull(memberDetails)
                         ? ReadMembersSpaceList.of(memberDetails.getMember().getMemberId(), targetMemberId, lastJoinedAt)
                         : ReadMembersSpaceList.of(targetMemberId, lastJoinedAt);
-        return spaceService.getMemberSpaceList(readMembersSpaceList);
+        return spaceReadService.getSpaceList(readMembersSpaceList);
     }
 
     @PatchMapping(AUTH + DOMAIN + "/spaceMember/role")
@@ -122,9 +123,7 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        return spaceService.getSpaceMemberList(
-                memberDetails.getMember().getMemberId(),
-                spaceId);
+        return spaceMemberReadService.getSpaceMemberList(memberDetails.getMember().getMemberId(), spaceId);
     }
 
     @GetMapping(AUTH + DOMAIN + "/invite")
@@ -134,7 +133,7 @@ public class SpaceController {
     ) {
         spaceService.checkIsCreatableInviteLink(memberDetails.getMember().getMemberId(), spaceId);
         ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), spaceId);
-        SpaceResponse space = spaceService.getSpace(readSpace);
+        SpaceResponse space = spaceReadService.getSpace(readSpace);
         InviteSpaceSubject inviteSpaceSubject = InviteSpaceSubject.of(
                 spaceId,
                 space.getTitle(),

@@ -4,7 +4,9 @@ import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
 import com.example.rqs.core.member.service.MemberAuthService;
+import com.example.rqs.core.space.service.SpaceReadService;
 import com.example.rqs.core.space.service.SpaceService;
+import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,6 +27,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest({SpaceController.class, JoinSpaceValidator.class, JwtProvider.class, CommonAPIAuthChecker.class, RedisDao.class})
 @DisplayName("스페이스 컨트롤러 테스트")
 public class SpaceControllerTest {
+
+
+    @MockBean
+    private SpaceReadService spaceReadService;
+
+    @MockBean
+    SpaceMemberReadService spaceMemberReadService;
 
     @MockBean
     private SpaceService spaceService;

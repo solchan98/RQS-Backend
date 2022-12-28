@@ -3,16 +3,7 @@ package com.example.rqs.core.space.service;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.service.dtos.*;
 
-import java.util.List;
-
 public interface SpaceService {
-
-    SpaceResponse getSpace(ReadSpace readSpace);
-    List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList);
-
-    List<SpaceResponse> getMemberSpaceList(ReadMembersSpaceList readMembersSpaceList);
-
-    List<SpaceMemberResponse> getSpaceMemberList(Long memberId, Long spaceId);
 
     SpaceResponse createSpace(CreateSpace createSpace);
 
