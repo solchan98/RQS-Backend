@@ -11,6 +11,6 @@ public interface MemberAuthService {
     boolean logout();
     boolean existEmail(String email);
     Optional<Member> getMember(long memberId);
-    Optional<Member> getMember(String memberId);
+    Optional<Member> getMember(String email);
 
 }
