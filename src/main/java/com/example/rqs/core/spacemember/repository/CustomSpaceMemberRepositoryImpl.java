@@ -8,7 +8,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import static com.example.rqs.core.member.QMember.member;
 import static com.example.rqs.core.space.QSpace.space;
-import static com.example.rqs.core.space.QSpaceMember.*;
+import static com.example.rqs.core.spacemember.QSpaceMember.*;
 
 import java.time.LocalDateTime;
 import java.util.*;

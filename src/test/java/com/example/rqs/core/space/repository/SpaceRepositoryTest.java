@@ -135,7 +135,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMembersSpaceList - memberId == targetMemberId")
     void getMySpaceListTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(firstMemberId, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(firstMemberId, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(5L),
@@ -151,7 +151,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMembersSpaceList - 다른 사림이 조회")
     void getMySpaceListByAnotherTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(secondMemberId, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(secondMemberId, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(3L),
@@ -167,7 +167,7 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMembersSpaceList - 게스트가 조회")
     void getMySpaceListByGuestTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMemberSpaceList(null, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(null, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(3L),
@@ -187,7 +187,7 @@ public class SpaceRepositoryTest {
     // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
 
         List<SpaceResponse> mySpaceList = spaceRepository
-                .getMemberSpaceList(firstMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
+                .getMembersSpaceList(firstMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(2L),
@@ -206,7 +206,7 @@ public class SpaceRepositoryTest {
         // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
         // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
         List<SpaceResponse> mySpaceList = spaceRepository
-                .getMemberSpaceList(secondMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
+                .getMembersSpaceList(secondMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(1L),
