@@ -4,6 +4,7 @@ import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
+import com.example.rqs.core.space.service.SpaceInviteService;
 import com.example.rqs.core.space.service.SpaceReadService;
 import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.space.service.SpaceService;
@@ -29,6 +30,7 @@ public class SpaceController {
     private static final String DOMAIN = "/space";
 
     private final SpaceReadService spaceReadService;
+    private final SpaceInviteService spaceInviteService;
 
     private final SpaceMemberReadService spaceMemberReadService;
 
@@ -131,15 +133,8 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        spaceService.checkIsCreatableInviteLink(memberDetails.getMember().getMemberId(), spaceId);
-        ReadSpace readSpace = ReadSpace.of(memberDetails.getMember(), spaceId);
-        SpaceResponse space = spaceReadService.getSpace(readSpace);
-        InviteSpaceSubject inviteSpaceSubject = InviteSpaceSubject.of(
-                spaceId,
-                space.getTitle(),
-                memberDetails.getMember().getMemberId(),
-                memberDetails.getMember().getNickname());
-        return jwtProvider.createInviteToken(inviteSpaceSubject);
+        InviteSpaceSubject subject = spaceInviteService.createInviteSpaceSubject(memberDetails.getMember(), spaceId);
+        return jwtProvider.createInviteToken(subject);
     }
 
     @GetMapping(AUTH + DOMAIN + "/join")

@@ -1,4 +1,4 @@
-package com.example.rqs.api.jwt;
+package com.example.rqs.core.space.service.dtos;
 
 import lombok.AccessLevel;
 import lombok.Getter;

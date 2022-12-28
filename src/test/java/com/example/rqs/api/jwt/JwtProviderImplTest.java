@@ -3,6 +3,7 @@ package com.example.rqs.api.jwt;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.exception.ForbiddenException;
 import com.example.rqs.core.member.service.dtos.MemberDto;
+import com.example.rqs.core.space.service.dtos.InviteSpaceSubject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;

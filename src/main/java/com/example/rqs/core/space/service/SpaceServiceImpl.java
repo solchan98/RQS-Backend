@@ -35,17 +35,6 @@ public class SpaceServiceImpl implements SpaceService {
 
     @Override
     @Transactional(readOnly = true)
-    // TODO: reatrn type을 void가 아닌 boolean으로 변경하기
-    public void checkIsCreatableInviteLink(Long memberId, Long spaceId) {
-        SpaceMember spaceMember = spaceMemberRepository
-                .getSpaceMember(memberId, spaceId)
-                .orElseThrow(ForbiddenException::new);
-        boolean updatableMemberRole = spaceMemberAuthService.isUpdatableSpaceMemberRole(spaceMember);
-        if (!updatableMemberRole) throw new ForbiddenException();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     // TODO: 메서드 명 변경 필요
     public boolean isSpaceCreator(Member member, Long spaceId) {
         Optional<SpaceMember> spaceMemberOptional = spaceMemberRepository
