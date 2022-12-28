@@ -4,7 +4,7 @@ import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
-import com.example.rqs.core.space.SpaceRole;
+import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.space.service.SpaceService;
 import com.example.rqs.core.space.service.dtos.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -79,14 +79,14 @@ public class SpaceController {
     public List<SpaceResponse> getAllSpace(
             @Nullable @RequestParam("lastCreatedAt") String lastCreatedAt
     ) {
-        return this.spaceService.getSpaceList(ReadSpaceList.guest(lastCreatedAt));
+        return this.spaceService.getSpaceList(ReadSpaceList.lastAt(lastCreatedAt));
     }
 
     @GetMapping(DOMAIN + "/all/trending")
     public List<SpaceResponse> getAllSpaceByTrending(
-            @Nullable @RequestParam("offset") Long offset
+            @Nullable @RequestParam("offset") long offset
     ) {
-        return this.spaceService.getSpaceList(ReadSpaceList.guest(offset));
+        return this.spaceService.getSpaceList(ReadSpaceList.offset(offset));
     }
 
     @GetMapping( DOMAIN + "/{targetMemberId}/all")

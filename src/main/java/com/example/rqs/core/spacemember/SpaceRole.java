@@ -1,4 +1,4 @@
-package com.example.rqs.core.space;
+package com.example.rqs.core.spacemember;
 
 public enum SpaceRole {
     ADMIN(999),

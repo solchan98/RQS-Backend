@@ -1,6 +1,6 @@
-package com.example.rqs.core.space.repository;
+package com.example.rqs.core.spacemember.repository;
 
-import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.spacemember.SpaceMember;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

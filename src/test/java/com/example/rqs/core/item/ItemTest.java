@@ -1,7 +1,7 @@
 package com.example.rqs.core.item;
 
 import com.example.rqs.core.space.Space;
-import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.spacemember.SpaceMember;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

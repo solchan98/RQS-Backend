@@ -1,7 +1,8 @@
-package com.example.rqs.core.space;
+package com.example.rqs.core.spacemember;
 
 import com.example.rqs.core.item.Item;
 import com.example.rqs.core.member.Member;
+import com.example.rqs.core.space.Space;
 import lombok.Getter;
 
 import javax.persistence.*;

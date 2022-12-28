@@ -8,6 +8,8 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.*;
 import com.example.rqs.core.space.repository.*;
 
+import com.example.rqs.core.spacemember.SpaceMember;
+import com.example.rqs.core.spacemember.repository.SpaceMemberRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

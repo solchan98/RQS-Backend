@@ -1,6 +1,7 @@
 package com.example.rqs.core.space;
 
 import com.example.rqs.core.item.Item;
+import com.example.rqs.core.spacemember.SpaceMember;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -61,7 +62,7 @@ public class Space {
         this.spaceMemberList.add(spaceMember);
     }
 
-    protected void updateTitle(String title) {
+    public void updateTitle(String title) {
         this.title = title;
         this.updatedAt = LocalDateTime.now();
     }

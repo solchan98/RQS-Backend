@@ -1,7 +1,7 @@
 package com.example.rqs.core.space.service.dtos;
 
 import com.example.rqs.core.member.Member;
-import com.example.rqs.core.space.SpaceRole;
+import com.example.rqs.core.spacemember.SpaceRole;
 import lombok.Getter;
 
 @Getter
