@@ -42,13 +42,16 @@ public class Member {
 
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void updateDescription(String description) {
         this.description = description;
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void updateAvatar(String avatar) {
         this.avatar = avatar;
+        this.updatedAt = LocalDateTime.now();
     }
 }
