@@ -70,7 +70,7 @@ public class SpaceRepositoryTest {
             SpaceMember spaceMember = space.getSpaceMemberList().get(0);
             List<Item> itemList = space.getItemList();
             for (int jdx = 0; jdx < idx + 1; jdx++) {
-                Item item = Item.newItem(space, spaceMember, "Q" + jdx, "A" + jdx, "");
+                Item item = Item.newItem(spaceMember, "Q" + jdx, "A" + jdx, "");
                 itemList.add(item);
             }
         }

@@ -34,8 +34,8 @@ public class ItemController {
     private final ItemRandomService itemRandomService;
     private final ItemAuthService itemAuthService;
     private final ItemUpdateService itemUpdateService;
+    private final ItemRegisterService itemRegisterService;
 
-    private final ItemService itemService;
     private final CreateItemValidator createItemValidator;
     private final UpdateItemValidator updateItemValidator;
     private final RandomItemCacheService randomItemCacheService;
@@ -62,7 +62,7 @@ public class ItemController {
                 createItemDto.getQuestion(),
                 createItemDto.getAnswer(),
                 createItemDto.getHint());
-        return itemService.createNewItem(createItem);
+        return itemRegisterService.createItem(createItem);
     }
 
     @GetMapping(DOMAIN)

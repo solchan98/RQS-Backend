@@ -57,7 +57,7 @@ public class ItemRepositoryTest {
     void createItems(SpaceMember spaceMember) {
         List<Item> itemList = new ArrayList<>(30);
         for (int idx = 0; idx < 30; idx++) {
-            Item item = Item.newItem(spaceMember.getSpace(), spaceMember, "Question_" + idx, "Answer", "");
+            Item item = Item.newItem(spaceMember, "Question_" + idx, "Answer", "");
             itemList.add(item);
         }
         itemRepository.saveAll(itemList);

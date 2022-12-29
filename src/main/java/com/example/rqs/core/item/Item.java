@@ -46,8 +46,8 @@ public class Item {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public static Item newItem(Space space, SpaceMember spaceMember, String question, String answer, String hint) {
-        return new Item(space, spaceMember, question, answer, hint);
+    public static Item newItem(SpaceMember spaceMember, String question, String answer, String hint) {
+        return new Item(spaceMember.getSpace(), spaceMember, question, answer, hint);
     }
 
     public void updateContent(String question, String answer, String hint) {

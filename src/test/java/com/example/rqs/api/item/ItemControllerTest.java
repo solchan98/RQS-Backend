@@ -4,8 +4,7 @@ import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
 import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.core.item.service.ItemReadService;
-import com.example.rqs.core.item.service.ItemService;
+import com.example.rqs.core.item.service.*;
 import com.example.rqs.core.member.service.MemberAuthService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
@@ -29,10 +28,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ItemControllerTest {
 
     @MockBean
-    private ItemService itemService;
-
-    @MockBean
     private ItemReadService itemReadService;
+    @MockBean
+    private ItemAuthService itemAuthService;
+    @MockBean
+    private ItemRandomService itemRandomService;
+    @MockBean
+    private ItemUpdateService itemUpdateService;
+    @MockBean
+    private ItemRegisterService itemRegisterService;
 
     @MockBean
     private MemberAuthService memberAuthService;
