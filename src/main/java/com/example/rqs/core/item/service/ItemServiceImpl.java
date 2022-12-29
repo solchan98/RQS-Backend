@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Random;
 
 @Service
@@ -94,30 +93,6 @@ public class ItemServiceImpl implements ItemService {
         ItemResponse itemResponse = itemRepository.getItem(spaceId, randomIndex);
 
         return RandomItemResponse.of((long) randomIndex, itemResponse, itemCnt);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public ItemResponse getItem(ReadItem readItem) {
-        Item item = itemRepository.findById(readItem.getItemId()).orElseThrow(BadRequestException::new);
-        boolean isGuest = Objects.isNull(readItem.getMember());
-        boolean isSpaceMember = !isGuest && spaceMemberRepository.existSpaceMember(readItem.getMember().getMemberId(), item.getSpace().getSpaceId());
-        if (!item.getSpace().isVisibility()) {
-            if (!isSpaceMember) throw new ForbiddenException();
-        }
-        return ItemResponse.of(item);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ItemResponse> getItemList(ReadItemList readItemList) {
-        Space space = spaceRepository.findById(readItemList.getSpaceId()).orElseThrow(BadRequestException::new);
-        boolean isGuest = Objects.isNull(readItemList.getMember());
-        boolean isSpaceMember = !isGuest && spaceMemberRepository.existSpaceMember(readItemList.getMember().getMemberId(), readItemList.getSpaceId());
-        if (!space.isVisibility()) {
-            if (!isSpaceMember) throw new ForbiddenException();
-        }
-        return itemRepository.getItemList(readItemList.getSpaceId(), readItemList.getLastId());
     }
 
     @Override

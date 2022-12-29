@@ -25,6 +25,11 @@ public class SpaceReadServiceImpl implements SpaceReadService {
     private final SpaceMemberReadService smReadService;
 
     @Override
+    public Optional<Space> getSpace(Long spaceId) {
+        return spaceRepository.findById(spaceId);
+    }
+
+    @Override
     public SpaceResponse getSpace(ReadSpace readSpace) {
         Space space = spaceRepository.findById(readSpace.getSpaceId()).orElseThrow(BadRequestException::new);
         Optional<SpaceMember> optionalSpaceMember = smReadService

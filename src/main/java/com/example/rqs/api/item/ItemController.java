@@ -5,10 +5,12 @@ import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
 import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.MemberDetails;
+import com.example.rqs.core.item.service.ItemReadService;
 import com.example.rqs.core.item.service.ItemService;
 import com.example.rqs.core.item.service.dtos.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,10 +25,13 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class ItemController {
 
     private static final String AUTH = "/my";
     private static final String DOMAIN = "/item";
+
+    private final ItemReadService itemReadService;
 
     private final ItemService itemService;
     private final CreateItemValidator createItemValidator;
@@ -42,14 +47,6 @@ public class ItemController {
     @InitBinder("updateItemDto")
     public void initUpdateItemBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(updateItemValidator);
-    }
-
-    public ItemController(ItemService itemService, CreateItemValidator createItemValidator, UpdateItemValidator updateItemValidator, RandomItemCacheService randomItemCacheService, CommonAPIAuthChecker commonAPIAuthChecker) {
-        this.itemService = itemService;
-        this.createItemValidator = createItemValidator;
-        this.updateItemValidator = updateItemValidator;
-        this.randomItemCacheService = randomItemCacheService;
-        this.commonAPIAuthChecker = commonAPIAuthChecker;
     }
 
     @PostMapping(AUTH + DOMAIN)
@@ -73,8 +70,8 @@ public class ItemController {
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? itemService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
-                : itemService.getItem(ReadItem.of(itemId));
+                ? itemReadService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
+                : itemReadService.getItem(ReadItem.of(itemId));
     }
 
     @GetMapping(DOMAIN + "/all")
@@ -85,8 +82,8 @@ public class ItemController {
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? itemService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
-                : itemService.getItemList(ReadItemList.of(lastItemId, spaceId));
+                ? itemReadService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
+                : itemReadService.getItemList(ReadItemList.of(lastItemId, spaceId));
     }
 
     @GetMapping(AUTH + DOMAIN + "/random")
