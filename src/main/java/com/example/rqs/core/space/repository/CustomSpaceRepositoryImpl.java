@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 import static com.example.rqs.core.space.QSpace.space;
 import static com.example.rqs.core.item.QItem.item;
-import static com.example.rqs.core.space.QSpaceMember.spaceMember;
+import static com.example.rqs.core.spacemember.QSpaceMember.spaceMember;
 
 public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
 
@@ -55,7 +55,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
     }
 
     @Override
-    public List<SpaceResponse> getMemberSpaceList(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt) {
+    public List<SpaceResponse> getMembersSpaceList(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt) {
         List<SpaceResponse> fetch = queryFactory
                 .select(getMySpaceResponseSelect())
                 .from(space)

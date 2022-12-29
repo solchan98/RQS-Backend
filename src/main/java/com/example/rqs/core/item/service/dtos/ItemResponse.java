@@ -1,8 +1,8 @@
 package com.example.rqs.core.item.service.dtos;
 
 import com.example.rqs.core.item.Item;
-import com.example.rqs.core.space.SpaceMember;
-import com.example.rqs.core.space.service.dtos.SpaceMemberResponse;
+import com.example.rqs.core.spacemember.SpaceMember;
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

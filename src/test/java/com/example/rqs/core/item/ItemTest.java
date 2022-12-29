@@ -1,7 +1,7 @@
 package com.example.rqs.core.item;
 
 import com.example.rqs.core.space.Space;
-import com.example.rqs.core.space.SpaceMember;
+import com.example.rqs.core.spacemember.SpaceMember;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,8 @@ public class ItemTest {
         SpaceMember isNotCreator = mock(SpaceMember.class);
         given(isNotCreator.getSpaceMemberId()).willReturn(1L);
         given(isCreator.getSpaceMemberId()).willReturn(2L);
-        Item item = Item.newItem(null, isCreator, "", "", "");
+        given(isCreator.getSpace()).willReturn(null);
+        Item item = Item.newItem(isCreator, "", "", "");
 
         boolean willIsCreator = item.isCreator(isCreator);
         boolean willIsNotCreator = item.isCreator(isNotCreator);
@@ -42,7 +43,8 @@ public class ItemTest {
     void testUpdateItemContent() {
         Space space = mock(Space.class);
         SpaceMember isCreator = mock(SpaceMember.class);
-        Item item = Item.newItem(space, isCreator, "수정 전, 질문!", "수정 전, 답변!", "수정, 전, 힌트");
+        given(isCreator.getSpace()).willReturn(space);
+        Item item = Item.newItem(isCreator, "수정 전, 질문!", "수정 전, 답변!", "수정, 전, 힌트");
         LocalDateTime beforeUpdate = item.getUpdatedAt();
 
         item.updateContent(

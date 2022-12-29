@@ -1,11 +1,11 @@
 package com.example.rqs.api.member;
 
-import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.api.jwt.MemberDetails;
-import com.example.rqs.api.jwt.TokenResponse;
+import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
-import com.example.rqs.core.member.service.MemberService;
+import com.example.rqs.core.member.service.*;
 import com.example.rqs.core.member.service.dtos.*;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -16,9 +16,13 @@ import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1/member")
+@RequiredArgsConstructor
 public class MemberController {
 
-    private final MemberService memberService;
+    private final MemberAuthService memberAuthService;
+    private final MemberRegisterService memberRegisterService;
+    private final MemberUpdateService memberUpdateService;
+
     private final SignUpValidator signUpValidator;
     private final JwtProvider jwtProvider;
 
@@ -27,21 +31,15 @@ public class MemberController {
         webDataBinder.addValidators(signUpValidator);
     }
 
-    public MemberController(MemberService memberService, SignUpValidator signUpValidator, JwtProvider jwtProvider) {
-        this.memberService = memberService;
-        this.signUpValidator = signUpValidator;
-        this.jwtProvider = jwtProvider;
-    }
-
     @PostMapping("/sign-up")
     public ResponseEntity<MemberDto> signUp(@RequestBody @Validated SignUpDto signUpDto) {
-        MemberDto memberDto = memberService.signUp(signUpDto);
+        MemberDto memberDto = memberRegisterService.signUp(signUpDto);
         return ResponseEntity.ok(memberDto);
     }
 
     @PostMapping("/login")
     public ResponseEntity<TokenResponse> login(@RequestBody LoginDto loginDto) {
-        MemberDto memberDto = memberService.login(loginDto);
+        MemberDto memberDto = memberAuthService.login(loginDto);
         TokenResponse tokenList = jwtProvider.createTokensByLogin(memberDto);
         return ResponseEntity.ok(tokenList);
     }
@@ -56,12 +54,12 @@ public class MemberController {
         return ResponseEntity.ok(atkResponse);
     }
 
-    @GetMapping("info")
+    @GetMapping("/info")
     public ResponseEntity<MemberDto> getMemberInfo(
             @RequestParam("memberId") Long memberId
     ) {
         MemberDto memberDto = MemberDto.of(
-                memberService.getMemberById(memberId)
+                memberAuthService.getMember(memberId)
                         .orElseThrow(BadRequestException::new));
         return ResponseEntity.ok(memberDto);
     }
@@ -70,7 +68,7 @@ public class MemberController {
     public ResponseEntity<CheckEmailResponse> checkEmail(
             @RequestParam("email") String email
     ) {
-        boolean isExist = memberService.existEmail(email);
+        boolean isExist = memberAuthService.existEmail(email);
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
     }
 
@@ -81,7 +79,7 @@ public class MemberController {
     ) {
         boolean nicknameIsNull = Objects.isNull(updateMember.getNickname());
         if(nicknameIsNull) throw new BadRequestException();
-        return memberService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
+        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
     }
 
     @PatchMapping("/description")
@@ -89,7 +87,7 @@ public class MemberController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody UpdateMember updateMember
     ) {
-        return memberService.updateNickname(memberDetails.getMember(), updateMember.getDescription());
+        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getDescription());
     }
 
     @PatchMapping("/avatar")
@@ -99,6 +97,6 @@ public class MemberController {
     ) {
         boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
         if(avatarIsNull) throw new BadRequestException();
-        return memberService.updateNickname(memberDetails.getMember(), updateMember.getUpdateUrl());
+        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getUpdateUrl());
     }
 }

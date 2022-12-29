@@ -3,8 +3,9 @@ package com.example.rqs.api.space;
 import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.api.jwt.JwtProvider;
-import com.example.rqs.core.member.service.MemberService;
-import com.example.rqs.core.space.service.SpaceService;
+import com.example.rqs.core.member.service.MemberAuthService;
+import com.example.rqs.core.space.service.*;
+import com.example.rqs.core.spacemember.service.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,10 +28,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class SpaceControllerTest {
 
     @MockBean
-    private SpaceService spaceService;
+    SpaceReadService spaceReadService;
+    @MockBean
+    SpaceInviteService spaceInviteService;
+    @MockBean
+    SpaceUpdateService spaceUpdateService;
+    @MockBean
+    SpaceRegisterService spaceRegisterService;
 
     @MockBean
-    private MemberService memberService;
+    SpaceMemberReadService spaceMemberReadService;
+    @MockBean
+    SpaceMemberRegisterService spaceMemberRegisterService;
+    @MockBean
+    SpaceMemberUpdateService spaceMemberUpdateService;
+    @MockBean
+    SpaceMemberAuthService spaceMemberAuthService;
+
+    @MockBean
+    private MemberAuthService memberService;
 
     @MockBean
     private RedisTemplate<String, String> redisTemplate;

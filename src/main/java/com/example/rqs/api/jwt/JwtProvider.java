@@ -1,6 +1,7 @@
 package com.example.rqs.api.jwt;
 
 import com.example.rqs.core.member.service.dtos.MemberDto;
+import com.example.rqs.core.space.service.dtos.InviteSpaceSubject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.JwtException;
 

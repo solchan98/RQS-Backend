@@ -5,10 +5,11 @@ import com.example.rqs.api.cache.randomItem.RandomItemCacheService;
 import com.example.rqs.api.common.CommonAPIAuthChecker;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.MemberDetails;
-import com.example.rqs.core.item.service.ItemService;
+import com.example.rqs.core.item.service.*;
 import com.example.rqs.core.item.service.dtos.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,12 +24,18 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
+@RequiredArgsConstructor
 public class ItemController {
 
     private static final String AUTH = "/my";
     private static final String DOMAIN = "/item";
 
-    private final ItemService itemService;
+    private final ItemReadService itemReadService;
+    private final ItemRandomService itemRandomService;
+    private final ItemAuthService itemAuthService;
+    private final ItemUpdateService itemUpdateService;
+    private final ItemRegisterService itemRegisterService;
+
     private final CreateItemValidator createItemValidator;
     private final UpdateItemValidator updateItemValidator;
     private final RandomItemCacheService randomItemCacheService;
@@ -44,14 +51,6 @@ public class ItemController {
         webDataBinder.addValidators(updateItemValidator);
     }
 
-    public ItemController(ItemService itemService, CreateItemValidator createItemValidator, UpdateItemValidator updateItemValidator, RandomItemCacheService randomItemCacheService, CommonAPIAuthChecker commonAPIAuthChecker) {
-        this.itemService = itemService;
-        this.createItemValidator = createItemValidator;
-        this.updateItemValidator = updateItemValidator;
-        this.randomItemCacheService = randomItemCacheService;
-        this.commonAPIAuthChecker = commonAPIAuthChecker;
-    }
-
     @PostMapping(AUTH + DOMAIN)
     public ItemResponse createNewItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
@@ -63,7 +62,7 @@ public class ItemController {
                 createItemDto.getQuestion(),
                 createItemDto.getAnswer(),
                 createItemDto.getHint());
-        return itemService.createNewItem(createItem);
+        return itemRegisterService.createItem(createItem);
     }
 
     @GetMapping(DOMAIN)
@@ -73,8 +72,8 @@ public class ItemController {
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? itemService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
-                : itemService.getItem(ReadItem.of(itemId));
+                ? itemReadService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
+                : itemReadService.getItem(ReadItem.of(itemId));
     }
 
     @GetMapping(DOMAIN + "/all")
@@ -85,8 +84,8 @@ public class ItemController {
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? itemService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
-                : itemService.getItemList(ReadItemList.of(lastItemId, spaceId));
+                ? itemReadService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
+                : itemReadService.getItemList(ReadItemList.of(lastItemId, spaceId));
     }
 
     @GetMapping(AUTH + DOMAIN + "/random")
@@ -100,7 +99,7 @@ public class ItemController {
 
         RandomItemResponse randomItemResponse;
         if (invalidCache) {
-            randomItemResponse = itemService.getRandomItem(memberDetails.getMember(), spaceId);
+            randomItemResponse = itemRandomService.getRandomItem(memberDetails.getMember(), spaceId);
             randomItemCacheService.addNewCache(
                     spaceId + "_" + memberDetails.getMember().getMemberId(),
                     randomItemResponse.getTotalCnt(),
@@ -109,7 +108,7 @@ public class ItemController {
             RandomItemCache itemCache = randomItemCache.get();
             ReadRandomItem readRandomItem = ReadRandomItem.of(
                     memberDetails.getMember(), spaceId, itemCache.getSelectableIndexList());
-            randomItemResponse = itemService.getRandomItem(readRandomItem);
+            randomItemResponse = itemRandomService.getRandomItem(readRandomItem);
             randomItemCacheService.updateCache(
                     spaceId + "_" + memberDetails.getMember().getMemberId(),
                     randomItemResponse.getSelectedCacheListIndex().intValue());
@@ -122,7 +121,7 @@ public class ItemController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("itemId") Long itemId
     ) {
-        boolean isItemCreator = itemService.isItemCreator(memberDetails.getMember(), itemId);
+        boolean isItemCreator = itemAuthService.isItemCreator(memberDetails.getMember(), itemId);
         return isItemCreator
                 ? new Message("200", HttpStatus.OK)
                 : new Message("403", HttpStatus.FORBIDDEN);
@@ -139,7 +138,7 @@ public class ItemController {
                 updateItemDto.getQuestion(),
                 updateItemDto.getAnswer(),
                 updateItemDto.getHint());
-        return itemService.updateItem(updateItem);
+        return itemUpdateService.updateItem(updateItem);
     }
 
     @DeleteMapping(AUTH + DOMAIN)
@@ -147,12 +146,8 @@ public class ItemController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("itemId") Long itemId
     ) throws JsonProcessingException {
-        DeleteItemCacheData deleteItemCacheData = itemService.getDeleteItemCacheData(itemId);
-        randomItemCacheService.deleteIndexInCache(
-                deleteItemCacheData.getSpaceId(),
-                deleteItemCacheData.getItemIndex());
-        DeleteItem deleteItem = DeleteItem.of(memberDetails.getMember(), itemId);
-        itemService.deleteItem(deleteItem);
+        DeletedItemData deletedItemData = itemUpdateService.deleteItem(memberDetails.getMember(), itemId);
+        randomItemCacheService.deleteIndexInCache(deletedItemData.getSpaceId(), deletedItemData.getItemIndex());
         return DeleteResponse.of(itemId, true);
     }
 }
