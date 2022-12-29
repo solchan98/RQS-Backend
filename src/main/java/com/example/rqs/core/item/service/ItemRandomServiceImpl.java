@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Random;
 
 @Service
@@ -54,8 +53,9 @@ public class ItemRandomServiceImpl implements ItemRandomService {
                     .orElseThrow(ForbiddenException::new);
         }
 
-        int randomIdx = this.pickRandomIndex(readRandomItem.getSelectableIndexList());
-        ItemResponse itemResponse = itemRepository.getItem(readRandomItem.getSpaceId(), randomIdx);
+        int randomIdx = this.pickRandomIndex(readRandomItem.getSelectableIndexList().size());
+        ItemResponse itemResponse = itemRepository.getItem(
+                readRandomItem.getSpaceId(), readRandomItem.getSelectableIndexList().get(randomIdx).intValue());
         return RandomItemResponse.of((long) randomIdx, itemResponse);
     }
 
@@ -64,9 +64,4 @@ public class ItemRandomServiceImpl implements ItemRandomService {
         return random.nextInt(size);
     }
 
-    private int pickRandomIndex(List<Long> selectableIdxList) {
-        Random random = new Random();
-        int randomIdx = random.nextInt(selectableIdxList.size());
-        return selectableIdxList.get(randomIdx).intValue();
-    }
 }

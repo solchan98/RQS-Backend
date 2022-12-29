@@ -20,7 +20,7 @@ public class ReadSpaceList {
         this.type = type;
     }
 
-    public static ReadSpaceList offset(long offset) {
+    public static ReadSpaceList offset(Long offset) {
         return new ReadSpaceList(null, offset, "TRENDING");
     }
 

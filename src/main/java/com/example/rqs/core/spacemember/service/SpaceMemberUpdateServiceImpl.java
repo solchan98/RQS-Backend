@@ -31,10 +31,12 @@ public class SpaceMemberUpdateServiceImpl implements SpaceMemberUpdateService {
         boolean isUpdatable = smAuthService.isUpdatableSpaceMemberRole(spaceMember);
         if (!isUpdatable) throw new ForbiddenException();
 
-        SpaceMember targetSpaceMember = smRepository.getSpaceMember(
-                        updateSpaceMemberRole.getChangedSpaceMemberId(),
-                        updateSpaceMemberRole.getSpaceId())
+        SpaceMember targetSpaceMember = smRepository
+                .findById(updateSpaceMemberRole.getChangedSpaceMemberId())
                 .orElseThrow(BadRequestException::new);
+        if (!targetSpaceMember.getSpace().getSpaceId().equals(spaceMember.getSpace().getSpaceId()))
+            throw new BadRequestException();
+
         targetSpaceMember.updateRole(updateSpaceMemberRole.getNewRole());
         return SpaceMemberResponse.of(targetSpaceMember);
     }
@@ -52,6 +54,9 @@ public class SpaceMemberUpdateServiceImpl implements SpaceMemberUpdateService {
         SpaceMember willDeleteSpaceMember = smRepository
                 .findById(deleteSpaceMember.getSpaceId())
                 .orElseThrow(BadRequestException::new);
+        if (!willDeleteSpaceMember.getSpace().getSpaceId().equals(spaceMember.getSpace().getSpaceId()))
+            throw new BadRequestException();
+
         smRepository.delete(willDeleteSpaceMember);
     }
 }

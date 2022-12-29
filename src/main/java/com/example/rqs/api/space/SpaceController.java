@@ -95,7 +95,7 @@ public class SpaceController {
 
     @GetMapping(DOMAIN + "/all/trending")
     public List<SpaceResponse> getAllSpaceByTrending(
-            @Nullable @RequestParam("offset") long offset
+            @Nullable @RequestParam("offset") Long offset
     ) {
         return this.spaceReadService.getSpaceList(ReadSpaceList.offset(offset));
     }
