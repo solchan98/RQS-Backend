@@ -20,6 +20,10 @@ public class ReadRandomItem {
         this.selectableIndexList = selectableIndexList;
     }
 
+    public static ReadRandomItem of(Member member, Long spaceId) {
+        return new ReadRandomItem(member, spaceId, List.of());
+    }
+
     public static ReadRandomItem of(Member member, Long spaceId, List<Long> selectableIndexList) {
         return new ReadRandomItem(member, spaceId, selectableIndexList);
     }

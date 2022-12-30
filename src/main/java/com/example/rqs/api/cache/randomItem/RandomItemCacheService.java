@@ -1,6 +1,7 @@
 package com.example.rqs.api.cache.randomItem;
 
 import com.example.rqs.core.common.redis.RedisDao;
+import com.example.rqs.core.item.service.dtos.RandomItem;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,19 +25,6 @@ public class RandomItemCacheService {
         this.redisDao = redisDao;
     }
 
-    private void addCache(String key, RandomItemCache randomItemCache) throws JsonProcessingException {
-        String objectAsString = objectMapper.writeValueAsString(randomItemCache);
-        redisDao.setValues(key, objectAsString, Duration.ofMillis(itemCacheTime));
-    }
-
-    public void addNewCache(String key, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
-        List<Long> itemIndexList = new ArrayList<>(spaceItemSize.intValue());
-        for (long i = 0L; i < spaceItemSize; i++) itemIndexList.add(i);
-        RandomItemCache randomItemCache = new RandomItemCache(itemIndexList);
-        randomItemCache.getSelectableIndexList().remove(selectedCacheIndex);
-        this.addCache(key, randomItemCache);
-    }
-
     public Optional<RandomItemCache> getCache(String key) throws JsonProcessingException {
         String stringObject = redisDao.getValues(key);
         return Objects.isNull(stringObject)
@@ -44,11 +32,32 @@ public class RandomItemCacheService {
                 : Optional.of(objectMapper.readValue(stringObject, RandomItemCache.class));
     }
 
-    public void updateCache(String key, int selectedCacheIndex) throws JsonProcessingException {
+    public RandomItemCache cache(String key, RandomItem randomItem, boolean isFirst) throws JsonProcessingException {
+        return isFirst
+                ? this.addNewCache(key, randomItem.getTotalCnt(), randomItem.getSelectedCacheListIndex().intValue())
+                : this.updateCache(key, randomItem.getSelectedCacheListIndex().intValue());
+    }
+
+    private RandomItemCache addNewCache(String key, Long spaceItemSize, int selectedCacheIndex) throws JsonProcessingException {
+        List<Long> itemIndexList = new ArrayList<>(spaceItemSize.intValue());
+        for (long i = 0L; i < spaceItemSize; i++) itemIndexList.add(i);
+        RandomItemCache randomItemCache = new RandomItemCache(itemIndexList, itemCacheTime);
+        randomItemCache.removeSelectableIndex(selectedCacheIndex);
+        this.addCache(key, randomItemCache);
+        return randomItemCache;
+    }
+
+    private RandomItemCache updateCache(String key, int selectedCacheIndex) throws JsonProcessingException {
         String values = redisDao.getValues(key);
-        RandomItemCache itemCache = objectMapper.readValue(values, RandomItemCache.class);
-        itemCache.getSelectableIndexList().remove(selectedCacheIndex);
-        this.addCache(key, itemCache);
+        RandomItemCache randomItemCache = objectMapper.readValue(values, RandomItemCache.class);
+        randomItemCache.removeSelectableIndex(selectedCacheIndex);
+        this.addCache(key, randomItemCache);
+        return randomItemCache;
+    }
+
+    private void addCache(String key, RandomItemCache randomItemCache) throws JsonProcessingException {
+        String objectAsString = objectMapper.writeValueAsString(randomItemCache);
+        redisDao.setValues(key, objectAsString, Duration.ofMillis(itemCacheTime));
     }
 
     public boolean existCacheByKeyPattern(String keyPattern) {

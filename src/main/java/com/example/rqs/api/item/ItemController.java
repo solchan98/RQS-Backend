@@ -89,31 +89,23 @@ public class ItemController {
     }
 
     @GetMapping(AUTH + DOMAIN + "/random")
-    public ItemResponse getRandomItem(
+    public RandomItemResponse getRandomItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) throws JsonProcessingException {
-        Optional<RandomItemCache> randomItemCache = randomItemCacheService
+        Optional<RandomItemCache> randomItemCacheOp = randomItemCacheService
                 .getCache(spaceId + "_" + memberDetails.getMember().getMemberId());
-        boolean invalidCache = randomItemCache.isEmpty() || randomItemCache.get().getSelectableIndexList().size() == 0;
+        boolean invalidCache = randomItemCacheOp.isEmpty() || randomItemCacheOp.get().getSelectableIndexList().size() == 0;
 
-        RandomItemResponse randomItemResponse;
-        if (invalidCache) {
-            randomItemResponse = itemRandomService.getRandomItem(memberDetails.getMember(), spaceId);
-            randomItemCacheService.addNewCache(
-                    spaceId + "_" + memberDetails.getMember().getMemberId(),
-                    randomItemResponse.getTotalCnt(),
-                    randomItemResponse.getSelectedCacheListIndex().intValue());
-        } else {
-            RandomItemCache itemCache = randomItemCache.get();
-            ReadRandomItem readRandomItem = ReadRandomItem.of(
-                    memberDetails.getMember(), spaceId, itemCache.getSelectableIndexList());
-            randomItemResponse = itemRandomService.getRandomItem(readRandomItem);
-            randomItemCacheService.updateCache(
-                    spaceId + "_" + memberDetails.getMember().getMemberId(),
-                    randomItemResponse.getSelectedCacheListIndex().intValue());
-        }
-        return randomItemResponse.getItemResponse();
+        ReadRandomItem readRandomItem = invalidCache
+                ? ReadRandomItem.of(memberDetails.getMember(), spaceId)
+                : ReadRandomItem.of(memberDetails.getMember(), spaceId, randomItemCacheOp.get().getSelectableIndexList());
+
+        RandomItem randomItem = itemRandomService.getRandomItem(readRandomItem);
+        String key = spaceId + "_" + memberDetails.getMember().getMemberId();
+        RandomItemCache randomItemCache = randomItemCacheService.cache(key, randomItem, invalidCache);
+
+        return RandomItemResponse.of(randomItemCache, randomItem.getItemResponse());
     }
 
     @GetMapping(AUTH + DOMAIN + "/creator")
