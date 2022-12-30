@@ -12,6 +12,7 @@ import java.time.Duration;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest(classes = {RedisConfig.class, RedisDao.class})
 public class RedisDaoTest {
@@ -52,5 +53,26 @@ public class RedisDaoTest {
         Set<String> keySet = redisDao.getKeys("pattern_*");
 
         assertThat(keySet.size()).isEqualTo(2);
+    }
+
+    @Test
+    @DisplayName("getExpiredAt - 정상 케이스 테스트")
+    void testGetExpiredAt() throws InterruptedException {
+        redisDao.setValues("key", "value", Duration.ofSeconds(6));
+
+        Thread.sleep(1500);
+        Duration expire = redisDao.getExpiredAt("key");
+
+        assertThat(expire.getSeconds()).isLessThan(5);
+    }
+
+    @Test
+    @DisplayName("getExpiredAt - 키가 만료된 경우")
+    void testGetExpiredAtWhenTheKeysHasExpired() throws InterruptedException {
+        redisDao.setValues("key", "value", Duration.ofSeconds(1));
+        Thread.sleep(1500);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> redisDao.getExpiredAt("key"));
+        assertThat(exception.getMessage()).isEqualTo("The key has expired");
     }
 }

@@ -5,7 +5,9 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
 import java.time.Duration;
+import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class RedisDao {
@@ -29,6 +31,13 @@ public class RedisDao {
     public String getValues(String key) {
         ValueOperations<String, String> values = redisTemplate.opsForValue();
         return values.get(key);
+    }
+
+    public Duration getExpiredAt(String key) throws RuntimeException {
+        Long expire = redisTemplate.getExpire(key, TimeUnit.MILLISECONDS);
+        boolean isExpired = Objects.isNull(expire) || expire <= 0;
+        if (isExpired) throw new RuntimeException("The key has expired");
+        return Duration.ofMillis(expire);
     }
 
     public Set<String> getKeys(String pattern) {
