@@ -5,7 +5,7 @@ import com.example.rqs.core.common.exception.ForbiddenException;
 import com.example.rqs.core.common.exception.RQSError;
 import com.example.rqs.core.item.repository.ItemRepository;
 import com.example.rqs.core.item.service.dtos.ItemResponse;
-import com.example.rqs.core.item.service.dtos.RandomItemResponse;
+import com.example.rqs.core.item.service.dtos.RandomItem;
 import com.example.rqs.core.item.service.dtos.ReadRandomItem;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.Space;
@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -27,8 +28,14 @@ public class ItemRandomServiceImpl implements ItemRandomService {
 
     private final ItemRepository itemRepository;
 
-    @Override
-    public RandomItemResponse getRandomItem(Member member, Long spaceId) {
+    public RandomItem getRandomItem(ReadRandomItem readRandomItem) {
+        boolean isFirst = readRandomItem.getSelectableIndexList().size() == 0;
+        return isFirst
+                ? this.getRandomItem(readRandomItem.getMember(), readRandomItem.getSpaceId())
+                : this.getRandomItem(readRandomItem.getMember(), readRandomItem.getSpaceId(), readRandomItem.getSelectableIndexList());
+    }
+
+    private RandomItem getRandomItem(Member member, Long spaceId) {
         Space space = spaceReadService.getSpace(spaceId).orElseThrow(BadRequestException::new);
 
         if (!space.isVisibility()) {
@@ -40,23 +47,19 @@ public class ItemRandomServiceImpl implements ItemRandomService {
 
         int randomIdx = this.pickRandomIndex(itemCnt.intValue());
         ItemResponse itemResponse = itemRepository.getItem(spaceId, randomIdx);
-        return RandomItemResponse.of((long) randomIdx, itemResponse, itemCnt);
+        return RandomItem.of((long) randomIdx, itemResponse, itemCnt);
     }
 
-    @Override
-    public RandomItemResponse getRandomItem(ReadRandomItem readRandomItem) {
-        Space space = spaceReadService.getSpace(readRandomItem.getSpaceId()).orElseThrow(BadRequestException::new);
+    private RandomItem getRandomItem(Member member, Long spaceId, List<Long> selectableIndexList) {
+        Space space = spaceReadService.getSpace(spaceId).orElseThrow(BadRequestException::new);
 
         if (!space.isVisibility()) {
-            smReadService
-                    .getSpaceMember(readRandomItem.getMember().getMemberId(), readRandomItem.getSpaceId())
-                    .orElseThrow(ForbiddenException::new);
+            smReadService.getSpaceMember(member.getMemberId(), spaceId).orElseThrow(ForbiddenException::new);
         }
 
-        int randomIdx = this.pickRandomIndex(readRandomItem.getSelectableIndexList().size());
-        ItemResponse itemResponse = itemRepository.getItem(
-                readRandomItem.getSpaceId(), readRandomItem.getSelectableIndexList().get(randomIdx).intValue());
-        return RandomItemResponse.of((long) randomIdx, itemResponse);
+        int randomIdx = this.pickRandomIndex(selectableIndexList.size());
+        ItemResponse itemResponse = itemRepository.getItem(spaceId, selectableIndexList.get(randomIdx).intValue());
+        return RandomItem.of((long) randomIdx, itemResponse);
     }
 
     private int pickRandomIndex(int size) {
