@@ -28,6 +28,9 @@ public class JwtProviderImpl implements JwtProvider {
     @Value("${spring.jwt.live.rtk}")
     private Long rtkLive;
 
+    @Value("${spring.jwt.live.itk}")
+    private Long itkLive;
+
     private final ObjectMapper objectMapper;
 
     private final RedisDao redisDao;
@@ -86,7 +89,7 @@ public class JwtProviderImpl implements JwtProvider {
                     .setIssuedAt(date)
                     .signWith(SignatureAlgorithm.HS256, key)
                     .compact();
-            redisDao.setValues(token, inviteSpaceSubject.getInviterNickname());
+            redisDao.setValues(token, inviteSpaceSubject.getInviterNickname(), Duration.ofMillis(itkLive));
             return InviteSpaceTokenResponse.of(token);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
