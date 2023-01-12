@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -33,19 +32,18 @@ public class SpaceReadServiceImpl implements SpaceReadService {
     public SpaceResponse getSpace(ReadSpace readSpace) {
         Space space = spaceRepository.findById(readSpace.getSpaceId()).orElseThrow(BadRequestException::new);
 
-        if (Objects.isNull(readSpace.getMember())) {
-            return SpaceResponse.createByGuest(space);
-        }
-
         Optional<SpaceMember> spaceMemberOptional = smReadService
                 .getSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
 
-        if (spaceMemberOptional.isEmpty()) {
-            if (!space.isVisibility()) throw new ForbiddenException();
-            return SpaceResponse.createByGuest(space);
-        } else {
+        if (spaceMemberOptional.isPresent()) {
             return SpaceResponse.createBySpaceMember(space, spaceMemberOptional.get());
         }
+
+        if (!space.isVisibility()) {
+            throw new ForbiddenException();
+        }
+
+        return SpaceResponse.createByGuest(space);
     }
 
     @Override
