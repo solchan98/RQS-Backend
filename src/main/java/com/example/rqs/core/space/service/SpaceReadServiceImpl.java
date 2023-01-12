@@ -34,18 +34,22 @@ public class SpaceReadServiceImpl implements SpaceReadService {
         Space space = spaceRepository.findById(readSpace.getSpaceId()).orElseThrow(BadRequestException::new);
 
         if (Objects.isNull(readSpace.getMember())) {
+            if (!space.isVisibility()) {
+                throw new ForbiddenException();
+            }
             return SpaceResponse.createByGuest(space);
         }
 
         Optional<SpaceMember> spaceMemberOptional = smReadService
                 .getSpaceMember(readSpace.getMember().getMemberId(), readSpace.getSpaceId());
-
         if (spaceMemberOptional.isEmpty()) {
-            if (!space.isVisibility()) throw new ForbiddenException();
+            if (!space.isVisibility()) {
+                throw new ForbiddenException();
+            }
             return SpaceResponse.createByGuest(space);
-        } else {
-            return SpaceResponse.createBySpaceMember(space, spaceMemberOptional.get());
         }
+
+        return SpaceResponse.createBySpaceMember(space, spaceMemberOptional.get());
     }
 
     @Override
