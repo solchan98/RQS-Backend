@@ -41,7 +41,6 @@ public class JwtProviderImplTest {
         ReflectionTestUtils.setField(jwtProviderImpl, "key", "secret");
         ReflectionTestUtils.setField(jwtProviderImpl, "atkLive", 6000L);
         ReflectionTestUtils.setField(jwtProviderImpl, "rtkLive", 6000L * 30);
-        ReflectionTestUtils.setField(jwtProviderImpl, "itkLive", 30000L);
     }
 
     @AfterEach
