@@ -15,7 +15,6 @@ import com.example.rqs.core.spacemember.service.SpaceMemberUpdateService;
 import com.example.rqs.core.spacemember.service.dtos.DeleteSpaceMember;
 import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.example.rqs.core.spacemember.service.dtos.UpdateSpaceMemberRole;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -148,11 +147,10 @@ public class SpaceController {
     @GetMapping(AUTH + DOMAIN + "/join")
     public SpaceMemberResponse joinSpace(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("itk") String itk
-    ) throws JsonProcessingException {
-        joinSpaceValidator.validate(itk);
-        InviteSpaceSubject inviteSpaceSubject = jwtProvider.getInviteSpaceSubject(itk);
-        return spaceMemberRegisterService.addNewMember(memberDetails.getMember(), inviteSpaceSubject.getSpaceId());
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("code") String code
+    ) {
+       return spaceInviteService.join(memberDetails.getMember(), spaceId, code);
     }
 
     // TODO: /creator -> updatable

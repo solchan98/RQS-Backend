@@ -11,6 +11,7 @@ import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
 import com.example.rqs.core.spacemember.service.SpaceMemberRegisterService;
 
+import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class SpaceInviteServiceImpl implements SpaceInviteService {
 
     @Override
     @Transactional
-    public SpaceMember join(Member member, Long spaceId, String joinCode) {
+    public SpaceMemberResponse join(Member member, Long spaceId, String joinCode) {
         Space space = spaceReadService
                 .getSpace(spaceId)
                 .orElseThrow(BadRequestException::new);
@@ -50,7 +51,8 @@ public class SpaceInviteServiceImpl implements SpaceInviteService {
         if (spaceRole == SpaceRole.GUEST) {
             throw new ForbiddenException();
         }
+        SpaceMember spaceMember = smRegisterService.createSpaceMember(member, space, spaceRole);
 
-        return smRegisterService.createSpaceMember(member, space, spaceRole);
+        return SpaceMemberResponse.of(spaceMember);
     }
 }
