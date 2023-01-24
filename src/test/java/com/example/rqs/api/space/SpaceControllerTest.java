@@ -23,7 +23,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest({SpaceController.class, JoinSpaceValidator.class, JwtProvider.class, CommonAPIAuthChecker.class, RedisDao.class})
+@WebMvcTest({SpaceController.class, JwtProvider.class, CommonAPIAuthChecker.class, RedisDao.class})
 @DisplayName("스페이스 컨트롤러 테스트")
 public class SpaceControllerTest {
 
