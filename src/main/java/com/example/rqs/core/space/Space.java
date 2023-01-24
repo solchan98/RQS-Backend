@@ -2,12 +2,15 @@ package com.example.rqs.core.space;
 
 import com.example.rqs.core.item.Item;
 import com.example.rqs.core.spacemember.SpaceMember;
+import com.example.rqs.core.spacemember.SpaceRole;
 import lombok.Getter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -23,6 +26,10 @@ public class Space {
     private String url;
 
     private boolean visibility;
+
+    private String adminCode;
+
+    private String memberCode;
 
     private LocalDateTime createdAt;
 
@@ -43,6 +50,8 @@ public class Space {
         this.visibility = visibility;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.adminCode = UUID.randomUUID().toString().substring(0, 6);
+        this.memberCode = UUID.randomUUID().toString().substring(0, 6);
     }
 
 
@@ -69,5 +78,12 @@ public class Space {
 
     public void changeVisibility(boolean visibility) {
         this.visibility = visibility;
+    }
+
+    public Map<SpaceRole, String> joinCode() {
+        return Map.of(
+                SpaceRole.ADMIN, adminCode,
+                SpaceRole.MEMBER, memberCode
+        );
     }
 }

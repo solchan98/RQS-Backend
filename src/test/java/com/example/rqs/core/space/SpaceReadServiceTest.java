@@ -6,6 +6,8 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.repository.SpaceRepository;
 import com.example.rqs.core.space.service.SpaceReadServiceImpl;
 import com.example.rqs.core.space.service.dtos.ReadSpace;
+import com.example.rqs.core.spacemember.SpaceMember;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -32,6 +35,9 @@ public class SpaceReadServiceTest {
 
     @Mock
     SpaceMemberReadService smReadService;
+
+    @Mock
+    SpaceMemberAuthService smAuthService;
 
     @Test
     @DisplayName("getSpace() - 스페이스가 없는 경우")
@@ -62,5 +68,37 @@ public class SpaceReadServiceTest {
         assertThrows(
                 ForbiddenException.class,
                 () -> spaceReadService.getSpace(readSpace));
+    }
+
+    @Test
+    @DisplayName("getJoinCodes - 권한이 없는 경우")
+    void getJoinCodesWhenNoRoles() {
+        // given
+        Member member = mock(Member.class);
+        given(member.getMemberId()).willReturn(1L);
+        SpaceMember spaceMember = mock(SpaceMember.class);
+        given(smReadService.getSpaceMember(1L, 1L)).willReturn(Optional.of(spaceMember));
+        given(smAuthService.isUpdatableSpaceMemberRole(any())).willReturn(false);
+
+        // when then
+        assertThrows(
+                ForbiddenException.class,
+                () -> spaceReadService.getJoinCodes(member, 1L)
+        );
+    }
+
+    @Test
+    @DisplayName("getJoinCodes - 스페이스 멤버가 아닌 경우")
+    void getJoinCodesWhenNotSpaceMember() {
+        // given
+        Member member = mock(Member.class);
+        given(member.getMemberId()).willReturn(1L);
+        given(smReadService.getSpaceMember(1L, 1L)).willReturn(Optional.empty());
+
+        // when then
+        assertThrows(
+                ForbiddenException.class,
+                () -> spaceReadService.getJoinCodes(member, 1L)
+        );
     }
 }
