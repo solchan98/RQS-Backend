@@ -2,10 +2,13 @@ package com.example.rqs.core.space.service;
 
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.common.exception.ForbiddenException;
+import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.space.repository.SpaceRepository;
 import com.example.rqs.core.space.service.dtos.*;
 import com.example.rqs.core.spacemember.SpaceMember;
+import com.example.rqs.core.spacemember.SpaceRole;
+import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
 
 import lombok.RequiredArgsConstructor;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -23,6 +27,7 @@ public class SpaceReadServiceImpl implements SpaceReadService {
 
     private final SpaceRepository spaceRepository;
     private final SpaceMemberReadService smReadService;
+    private final SpaceMemberAuthService smAuthService;
 
     @Override
     public Optional<Space> getSpace(Long spaceId) {
@@ -65,5 +70,19 @@ public class SpaceReadServiceImpl implements SpaceReadService {
                 readMembersSpaceList.getMemberId(),
                 readMembersSpaceList.getTargetMemberId(),
                 readMembersSpaceList.getLastJoinedAt());
+    }
+
+    @Override
+    public Map<SpaceRole, String> getJoinCodes(Member member, Long spaceId) {
+        SpaceMember spaceMember = smReadService
+                .getSpaceMember(member.getMemberId(), spaceId)
+                .orElseThrow(ForbiddenException::new);
+
+        boolean readable = smAuthService.isUpdatableSpaceMemberRole(spaceMember);
+        if (!readable) {
+            throw new ForbiddenException();
+        }
+
+        return spaceMember.getSpace().joinCode();
     }
 }

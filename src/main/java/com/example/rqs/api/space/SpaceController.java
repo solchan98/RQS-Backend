@@ -9,13 +9,11 @@ import com.example.rqs.core.space.service.dtos.*;
 import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
-
-import com.example.rqs.core.spacemember.service.SpaceMemberRegisterService;
 import com.example.rqs.core.spacemember.service.SpaceMemberUpdateService;
 import com.example.rqs.core.spacemember.service.dtos.DeleteSpaceMember;
 import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.example.rqs.core.spacemember.service.dtos.UpdateSpaceMemberRole;
-import com.fasterxml.jackson.core.JsonProcessingException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -40,12 +38,9 @@ public class SpaceController {
     private final SpaceUpdateService spaceUpdateService;
 
     private final SpaceMemberReadService spaceMemberReadService;
-    private final SpaceMemberRegisterService spaceMemberRegisterService;
     private final SpaceMemberUpdateService spaceMemberUpdateService;
     private final SpaceMemberAuthService spaceMemberAuthService;
 
-    private final JwtProvider jwtProvider;
-    private final JoinSpaceValidator joinSpaceValidator;
     private final CommonAPIAuthChecker commonAPIAuthChecker;
 
     @PostMapping(AUTH + DOMAIN)
@@ -136,23 +131,21 @@ public class SpaceController {
         return spaceMemberReadService.getSpaceMemberList(memberDetails.getMember().getMemberId(), spaceId);
     }
 
-    @GetMapping(AUTH + DOMAIN + "/invite")
-    public InviteSpaceTokenResponse createInviteSpaceLink(
-            @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("spaceId") Long spaceId
+    @GetMapping(DOMAIN + "/join")
+    public JoinSpace checkJoinSpace(
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("code") String code
     ) {
-        InviteSpaceSubject subject = spaceInviteService.createInviteSpaceSubject(memberDetails.getMember(), spaceId);
-        return jwtProvider.createInviteToken(subject);
+        return spaceInviteService.checkJoinSpace(spaceId, code);
     }
 
     @GetMapping(AUTH + DOMAIN + "/join")
     public SpaceMemberResponse joinSpace(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("itk") String itk
-    ) throws JsonProcessingException {
-        joinSpaceValidator.validate(itk);
-        InviteSpaceSubject inviteSpaceSubject = jwtProvider.getInviteSpaceSubject(itk);
-        return spaceMemberRegisterService.addNewMember(memberDetails.getMember(), inviteSpaceSubject.getSpaceId());
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("code") String code
+    ) {
+       return spaceInviteService.join(memberDetails.getMember(), spaceId, code);
     }
 
     // TODO: /creator -> updatable
