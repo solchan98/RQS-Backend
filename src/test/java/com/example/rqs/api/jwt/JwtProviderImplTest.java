@@ -3,7 +3,6 @@ package com.example.rqs.api.jwt;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.example.rqs.core.common.exception.ForbiddenException;
 import com.example.rqs.core.member.service.dtos.MemberDto;
-import com.example.rqs.core.space.service.dtos.InviteSpaceSubject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
@@ -84,45 +83,6 @@ public class JwtProviderImplTest {
 
         assertAll(
                 () -> assertEquals("인증 정보가 만료되었습니다.", exception.getMessage())
-        );
-    }
-
-    @Test
-    @DisplayName("jwtProvider inviteToken 생성 테스트")
-    void createInviteToken() {
-        Long spaceId = 1L; String spaceTitle = "테스트 스페이스";
-        Long inviterId = 1L; String inviterNickname = "sol";
-        InviteSpaceSubject inviteSpaceSubject = InviteSpaceSubject.of(
-                spaceId,
-                spaceTitle,
-                inviterId,
-                inviterNickname);
-        InviteSpaceTokenResponse inviteToken = jwtProviderImpl.createInviteToken(inviteSpaceSubject);
-        String itk = inviteToken.getInviteToken();
-
-        assertAll(
-                () -> assertThat(itk).isNotNull()
-        );
-    }
-
-    @Test
-    @DisplayName("jwtProvider inviteTokenSubject 확인 테스트")
-    void itkPayloadSubjectTest() throws JsonProcessingException {
-        Long spaceId = 1L; String spaceTitle = "테스트 스페이스";
-        Long inviterId = 1L; String inviterNickname = "sol";
-        InviteSpaceSubject inviteSpaceSubject = InviteSpaceSubject.of(
-                spaceId,
-                spaceTitle,
-                inviterId,
-                inviterNickname);
-        InviteSpaceTokenResponse inviteToken = jwtProviderImpl.createInviteToken(inviteSpaceSubject);
-        InviteSpaceSubject subject = jwtProviderImpl.getInviteSpaceSubject(inviteToken.getInviteToken());
-
-        assertAll(
-                () -> assertThat(subject.getSpaceId()).isEqualTo(1L),
-                () -> assertThat(subject.getSpaceTitle()).isEqualTo(spaceTitle),
-                () -> assertThat(subject.getInviterId()).isEqualTo(1L),
-                () -> assertThat(subject.getInviterNickname()).isEqualTo(inviterNickname)
         );
     }
 }

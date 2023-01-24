@@ -9,12 +9,11 @@ import com.example.rqs.core.space.service.dtos.*;
 import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.spacemember.service.SpaceMemberAuthService;
 import com.example.rqs.core.spacemember.service.SpaceMemberReadService;
-
-import com.example.rqs.core.spacemember.service.SpaceMemberRegisterService;
 import com.example.rqs.core.spacemember.service.SpaceMemberUpdateService;
 import com.example.rqs.core.spacemember.service.dtos.DeleteSpaceMember;
 import com.example.rqs.core.spacemember.service.dtos.SpaceMemberResponse;
 import com.example.rqs.core.spacemember.service.dtos.UpdateSpaceMemberRole;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.lang.Nullable;
@@ -39,12 +38,9 @@ public class SpaceController {
     private final SpaceUpdateService spaceUpdateService;
 
     private final SpaceMemberReadService spaceMemberReadService;
-    private final SpaceMemberRegisterService spaceMemberRegisterService;
     private final SpaceMemberUpdateService spaceMemberUpdateService;
     private final SpaceMemberAuthService spaceMemberAuthService;
 
-    private final JwtProvider jwtProvider;
-    private final JoinSpaceValidator joinSpaceValidator;
     private final CommonAPIAuthChecker commonAPIAuthChecker;
 
     @PostMapping(AUTH + DOMAIN)
@@ -133,15 +129,6 @@ public class SpaceController {
             @RequestParam("spaceId") Long spaceId
     ) {
         return spaceMemberReadService.getSpaceMemberList(memberDetails.getMember().getMemberId(), spaceId);
-    }
-
-    @GetMapping(AUTH + DOMAIN + "/invite")
-    public InviteSpaceTokenResponse createInviteSpaceLink(
-            @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("spaceId") Long spaceId
-    ) {
-        InviteSpaceSubject subject = spaceInviteService.createInviteSpaceSubject(memberDetails.getMember(), spaceId);
-        return jwtProvider.createInviteToken(subject);
     }
 
     @GetMapping(AUTH + DOMAIN + "/join")
