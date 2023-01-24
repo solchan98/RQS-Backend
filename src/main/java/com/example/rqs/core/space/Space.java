@@ -59,10 +59,6 @@ public class Space {
         return new Space(title, null, null, visibility);
     }
 
-    public static Space newSpace(String title, String content, boolean visibility) {
-        return new Space(title, content, null, visibility);
-    }
-
     public static Space newSpace(String title, String content, String url, boolean visibility) {
         return new Space(title, content, url, visibility);
     }
@@ -85,5 +81,15 @@ public class Space {
                 SpaceRole.ADMIN, adminCode,
                 SpaceRole.MEMBER, memberCode
         );
+    }
+
+    public SpaceRole getRoleByJoinCode(String joinCode) {
+        if (adminCode.equals(joinCode)) {
+            return SpaceRole.ADMIN;
+        }
+        if (memberCode.equals(joinCode)) {
+            return SpaceRole.MEMBER;
+        }
+        return SpaceRole.GUEST;
     }
 }
