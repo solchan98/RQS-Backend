@@ -131,6 +131,14 @@ public class SpaceController {
         return spaceMemberReadService.getSpaceMemberList(memberDetails.getMember().getMemberId(), spaceId);
     }
 
+    @GetMapping(DOMAIN + "/join")
+    public JoinSpace checkJoinSpace(
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("code") String code
+    ) {
+        return spaceInviteService.checkJoinSpace(spaceId, code);
+    }
+
     @GetMapping(AUTH + DOMAIN + "/join")
     public SpaceMemberResponse joinSpace(
             @AuthenticationPrincipal MemberDetails memberDetails,
