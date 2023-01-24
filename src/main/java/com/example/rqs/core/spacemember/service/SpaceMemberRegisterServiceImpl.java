@@ -24,6 +24,9 @@ public class SpaceMemberRegisterServiceImpl implements SpaceMemberRegisterServic
 
     @Override
     public SpaceMember createSpaceMember(Member member, Space space, SpaceRole spaceRole) {
+        boolean existSpaceMember = spaceMemberRepository.existSpaceMember(member.getMemberId(), space.getSpaceId());
+        if (existSpaceMember) throw new BadRequestException(RQSError.SPACE_MEMBER_ALREADY_EXIST);
+
         SpaceMember spaceMember = SpaceMember.of(member, space, spaceRole);
         return spaceMemberRepository.save(spaceMember);
     }
