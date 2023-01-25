@@ -148,8 +148,7 @@ public class SpaceController {
        return spaceInviteService.join(memberDetails.getMember(), spaceId, code);
     }
 
-    // TODO: /creator -> updatable
-    @GetMapping(AUTH + DOMAIN + "/creator")
+    @GetMapping(AUTH + DOMAIN + "/updatable")
     public Message isUpdatable(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
@@ -159,6 +158,17 @@ public class SpaceController {
         return isUpdatable
                 ? new Message("200", HttpStatus.OK)
                 : new Message("403", HttpStatus.FORBIDDEN);
+    }
+
+    @PatchMapping(AUTH + DOMAIN + "/visibility")
+    public Message changeVisibility(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("open") boolean open
+    ) {
+        spaceUpdateService.changeVisibility(memberDetails.getMember(), spaceId, open);
+
+        return new Message("Success", HttpStatus.OK);
     }
 
     @DeleteMapping(AUTH + DOMAIN + "/spaceMember")
