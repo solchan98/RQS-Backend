@@ -148,8 +148,7 @@ public class SpaceController {
        return spaceInviteService.join(memberDetails.getMember(), spaceId, code);
     }
 
-    // TODO: /creator -> updatable
-    @GetMapping(AUTH + DOMAIN + "/creator")
+    @GetMapping(AUTH + DOMAIN + "/updatable")
     public Message isUpdatable(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
