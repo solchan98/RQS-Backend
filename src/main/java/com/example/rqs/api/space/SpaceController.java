@@ -161,6 +161,17 @@ public class SpaceController {
                 : new Message("403", HttpStatus.FORBIDDEN);
     }
 
+    @PatchMapping(AUTH + DOMAIN + "/visibility")
+    public Message changeVisibility(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId,
+            @RequestParam("open") boolean open
+    ) {
+        spaceUpdateService.changeVisibility(memberDetails.getMember(), spaceId, open);
+
+        return new Message("Success", HttpStatus.OK);
+    }
+
     @DeleteMapping(AUTH + DOMAIN + "/spaceMember")
     public DeleteResponse deleteSpaceMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
