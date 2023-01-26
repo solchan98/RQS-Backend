@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -140,6 +141,15 @@ public class SpaceController {
     }
 
     @GetMapping(AUTH + DOMAIN + "/join")
+    public JoinCodeDto getJoinCode(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @RequestParam("spaceId") Long spaceId
+    ) {
+        Map<SpaceRole, String> joinCodes = spaceReadService.getJoinCodes(memberDetails.getMember(), spaceId);
+        return new JoinCodeDto(spaceId, joinCodes.get(SpaceRole.ADMIN), joinCodes.get(SpaceRole.MEMBER));
+    }
+
+    @PostMapping(AUTH + DOMAIN + "/join")
     public SpaceMemberResponse joinSpace(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
