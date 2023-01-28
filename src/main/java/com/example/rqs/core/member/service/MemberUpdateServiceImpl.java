@@ -15,14 +15,8 @@ public class MemberUpdateServiceImpl implements MemberUpdateService {
     private final MemberRepository memberRepository;
 
     @Override
-    public MemberDto updateNickname(Member member, String nickname) {
+    public MemberDto updateMember(Member member, String nickname, String description) {
         member.updateNickname(nickname);
-        memberRepository.save(member);
-        return MemberDto.of(member);
-    }
-
-    @Override
-    public MemberDto updateDescription(Member member, String description) {
         member.updateDescription(description);
         memberRepository.save(member);
         return MemberDto.of(member);

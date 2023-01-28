@@ -72,22 +72,18 @@ public class MemberController {
         return ResponseEntity.ok(CheckEmailResponse.of(email, isExist));
     }
 
-    @PatchMapping("/nickname")
+    @PatchMapping("")
     public MemberDto updateMember(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestBody UpdateMember updateMember
     ) {
         boolean nicknameIsNull = Objects.isNull(updateMember.getNickname());
         if(nicknameIsNull) throw new BadRequestException();
-        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getNickname());
-    }
-
-    @PatchMapping("/description")
-    public MemberDto updateDescription(
-            @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestBody UpdateMember updateMember
-    ) {
-        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getDescription());
+        return memberUpdateService.updateMember(
+                memberDetails.getMember(),
+                updateMember.getNickname(),
+                updateMember.getDescription()
+        );
     }
 
     @PatchMapping("/avatar")
@@ -97,6 +93,6 @@ public class MemberController {
     ) {
         boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
         if(avatarIsNull) throw new BadRequestException();
-        return memberUpdateService.updateNickname(memberDetails.getMember(), updateMember.getUpdateUrl());
+        return memberUpdateService.updateAvatar(memberDetails.getMember(), updateMember.getUpdateUrl());
     }
 }
