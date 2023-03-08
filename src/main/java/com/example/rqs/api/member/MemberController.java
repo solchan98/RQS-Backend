@@ -1,6 +1,9 @@
 package com.example.rqs.api.member;
 
 import com.example.rqs.api.jwt.*;
+import com.example.rqs.api.oauth.OauthManager;
+import com.example.rqs.api.oauth.OauthProfile;
+import com.example.rqs.api.oauth.OauthType;
 import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.member.service.*;
 import com.example.rqs.core.member.service.dtos.*;
@@ -12,6 +15,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -25,6 +31,8 @@ public class MemberController {
 
     private final SignUpValidator signUpValidator;
     private final JwtProvider jwtProvider;
+
+    private final Map<String, OauthManager> oauthManagerMap;
 
     @InitBinder("signUpDto")
     public void initSignUpBinder(WebDataBinder webDataBinder) {
@@ -94,5 +102,21 @@ public class MemberController {
         boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
         if(avatarIsNull) throw new BadRequestException();
         return memberUpdateService.updateAvatar(memberDetails.getMember(), updateMember.getUpdateUrl());
+    }
+
+    @PostMapping("/oauth/{type}")
+    public ResponseEntity<TokenResponse>  oauthLogin(
+            HttpServletRequest request,
+            @PathVariable("type") String type
+    ) {
+        String code = request.getParameter("code");
+        OauthType oauthType = OauthType.valueOfType(type);
+        OauthManager oauthManager = oauthManagerMap.get(oauthType.getType() + "Oauth");
+        OauthProfile oauthProfile = oauthManager.verify(code);
+
+        MemberDto memberDto = memberAuthService.oauthLogin(oauthProfile.toOauthLoginDto(type));
+        TokenResponse tokenList = jwtProvider.createTokensByLogin(memberDto);
+        return ResponseEntity.ok(tokenList);
+
     }
 }

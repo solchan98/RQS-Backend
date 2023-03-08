@@ -34,6 +34,7 @@ public class MemberAuthServiceImpl implements MemberAuthService {
     }
 
     @Override
+    @Transactional
     public MemberDto oauthLogin(OauthLoginDto oauthLoginDto) {
         String email = oauthLoginDto.getId() + "@" + oauthLoginDto.getType() + ".quizbox";
         Optional<Member> optionalMember = memberRepository.findByEmail(email);
