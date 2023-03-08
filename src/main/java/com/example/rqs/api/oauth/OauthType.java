@@ -5,7 +5,8 @@ import com.example.rqs.core.common.exception.BadRequestException;
 import java.util.Arrays;
 
 public enum OauthType {
-    GOOGLE("google");
+    GOOGLE("google"),
+    KAKAO("kakao");
 
     final String type;
 
