@@ -28,16 +28,21 @@ public class Member {
 
     protected Member() {}
 
-    private Member(String email, String password, String nickname) {
+    private Member(String email, String password, String nickname, String avatar) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.avatar = avatar;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
     public static Member newMember(String email, String password, String nickname) {
-        return new Member(email, password, nickname);
+        return new Member(email, password, nickname, "");
+    }
+
+    public static Member newMember(String email, String password, String nickname, String avatar) {
+        return new Member(email, password, nickname, avatar);
     }
 
     public void updateNickname(String nickname) {
