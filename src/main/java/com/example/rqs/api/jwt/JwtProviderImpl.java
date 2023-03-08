@@ -73,6 +73,12 @@ public class JwtProviderImpl implements JwtProvider {
         return objectMapper.readValue(subjectStr, Subject.class);
     }
 
+    @Override
+    public byte[] decode(String token) {
+        String payload = token.split("\\.")[1];
+        return Base64.getDecoder().decode(payload);
+    }
+
     private String createToken(Subject subject, Long tokenLive) throws JsonProcessingException {
         String subjectStr = objectMapper.writeValueAsString(subject);
         Claims claims = Jwts.claims()
