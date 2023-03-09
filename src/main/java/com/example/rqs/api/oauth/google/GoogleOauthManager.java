@@ -62,7 +62,8 @@ public class GoogleOauthManager implements OauthManager {
         byte[] decode = jwtProvider.decode(googleOauthAccess.getId_token());
         try {
             GoogleTokenPayload googleTokenPayload = objectMapper.readValue(decode, GoogleTokenPayload.class);
-            return OauthProfile.of(googleTokenPayload.getAzp(), googleTokenPayload.getName(), googleTokenPayload.getPicture());
+            System.out.println(googleTokenPayload.toString());
+            return OauthProfile.of(googleTokenPayload.getSub(), googleTokenPayload.getName(), googleTokenPayload.getPicture());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
