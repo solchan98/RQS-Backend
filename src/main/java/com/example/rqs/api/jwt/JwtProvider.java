@@ -8,4 +8,5 @@ public interface JwtProvider {
     TokenResponse createTokensByLogin(MemberDto memberDto);
     String reissueAtk(MemberDto memberDto);
     Subject getSubject(String atk) throws JwtException, JsonProcessingException;
+    byte[] decode(String token);
 }

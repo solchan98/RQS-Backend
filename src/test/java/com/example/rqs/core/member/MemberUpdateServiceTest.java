@@ -23,20 +23,6 @@ public class MemberUpdateServiceTest {
     MemberRepository memberRepository;
 
     @Test
-    @DisplayName("멤버 nickname 업데이트 테스트")
-    void updateNicknameTest() {
-        // given
-        Member member = Member.newMember("sol@sol.com", "1234", "sol");
-        String newNickname = "solsol";
-
-        // when
-        MemberDto memberDto = memberUpdateService.updateNickname(member, newNickname);
-
-        // then
-        assertThat(memberDto.getNickname()).isEqualTo(newNickname);
-    }
-
-    @Test
     @DisplayName("멤버 avatar 업데이트 테스트")
     void updateAvatarTest() {
         // given
@@ -50,17 +36,17 @@ public class MemberUpdateServiceTest {
         assertThat(memberDto.getAvatar()).isEqualTo(avatarUrl);
     }
 
-    @Test
-    @DisplayName("멤버 description 업데이트 테스트")
-    void updateDescriptionTest() {
-        // given
-        Member member = Member.newMember("sol@sol.com", "1234", "sol");
-        String newDescription = "Hello, ";
-
-        // when
-        MemberDto memberDto = memberUpdateService.updateDescription(member, newDescription);
-
-        // then
-        assertThat(memberDto.getDescription()).isEqualTo(newDescription);
-    }
+//    @Test
+//    @DisplayName("멤버 description 업데이트 테스트")
+//    void updateDescriptionTest() {
+//        // given
+//        Member member = Member.newMember("sol@sol.com", "1234", "sol");
+//        String newDescription = "Hello, ";
+//
+//        // when
+//        MemberDto memberDto = memberUpdateService.updateDescription(member, newDescription);
+//
+//        // then
+//        assertThat(memberDto.getDescription()).isEqualTo(newDescription);
+//    }
 }

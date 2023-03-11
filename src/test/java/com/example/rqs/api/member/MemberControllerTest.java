@@ -115,7 +115,7 @@ public class MemberControllerTest {
         String req = objectMapper.writeValueAsString(updateMember);
 
         ResultActions perform = mockMvc.perform(
-                patch("/api/v1/member/nickname")
+                patch("/api/v1/member")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf())

@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -44,7 +45,7 @@ public class ApiConfig {
                 .antMatchers(
                         "/api/v1/member/info",
                         "/api/v1/space/**", "/api/v1/item/**",
-                        "/api/v1/member/sign-up", "/api/v1/member/login", "/api/v1/member/check").permitAll()
+                        "/api/v1/member/sign-up", "/api/v1/member/login", "/api/v1/member/oauth/**", "/api/v1/member/check").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, memberDetailsService),
@@ -62,5 +63,10 @@ public class ApiConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
+    }
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
     }
 }

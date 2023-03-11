@@ -6,6 +6,7 @@ import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.member.service.dtos.LoginDto;
 import com.example.rqs.core.member.service.dtos.MemberDto;
+import com.example.rqs.core.member.service.dtos.OauthLoginDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberAuthServiceImpl implements MemberAuthService {
+    private final MemberRegisterService memberRegisterService;
 
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
@@ -29,6 +31,18 @@ public class MemberAuthServiceImpl implements MemberAuthService {
         boolean matches = passwordEncoder.matches(loginDto.getPassword(), member.getPassword());
         if (!matches) throw new BadRequestException(RQSError.INVALID_EMAIL_OR_PW);
         return MemberDto.of(member);
+    }
+
+    @Override
+    @Transactional
+    public MemberDto oauthLogin(OauthLoginDto oauthLoginDto) {
+        String email = oauthLoginDto.getId() + "@" + oauthLoginDto.getType() + ".quizbox";
+        Optional<Member> optionalMember = memberRepository.findByEmail(email);
+        if (optionalMember.isPresent()) {
+            return MemberDto.of(optionalMember.get());
+        }
+
+        return memberRegisterService.oauthSignUp(oauthLoginDto);
     }
 
     @Override
