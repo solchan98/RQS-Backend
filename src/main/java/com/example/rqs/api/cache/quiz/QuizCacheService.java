@@ -10,4 +10,6 @@ public interface QuizCacheService {
     Long pickRandomQuizId(Long spaceId, Long memberId);
     QuizCache start(Long spaceId, Long memberId, List<Long> itemIds);
     void deleteQuiz(Long spaceId, Long quizId);
+    boolean inProgress(Long spaceId, Long memberId);
+    QuizCache status(Long spaceId, Long memberId);
 }

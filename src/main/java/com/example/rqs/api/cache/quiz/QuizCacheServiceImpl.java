@@ -49,6 +49,18 @@ public class QuizCacheServiceImpl implements QuizCacheService {
         }
     }
 
+    @Override
+    public boolean inProgress(Long spaceId, Long memberId) {
+        String values = redisDao.getValues(getKey(spaceId, memberId));
+        return values != null;
+    }
+
+    @Override
+    public QuizCache status(Long spaceId, Long memberId) {
+        String values = redisDao.getValues(getKey(spaceId, memberId));
+        return convertToQuizCache(values);
+    }
+
     private void cache(String key, QuizCache quizCache) {
         if (quizCache.quizSize() == 0) {
             redisDao.deleteValues(key);
