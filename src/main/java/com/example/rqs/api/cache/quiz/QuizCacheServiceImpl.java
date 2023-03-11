@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.List;
 
 @Component
@@ -19,7 +20,7 @@ public class QuizCacheServiceImpl implements QuizCacheService {
     public Long pickRandomQuizId(Long spaceId, Long memberId) {
         String key = getKey(spaceId, memberId);
         String gameInfo = redisDao.getValues(key);
-        if (gameInfo.isEmpty()) {
+        if (gameInfo == null) {
             return -1L;
         }
 
@@ -41,7 +42,7 @@ public class QuizCacheServiceImpl implements QuizCacheService {
             redisDao.deleteValues(key);
             return;
         }
-        redisDao.setValues(key, convertToString(quizCache));
+        redisDao.setValues(key, convertToString(quizCache), Duration.ofSeconds(defaultTTL));
     }
 
     private QuizCache convertToQuizCache(String values) {
