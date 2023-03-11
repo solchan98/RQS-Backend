@@ -4,6 +4,7 @@ import com.example.rqs.api.cache.quiz.QuizCache;
 import com.example.rqs.api.cache.quiz.QuizCacheServiceImpl;
 import com.example.rqs.core.common.redis.RedisConfig;
 import com.example.rqs.core.common.redis.RedisDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -26,6 +27,9 @@ public class QuizCacheServiceTest {
 
     @Autowired
     private RedisDao redisDao;
+
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @AfterEach
     void clear() {
@@ -84,5 +88,24 @@ public class QuizCacheServiceTest {
                 () -> assertThat(quizCache.getTotal()).isEqualTo(newItemIds.size()),
                 () -> assertThat(quizCache.quizSize()).isEqualTo(newItemIds.size())
         );
+    }
+
+    @Test
+    @DisplayName("deleteQuizId - 다른 캐시에서 해당 QuizId가 존재할 때 정상 삭제 테스트")
+    void deleteQuizIdWhenDoesExist() throws JsonProcessingException {
+        // given
+        Long spaceId = 1L;
+        Long memberId = 1L;
+        List<Long> itemIds = List.of(1L, 2L, 3L, 4L, 5L);
+        quizCacheService.start(spaceId, memberId, itemIds);
+
+        // when
+        quizCacheService.deleteQuiz(spaceId, 3L);
+        String values = redisDao.getValues("1_1");
+        QuizCache quizCache = objectMapper.readValue(values, QuizCache.class);
+
+        // then
+        assertThat(quizCache.quizSize()).isEqualTo(4);
+
     }
 }

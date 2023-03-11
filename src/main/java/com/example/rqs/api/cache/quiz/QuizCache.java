@@ -1,6 +1,7 @@
 package com.example.rqs.api.cache.quiz;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,10 +10,11 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
+@NoArgsConstructor
 public class QuizCache {
-    private final List<Long> quizIds;
-    private final int total;
-    private final String startedAt;
+    private List<Long> quizIds;
+    private int total;
+    private String startedAt;
 
     private QuizCache(List<Long> quizIds) {
         this.quizIds = new ArrayList<>(quizIds);
@@ -35,5 +37,9 @@ public class QuizCache {
         }
         int randomIdx = ThreadLocalRandom.current().nextInt(0, quizIds.size());
         return quizIds.get(randomIdx);
+    }
+
+    public void removeQuizId(Long quizId) {
+        quizIds.remove(quizId);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -35,6 +36,17 @@ public class QuizCacheServiceImpl implements QuizCacheService {
         QuizCache quizCache = QuizCache.of(itemIds);
         cache(getKey(spaceId, memberId), quizCache);
         return quizCache;
+    }
+
+    @Override
+    public void deleteQuiz(Long spaceId, Long quizId) {
+        Set<String> keys = redisDao.getKeys(spaceId + "*");
+        for (String key: keys) {
+            String values = redisDao.getValues(key);
+            QuizCache quizCache = convertToQuizCache(values);
+            quizCache.removeQuizId(quizId);
+            cache(key, quizCache);
+        }
     }
 
     private void cache(String key, QuizCache quizCache) {
