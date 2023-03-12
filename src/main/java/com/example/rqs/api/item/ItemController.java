@@ -67,9 +67,10 @@ public class ItemController {
             @RequestParam("itemId") Long itemId
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        return Objects.nonNull(memberDetails)
-                ? itemReadService.getItem(ReadItem.of(memberDetails.getMember(), itemId))
-                : itemReadService.getItem(ReadItem.of(itemId));
+        if (Objects.nonNull(memberDetails)) {
+            return itemReadService.getItem(ReadItem.of(memberDetails.getMember(), itemId));
+        }
+        return itemReadService.getItem(ReadItem.of(itemId));
     }
 
     @GetMapping(DOMAIN + "/all")
@@ -79,9 +80,11 @@ public class ItemController {
             @Nullable @RequestParam("lastItemId") Long lastItemId
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        return Objects.nonNull(memberDetails)
-                ? itemReadService.getItems(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
-                : itemReadService.getItems(ReadItemList.of(lastItemId, spaceId));
+        if (Objects.nonNull(memberDetails)) {
+            return itemReadService.getItems(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId));
+        }
+
+        return itemReadService.getItems(ReadItemList.of(lastItemId, spaceId));
     }
 
     @GetMapping(AUTH + DOMAIN + "/creator")
@@ -90,9 +93,11 @@ public class ItemController {
             @RequestParam("itemId") Long itemId
     ) {
         boolean isItemCreator = itemAuthService.isItemCreator(memberDetails.getMember(), itemId);
-        return isItemCreator
-                ? new Message("200", HttpStatus.OK)
-                : new Message("403", HttpStatus.FORBIDDEN);
+        if (isItemCreator) {
+            return new Message("200", HttpStatus.OK);
+        }
+
+        return new Message("403", HttpStatus.FORBIDDEN);
     }
 
     @PutMapping(AUTH + DOMAIN)
