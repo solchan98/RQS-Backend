@@ -6,13 +6,11 @@ import java.util.List;
 
 public interface CustomItemRepository {
 
-    List<ItemResponse> getItemList(Long spaceId, Long lastItemId);
+    List<ItemResponse> getItems(Long spaceId, Long lastItemId);
 
     Long countBySpaceId(Long spaceId);
 
-    ItemResponse getItem(Long spaceId, int randomIndex);
-
     ItemResponse getItem(Long itemId);
 
-    List<Long> getItemIdList(Long spaceId);
+    List<Long> getItemIds(Long spaceId);
 }

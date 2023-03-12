@@ -8,5 +8,6 @@ import java.util.List;
 
 public interface ItemReadService {
     ItemResponse getItem(ReadItem readItem);
-    List<ItemResponse> getItemList(ReadItemList readItemList);
+    List<ItemResponse> getItems(ReadItemList readItemList);
+    List<Long> getItemIds(Long spaceId);
 }

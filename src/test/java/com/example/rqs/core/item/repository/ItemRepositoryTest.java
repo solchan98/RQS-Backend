@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -82,9 +81,9 @@ public class ItemRepositoryTest {
     void getItemListTestWhenFirstRead() {
         Space space = spaceMember.getSpace();
 
-        List<ItemResponse> itemList = itemRepository.getItemList(space.getSpaceId(), null);
+        List<ItemResponse> items = itemRepository.getItems(space.getSpaceId(), null);
 
-        assertThat(itemList.size()).isEqualTo(20);
+        assertThat(items.size()).isEqualTo(20);
     }
 
     @Test
@@ -92,11 +91,11 @@ public class ItemRepositoryTest {
     void getItemListTestWhenSecondRead() {
         Space space = spaceMember.getSpace();
 
-        List<ItemResponse> firstRead = itemRepository.getItemList(space.getSpaceId(), null);
+        List<ItemResponse> firstRead = itemRepository.getItems(space.getSpaceId(), null);
         Long lastId = firstRead.get(firstRead.size() - 1).getItemId();
-        List<ItemResponse> itemList = itemRepository.getItemList(space.getSpaceId(), lastId);
+        List<ItemResponse> items = itemRepository.getItems(space.getSpaceId(), lastId);
 
-        assertThat(itemList.size()).isEqualTo(10);
+        assertThat(items.size()).isEqualTo(10);
     }
 
     @Test
@@ -120,16 +119,14 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("getItem(spaceId, randomIndex) - 정상 조회")
+    @DisplayName("getItem(spaceId) - 정상 조회")
     void getItemBySpaceIdAndRandomIdxTest() {
         Space space = spaceMember.getSpace();
-        Long size = itemRepository.countBySpaceId(space.getSpaceId());
-        Random random = new Random();
-        int randomIndex = random.nextInt(size.intValue());
+        List<Long> itemIds = itemRepository.getItemIds(space.getSpaceId());
 
-        ItemResponse item = itemRepository.getItem(space.getSpaceId(), randomIndex);
+        ItemResponse itemResponse = itemRepository.getItem(itemIds.get(0));
 
-        assertThat(item).isNotNull();
+        assertThat(itemResponse).isNotNull();
     }
 
     @Test
@@ -137,9 +134,9 @@ public class ItemRepositoryTest {
     void getItemIdListTest() {
         Space space = spaceMember.getSpace();
 
-        List<Long> itemIdList = itemRepository.getItemIdList(space.getSpaceId());
+        List<Long> itemIds = itemRepository.getItemIds(space.getSpaceId());
 
-        assertThat(itemIdList.size()).isEqualTo(30L);
+        assertThat(itemIds.size()).isEqualTo(30L);
     }
 
 }
