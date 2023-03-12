@@ -7,7 +7,6 @@ import lombok.Getter;
 public class ReadItem {
 
     private final Member member;
-
     private final Long itemId;
 
     private ReadItem(Member member, Long itemId) {

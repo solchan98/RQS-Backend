@@ -13,11 +13,10 @@ import java.util.Map;
 import java.util.Optional;
 
 public interface SpaceReadService {
-
     Optional<Space> getSpace(Long spaceId);
     SpaceResponse getSpace(ReadSpace readSpace);
     List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList);
     List<SpaceResponse> getSpaceList(ReadMembersSpaceList readMembersSpaceList);
-
     Map<SpaceRole, String> getJoinCodes(Member member, Long spaceId);
+    void checkReadableQuiz(Long memberId, Long spaceId);
 }

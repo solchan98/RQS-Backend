@@ -85,4 +85,17 @@ public class SpaceReadServiceImpl implements SpaceReadService {
 
         return spaceMember.getSpace().joinCode();
     }
+
+    @Override
+    public void checkReadableQuiz(Long memberId, Long spaceId) {
+        Space space = spaceRepository
+                .findById(spaceId)
+                .orElseThrow(BadRequestException::new);
+
+        if (!space.isVisibility()) {
+            smReadService
+                    .getSpaceMember(memberId, spaceId)
+                    .orElseThrow(ForbiddenException::new);
+        }
+    }
 }

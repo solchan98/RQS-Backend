@@ -6,6 +6,7 @@ import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.item.service.ItemReadService;
 import com.example.rqs.core.item.service.dtos.ItemResponse;
 import com.example.rqs.core.item.service.dtos.ReadItem;
+import com.example.rqs.core.space.service.SpaceReadService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,6 +20,7 @@ import java.util.List;
 public class RandomQuizController {
     private final QuizCacheService quizCacheService;
     private final ItemReadService itemReadService;
+    private final SpaceReadService spaceReadService;
 
     @GetMapping("/progress/{spaceId}")
     public ResponseEntity<InProgressResponse> progress(
@@ -40,6 +42,8 @@ public class RandomQuizController {
             @PathVariable("spaceId") Long spaceId
     ) {
         Long memberId = memberDetails.getMember().getMemberId();
+        spaceReadService.checkReadableQuiz(memberId, spaceId);
+
         boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
         if (!inProgress) {
             List<Long> itemIds = itemReadService.getItemIds(spaceId);
@@ -47,7 +51,7 @@ public class RandomQuizController {
         }
 
         Long randomQuizId = quizCacheService.pickRandomQuizId(spaceId, memberId);
-        ItemResponse itemResponse = itemReadService.getItem(ReadItem.of(randomQuizId));
+        ItemResponse itemResponse = itemReadService.getItem(ReadItem.of(memberDetails.getMember(), randomQuizId));
         return ResponseEntity.ok(itemResponse);
     }
 }
