@@ -28,7 +28,6 @@ public class ItemController {
     private static final String DOMAIN = "/item";
 
     private final ItemReadService itemReadService;
-    private final ItemRandomService itemRandomService;
     private final ItemAuthService itemAuthService;
     private final ItemUpdateService itemUpdateService;
     private final ItemRegisterService itemRegisterService;

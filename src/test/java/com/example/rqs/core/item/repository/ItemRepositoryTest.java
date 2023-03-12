@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Import;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -120,16 +119,14 @@ public class ItemRepositoryTest {
     }
 
     @Test
-    @DisplayName("getItem(spaceId, randomIndex) - 정상 조회")
+    @DisplayName("getItem(spaceId) - 정상 조회")
     void getItemBySpaceIdAndRandomIdxTest() {
         Space space = spaceMember.getSpace();
-        Long size = itemRepository.countBySpaceId(space.getSpaceId());
-        Random random = new Random();
-        int randomIndex = random.nextInt(size.intValue());
+        List<Long> itemIdList = itemRepository.getItemIdList(space.getSpaceId());
 
-        ItemResponse item = itemRepository.getItem(space.getSpaceId(), randomIndex);
+        ItemResponse itemResponse = itemRepository.getItem(itemIdList.get(0));
 
-        assertThat(item).isNotNull();
+        assertThat(itemResponse).isNotNull();
     }
 
     @Test

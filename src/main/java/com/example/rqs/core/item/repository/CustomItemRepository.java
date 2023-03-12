@@ -10,8 +10,6 @@ public interface CustomItemRepository {
 
     Long countBySpaceId(Long spaceId);
 
-    ItemResponse getItem(Long spaceId, int randomIndex);
-
     ItemResponse getItem(Long itemId);
 
     List<Long> getItemIdList(Long spaceId);

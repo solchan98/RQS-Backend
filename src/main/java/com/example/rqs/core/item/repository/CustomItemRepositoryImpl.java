@@ -44,19 +44,12 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
     }
 
     @Override
-    public ItemResponse getItem(Long spaceId, int randomIndex) {
+    public ItemResponse getItem(Long itemId) {
         return queryFactory
                 .select(itemResponseConstructor())
                 .from(item)
-                .where(item.space.spaceId.eq(spaceId))
-                .offset(randomIndex)
-                .limit(1)
+                .where(item.itemId.eq(itemId))
                 .fetchOne();
-    }
-
-    @Override
-    public ItemResponse getItem(Long itemId) {
-        return null;
     }
 
     @Override
@@ -72,7 +65,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
         return Objects.isNull(lastItemId) ? null : item.itemId.lt(lastItemId);
     }
 
-    private FactoryExpression<ItemResponse> itemResponseConstructor () {
+    private FactoryExpression<ItemResponse> itemResponseConstructor() {
         return Projections.constructor(
                 ItemResponse.class,
                 item.itemId,
