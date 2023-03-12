@@ -43,8 +43,8 @@ public class ItemUpdateServiceImpl implements ItemUpdateService {
                 .findById(itemId)
                 .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
 
-        List<Long> itemIdList = itemRepository.getItemIdList(item.getSpace().getSpaceId());
-        int index = itemIdList.indexOf(itemId);
+        List<Long> itemIds = itemRepository.getItemIds(item.getSpace().getSpaceId());
+        int index = itemIds.indexOf(itemId);
         if (index == -1) throw new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE);
 
         itemRepository.deleteById(itemId);
