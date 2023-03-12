@@ -42,7 +42,7 @@ public class ItemReadServiceImpl implements ItemReadService {
     }
 
     @Override
-    public List<ItemResponse> getItemList(ReadItemList readItemList) {
+    public List<ItemResponse> getItems(ReadItemList readItemList) {
         Space space = spaceReadService
                 .getSpace(readItemList.getSpaceId())
                 .orElseThrow(BadRequestException::new);
@@ -53,7 +53,12 @@ public class ItemReadServiceImpl implements ItemReadService {
             this.checkIsSpaceMember(readItemList.getMember(), space.getSpaceId());
         }
 
-        return itemRepository.getItemList(readItemList.getSpaceId(), readItemList.getLastId());
+        return itemRepository.getItems(readItemList.getSpaceId(), readItemList.getLastId());
+    }
+
+    @Override
+    public List<Long> getItemIds(Long spaceId) {
+        return itemRepository.getItemIds(spaceId);
     }
 
     private void checkIsSpaceMember(Member member, Long spaceId) throws ForbiddenException {

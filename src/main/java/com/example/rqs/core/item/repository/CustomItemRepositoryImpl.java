@@ -12,7 +12,7 @@ import static com.example.rqs.core.item.QItem.*;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomItemRepositoryImpl implements CustomItemRepository{
+public class CustomItemRepositoryImpl implements CustomItemRepository {
 
     private final JPAQueryFactory queryFactory;
 
@@ -21,7 +21,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
     }
 
     @Override
-    public List<ItemResponse> getItemList(Long spaceId, Long lastItemId) {
+    public List<ItemResponse> getItems(Long spaceId, Long lastItemId) {
         return queryFactory
                 .select(itemResponseConstructor())
                 .from(item)
@@ -53,7 +53,7 @@ public class CustomItemRepositoryImpl implements CustomItemRepository{
     }
 
     @Override
-    public List<Long> getItemIdList(Long spaceId) {
+    public List<Long> getItemIds(Long spaceId) {
         return queryFactory
                 .select(item.itemId)
                 .from(item)

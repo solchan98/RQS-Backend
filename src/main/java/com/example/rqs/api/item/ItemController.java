@@ -80,8 +80,8 @@ public class ItemController {
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         return Objects.nonNull(memberDetails)
-                ? itemReadService.getItemList(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
-                : itemReadService.getItemList(ReadItemList.of(lastItemId, spaceId));
+                ? itemReadService.getItems(ReadItemList.of(memberDetails.getMember(), lastItemId, spaceId))
+                : itemReadService.getItems(ReadItemList.of(lastItemId, spaceId));
     }
 
     @GetMapping(AUTH + DOMAIN + "/creator")
