@@ -34,7 +34,7 @@ public class RandomQuizController {
         return ResponseEntity.ok(InProgressResponse.of(false));
     }
 
-    @GetMapping("/pick/{spaceId}")
+    @GetMapping("/random/{spaceId}")
     public ResponseEntity<ItemResponse> pickRandomQuiz(
             @AuthenticationPrincipal MemberDetails memberDetails,
             @PathVariable("spaceId") Long spaceId
@@ -45,7 +45,7 @@ public class RandomQuizController {
             List<Long> itemIds = itemReadService.getItemIds(spaceId);
             quizCacheService.start(spaceId, memberId, itemIds);
         }
-        
+
         Long randomQuizId = quizCacheService.pickRandomQuizId(spaceId, memberId);
         ItemResponse itemResponse = itemReadService.getItem(ReadItem.of(randomQuizId));
         return ResponseEntity.ok(itemResponse);

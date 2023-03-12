@@ -36,7 +36,9 @@ public class QuizCache {
             return -1L;
         }
         int randomIdx = ThreadLocalRandom.current().nextInt(0, quizIds.size());
-        return quizIds.get(randomIdx);
+        Long pickedId = quizIds.get(randomIdx);
+        removeQuizId(pickedId);
+        return pickedId;
     }
 
     public void removeQuizId(Long quizId) {
