@@ -20,25 +20,28 @@ public class QuizResponse {
     private Long quizId;
     private Long spaceId;
     private String question;
+    private String type;
     private SpaceMemberResponse spaceMemberResponse;
     private List<AnswerResponse> answerResponses;
     private String hint;
     private LocalDateTime createdAt;
 
-    public QuizResponse(Long quizId, Long spaceId, String question, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
+    public QuizResponse(Long quizId, Long spaceId, String question, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
         this.question = question;
+        this.type = type;
         this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
         this.answerResponses = null;
         this.hint = hint;
         this.createdAt = createdAt;
     }
 
-    public QuizResponse(Long quizId, Long spaceId, String question, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
+    public QuizResponse(Long quizId, Long spaceId, String question, String type, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
         this.question = question;
+        this.type = type;
         this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
         this.answerResponses = answers.stream().map(AnswerResponse::of).collect(Collectors.toList());
         this.hint = hint;
@@ -50,6 +53,7 @@ public class QuizResponse {
                 quiz.getQuizId(),
                 quiz.getSpace().getSpaceId(),
                 quiz.getQuestion(),
+                quiz.getType(),
                 quiz.getSpaceMember(),
                 quiz.getAnswers(),
                 quiz.getHint(),
