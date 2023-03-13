@@ -44,7 +44,7 @@ public class ApiConfig {
                 .authorizeRequests()
                 .antMatchers(
                         "/api/v1/member/info",
-                        "/api/v1/space/**", "/api/v1/item/**",
+                        "/api/v1/space/**", "/api/v1/quiz/**",
                         "/api/v1/member/sign-up", "/api/v1/member/login", "/api/v1/member/oauth/**", "/api/v1/member/check").permitAll()
                 .anyRequest().authenticated()
                 .and()
