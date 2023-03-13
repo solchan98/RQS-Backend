@@ -56,7 +56,8 @@ public class QuizController {
                 createQuizDto.getSpaceId(),
                 memberDetails.getMember(),
                 createQuizDto.getQuestion(),
-                createQuizDto.getAnswer(),
+                List.of(createQuizDto.getAnswer()),
+                "form",
                 createQuizDto.getHint());
         return quizRegisterService.createQuiz(createQuiz);
     }

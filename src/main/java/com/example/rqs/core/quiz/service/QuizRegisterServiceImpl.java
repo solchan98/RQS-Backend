@@ -29,9 +29,11 @@ public class QuizRegisterServiceImpl implements QuizRegisterService {
                 .orElseThrow(ForbiddenException::new);
 
         boolean isCreatable = smAuthService.isCreatableItem(spaceMember);
-        if(!isCreatable) throw new ForbiddenException();
+        if(!isCreatable) {
+            throw new ForbiddenException();
+        }
 
-        Quiz quiz = Quiz.newQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getAnswer(), createQuiz.getHint());
+        Quiz quiz = Quiz.newQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getAnswers(), createQuiz.getType(), createQuiz.getHint());
         quizRepository.save(quiz);
         return QuizResponse.of(quiz);
     }
