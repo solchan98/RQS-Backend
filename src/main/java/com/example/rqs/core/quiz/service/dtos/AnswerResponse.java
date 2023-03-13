@@ -12,7 +12,7 @@ public class AnswerResponse {
     private final Long answerId;
     private final Long quizId;
     private final String answer;
-    private final boolean isCorrect;
+    private final Boolean isCorrect;
     private final LocalDateTime createdAt;
     private final LocalDateTime updatedAt;
 
