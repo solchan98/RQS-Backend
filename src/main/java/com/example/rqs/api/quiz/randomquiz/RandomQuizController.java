@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/quiz")
+@RequestMapping("/api/v1/quizgame")
 @RequiredArgsConstructor
 public class RandomQuizController {
     private final QuizCacheService quizCacheService;
