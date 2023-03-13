@@ -36,17 +36,18 @@ public class RandomQuizController {
         return ResponseEntity.ok(InProgressResponse.of(false));
     }
 
-    @GetMapping("/random/{spaceId}")
+    @GetMapping("/random/{spaceId}/{type}")
     public ResponseEntity<QuizResponse> pickRandomQuiz(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @PathVariable("spaceId") Long spaceId
+            @PathVariable("spaceId") Long spaceId,
+            @PathVariable("type") String type
     ) {
         Long memberId = memberDetails.getMember().getMemberId();
         spaceReadService.checkReadableQuiz(memberId, spaceId);
 
         boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
         if (!inProgress) {
-            List<Long> itemIds = quizReadService.getQuizIds(spaceId);
+            List<Long> itemIds = quizReadService.getQuizIds(spaceId, type);
             quizCacheService.start(spaceId, memberId, itemIds);
         }
 

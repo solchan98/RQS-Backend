@@ -57,8 +57,8 @@ public class QuizReadServiceImpl implements QuizReadService {
     }
 
     @Override
-    public List<Long> getQuizIds(Long spaceId) {
-        return quizRepository.getQuizIds(spaceId);
+    public List<Long> getQuizIds(Long spaceId, String type) {
+        return quizRepository.getQuizIds(spaceId, type);
     }
 
     private void checkIsSpaceMember(Member member, Long spaceId) throws ForbiddenException {

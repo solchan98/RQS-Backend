@@ -9,5 +9,5 @@ import java.util.List;
 public interface QuizReadService {
     QuizResponse getQuiz(ReadQuiz readQuiz);
     List<QuizResponse> getQuizzes(ReadQuizzes readQuizzes);
-    List<Long> getQuizIds(Long spaceId);
+    List<Long> getQuizIds(Long spaceId, String type);
 }

@@ -43,12 +43,16 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     }
 
     @Override
-    public List<Long> getQuizIds(Long spaceId) {
+    public List<Long> getQuizIds(Long spaceId, String type) {
         return queryFactory
                 .select(quiz.quizId)
                 .from(quiz)
-                .where(quiz.space.spaceId.eq(spaceId))
+                .where(quiz.space.spaceId.eq(spaceId), quizType(type))
                 .fetch();
+    }
+
+    private BooleanExpression quizType(String type) {
+        return Objects.isNull(type) ? null : quiz.type.eq(type);
     }
 
     private BooleanExpression lastItemId(Long lastItemId) {

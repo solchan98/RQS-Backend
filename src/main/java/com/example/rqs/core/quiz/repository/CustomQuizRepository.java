@@ -7,5 +7,5 @@ import java.util.List;
 public interface CustomQuizRepository {
     List<QuizResponse> getQuizzes(Long spaceId, Long lastItemId);
     Long countBySpaceId(Long spaceId);
-    List<Long> getQuizIds(Long spaceId);
+    List<Long> getQuizIds(Long spaceId, String type);
 }
