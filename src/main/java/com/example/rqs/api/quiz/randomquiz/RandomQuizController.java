@@ -1,6 +1,5 @@
 package com.example.rqs.api.quiz.randomquiz;
 
-import com.example.rqs.api.cache.quiz.QuizCache;
 import com.example.rqs.api.cache.quiz.QuizCacheService;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.quiz.service.QuizReadService;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/quiz")
+@RequestMapping("/api/v1/quizgame")
 @RequiredArgsConstructor
 public class RandomQuizController {
     private final QuizCacheService quizCacheService;
@@ -28,26 +27,23 @@ public class RandomQuizController {
             @PathVariable("spaceId") Long spaceId
     ) {
         Long memberId = memberDetails.getMember().getMemberId();
-        boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
-        if (inProgress) {
-            QuizCache quizCache = quizCacheService.status(spaceId, memberId);
-            return ResponseEntity.ok(InProgressResponse.from(quizCache));
-        }
-        return ResponseEntity.ok(InProgressResponse.of(false));
+        InProgressResponse inProgress = quizCacheService.inProgress(spaceId, memberId);
+        return ResponseEntity.ok(inProgress);
     }
 
-    @GetMapping("/random/{spaceId}")
+    @GetMapping("/random/{spaceId}/{type}")
     public ResponseEntity<QuizResponse> pickRandomQuiz(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @PathVariable("spaceId") Long spaceId
+            @PathVariable("spaceId") Long spaceId,
+            @PathVariable("type") String type
     ) {
         Long memberId = memberDetails.getMember().getMemberId();
         spaceReadService.checkReadableQuiz(memberId, spaceId);
 
-        boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
-        if (!inProgress) {
-            List<Long> itemIds = quizReadService.getQuizIds(spaceId);
-            quizCacheService.start(spaceId, memberId, itemIds);
+        InProgressResponse inProgress = quizCacheService.inProgress(spaceId, memberId);
+        if (!inProgress.isStatus() || !inProgress.isType(type)) {
+            List<Long> itemIds = quizReadService.getQuizIds(spaceId, type);
+            quizCacheService.start(spaceId, memberId, itemIds, type);
         }
 
         Long randomQuizId = quizCacheService.pickRandomQuizId(spaceId, memberId);

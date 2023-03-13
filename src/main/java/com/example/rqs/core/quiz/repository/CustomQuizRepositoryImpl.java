@@ -8,7 +8,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import static com.example.rqs.core.quiz.QQuiz.quiz;
 
-
 import java.util.List;
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     @Override
     public List<QuizResponse> getQuizzes(Long spaceId, Long lastItemId) {
         return queryFactory
-                .select(itemResponseConstructor())
+                .select(quizResponseConstructorWithoutAnswers())
                 .from(quiz)
                 .innerJoin(quiz.space).on(quiz.space.spaceId.eq(spaceId))
                 .where(
@@ -44,35 +43,30 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     }
 
     @Override
-    public QuizResponse getQuiz(Long itemId) {
-        return queryFactory
-                .select(itemResponseConstructor())
-                .from(quiz)
-                .where(quiz.quizId.eq(itemId))
-                .fetchOne();
-    }
-
-    @Override
-    public List<Long> getQuizIds(Long spaceId) {
+    public List<Long> getQuizIds(Long spaceId, String type) {
         return queryFactory
                 .select(quiz.quizId)
                 .from(quiz)
-                .where(quiz.space.spaceId.eq(spaceId))
+                .where(quiz.space.spaceId.eq(spaceId), quizType(type))
                 .fetch();
+    }
+
+    private BooleanExpression quizType(String type) {
+        return Objects.isNull(type) ? null : quiz.type.eq(type);
     }
 
     private BooleanExpression lastItemId(Long lastItemId) {
         return Objects.isNull(lastItemId) ? null : quiz.quizId.lt(lastItemId);
     }
 
-    private FactoryExpression<QuizResponse> itemResponseConstructor() {
+    private FactoryExpression<QuizResponse> quizResponseConstructorWithoutAnswers() {
         return Projections.constructor(
                 QuizResponse.class,
                 quiz.quizId,
                 quiz.space.spaceId,
                 quiz.question,
+                quiz.type,
                 quiz.spaceMember,
-                quiz.answer,
                 quiz.hint,
                 quiz.createdAt
         );

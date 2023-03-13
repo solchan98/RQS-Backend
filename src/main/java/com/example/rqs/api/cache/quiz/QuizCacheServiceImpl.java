@@ -1,5 +1,6 @@
 package com.example.rqs.api.cache.quiz;
 
+import com.example.rqs.api.quiz.randomquiz.InProgressResponse;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -32,8 +33,8 @@ public class QuizCacheServiceImpl implements QuizCacheService {
     }
 
     @Override
-    public QuizCache start(Long spaceId, Long memberId, List<Long> itemIds) {
-        QuizCache quizCache = QuizCache.of(itemIds);
+    public QuizCache start(Long spaceId, Long memberId, List<Long> itemIds, String type) {
+        QuizCache quizCache = QuizCache.of(itemIds, type);
         cache(getKey(spaceId, memberId), quizCache);
         return quizCache;
     }
@@ -50,15 +51,14 @@ public class QuizCacheServiceImpl implements QuizCacheService {
     }
 
     @Override
-    public boolean inProgress(Long spaceId, Long memberId) {
+    public InProgressResponse inProgress(Long spaceId, Long memberId) {
         String values = redisDao.getValues(getKey(spaceId, memberId));
-        return values != null;
-    }
+        if (values == null) {
+            return InProgressResponse.of(false);
+        }
 
-    @Override
-    public QuizCache status(Long spaceId, Long memberId) {
-        String values = redisDao.getValues(getKey(spaceId, memberId));
-        return convertToQuizCache(values);
+        QuizCache quizCache = convertToQuizCache(values);
+        return InProgressResponse.from(quizCache);
     }
 
     private void cache(String key, QuizCache quizCache) {

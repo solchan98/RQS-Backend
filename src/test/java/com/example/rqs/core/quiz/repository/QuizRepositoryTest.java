@@ -2,6 +2,7 @@ package com.example.rqs.core.quiz.repository;
 
 import com.example.rqs.core.config.DataTestConfig;
 import com.example.rqs.core.quiz.Quiz;
+import com.example.rqs.core.quiz.service.dtos.CreateAnswer;
 import com.example.rqs.core.quiz.service.dtos.QuizResponse;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
@@ -56,7 +57,7 @@ public class QuizRepositoryTest {
     void createItems(SpaceMember spaceMember) {
         List<Quiz> quizList = new ArrayList<>(30);
         for (int idx = 0; idx < 30; idx++) {
-            Quiz quiz = Quiz.newQuiz(spaceMember, "Question_" + idx, "Answer", "");
+            Quiz quiz = Quiz.newQuiz(spaceMember, "Question_" + idx, List.of(CreateAnswer.of("answer", true)), "form", "");
             quizList.add(quiz);
         }
         quizRepository.saveAll(quizList);
@@ -70,10 +71,10 @@ public class QuizRepositoryTest {
 
     @AfterAll
     void clear() {
-        quizRepository.deleteAllInBatch();
-        spaceMemberRepository.deleteAllInBatch();
-        spaceRepository.deleteAllInBatch();
-        memberRepository.deleteAllInBatch();
+        quizRepository.deleteAll();
+        spaceMemberRepository.deleteAll();
+        spaceRepository.deleteAll();
+        memberRepository.deleteAll();
     }
 
     @Test
@@ -119,22 +120,11 @@ public class QuizRepositoryTest {
     }
 
     @Test
-    @DisplayName("getItem(spaceId) - 정상 조회")
-    void getItemBySpaceIdAndRandomIdxTest() {
-        Space space = spaceMember.getSpace();
-        List<Long> itemIds = quizRepository.getQuizIds(space.getSpaceId());
-
-        QuizResponse quizResponse = quizRepository.getQuiz(itemIds.get(0));
-
-        assertThat(quizResponse).isNotNull();
-    }
-
-    @Test
     @DisplayName("getItemIdList(spaceId) - 정상 조회")
     void getItemIdListTest() {
         Space space = spaceMember.getSpace();
 
-        List<Long> itemIds = quizRepository.getQuizIds(space.getSpaceId());
+        List<Long> itemIds = quizRepository.getQuizIds(space.getSpaceId(), "form");
 
         assertThat(itemIds.size()).isEqualTo(30L);
     }

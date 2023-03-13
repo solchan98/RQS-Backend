@@ -4,6 +4,7 @@ import com.example.rqs.core.config.DataTestConfig;
 import com.example.rqs.core.quiz.Quiz;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
+import com.example.rqs.core.quiz.service.dtos.CreateAnswer;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.SpaceRole;
@@ -67,7 +68,7 @@ public class SpaceRepositoryTest {
             SpaceMember spaceMember = space.getSpaceMembers().get(0);
             List<Quiz> quizList = space.getQuizzes();
             for (int jdx = 0; jdx < idx + 1; jdx++) {
-                Quiz quiz = Quiz.newQuiz(spaceMember, "Q" + jdx, "A" + jdx, "");
+                Quiz quiz = Quiz.newQuiz(spaceMember, "Q" + jdx, List.of(CreateAnswer.of("answer", true)), "", "");
                 quizList.add(quiz);
             }
         }

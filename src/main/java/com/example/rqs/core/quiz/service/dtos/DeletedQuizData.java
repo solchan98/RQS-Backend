@@ -7,14 +7,14 @@ public class DeletedQuizData {
 
     private final Long spaceId;
 
-    private final int quizIndex;
+    private final Long quizId;
 
-    private DeletedQuizData(Long spaceId, int quizIndex) {
+    private DeletedQuizData(Long spaceId, Long quizId) {
         this.spaceId = spaceId;
-        this.quizIndex = quizIndex;
+        this.quizId = quizId;
     }
 
-    public static DeletedQuizData of(Long spaceId, int quizIndex) {
-        return new DeletedQuizData(spaceId, quizIndex);
+    public static DeletedQuizData of(Long spaceId, Long quizId) {
+        return new DeletedQuizData(spaceId, quizId);
     }
 }

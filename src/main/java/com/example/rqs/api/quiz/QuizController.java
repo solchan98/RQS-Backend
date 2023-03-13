@@ -56,21 +56,22 @@ public class QuizController {
                 createQuizDto.getSpaceId(),
                 memberDetails.getMember(),
                 createQuizDto.getQuestion(),
-                createQuizDto.getAnswer(),
+                createQuizDto.getCreateAnswers(),
+                createQuizDto.getType(),
                 createQuizDto.getHint());
         return quizRegisterService.createQuiz(createQuiz);
     }
 
-    @GetMapping(DOMAIN)
+    @GetMapping(DOMAIN + "/{quizId}")
     public QuizResponse getQuiz(
             HttpServletRequest request,
-            @RequestParam("quizId") Long itemId
+            @PathVariable("quizId") Long quizId
     ) {
         MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
         if (Objects.nonNull(memberDetails)) {
-            return quizReadService.getQuiz(ReadQuiz.of(memberDetails.getMember(), itemId));
+            return quizReadService.getQuiz(ReadQuiz.of(memberDetails.getMember(), quizId));
         }
-        return quizReadService.getQuiz(ReadQuiz.of(itemId));
+        return quizReadService.getQuiz(ReadQuiz.of(quizId));
     }
 
     @GetMapping(DOMAIN + "/all")
@@ -87,10 +88,10 @@ public class QuizController {
         return quizReadService.getQuizzes(ReadQuizzes.of(lastQuizId, spaceId));
     }
 
-    @GetMapping(AUTH + DOMAIN + "/creator")
+    @GetMapping(AUTH + DOMAIN + "/isCreator/{quizId}")
     public Message checkIsCreator(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("quizId") Long quizId
+            @PathVariable("quizId") Long quizId
     ) {
         boolean isQuizCreator = quizAuthService.isQuizCreator(memberDetails.getMember(), quizId);
         if (isQuizCreator) {
@@ -100,24 +101,26 @@ public class QuizController {
         return new Message("403", HttpStatus.FORBIDDEN);
     }
 
-    @PutMapping(AUTH + DOMAIN)
+    @PutMapping(AUTH + DOMAIN + "/{quizId}")
     public QuizResponse updateQuiz(
             @AuthenticationPrincipal MemberDetails memberDetails,
+            @PathVariable("quizId") Long quizId,
             @Validated @RequestBody UpdateQuizDto updateQuizDto
     ) {
         UpdateQuiz updateQuiz = UpdateQuiz.of(
                 memberDetails.getMember(),
-                updateQuizDto.getQuizId(),
+                quizId,
                 updateQuizDto.getQuestion(),
-                updateQuizDto.getAnswer(),
+                updateQuizDto.getAnswers(),
+                updateQuizDto.getType(),
                 updateQuizDto.getHint());
         return quizUpdateService.updateQuiz(updateQuiz);
     }
 
-    @DeleteMapping(AUTH + DOMAIN)
+    @DeleteMapping(AUTH + DOMAIN + "/{quizId}")
     public DeleteResponse deleteItem(
             @AuthenticationPrincipal MemberDetails memberDetails,
-            @RequestParam("quizId") Long quizId
+            @PathVariable("quizId") Long quizId
     ) {
         DeletedQuizData deletedQuizData = quizUpdateService.deleteQuiz(memberDetails.getMember(), quizId);
         quizCacheService.deleteQuiz(deletedQuizData.getSpaceId(), quizId);

@@ -19,8 +19,28 @@ public class CreateQuizValidator implements Validator {
 
         boolean isEmpty =
                 createQuizDto.getQuestion().isEmpty()
-                || createQuizDto.getAnswer().isEmpty();
+                || createQuizDto.getCreateAnswers().isEmpty();
 
-        if (isEmpty) throw new BadRequestException();
+        if (isEmpty) {
+            throw new BadRequestException();
+        }
+
+        if (createQuizDto.getType().equals("form")) {
+            checkIsValidToForm(createQuizDto);
+        } else {
+            checkIsValidMutli(createQuizDto);
+        }
+    }
+
+    private void checkIsValidToForm(CreateQuizDto createQuizDto) {
+        if (createQuizDto.getCreateAnswers().size() > 1) {
+            throw new BadRequestException("정답을 2개 이상 작성할 수 없습니다.");
+        }
+    }
+
+    private void checkIsValidMutli(CreateQuizDto createQuizDto){
+        if (createQuizDto.getCreateAnswers().size() < 2 || createQuizDto.getCreateAnswers().size() > 4) {
+            throw new BadRequestException("정답을 최소 2개 이상, 최대 4개 이하로 작성해야 합니다.");
+        }
     }
 }
