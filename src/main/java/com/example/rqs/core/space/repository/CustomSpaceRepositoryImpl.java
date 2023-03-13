@@ -12,7 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.example.rqs.core.space.QSpace.space;
-import static com.example.rqs.core.item.QItem.item;
+import static com.example.rqs.core.quiz.QQuiz.quiz;
 import static com.example.rqs.core.spacemember.QSpaceMember.spaceMember;
 
 public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
@@ -24,14 +24,14 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
     }
 
     @Override
-    public List<SpaceResponse> getSpaceList(LocalDateTime lastCreatedAt) {
+    public List<SpaceResponse> getSpaces(LocalDateTime lastCreatedAt) {
         return queryFactory
                 .select(getSpaceResponseSelect())
                 .from(space)
                 .where(
                         space.visibility.isTrue(),
                         spaceCreatedAtBefore(lastCreatedAt))
-                .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
+                .leftJoin(quiz).on(quiz.space.spaceId.eq(space.spaceId))
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .orderBy(space.createdAt.desc())
                 .groupBy(space.spaceId)
@@ -40,12 +40,12 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
     }
 
     @Override
-    public List<SpaceResponse> getSpaceListByTrending(Long offset) {
+    public List<SpaceResponse> getSpacesByTrending(Long offset) {
         return queryFactory
                 .select(getSpaceResponseSelect())
                 .from(space)
                 .where(space.visibility.isTrue())
-                .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
+                .leftJoin(quiz).on(quiz.space.spaceId.eq(space.spaceId))
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .groupBy(space.spaceId)
                 .orderBy(spaceMember.countDistinct().desc(), space.createdAt.desc())
@@ -55,13 +55,13 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
     }
 
     @Override
-    public List<SpaceResponse> getMembersSpaceList(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt) {
+    public List<SpaceResponse> getMembersSpaces(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt) {
         List<SpaceResponse> fetch = queryFactory
                 .select(getMySpaceResponseSelect())
                 .from(space)
                 .leftJoin(spaceMember).on(spaceMember.space.spaceId.eq(space.spaceId))
                 .fetchJoin()
-                .leftJoin(item).on(item.space.spaceId.eq(space.spaceId))
+                .leftJoin(quiz).on(quiz.space.spaceId.eq(space.spaceId))
                 .where(
                         spaceMember.member.memberId.eq(targetMemberId),
                         joinedAtBefore(lastJoinedAt),
@@ -71,19 +71,19 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
                 .limit(limit)
                 .fetch();
 
-        List<Long> spaceIdList = fetch.stream().map(SpaceResponse::getSpaceId).collect(Collectors.toList());
-        List<Long> spaceMemberCountList = queryFactory
+        List<Long> spaceIds = fetch.stream().map(SpaceResponse::getSpaceId).collect(Collectors.toList());
+        List<Long> spaceMemberCounts = queryFactory
                 .select(spaceMember.count())
                 .from(spaceMember)
                 .where(
-                        spaceMember.space.spaceId.in(spaceIdList)
+                        spaceMember.space.spaceId.in(spaceIds)
                 )
                 .groupBy(spaceMember.space.spaceId)
                 .orderBy(spaceMember.space.createdAt.desc())
                 .fetch();
 
-        for (int idx = 0; idx < spaceMemberCountList.size(); idx++) {
-            fetch.get(idx).setSpaceMemberCount(spaceMemberCountList.get(idx));
+        for (int idx = 0; idx < spaceMemberCounts.size(); idx++) {
+            fetch.get(idx).setSpaceMemberCount(spaceMemberCounts.get(idx));
         }
 
         return fetch;
@@ -114,7 +114,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
                 space.content,
                 space.url.as("imageUrl"),
                 space.visibility,
-                item.countDistinct().as("itemCount"),
+                quiz.countDistinct().as("quizCount"),
                 spaceMember.countDistinct().as("spaceMemberCount"),
                 space.createdAt,
                 space.updatedAt
@@ -129,7 +129,7 @@ public class CustomSpaceRepositoryImpl implements CustomSpaceRepository {
                 space.visibility,
                 space.content,
                 space.url.as("imageUrl"),
-                item.countDistinct().as("itemCount"),
+                quiz.countDistinct().as("quizCount"),
                 spaceMember.countDistinct().as("spaceMemberCount"),
                 space.createdAt,
                 space.updatedAt,

@@ -10,7 +10,7 @@ public interface CustomSpaceMemberRepository {
 
     Optional<SpaceMember> getSpaceMember(Long memberId, Long spaceId);
 
-    List<SpaceMemberResponse> getSpaceMemberResponseList(Long spaceId);
+    List<SpaceMemberResponse> getSpaceMemberResponses(Long spaceId);
 
     boolean existSpaceMember(Long memberId, Long spaceId);
 

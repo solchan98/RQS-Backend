@@ -1,17 +1,14 @@
 package com.example.rqs.core.space.repository;
 
 import com.example.rqs.core.config.DataTestConfig;
-import com.example.rqs.core.item.Item;
+import com.example.rqs.core.quiz.Quiz;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.SpaceRole;
 import com.example.rqs.core.space.service.dtos.SpaceResponse;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -67,11 +64,11 @@ public class SpaceRepositoryTest {
         // 각 스페이스에 1 * (해당 스페이스 idx + 1) 만큼 퀴즈(아이템) 추가
         for (int idx = 0; idx < testSpaceList.size(); idx++) {
             Space space = testSpaceList.get(idx);
-            SpaceMember spaceMember = space.getSpaceMemberList().get(0);
-            List<Item> itemList = space.getItemList();
+            SpaceMember spaceMember = space.getSpaceMembers().get(0);
+            List<Quiz> quizList = space.getQuizzes();
             for (int jdx = 0; jdx < idx + 1; jdx++) {
-                Item item = Item.newItem(spaceMember, "Q" + jdx, "A" + jdx, "");
-                itemList.add(item);
+                Quiz quiz = Quiz.newQuiz(spaceMember, "Q" + jdx, "A" + jdx, "");
+                quizList.add(quiz);
             }
         }
         memberRepository.saveAll(testMemberList);
@@ -80,39 +77,45 @@ public class SpaceRepositoryTest {
         spaceRepository.saveAll(testSpaceList);
     }
 
+    @AfterAll
+    void clear() {
+        spaceRepository.deleteAll();
+        memberRepository.deleteAll();
+    }
+
     @Test
     @DisplayName("getSpaceList - 정상 조회")
     void getSpaceListTest() {
-        List<SpaceResponse> spaceList = spaceRepository.getSpaceList(null);
+        List<SpaceResponse> spaceList = spaceRepository.getSpaces(null);
 
         assertAll(
                 () -> assertThat(spaceList.size()).isEqualTo(3),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space4"),
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(5),
+                () -> assertThat(spaceList.get(0).getQuizCount()).isEqualTo(5),
                 () -> assertThat(spaceList.get(2).getTitle()).isEqualTo("space0"),
                 () -> assertThat(spaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(spaceList.get(2).getItemCount()).isEqualTo(1L)
+                () -> assertThat(spaceList.get(2).getQuizCount()).isEqualTo(1L)
         );
     }
 
     @Test
     @DisplayName("getSpaceList - 특정 기준 cursor 페이징")
     void getSpaceListWithCursorPagingTest() {
-        List<SpaceResponse> spaceList = spaceRepository.getSpaceList(testCursorLocalDateTime);
+        List<SpaceResponse> spaceList = spaceRepository.getSpaces(testCursorLocalDateTime);
 
         assertAll(
                 () -> assertThat(spaceList.size()).isEqualTo(1),
                 () -> assertThat(spaceList.get(0).getTitle()).isEqualTo("space0"),
                 () -> assertThat(spaceList.get(0).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(spaceList.get(0).getItemCount()).isEqualTo(1)
+                () -> assertThat(spaceList.get(0).getQuizCount()).isEqualTo(1)
         );
     }
 
     @Test
     @DisplayName("getSpaceListByTrending - 정상 조회")
     void getSpaceListByTrendingTest() {
-        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(0L);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpacesByTrending(0L);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(2L),
@@ -123,27 +126,27 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getSpaceListByTrending - 특정 기준 offset 페이징")
     void getSpaceListByTrendingWithOffsetPagingTest() {
-        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpaceListByTrending(2L);
+        List<SpaceResponse> spaceListByTrending = spaceRepository.getSpacesByTrending(2L);
 
         assertAll(
                 () -> assertThat(spaceListByTrending.size()).isEqualTo(1),
                 () -> assertThat(spaceListByTrending.get(0).getSpaceMemberCount()).isEqualTo(1),
-                () -> assertThat(spaceListByTrending.get(0).getItemCount()).isEqualTo(1)
+                () -> assertThat(spaceListByTrending.get(0).getQuizCount()).isEqualTo(1)
         );
     }
 
     @Test
     @DisplayName("getMembersSpaceList - memberId == targetMemberId")
     void getMySpaceListTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(firstMemberId, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaces(firstMemberId, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getQuizCount()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(4).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(4).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(4).getQuizCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(4).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
@@ -151,15 +154,15 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMembersSpaceList - 다른 사림이 조회")
     void getMySpaceListByAnotherTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(secondMemberId, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaces(secondMemberId, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(3L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getQuizCount()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(2).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getQuizCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(2).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
@@ -167,15 +170,15 @@ public class SpaceRepositoryTest {
     @Test
     @DisplayName("getMembersSpaceList - 게스트가 조회")
     void getMySpaceListByGuestTest() {
-        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaceList(null, firstMemberId, null);
+        List<SpaceResponse> mySpaceList = spaceRepository.getMembersSpaces(null, firstMemberId, null);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(3L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(5L),
+                () -> assertThat(mySpaceList.get(0).getQuizCount()).isEqualTo(5L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(2).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(2).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(2).getQuizCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(2).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
@@ -187,15 +190,15 @@ public class SpaceRepositoryTest {
     // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
 
         List<SpaceResponse> mySpaceList = spaceRepository
-                .getMembersSpaceList(firstMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
+                .getMembersSpaces(firstMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(2L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(2L),
-                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(2L),
+                () -> assertThat(mySpaceList.get(0).getQuizCount()).isEqualTo(2L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.MEMBER),
                 () -> assertThat(mySpaceList.get(1).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(1).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(1).getQuizCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(1).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }
@@ -206,12 +209,12 @@ public class SpaceRepositoryTest {
         // firstMember =  첫번째 멤버 : 생성된 모든(5개) 테스트 스페이스에 참여된 상태
         // testCursorLocalDateTimeTheFirstMember = 첫번재 멤버가 세번째 스페이스에 참여한 시간
         List<SpaceResponse> mySpaceList = spaceRepository
-                .getMembersSpaceList(secondMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
+                .getMembersSpaces(secondMemberId, firstMemberId, testCursorLocalDateTimeTheFirstMember);
 
         assertAll(
                 () -> assertThat(mySpaceList.size()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(0).getSpaceMemberCount()).isEqualTo(1L),
-                () -> assertThat(mySpaceList.get(0).getItemCount()).isEqualTo(1L),
+                () -> assertThat(mySpaceList.get(0).getQuizCount()).isEqualTo(1L),
                 () -> assertThat(mySpaceList.get(0).getAuthority()).isEqualTo(SpaceRole.ADMIN)
         );
     }

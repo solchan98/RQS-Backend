@@ -1,6 +1,6 @@
 package com.example.rqs.core.space;
 
-import com.example.rqs.core.item.Item;
+import com.example.rqs.core.quiz.Quiz;
 import com.example.rqs.core.spacemember.SpaceMember;
 import com.example.rqs.core.spacemember.SpaceRole;
 import lombok.Getter;
@@ -36,10 +36,10 @@ public class Space {
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-    private final List<Item> itemList = new ArrayList<>();
+    private final List<Quiz> quizzes = new ArrayList<>();
 
     @OneToMany(mappedBy = "space", cascade = CascadeType.ALL)
-    private final List<SpaceMember> spaceMemberList = new ArrayList<>();
+    private final List<SpaceMember> spaceMembers = new ArrayList<>();
 
     protected Space(){}
 
@@ -64,7 +64,7 @@ public class Space {
     }
 
     public void addMember(SpaceMember spaceMember) {
-        this.spaceMemberList.add(spaceMember);
+        this.spaceMembers.add(spaceMember);
     }
 
     public void updateTitle(String title) {

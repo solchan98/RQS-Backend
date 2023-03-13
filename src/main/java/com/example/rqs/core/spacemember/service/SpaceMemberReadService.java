@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface SpaceMemberReadService {
 
     Optional<SpaceMember> getSpaceMember(long memberId, long spaceId);
-    List<SpaceMemberResponse> getSpaceMemberList(long memberId, long spaceId);
+    List<SpaceMemberResponse> getSpaceMembers(long memberId, long spaceId);
 }

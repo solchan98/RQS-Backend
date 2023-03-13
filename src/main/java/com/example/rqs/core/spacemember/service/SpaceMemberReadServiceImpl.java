@@ -25,14 +25,14 @@ public class SpaceMemberReadServiceImpl implements SpaceMemberReadService {
     }
 
     @Override
-    public List<SpaceMemberResponse> getSpaceMemberList(long memberId, long spaceId) {
+    public List<SpaceMemberResponse> getSpaceMembers(long memberId, long spaceId) {
         SpaceMember spaceMember = spaceMemberRepository
                 .getSpaceMember(memberId, spaceId)
                 .orElseThrow(ForbiddenException::new);
 
-        boolean readable = spaceMemberAuthService.isReadableSpaceMemberList(spaceMember);
+        boolean readable = spaceMemberAuthService.isReadableSpaceMembers(spaceMember);
 
         if (!readable) throw new ForbiddenException();
-        return spaceMemberRepository.getSpaceMemberResponseList(spaceId);
+        return spaceMemberRepository.getSpaceMemberResponses(spaceId);
     }
 }

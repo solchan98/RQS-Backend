@@ -9,9 +9,9 @@ public interface CustomSpaceRepository {
 
     long limit = 20;
 
-    List<SpaceResponse> getSpaceList(LocalDateTime lastCreatedAt);
+    List<SpaceResponse> getSpaces(LocalDateTime lastCreatedAt);
 
-    List<SpaceResponse> getSpaceListByTrending(Long offset);
+    List<SpaceResponse> getSpacesByTrending(Long offset);
 
-    List<SpaceResponse> getMembersSpaceList(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt);
+    List<SpaceResponse> getMembersSpaces(Long memberId, Long targetMemberId, LocalDateTime lastJoinedAt);
 }

@@ -58,18 +58,18 @@ public class SpaceReadServiceImpl implements SpaceReadService {
     }
 
     @Override
-    public List<SpaceResponse> getSpaceList(ReadSpaceList readSpaceList) {
-        return readSpaceList.getType().equals("TRENDING")
-                ? this.spaceRepository.getSpaceListByTrending(readSpaceList.getOffset())
-                : this.spaceRepository.getSpaceList(readSpaceList.getLastAt());
+    public List<SpaceResponse> getSpaces(ReadSpaces readSpaces) {
+        return readSpaces.getType().equals("TRENDING")
+                ? this.spaceRepository.getSpacesByTrending(readSpaces.getOffset())
+                : this.spaceRepository.getSpaces(readSpaces.getLastAt());
     }
 
     @Override
-    public List<SpaceResponse> getSpaceList(ReadMembersSpaceList readMembersSpaceList) {
-        return spaceRepository.getMembersSpaceList(
-                readMembersSpaceList.getMemberId(),
-                readMembersSpaceList.getTargetMemberId(),
-                readMembersSpaceList.getLastJoinedAt());
+    public List<SpaceResponse> getSpaces(ReadMembersSpaceList readMembersSpaces) {
+        return spaceRepository.getMembersSpaces(
+                readMembersSpaces.getMemberId(),
+                readMembersSpaces.getTargetMemberId(),
+                readMembersSpaces.getLastJoinedAt());
     }
 
     @Override

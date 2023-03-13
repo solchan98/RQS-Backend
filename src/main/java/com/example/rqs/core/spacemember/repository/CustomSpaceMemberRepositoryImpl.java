@@ -38,7 +38,7 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
     }
 
     @Override
-    public List<SpaceMemberResponse> getSpaceMemberResponseList(Long spaceId) {
+    public List<SpaceMemberResponse> getSpaceMemberResponses(Long spaceId) {
         return queryFactory
                 .select(
                         Projections.fields(
@@ -89,6 +89,4 @@ public class CustomSpaceMemberRepositoryImpl implements CustomSpaceMemberReposit
     private BooleanExpression lastJoinedAt(LocalDateTime lastJoinedAt) {
         return Objects.isNull(lastJoinedAt) ? null : spaceMember.joinedAt.before(lastJoinedAt);
     }
-
-
 }

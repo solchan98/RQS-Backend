@@ -16,7 +16,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -66,9 +65,7 @@ public class MemberController {
     public ResponseEntity<MemberDto> getMemberInfo(
             @RequestParam("memberId") Long memberId
     ) {
-        MemberDto memberDto = MemberDto.of(
-                memberAuthService.getMember(memberId)
-                        .orElseThrow(BadRequestException::new));
+        MemberDto memberDto = MemberDto.of(memberAuthService.getMember(memberId).orElseThrow(BadRequestException::new));
         return ResponseEntity.ok(memberDto);
     }
 
@@ -100,7 +97,10 @@ public class MemberController {
             @RequestBody UpdateMember updateMember
     ) {
         boolean avatarIsNull = Objects.isNull(updateMember.getUpdateUrl());
-        if(avatarIsNull) throw new BadRequestException();
+        if(avatarIsNull) {
+            throw new BadRequestException();
+        }
+
         return memberUpdateService.updateAvatar(memberDetails.getMember(), updateMember.getUpdateUrl());
     }
 

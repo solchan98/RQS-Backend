@@ -28,7 +28,7 @@ public class MemberRepositoryTest {
 
     @AfterAll
     void clear() {
-        memberRepository.deleteAllInBatch();
+        memberRepository.deleteAll();
     }
 
     Member createMember(String email, String password, String nickname) {

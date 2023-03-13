@@ -63,28 +63,28 @@ public class SpaceMemberAuthServiceTest {
     }
 
     @Test
-    @DisplayName("isReadableSpaceMemberList() - 권한이 ADMIN인 경우")
+    @DisplayName("isReadableSpaceMembers() - 권한이 ADMIN인 경우")
     void isReadableSpaceMemberListWhenRoleIsADMIN() {
         // given
         SpaceMember mockSM = mock(SpaceMember.class);
         given(mockSM.getRole()).willReturn(SpaceRole.ADMIN);
 
         // when
-        boolean isReadableSpaceMemberList = spaceMemberAuthService.isReadableSpaceMemberList(mockSM);
+        boolean isReadableSpaceMemberList = spaceMemberAuthService.isReadableSpaceMembers(mockSM);
 
         // then
         assertThat(isReadableSpaceMemberList).isTrue();
     }
 
     @Test
-    @DisplayName("isReadableSpaceMemberList() - 권한이 MEMBER인 경우")
+    @DisplayName("isReadableSpaceMembers() - 권한이 MEMBER인 경우")
     void isReadableSpaceMemberListWhenRoleIsMember() {
         // given
         SpaceMember mockSM = mock(SpaceMember.class);
         given(mockSM.getRole()).willReturn(SpaceRole.MEMBER);
 
         // when
-        boolean isReadableSpaceMemberList = spaceMemberAuthService.isReadableSpaceMemberList(mockSM);
+        boolean isReadableSpaceMemberList = spaceMemberAuthService.isReadableSpaceMembers(mockSM);
 
         // then
         assertThat(isReadableSpaceMemberList).isFalse();

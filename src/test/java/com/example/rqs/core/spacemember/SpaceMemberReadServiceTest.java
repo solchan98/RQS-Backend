@@ -31,7 +31,7 @@ public class SpaceMemberReadServiceTest {
     SpaceMemberAuthService spaceMemberAuthService;
 
     @Test
-    @DisplayName("getSpaceMemberList() - 스페이스 멤버가 아닌 경우")
+    @DisplayName("getSpaceMembers() - 스페이스 멤버가 아닌 경우")
     void getSpaceMemberListWhenIsNotSpaceMember() {
         // given
         long memberId = 1L;
@@ -39,20 +39,20 @@ public class SpaceMemberReadServiceTest {
         given(smRepository.getSpaceMember(memberId, spaceId)).willReturn(Optional.empty());
 
         // when then
-        assertThrows(ForbiddenException.class, () -> smReadService.getSpaceMemberList(memberId, spaceId));
+        assertThrows(ForbiddenException.class, () -> smReadService.getSpaceMembers(memberId, spaceId));
     }
 
     @Test
-    @DisplayName("getSpaceMemberList() - 권한이 존재하지 않는 경우")
+    @DisplayName("getSpaceMembers() - 권한이 존재하지 않는 경우")
     void getSpaceMemberListWhenIsNotReadableRole() {
         // given
         long memberId = 1L;
         long spaceId = 1L;
         SpaceMember mockSM = mock(SpaceMember.class);
-        given(spaceMemberAuthService.isReadableSpaceMemberList(mockSM)).willReturn(Boolean.FALSE);
+        given(spaceMemberAuthService.isReadableSpaceMembers(mockSM)).willReturn(Boolean.FALSE);
         given(smRepository.getSpaceMember(memberId, spaceId)).willReturn(Optional.of(mockSM));
 
         // when then
-        assertThrows(ForbiddenException.class, () -> smReadService.getSpaceMemberList(memberId, spaceId));
+        assertThrows(ForbiddenException.class, () -> smReadService.getSpaceMembers(memberId, spaceId));
     }
 }

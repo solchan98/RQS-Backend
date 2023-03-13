@@ -28,7 +28,7 @@ public class SpaceMemberAuthServiceImpl implements SpaceMemberAuthService {
     }
 
     @Override
-    public boolean isReadableSpaceMemberList(SpaceMember spaceMember) {
+    public boolean isReadableSpaceMembers(SpaceMember spaceMember) {
         return spaceMember.getRole().goe(SpaceRole.ADMIN);
     }
 

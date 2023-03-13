@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class DeleteResponse {
-
     public final Long deletedId;
-
     private final boolean isDeleted;
 
     private DeleteResponse(Long deletedId, boolean isDeleted) {

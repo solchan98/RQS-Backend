@@ -1,6 +1,6 @@
 package com.example.rqs.core.spacemember;
 
-import com.example.rqs.core.item.Item;
+import com.example.rqs.core.quiz.Quiz;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.space.Space;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class SpaceMember {
     private Long spaceMemberId;
 
     @OneToMany(mappedBy = "spaceMember", cascade = CascadeType.ALL)
-    private final List<Item> itemList = new ArrayList<>();
+    private final List<Quiz> quizzes = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")

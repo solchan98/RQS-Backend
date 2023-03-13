@@ -77,23 +77,25 @@ public class SpaceController {
             @RequestParam("spaceId") Long spaceId
     ) {
         MemberDetails memberDetails = this.commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        return Objects.nonNull(memberDetails)
-                ? spaceReadService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId))
-                : spaceReadService.getSpace(ReadSpace.of(spaceId));
+        if (Objects.nonNull(memberDetails)) {
+            return spaceReadService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId));
+        }
+
+        return spaceReadService.getSpace(ReadSpace.of(spaceId));
     }
 
     @GetMapping(DOMAIN + "/all")
     public List<SpaceResponse> getAllSpace(
             @Nullable @RequestParam("lastCreatedAt") String lastCreatedAt
     ) {
-        return this.spaceReadService.getSpaceList(ReadSpaceList.lastAt(lastCreatedAt));
+        return this.spaceReadService.getSpaces(ReadSpaces.lastAt(lastCreatedAt));
     }
 
     @GetMapping(DOMAIN + "/all/trending")
     public List<SpaceResponse> getAllSpaceByTrending(
             @Nullable @RequestParam("offset") Long offset
     ) {
-        return this.spaceReadService.getSpaceList(ReadSpaceList.offset(offset));
+        return this.spaceReadService.getSpaces(ReadSpaces.offset(offset));
     }
 
     @GetMapping( DOMAIN + "/{targetMemberId}/all")
@@ -106,7 +108,7 @@ public class SpaceController {
         ReadMembersSpaceList readMembersSpaceList = Objects.nonNull(memberDetails)
                         ? ReadMembersSpaceList.of(memberDetails.getMember().getMemberId(), targetMemberId, lastJoinedAt)
                         : ReadMembersSpaceList.of(targetMemberId, lastJoinedAt);
-        return spaceReadService.getSpaceList(readMembersSpaceList);
+        return spaceReadService.getSpaces(readMembersSpaceList);
     }
 
     @PatchMapping(AUTH + DOMAIN + "/spaceMember/role")
@@ -129,7 +131,7 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        return spaceMemberReadService.getSpaceMemberList(memberDetails.getMember().getMemberId(), spaceId);
+        return spaceMemberReadService.getSpaceMembers(memberDetails.getMember().getMemberId(), spaceId);
     }
 
     @GetMapping(DOMAIN + "/join")
@@ -163,11 +165,12 @@ public class SpaceController {
             @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        boolean isUpdatable = spaceMemberAuthService
-                .isUpdatableSpace(memberDetails.getMember().getMemberId(), spaceId);
-        return isUpdatable
-                ? new Message("200", HttpStatus.OK)
-                : new Message("403", HttpStatus.FORBIDDEN);
+        boolean isUpdatable = spaceMemberAuthService.isUpdatableSpace(memberDetails.getMember().getMemberId(), spaceId);
+        if (isUpdatable) {
+            return new Message("200", HttpStatus.OK);
+        }
+
+        return new Message("403", HttpStatus.FORBIDDEN);
     }
 
     @PatchMapping(AUTH + DOMAIN + "/visibility")
@@ -187,11 +190,7 @@ public class SpaceController {
             @RequestParam("spaceId") Long spaceId,
             @RequestParam("spaceMemberId") Long spaceMemberId
     ) {
-        DeleteSpaceMember deleteSpaceMember = DeleteSpaceMember.of(
-                memberDetails.getMember(),
-                spaceId,
-                spaceMemberId);
-
+        DeleteSpaceMember deleteSpaceMember = DeleteSpaceMember.of(memberDetails.getMember(), spaceId, spaceMemberId);
         spaceMemberUpdateService.deleteSpaceMember(deleteSpaceMember);
         return DeleteResponse.of(spaceMemberId, true);
     }

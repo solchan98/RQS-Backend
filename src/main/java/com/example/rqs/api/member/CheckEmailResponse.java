@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public class CheckEmailResponse {
-
     private final String email;
-
     private final boolean exist;
 
     public CheckEmailResponse(String email, boolean exist) {

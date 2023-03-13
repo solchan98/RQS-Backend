@@ -17,18 +17,18 @@ public class JoinSpace {
 
     private Long spaceMemberCount;
 
-    private Long itemCount;
+    private Long quizCount;
 
     private boolean visibility;
 
     private SpaceRole spaceRole;
 
-    private JoinSpace(Long spaceId, String title, String content, Long spaceMemberCount, Long itemCount, boolean visibility, SpaceRole spaceRole) {
+    private JoinSpace(Long spaceId, String title, String content, Long spaceMemberCount, Long quizCount, boolean visibility, SpaceRole spaceRole) {
         this.spaceId = spaceId;
         this.title = title;
         this.content = content;
         this.spaceMemberCount = spaceMemberCount;
-        this.itemCount = itemCount;
+        this.quizCount = quizCount;
         this.visibility = visibility;
         this.spaceRole = spaceRole;
     }
@@ -39,7 +39,7 @@ public class JoinSpace {
                 spaceResponse.getTitle(),
                 spaceResponse.getContent(),
                 spaceResponse.getSpaceMemberCount(),
-                spaceResponse.getItemCount(),
+                spaceResponse.getQuizCount(),
                 spaceResponse.isVisibility(),
                 spaceRole
         );

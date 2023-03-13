@@ -69,11 +69,11 @@ public class SpaceMemberRepositoryTest {
     }
 
     @Test
-    @DisplayName("getSpaceMemberResponseList - 정상 조회")
+    @DisplayName("getSpaceMemberResponses - 정상 조회")
     void getSpaceMemberResponseListTest() {
         Space space = spaceMemberList.get(0).getSpace();
         List<SpaceMemberResponse> spaceMemberResponseList = spaceMemberRepository
-                .getSpaceMemberResponseList(space.getSpaceId());
+                .getSpaceMemberResponses(space.getSpaceId());
 
         assertAll(
                 () -> assertThat(spaceMemberResponseList.size()).isEqualTo(2),

@@ -25,7 +25,7 @@ public class SpaceResponse {
 
     private Long spaceMemberCount;
 
-    private Long itemCount;
+    private Long quizCount;
 
     private LocalDateTime memberJoinedAt;
 
@@ -42,8 +42,8 @@ public class SpaceResponse {
                 space.getContent(),
                 space.getUrl(),
                 space.isVisibility(),
-                (long) space.getSpaceMemberList().size(),
-                (long) space.getItemList().size(),
+                (long) space.getSpaceMembers().size(),
+                (long) space.getQuizzes().size(),
                 null,
                 SpaceRole.GUEST,
                 space.getCreatedAt(),
@@ -57,8 +57,8 @@ public class SpaceResponse {
                 space.getContent(),
                 space.getUrl(),
                 space.isVisibility(),
-                (long) space.getSpaceMemberList().size(),
-                (long) space.getItemList().size(),
+                (long) space.getSpaceMembers().size(),
+                (long) space.getQuizzes().size(),
                 reader.getJoinedAt(),
                 reader.getRole(),
                 space.getCreatedAt(),
@@ -72,6 +72,5 @@ public class SpaceResponse {
     public void setMemberData(SpaceRole spaceRole, LocalDateTime memberJoinedAt) {
         this.authority = spaceRole;
         this.memberJoinedAt = memberJoinedAt;
-
     }
 }
