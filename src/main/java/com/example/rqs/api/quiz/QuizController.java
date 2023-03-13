@@ -57,7 +57,7 @@ public class QuizController {
                 memberDetails.getMember(),
                 createQuizDto.getQuestion(),
                 createQuizDto.getCreateAnswers(),
-                "form",
+                createQuizDto.getType(),
                 createQuizDto.getHint());
         return quizRegisterService.createQuiz(createQuiz);
     }

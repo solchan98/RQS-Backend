@@ -25,6 +25,16 @@ public class QuizResponse {
     private String hint;
     private LocalDateTime createdAt;
 
+    public QuizResponse(Long quizId, Long spaceId, String question, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
+        this.quizId = quizId;
+        this.spaceId = spaceId;
+        this.question = question;
+        this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
+        this.answerResponses = null;
+        this.hint = hint;
+        this.createdAt = createdAt;
+    }
+
     public QuizResponse(Long quizId, Long spaceId, String question, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;

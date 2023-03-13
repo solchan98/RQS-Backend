@@ -22,7 +22,7 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     @Override
     public List<QuizResponse> getQuizzes(Long spaceId, Long lastItemId) {
         return queryFactory
-                .select(itemResponseConstructor())
+                .select(quizResponseConstructorWithoutAnswers())
                 .from(quiz)
                 .innerJoin(quiz.space).on(quiz.space.spaceId.eq(spaceId))
                 .where(
@@ -43,15 +43,6 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     }
 
     @Override
-    public QuizResponse getQuiz(Long itemId) {
-        return queryFactory
-                .select(itemResponseConstructor())
-                .from(quiz)
-                .where(quiz.quizId.eq(itemId))
-                .fetchOne();
-    }
-
-    @Override
     public List<Long> getQuizIds(Long spaceId) {
         return queryFactory
                 .select(quiz.quizId)
@@ -64,14 +55,13 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
         return Objects.isNull(lastItemId) ? null : quiz.quizId.lt(lastItemId);
     }
 
-    private FactoryExpression<QuizResponse> itemResponseConstructor() {
+    private FactoryExpression<QuizResponse> quizResponseConstructorWithoutAnswers() {
         return Projections.constructor(
                 QuizResponse.class,
                 quiz.quizId,
                 quiz.space.spaceId,
                 quiz.question,
                 quiz.spaceMember,
-                quiz.answers,
                 quiz.hint,
                 quiz.createdAt
         );

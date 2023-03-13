@@ -16,5 +16,7 @@ public class CreateQuizDto {
 
     private List<CreateAnswer> createAnswers;
 
+    private String type;
+
     private String hint;
 }
