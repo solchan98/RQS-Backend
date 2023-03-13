@@ -25,7 +25,7 @@ public class Quiz {
     @JoinColumn(name = "space_member_id", referencedColumnName = "spaceMemberId")
     private SpaceMember spaceMember;
 
-    @OneToMany(mappedBy = "quiz",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "quiz",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers;
 
     @Column(columnDefinition = "TEXT")
@@ -56,10 +56,11 @@ public class Quiz {
         return new Quiz(spaceMember.getSpace(), spaceMember, question, createAnswers, type, hint);
     }
 
-    // TODO: Quiz update
-    public void updateContent(String question, String answer, String hint) {
+    public void updateContent(String question, List<CreateAnswer> answers, String hint) {
         this.question = question;
-//        this.answer = answer;
+        this.answers.forEach(Answer::delete);
+        this.answers.clear();
+        this.answers.addAll(answers.stream().map(ca -> Answer.of(this, ca.getAnswer(), ca.isCorrect())).collect(Collectors.toList()));
         this.hint = hint;
         this.updatedAt = LocalDateTime.now();
     }

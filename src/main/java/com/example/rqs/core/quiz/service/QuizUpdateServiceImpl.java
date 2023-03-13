@@ -28,7 +28,7 @@ public class QuizUpdateServiceImpl implements QuizUpdateService {
         boolean isCreator = this.quizAuthService.isQuizCreator(updateQuiz.getMember(), quiz);
         if (!isCreator) throw new ForbiddenException();
 
-        quiz.updateContent(updateQuiz.getQuestion(), updateQuiz.getAnswer(), updateQuiz.getHint());
+        quiz.updateContent(updateQuiz.getQuestion(), updateQuiz.getAnswers(), updateQuiz.getHint());
         return QuizResponse.of(quiz);
     }
 

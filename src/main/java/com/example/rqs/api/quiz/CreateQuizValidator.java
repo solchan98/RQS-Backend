@@ -24,7 +24,7 @@ public class CreateQuizValidator implements Validator {
         if (createQuizDto.getType().equals("form")) {
             checkIsValidToForm(createQuizDto);
         } else {
-            checkIsValidMuti(createQuizDto);
+            checkIsValidMutli(createQuizDto);
         }
 
         if (isEmpty) throw new BadRequestException();
@@ -36,9 +36,9 @@ public class CreateQuizValidator implements Validator {
         }
     }
 
-    private void checkIsValidMuti(CreateQuizDto createQuizDto){
-        if (createQuizDto.getCreateAnswers().size() < 2) {
-            throw new BadRequestException("정답을 최소 2개 이상 작성해야 합니다.");
+    private void checkIsValidMutli(CreateQuizDto createQuizDto){
+        if (createQuizDto.getCreateAnswers().size() < 2 || createQuizDto.getCreateAnswers().size() > 4) {
+            throw new BadRequestException("정답을 최소 2개 이상, 최대 4개 이하로 작성해야 합니다.");
         }
     }
 }

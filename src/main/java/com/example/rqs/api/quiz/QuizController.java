@@ -111,7 +111,8 @@ public class QuizController {
                 memberDetails.getMember(),
                 quizId,
                 updateQuizDto.getQuestion(),
-                updateQuizDto.getAnswer(),
+                updateQuizDto.getAnswers(),
+                updateQuizDto.getType(),
                 updateQuizDto.getHint());
         return quizUpdateService.updateQuiz(updateQuiz);
     }

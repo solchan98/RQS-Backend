@@ -38,4 +38,8 @@ public class Answer {
     public static Answer of(Quiz quiz, String answer, boolean isCorrect) {
         return new Answer(quiz, answer, isCorrect);
     }
+
+    public void delete() {
+        this.quiz = null;
+    }
 }
