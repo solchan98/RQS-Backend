@@ -19,7 +19,7 @@ public class CreateQuizValidator implements Validator {
 
         boolean isEmpty =
                 createQuizDto.getQuestion().isEmpty()
-                || createQuizDto.getAnswer().isEmpty();
+                || createQuizDto.getCreateAnswers().isEmpty();
 
         if (isEmpty) throw new BadRequestException();
     }

@@ -33,7 +33,7 @@ public class QuizRegisterServiceImpl implements QuizRegisterService {
             throw new ForbiddenException();
         }
 
-        Quiz quiz = Quiz.newQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getAnswers(), createQuiz.getType(), createQuiz.getHint());
+        Quiz quiz = Quiz.newQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getCreateAnswers(), createQuiz.getType(), createQuiz.getHint());
         quizRepository.save(quiz);
         return QuizResponse.of(quiz);
     }

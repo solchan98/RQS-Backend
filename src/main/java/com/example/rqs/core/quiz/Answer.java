@@ -20,19 +20,22 @@ public class Answer {
 
     private String answer;
 
+    private boolean isCorrect;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 
 
-    private Answer(Quiz quiz, String answer) {
+    private Answer(Quiz quiz, String answer, boolean isCorrect) {
         this.quiz = quiz;
         this.answer = answer;
+        this.isCorrect = isCorrect;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public static Answer of(Quiz quiz, String answer) {
-        return new Answer(quiz, answer);
+    public static Answer of(Quiz quiz, String answer, boolean isCorrect) {
+        return new Answer(quiz, answer, isCorrect);
     }
 }

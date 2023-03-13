@@ -1,5 +1,6 @@
 package com.example.rqs.core.quiz;
 
+import com.example.rqs.core.quiz.service.dtos.CreateAnswer;
 import com.example.rqs.core.space.Space;
 import com.example.rqs.core.spacemember.SpaceMember;
 import lombok.Getter;
@@ -30,9 +31,6 @@ public class Quiz {
     @Column(columnDefinition = "TEXT")
     private String question;
 
-    @Column(columnDefinition = "TEXT") // TODO: will delete
-    private String answer;
-
     private String type; // TODO: will enum
 
     private String hint; // TODO: will table
@@ -43,30 +41,25 @@ public class Quiz {
 
     protected Quiz() {}
 
-    private Quiz(Space space, SpaceMember spaceMember, String question, List<String> answers, String type, String answer, String hint) {
+    private Quiz(Space space, SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
         this.space = space;
         this.spaceMember = spaceMember;
         this.question = question;
-        this.answers = answers.stream().map(a -> Answer.of(this, a)).collect(Collectors.toList());
-        this.answer = answer;
+        this.answers = createAnswers.stream().map(ca -> Answer.of(this, ca.getAnswer(), ca.isCorrect())).collect(Collectors.toList());
         this.type = type;
         this.hint = hint;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
     }
 
-    public static Quiz newQuiz(SpaceMember spaceMember, String question, List<String> answers, String type, String hint) {
-        return new Quiz(spaceMember.getSpace(), spaceMember, question, answers, type, "", hint);
+    public static Quiz newQuiz(SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
+        return new Quiz(spaceMember.getSpace(), spaceMember, question, createAnswers, type, hint);
     }
 
-    // TODO: legacy
-    public static Quiz newQuiz(SpaceMember spaceMember, String question, String answer, String hint) {
-        return new Quiz(spaceMember.getSpace(), spaceMember, question, List.of(), "form", "", hint);
-    }
-
+    // TODO: Quiz update
     public void updateContent(String question, String answer, String hint) {
         this.question = question;
-        this.answer = answer;
+//        this.answer = answer;
         this.hint = hint;
         this.updatedAt = LocalDateTime.now();
     }

@@ -2,6 +2,7 @@ package com.example.rqs.core.quiz.repository;
 
 import com.example.rqs.core.config.DataTestConfig;
 import com.example.rqs.core.quiz.Quiz;
+import com.example.rqs.core.quiz.service.dtos.CreateAnswer;
 import com.example.rqs.core.quiz.service.dtos.QuizResponse;
 import com.example.rqs.core.member.Member;
 import com.example.rqs.core.member.repository.MemberRepository;
@@ -56,7 +57,7 @@ public class QuizRepositoryTest {
     void createItems(SpaceMember spaceMember) {
         List<Quiz> quizList = new ArrayList<>(30);
         for (int idx = 0; idx < 30; idx++) {
-            Quiz quiz = Quiz.newQuiz(spaceMember, "Question_" + idx, "Answer", "");
+            Quiz quiz = Quiz.newQuiz(spaceMember, "Question_" + idx, List.of(CreateAnswer.of("answer", true)), "", "");
             quizList.add(quiz);
         }
         quizRepository.saveAll(quizList);

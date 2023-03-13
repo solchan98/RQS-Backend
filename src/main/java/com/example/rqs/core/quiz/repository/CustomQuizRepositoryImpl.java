@@ -8,7 +8,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import static com.example.rqs.core.quiz.QQuiz.quiz;
 
-
 import java.util.List;
 import java.util.Objects;
 
@@ -72,7 +71,7 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
                 quiz.space.spaceId,
                 quiz.question,
                 quiz.spaceMember,
-                quiz.answer,
+                quiz.answers,
                 quiz.hint,
                 quiz.createdAt
         );
