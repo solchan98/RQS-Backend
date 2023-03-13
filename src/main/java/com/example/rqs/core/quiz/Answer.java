@@ -18,6 +18,7 @@ public class Answer {
     @JoinColumn(name = "quiz_id", referencedColumnName = "quizId")
     private Quiz quiz;
 
+    @Column(columnDefinition = "TEXT")
     private String answer;
 
     private boolean isCorrect;
