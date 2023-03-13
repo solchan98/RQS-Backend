@@ -57,7 +57,7 @@ public class QuizControllerTest {
     @WithMockUser
     @DisplayName("퀴즈 생성, Question필드 비어있는 경우 예외 처리 400")
     void createQuizFailByNullQuestionField() throws Exception {
-        CreateQuizDto createQuizDto = new CreateQuizDto(1L, "",  List.of(CreateAnswer.of("answer", true)), "없엉, 틀려랑, 땡!");
+        CreateQuizDto createQuizDto = new CreateQuizDto(1L, "",  List.of(CreateAnswer.of("answer", true)), "form", "없엉, 틀려랑, 땡!");
         String req = objectMapper.writeValueAsString(createQuizDto);
 
         ResultActions perform = mockMvc.perform(
@@ -76,7 +76,7 @@ public class QuizControllerTest {
     @DisplayName("퀴즈 생성, Answer필드 비어있는 경우 예외 처리 400")
     void createQuizFailByNullAnswerField() throws Exception {
         CreateQuizDto createQuizDto = new CreateQuizDto(
-                1L, "프로세스 어쩌구 저쩌구", List.of(CreateAnswer.of("answer", true)), "없엉, 틀려랑, 땡!");
+                1L, "프로세스 어쩌구 저쩌구", List.of(), "form", "없엉, 틀려랑, 땡!");
         String req = objectMapper.writeValueAsString(createQuizDto);
 
         ResultActions perform = mockMvc.perform(
@@ -94,11 +94,11 @@ public class QuizControllerTest {
     @WithMockUser
     @DisplayName("퀴즈 업데이트, Question필드 비어있는 경우 예외 처리 400")
     void updateQuizFailByNullQuestionField() throws Exception {
-        CreateQuizDto createQuizDto = new CreateQuizDto(1L, "", List.of(CreateAnswer.of("answer", true)), "없엉, 틀려랑, 땡!");
+        UpdateQuizDto createQuizDto = new UpdateQuizDto(1L, "", List.of(CreateAnswer.of("answer", true)), "form", "없엉, 틀려랑, 땡!");
         String req = objectMapper.writeValueAsString(createQuizDto);
 
         ResultActions perform = mockMvc.perform(
-                put("/api/v1/my/quiz")
+                put("/api/v1/my/quiz/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));
@@ -112,12 +112,12 @@ public class QuizControllerTest {
     @WithMockUser
     @DisplayName("퀴즈 업데이트, Answer필드 비어있는 경우 예외 처리 400")
     void updateQuizFailByNullAnswerField() throws Exception {
-        CreateQuizDto createQuizDto = new CreateQuizDto(
-                1L, "프로세스 어쩌구 저쩌구", List.of(CreateAnswer.of("answer", true)), "없엉, 틀려랑, 땡!");
+        UpdateQuizDto createQuizDto = new UpdateQuizDto(
+                1L, "프로세스 어쩌구 저쩌구", List.of(), "form", "없엉, 틀려랑, 땡!");
         String req = objectMapper.writeValueAsString(createQuizDto);
 
         ResultActions perform = mockMvc.perform(
-                put("/api/v1/my/quiz")
+                put("/api/v1/my/quiz/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(req)
                         .with(csrf()));

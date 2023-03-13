@@ -60,7 +60,7 @@ public class QuizCacheServiceTest {
         List<Long> itemIds = List.of(1L, 2L, 3L, 4L, 5L);
 
         // when
-        QuizCache quizCache = quizCacheService.start(spaceId, memberId, itemIds);
+        QuizCache quizCache = quizCacheService.start(spaceId, memberId, itemIds, "form");
 
         // then
         assertAll(
@@ -80,8 +80,8 @@ public class QuizCacheServiceTest {
         List<Long> newItemIds = List.of(1L, 2L, 3L, 4L, 5L);
 
         // when
-        quizCacheService.start(spaceId, memberId, itemIds);
-        QuizCache quizCache = quizCacheService.start(spaceId, memberId, newItemIds);
+        quizCacheService.start(spaceId, memberId, itemIds, "form");
+        QuizCache quizCache = quizCacheService.start(spaceId, memberId, newItemIds, "form");
 
         // then
         assertAll(
@@ -97,7 +97,7 @@ public class QuizCacheServiceTest {
         Long spaceId = 1L;
         Long memberId = 1L;
         List<Long> itemIds = List.of(1L, 2L, 3L, 4L, 5L);
-        quizCacheService.start(spaceId, memberId, itemIds);
+        quizCacheService.start(spaceId, memberId, itemIds, "form");
 
         // when
         quizCacheService.deleteQuiz(spaceId, 3L);

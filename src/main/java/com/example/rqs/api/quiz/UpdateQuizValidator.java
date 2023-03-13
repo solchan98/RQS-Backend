@@ -21,13 +21,15 @@ public class UpdateQuizValidator implements Validator {
                 updateQuizDto.getQuestion().isEmpty()
                 || updateQuizDto.getAnswers().isEmpty();
 
+        if (isEmpty) {
+            throw new BadRequestException();
+        }
+
         if (updateQuizDto.getType().equals("form")) {
             checkIsValidToForm(updateQuizDto);
         } else {
             checkIsValidMutli(updateQuizDto);
         }
-
-        if (isEmpty) throw new BadRequestException();
     }
 
     private void checkIsValidToForm(UpdateQuizDto updateQuizDto) {

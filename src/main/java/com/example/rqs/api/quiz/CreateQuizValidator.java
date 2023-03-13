@@ -21,13 +21,15 @@ public class CreateQuizValidator implements Validator {
                 createQuizDto.getQuestion().isEmpty()
                 || createQuizDto.getCreateAnswers().isEmpty();
 
+        if (isEmpty) {
+            throw new BadRequestException();
+        }
+
         if (createQuizDto.getType().equals("form")) {
             checkIsValidToForm(createQuizDto);
         } else {
             checkIsValidMutli(createQuizDto);
         }
-
-        if (isEmpty) throw new BadRequestException();
     }
 
     private void checkIsValidToForm(CreateQuizDto createQuizDto) {

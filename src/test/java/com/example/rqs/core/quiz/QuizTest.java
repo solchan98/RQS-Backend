@@ -37,27 +37,4 @@ public class QuizTest {
         );
 
     }
-
-    // TODO: 아이템 업데이트 재구현 후 다시 오픈
-//    @Test()
-//    @DisplayName("아이템 컨텐츠 업데이트 테스트")
-//    void testUpdateItemContent() {
-//        Space space = mock(Space.class);
-//        SpaceMember isCreator = mock(SpaceMember.class);
-//        given(isCreator.getSpace()).willReturn(space);
-//        Quiz quiz = Quiz.newQuiz(isCreator, "수정 전, 질문!", List.of(CreateAnswer.of("answer", true)), "", "수정, 전, 힌트");
-//        LocalDateTime beforeUpdate = quiz.getUpdatedAt();
-//
-//        quiz.updateContent(
-//                "수정 후, 질문!",
-//                "수정 후, 답변!",
-//                "수정 후, 힌트!");
-//
-//        assertAll(
-//                () -> assertThat(quiz.getQuestion()).isEqualTo("수정 후, 질문!"),
-//                () -> assertThat(quiz.getAnswers()).isEqualTo("수정 후, 답변!"),
-//                () -> assertThat(quiz.getHint()).isEqualTo("수정 후, 힌트!"),
-//                () -> assertThat(quiz.getUpdatedAt()).isNotEqualTo(beforeUpdate)
-//        );
-//    }
 }
