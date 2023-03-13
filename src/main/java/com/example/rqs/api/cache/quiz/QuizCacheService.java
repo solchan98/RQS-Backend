@@ -1,5 +1,7 @@
 package com.example.rqs.api.cache.quiz;
 
+import com.example.rqs.api.quiz.randomquiz.InProgressResponse;
+
 import java.util.List;
 
 public interface QuizCacheService {
@@ -8,8 +10,7 @@ public interface QuizCacheService {
         return spaceId + "_" + memberId;
     }
     Long pickRandomQuizId(Long spaceId, Long memberId);
-    QuizCache start(Long spaceId, Long memberId, List<Long> itemIds);
+    QuizCache start(Long spaceId, Long memberId, List<Long> itemIds, String type);
     void deleteQuiz(Long spaceId, Long quizId);
-    boolean inProgress(Long spaceId, Long memberId);
-    QuizCache status(Long spaceId, Long memberId);
+    InProgressResponse inProgress(Long spaceId, Long memberId);
 }

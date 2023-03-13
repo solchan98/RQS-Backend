@@ -1,6 +1,5 @@
 package com.example.rqs.api.quiz.randomquiz;
 
-import com.example.rqs.api.cache.quiz.QuizCache;
 import com.example.rqs.api.cache.quiz.QuizCacheService;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.quiz.service.QuizReadService;
@@ -28,12 +27,8 @@ public class RandomQuizController {
             @PathVariable("spaceId") Long spaceId
     ) {
         Long memberId = memberDetails.getMember().getMemberId();
-        boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
-        if (inProgress) {
-            QuizCache quizCache = quizCacheService.status(spaceId, memberId);
-            return ResponseEntity.ok(InProgressResponse.from(quizCache));
-        }
-        return ResponseEntity.ok(InProgressResponse.of(false));
+        InProgressResponse inProgress = quizCacheService.inProgress(spaceId, memberId);
+        return ResponseEntity.ok(inProgress);
     }
 
     @GetMapping("/random/{spaceId}/{type}")
@@ -45,10 +40,10 @@ public class RandomQuizController {
         Long memberId = memberDetails.getMember().getMemberId();
         spaceReadService.checkReadableQuiz(memberId, spaceId);
 
-        boolean inProgress = quizCacheService.inProgress(spaceId, memberId);
-        if (!inProgress) {
+        InProgressResponse inProgress = quizCacheService.inProgress(spaceId, memberId);
+        if (!inProgress.isStatus() || !inProgress.isType(type)) {
             List<Long> itemIds = quizReadService.getQuizIds(spaceId, type);
-            quizCacheService.start(spaceId, memberId, itemIds);
+            quizCacheService.start(spaceId, memberId, itemIds, type);
         }
 
         Long randomQuizId = quizCacheService.pickRandomQuizId(spaceId, memberId);
