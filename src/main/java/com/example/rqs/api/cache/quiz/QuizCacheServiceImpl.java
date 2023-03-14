@@ -1,6 +1,7 @@
 package com.example.rqs.api.cache.quiz;
 
 import com.example.rqs.api.quiz.randomquiz.InProgressResponse;
+import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,13 +18,12 @@ public class QuizCacheServiceImpl implements QuizCacheService {
     private final ObjectMapper objectMapper;
     private final RedisDao redisDao;
 
-    /** will be return -1 if it doesn't exist quiz data */
     @Override
     public Long pickRandomQuizId(Long spaceId, Long memberId) {
         String key = getKey(spaceId, memberId);
         String gameInfo = redisDao.getValues(key);
         if (gameInfo == null) {
-            return -1L;
+            throw new BadRequestException("뽑을 수 있는 퀴즈가 존재하지 않습니다.");
         }
 
         QuizCache quizCache = convertToQuizCache(gameInfo);
