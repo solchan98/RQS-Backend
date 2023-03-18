@@ -17,6 +17,8 @@ public class Quiz {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
+    private Long parentId;
+
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "spaceId")
     private Space space;
