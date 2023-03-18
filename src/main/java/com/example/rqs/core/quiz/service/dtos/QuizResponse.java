@@ -27,9 +27,10 @@ public class QuizResponse {
     private String hint;
     private LocalDateTime createdAt;
 
-    public QuizResponse(Long quizId, Long spaceId, String question, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
+    public QuizResponse(Long quizId, Long spaceId, Long childId, String question, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
+        this.childId = childId;
         this.question = question;
         this.type = type;
         this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
