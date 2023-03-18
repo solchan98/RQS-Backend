@@ -5,4 +5,5 @@ import com.example.rqs.core.quiz.service.dtos.QuizResponse;
 
 public interface QuizRegisterService {
     QuizResponse createQuiz(CreateQuiz createQuiz);
+    QuizResponse createChildQuiz(CreateQuiz createQuiz, Long parentQuizId);
 }

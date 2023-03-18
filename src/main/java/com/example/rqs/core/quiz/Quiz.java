@@ -17,7 +17,7 @@ public class Quiz {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizId;
 
-    private Long parentId;
+    private Long childId;
 
     @ManyToOne
     @JoinColumn(name = "space_id", referencedColumnName = "spaceId")
@@ -44,6 +44,7 @@ public class Quiz {
     protected Quiz() {}
 
     private Quiz(Space space, SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
+        this.childId = null;
         this.space = space;
         this.spaceMember = spaceMember;
         this.question = question;
@@ -69,5 +70,14 @@ public class Quiz {
 
     public boolean isCreator(SpaceMember spaceMember) {
         return this.spaceMember.getSpaceMemberId().equals(spaceMember.getSpaceMemberId());
+    }
+
+    public void addChildId(Long childId) {
+        this.childId = childId;
+    }
+
+    // TODO: String type -> Enum
+    public boolean isSameType(String type) {
+        return this.type.equals(type);
     }
 }
