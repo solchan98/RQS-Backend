@@ -83,6 +83,10 @@ public class Quiz {
         this.childId = childId;
     }
 
+    public void removeChildId() {
+        this.childId = -999L;
+    }
+
     // TODO: String type -> Enum
     public boolean isSameType(String type) {
         return this.type.equals(type);

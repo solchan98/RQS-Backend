@@ -1,5 +1,6 @@
 package com.example.rqs.core.quiz.repository;
 
+import com.example.rqs.core.quiz.Quiz;
 import com.example.rqs.core.quiz.service.dtos.*;
 import com.querydsl.core.types.FactoryExpression;
 import com.querydsl.core.types.Projections;
@@ -10,6 +11,7 @@ import static com.example.rqs.core.quiz.QQuiz.quiz;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class CustomQuizRepositoryImpl implements CustomQuizRepository {
 
@@ -56,6 +58,16 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
                         quiz.isRoot.isTrue()
                 )
                 .fetch();
+    }
+
+    @Override
+    public Optional<Quiz> getByChildId(Long childId) {
+        Quiz fetchOne = queryFactory
+                .selectFrom(quiz)
+                .where(quiz.childId.eq(childId))
+                .fetchOne();
+
+        return Optional.ofNullable(fetchOne);
     }
 
     private BooleanExpression quizType(String type) {

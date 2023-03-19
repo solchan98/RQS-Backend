@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -41,7 +43,14 @@ public class QuizUpdateServiceImpl implements QuizUpdateService {
                 .findById(quizId)
                 .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
 
+        deleteChildIdInParentQuiz(quiz);
         quizRepository.deleteById(quizId);
+
         return DeletedQuizData.of(quiz.getSpace().getSpaceId(), quizId);
+    }
+
+    private void deleteChildIdInParentQuiz(Quiz quiz) {
+        Optional<Quiz> parent = quizRepository.getByChildId(quiz.getChildId());
+        parent.ifPresent(Quiz::removeChildId);
     }
 }

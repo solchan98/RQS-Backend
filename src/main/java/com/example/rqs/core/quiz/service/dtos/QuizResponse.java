@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @ToString
 public class QuizResponse {
-
     private Long quizId;
     private Long childId;
     private Long spaceId;
@@ -31,7 +30,7 @@ public class QuizResponse {
     public QuizResponse(Long quizId, Long spaceId, Long childId, String question, Boolean isRoot, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
-        this.childId = childId;
+        this.childId = childId == -999L ? null : childId;
         this.question = question;
         this.type = type;
         this.isRoot = isRoot;
@@ -44,7 +43,7 @@ public class QuizResponse {
     public QuizResponse(Long quizId, Long spaceId, Long childId, String question, Boolean isRoot, String type, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
-        this.childId = childId;
+        this.childId = childId == -999L ? null : childId;
         this.question = question;
         this.isRoot = isRoot;
         this.type = type;
