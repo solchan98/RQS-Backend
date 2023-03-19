@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +46,7 @@ public class QuizUpdateServiceImpl implements QuizUpdateService {
                 .orElseThrow(() -> new BadRequestException(RQSError.ITEM_IS_NOT_EXIST_IN_SPACE));
 
         deleteChildIdInParentQuiz(quiz);
+        deleteAllChildQuizzes(quiz);
         quizRepository.deleteById(quizId);
 
         return DeletedQuizData.of(quiz.getSpace().getSpaceId(), quizId);
@@ -52,5 +55,21 @@ public class QuizUpdateServiceImpl implements QuizUpdateService {
     private void deleteChildIdInParentQuiz(Quiz quiz) {
         Optional<Quiz> parent = quizRepository.getByChildId(quiz.getQuizId());
         parent.ifPresent(Quiz::removeChildId);
+    }
+
+    private void deleteAllChildQuizzes(Quiz quiz) {
+        List<Quiz> deleteQuizzes = new ArrayList<>();
+        getDeleteQuizzes(quiz.getChildId(), deleteQuizzes);
+        quizRepository.deleteAll(deleteQuizzes);
+    }
+
+    private void getDeleteQuizzes(Long quizId, List<Quiz> deleteQuizzes) {
+        Optional<Quiz> quizOptional = quizRepository.findById(quizId);
+        if (quizOptional.isEmpty()) {
+            return;
+        }
+
+        deleteQuizzes.add(quizOptional.get());
+        getDeleteQuizzes(quizOptional.get().getChildId(), deleteQuizzes);
     }
 }
