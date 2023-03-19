@@ -26,7 +26,8 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
                 .from(quiz)
                 .innerJoin(quiz.space).on(quiz.space.spaceId.eq(spaceId))
                 .where(
-                        lastItemId(lastItemId)
+                        lastItemId(lastItemId),
+                        quiz.isRoot.isTrue()
                 )
                 .limit(20)
                 .orderBy(quiz.quizId.desc())
@@ -34,6 +35,7 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     }
 
     @Override
+    //* with tail quizzes */
     public Long countBySpaceId(Long spaceId) {
         return queryFactory
                 .select(quiz.count())
@@ -43,11 +45,16 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
     }
 
     @Override
+    //* without tail quizzes */
     public List<Long> getQuizIds(Long spaceId, String type) {
         return queryFactory
                 .select(quiz.quizId)
                 .from(quiz)
-                .where(quiz.space.spaceId.eq(spaceId), quizType(type))
+                .where(
+                        quiz.space.spaceId.eq(spaceId),
+                        quizType(type),
+                        quiz.isRoot.isTrue()
+                )
                 .fetch();
     }
 
