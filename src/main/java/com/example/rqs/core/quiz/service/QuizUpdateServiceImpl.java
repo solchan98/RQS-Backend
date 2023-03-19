@@ -50,7 +50,7 @@ public class QuizUpdateServiceImpl implements QuizUpdateService {
     }
 
     private void deleteChildIdInParentQuiz(Quiz quiz) {
-        Optional<Quiz> parent = quizRepository.getByChildId(quiz.getChildId());
+        Optional<Quiz> parent = quizRepository.getByChildId(quiz.getQuizId());
         parent.ifPresent(Quiz::removeChildId);
     }
 }
