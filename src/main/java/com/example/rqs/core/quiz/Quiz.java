@@ -33,6 +33,8 @@ public class Quiz {
     @Column(columnDefinition = "TEXT")
     private String question;
 
+    private Boolean isRoot;
+
     private String type; // TODO: will enum
 
     private String hint; // TODO: will table
@@ -43,11 +45,12 @@ public class Quiz {
 
     protected Quiz() {}
 
-    private Quiz(Space space, SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
+    private Quiz(Space space, SpaceMember spaceMember, String question, Boolean isRoot, List<CreateAnswer> createAnswers, String type, String hint) {
         this.childId = null;
         this.space = space;
         this.spaceMember = spaceMember;
         this.question = question;
+        this.isRoot = isRoot;
         this.answers = createAnswers.stream().map(ca -> Answer.of(this, ca.getAnswer(), ca.isCorrect())).collect(Collectors.toList());
         this.type = type;
         this.hint = hint;
@@ -56,7 +59,11 @@ public class Quiz {
     }
 
     public static Quiz newQuiz(SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
-        return new Quiz(spaceMember.getSpace(), spaceMember, question, createAnswers, type, hint);
+        return new Quiz(spaceMember.getSpace(), spaceMember, question, true, createAnswers, type, hint);
+    }
+
+    public static Quiz newChildQuiz(SpaceMember spaceMember, String question, List<CreateAnswer> createAnswers, String type, String hint) {
+        return new Quiz(spaceMember.getSpace(), spaceMember, question, false, createAnswers, type, hint);
     }
 
     public void updateContent(String question, List<CreateAnswer> answers, String hint) {

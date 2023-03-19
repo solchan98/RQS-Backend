@@ -21,29 +21,32 @@ public class QuizResponse {
     private Long childId;
     private Long spaceId;
     private String question;
+    private Boolean isRoot;
     private String type;
     private SpaceMemberResponse spaceMemberResponse;
     private List<AnswerResponse> answerResponses;
     private String hint;
     private LocalDateTime createdAt;
 
-    public QuizResponse(Long quizId, Long spaceId, Long childId, String question, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
+    public QuizResponse(Long quizId, Long spaceId, Long childId, String question, Boolean isRoot, String type, SpaceMember spaceMember, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
         this.childId = childId;
         this.question = question;
         this.type = type;
+        this.isRoot = isRoot;
         this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
         this.answerResponses = null;
         this.hint = hint;
         this.createdAt = createdAt;
     }
 
-    public QuizResponse(Long quizId, Long spaceId, Long childId, String question, String type, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
+    public QuizResponse(Long quizId, Long spaceId, Long childId, String question, Boolean isRoot, String type, SpaceMember spaceMember, List<Answer> answers, String hint, LocalDateTime createdAt) {
         this.quizId = quizId;
         this.spaceId = spaceId;
         this.childId = childId;
         this.question = question;
+        this.isRoot = isRoot;
         this.type = type;
         this.spaceMemberResponse = SpaceMemberResponse.of(spaceMember);
         this.answerResponses = answers.stream().map(AnswerResponse::of).collect(Collectors.toList());
@@ -57,6 +60,7 @@ public class QuizResponse {
                 quiz.getSpace().getSpaceId(),
                 quiz.getChildId(),
                 quiz.getQuestion(),
+                quiz.getIsRoot(),
                 quiz.getType(),
                 quiz.getSpaceMember(),
                 quiz.getAnswers(),
