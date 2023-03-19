@@ -46,7 +46,7 @@ public class Quiz {
     protected Quiz() {}
 
     private Quiz(Space space, SpaceMember spaceMember, String question, Boolean isRoot, List<CreateAnswer> createAnswers, String type, String hint) {
-        this.childId = null;
+        this.childId = -999L;
         this.space = space;
         this.spaceMember = spaceMember;
         this.question = question;
