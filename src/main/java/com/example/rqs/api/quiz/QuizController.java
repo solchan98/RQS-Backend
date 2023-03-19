@@ -62,6 +62,22 @@ public class QuizController {
         return quizRegisterService.createQuiz(createQuiz);
     }
 
+    @PostMapping(AUTH + DOMAIN + "/{parentId}/child")
+    public QuizResponse createNewChildQuiz(
+            @AuthenticationPrincipal MemberDetails memberDetails,
+            @PathVariable("parentId") Long parentId,
+            @Validated @RequestBody CreateQuizDto createQuizDto
+    ) {
+        CreateQuiz createQuiz = CreateQuiz.of(
+                createQuizDto.getSpaceId(),
+                memberDetails.getMember(),
+                createQuizDto.getQuestion(),
+                createQuizDto.getCreateAnswers(),
+                createQuizDto.getType(),
+                createQuizDto.getHint());
+        return quizRegisterService.createChildQuiz(createQuiz, parentId);
+    }
+
     @GetMapping(DOMAIN + "/{quizId}")
     public QuizResponse getQuiz(
             HttpServletRequest request,

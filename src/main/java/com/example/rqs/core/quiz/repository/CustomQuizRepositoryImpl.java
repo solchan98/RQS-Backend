@@ -64,6 +64,7 @@ public class CustomQuizRepositoryImpl implements CustomQuizRepository {
                 QuizResponse.class,
                 quiz.quizId,
                 quiz.space.spaceId,
+                quiz.childId,
                 quiz.question,
                 quiz.type,
                 quiz.spaceMember,

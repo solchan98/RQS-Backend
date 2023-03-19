@@ -2,6 +2,7 @@ package com.example.rqs.api.cache;
 
 import com.example.rqs.api.cache.quiz.QuizCache;
 import com.example.rqs.api.cache.quiz.QuizCacheServiceImpl;
+import com.example.rqs.core.common.exception.BadRequestException;
 import com.example.rqs.core.common.redis.RedisConfig;
 import com.example.rqs.core.common.redis.RedisDao;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = {RedisConfig.class, RedisDao.class, ObjectMapper.class, QuizCacheServiceImpl.class})
 @DisplayName("QuizCacheService Test")
@@ -44,11 +45,12 @@ public class QuizCacheServiceTest {
         Long spaceId = 1L;
         Long memberId = 1L;
 
-        // when
-        Long randomQuizId = quizCacheService.pickRandomQuizId(spaceId, memberId);
+        // when then
+        BadRequestException exception = assertThrows(BadRequestException.class,
+                () -> quizCacheService.pickRandomQuizId(spaceId, memberId)
+        );
 
-        // then
-        assertThat(randomQuizId).isEqualTo(-1L);
+        assertThat(exception.getMessage()).isEqualTo("뽑을 수 있는 퀴즈가 존재하지 않습니다.");
     }
 
     @Test
