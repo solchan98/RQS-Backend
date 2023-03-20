@@ -44,7 +44,7 @@ public class QuizRegisterServiceImpl implements QuizRegisterService {
         if (!parentQuiz.isSameType(createQuiz.getType())) {
             throw new BadRequestException("부모와 같은 타입의 퀴즈만 생성할 수 있습니다.");
         }
-        Quiz quiz = Quiz.newChildQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getCreateAnswers(), "child", createQuiz.getHint());
+        Quiz quiz = Quiz.newChildQuiz(spaceMember, createQuiz.getQuestion(), createQuiz.getCreateAnswers(), createQuiz.getType(), createQuiz.getHint());
 
         quizRepository.save(quiz);
         parentQuiz.addChildId(quiz.getQuizId());
