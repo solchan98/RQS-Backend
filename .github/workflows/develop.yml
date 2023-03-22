@@ -60,21 +60,12 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-#
-#      - name: Authenticate with Google Cloud
-#        id: 'auth'
-#        uses: 'google-github-actions/auth@v0'
-#        with:
-#          credentials_json: ${{ secrets.GCP_SA_KEY }}
-#
-#      - name: Setup Google Cloud SDK
-#        uses: google-github-actions/setup-gcloud@v0
-#
-#      - name: Connect GCE And Execute Deploy Script
-#        id: 'compute-ssh'
-#        uses: 'google-github-actions/ssh-compute@v0'
-#        with:
-#          instance_name: ${{ secrets.INSTANCE_NAME }}
-#          zone: ${{ secrets.REGION_WITH_ZONE }}
-#          ssh_private_key: ${{ secrets.GCP_SSH_PRIVATE_KEY }}
-#          script: "./deploy.sh"
+
+      - name: SSH Compute
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          port: 22
+          script: sh backend-deploy.sh
