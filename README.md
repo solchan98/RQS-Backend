@@ -9,9 +9,9 @@
 <img width="847" alt="image" src="https://user-images.githubusercontent.com/64524916/191677758-182b96a0-c83a-474f-abe6-42537879e436.png">
 
 ## Deployment Architecture
-<img width="888" alt="image" src="https://user-images.githubusercontent.com/64524916/227120123-e821e1ce-e812-4bd3-b7ad-1938fe5cf32e.png">
+![image](https://user-images.githubusercontent.com/64524916/227122366-65a4d29d-21be-442b-9f49-cf9284953a54.png)
 
 ## CI/ CD
-<img width="720" alt="image" src="https://user-images.githubusercontent.com/64524916/227119858-3628aa4b-7b6c-4750-9a50-50220c0fa61e.png">
+![image](https://user-images.githubusercontent.com/64524916/227120727-b449372d-e99d-4d93-bd85-5518c46c5733.png)
 
 ## [프론트엔드 레포지토리](https://github.com/solchan98/RQS-frontend)
