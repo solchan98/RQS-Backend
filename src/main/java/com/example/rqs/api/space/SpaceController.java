@@ -1,6 +1,6 @@
 package com.example.rqs.api.space;
 
-import com.example.rqs.api.common.CommonAPIAuthChecker;
+import com.example.rqs.api.common.CommonAPI;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.*;
 import com.example.rqs.core.common.exception.BadRequestException;
@@ -20,16 +20,13 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class SpaceController {
-
     private static final String AUTH = "/my";
     private static final String DOMAIN = "/space";
 
@@ -41,8 +38,6 @@ public class SpaceController {
     private final SpaceMemberReadService spaceMemberReadService;
     private final SpaceMemberUpdateService spaceMemberUpdateService;
     private final SpaceMemberAuthService spaceMemberAuthService;
-
-    private final CommonAPIAuthChecker commonAPIAuthChecker;
 
     @PostMapping(AUTH + DOMAIN)
     public SpaceResponse createNewSpace(
@@ -72,16 +67,16 @@ public class SpaceController {
     }
 
     @GetMapping(DOMAIN)
+    @CommonAPI
     public SpaceResponse getSpace(
-            HttpServletRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId
     ) {
-        MemberDetails memberDetails = this.commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        if (Objects.nonNull(memberDetails)) {
-            return spaceReadService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId));
+        if (memberDetails == null) {
+            return spaceReadService.getSpace(ReadSpace.of(spaceId));
         }
 
-        return spaceReadService.getSpace(ReadSpace.of(spaceId));
+        return spaceReadService.getSpace(ReadSpace.of(memberDetails.getMember(), spaceId));
     }
 
     @GetMapping(DOMAIN + "/all")
@@ -99,15 +94,18 @@ public class SpaceController {
     }
 
     @GetMapping( DOMAIN + "/{targetMemberId}/all")
+    @CommonAPI
     public List<SpaceResponse> getAllMySpace(
-            HttpServletRequest request,
             @PathVariable("targetMemberId") Long targetMemberId,
-            @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt
+            @Nullable @RequestParam("lastJoinedAt") String lastJoinedAt,
+            @AuthenticationPrincipal MemberDetails memberDetails
     ) {
-        MemberDetails memberDetails = this.commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        ReadMembersSpaceList readMembersSpaceList = Objects.nonNull(memberDetails)
-                        ? ReadMembersSpaceList.of(memberDetails.getMember().getMemberId(), targetMemberId, lastJoinedAt)
-                        : ReadMembersSpaceList.of(targetMemberId, lastJoinedAt);
+        if (memberDetails != null) {
+            ReadMembersSpaceList readMembersSpaceList = ReadMembersSpaceList.of(memberDetails.getMember().getMemberId(), targetMemberId, lastJoinedAt);
+            return spaceReadService.getSpaces(readMembersSpaceList);
+        }
+
+        ReadMembersSpaceList readMembersSpaceList = ReadMembersSpaceList.of(targetMemberId, lastJoinedAt);
         return spaceReadService.getSpaces(readMembersSpaceList);
     }
 

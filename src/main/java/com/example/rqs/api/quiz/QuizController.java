@@ -1,7 +1,7 @@
 package com.example.rqs.api.quiz;
 
 import com.example.rqs.api.cache.quiz.QuizCacheService;
-import com.example.rqs.api.common.CommonAPIAuthChecker;
+import com.example.rqs.api.common.CommonAPI;
 import com.example.rqs.api.exception.Message;
 import com.example.rqs.api.jwt.MemberDetails;
 import com.example.rqs.core.quiz.service.*;
@@ -15,27 +15,23 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class QuizController {
-
     private static final String AUTH = "/my";
     private static final String DOMAIN = "/quiz";
 
     private final QuizReadService quizReadService;
     private final QuizAuthService quizAuthService;
+    private final QuizCacheService quizCacheService;
     private final QuizUpdateService quizUpdateService;
     private final QuizRegisterService quizRegisterService;
 
     private final CreateQuizValidator createQuizValidator;
     private final UpdateQuizValidator updateQuizValidator;
-    private final QuizCacheService quizCacheService;
-    private final CommonAPIAuthChecker commonAPIAuthChecker;
 
     @InitBinder("createQuizDto")
     public void initCreateQuizBinder(WebDataBinder webDataBinder) {
@@ -79,29 +75,30 @@ public class QuizController {
     }
 
     @GetMapping(DOMAIN + "/{quizId}")
+    @CommonAPI
     public QuizResponse getQuiz(
-            HttpServletRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails,
             @PathVariable("quizId") Long quizId
     ) {
-        MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        if (Objects.nonNull(memberDetails)) {
-            return quizReadService.getQuiz(ReadQuiz.of(memberDetails.getMember(), quizId));
+        if (memberDetails == null) {
+            return quizReadService.getQuiz(ReadQuiz.of(quizId));
         }
-        return quizReadService.getQuiz(ReadQuiz.of(quizId));
+
+        return quizReadService.getQuiz(ReadQuiz.of(memberDetails.getMember(), quizId));
     }
 
     @GetMapping(DOMAIN + "/all")
+    @CommonAPI
     public List<QuizResponse> getQuizzes(
-            HttpServletRequest request,
+            @AuthenticationPrincipal MemberDetails memberDetails,
             @RequestParam("spaceId") Long spaceId,
             @Nullable @RequestParam("lastQuizId") Long lastQuizId
     ) {
-        MemberDetails memberDetails = commonAPIAuthChecker.checkIsAuth(request.getHeader("Authorization"));
-        if (Objects.nonNull(memberDetails)) {
-            return quizReadService.getQuizzes(ReadQuizzes.of(memberDetails.getMember(), lastQuizId, spaceId));
+        if (memberDetails == null) {
+            return quizReadService.getQuizzes(ReadQuizzes.of(lastQuizId, spaceId));
         }
 
-        return quizReadService.getQuizzes(ReadQuizzes.of(lastQuizId, spaceId));
+        return quizReadService.getQuizzes(ReadQuizzes.of(memberDetails.getMember(), lastQuizId, spaceId));
     }
 
     @GetMapping(AUTH + DOMAIN + "/isCreator/{quizId}")
