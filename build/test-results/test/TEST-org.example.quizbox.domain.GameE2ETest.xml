@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="org.example.quizbox.domain.GameE2ETest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-07-20T02:12:46" hostname="HMC2940243ui-MacBookPro.local" time="0.041">
-  <properties/>
-  <testcase name="game1()" classname="org.example.quizbox.domain.GameE2ETest" time="0.041"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
