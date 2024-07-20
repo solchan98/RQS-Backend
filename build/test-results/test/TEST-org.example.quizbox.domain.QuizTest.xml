@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.example.quizbox.domain.QuizTest" tests="2" skipped="0" failures="0" errors="0" timestamp="2024-07-20T02:12:46" hostname="HMC2940243ui-MacBookPro.local" time="0.001">
+  <properties/>
+  <testcase name="퀴즈의 정답과 정답이 아닌 답변을 한번에 조회할 수 있다." classname="org.example.quizbox.domain.QuizTest" time="0.001"/>
+  <testcase name="모두 맞아야 정답이며, 하나라도 정답이 아닐 경우 틀린다." classname="org.example.quizbox.domain.QuizTest" time="0.0"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
