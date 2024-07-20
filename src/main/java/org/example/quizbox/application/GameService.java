@@ -15,6 +15,7 @@ import org.example.quizbox.domain.QuizRepository;
 import org.example.quizbox.domain.SequentialGameQuizzes;
 import org.example.quizbox.domain.exception.BusinessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class GameService {
     private final QuizRepository quizRepository;
     private final GameRepository gameRepository;
 
+    @Transactional
     public String startGame(long playerId, long groupId) {
         Player player = playerRepository.findById(playerId).orElseThrow(() -> new BusinessException(GM7.code()));
         GameQuizzes gameQuizzes = SequentialGameQuizzes.from(quizRepository.findAllByGroupId(groupId));
@@ -32,6 +34,7 @@ public class GameService {
         return gameRepository.save(game).getId();
     }
 
+    @Transactional
     public GameStatus gameStatus(String gameId) {
         return gameRepository.findById(gameId)
                 .map(GameStatus::from)
