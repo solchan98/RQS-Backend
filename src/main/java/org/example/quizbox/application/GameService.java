@@ -1,8 +1,5 @@
 package org.example.quizbox.application;
 
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM5;
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM7;
-
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.domain.Game;
@@ -27,7 +24,7 @@ public class GameService {
 
     @Transactional
     public String startGame(long playerId, long groupId) {
-        Player player = playerRepository.findById(playerId).orElseThrow(() -> new BusinessException(GM7.code()));
+        Player player = playerRepository.findById(playerId).orElseThrow(BusinessException::checkPlayer);
         GameQuizzes gameQuizzes = SequentialGameQuizzes.from(quizRepository.findAllByGroupId(groupId));
         Game game = new Game(gameQuizzes, Set.of(player), new GameReporter());
 
@@ -40,6 +37,6 @@ public class GameService {
                 .map(GameStatus::from)
                 .stream()
                 .findAny()
-                .orElseThrow(() -> new BusinessException(GM5.code()));
+                .orElseThrow(BusinessException::gameDoesNotExist);
     }
 }

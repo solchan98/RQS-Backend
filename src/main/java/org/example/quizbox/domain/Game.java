@@ -1,11 +1,5 @@
 package org.example.quizbox.domain;
 
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM1;
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM2;
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM3;
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM4;
-import static org.example.quizbox.domain.exception.ExceptionConstants.GM6;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -30,7 +24,7 @@ public class Game {
     public Game(GameQuizzes gameQuizzes, Set<Player> players, GameReporter gameReporter) {
         this.id = UUID.randomUUID().toString();
         if (gameQuizzes == null || gameQuizzes.isEmpty()) {
-            throw new BusinessException(GM1.code());
+            throw BusinessException.atLeastOneQuizRequired();
         }
         this.gameQuizzes = gameQuizzes;
         this.players = players;
@@ -53,11 +47,11 @@ public class Game {
     public void submitAnswer(long quizId, Answers answers, Player player) {
         validatePlayer(player);
         if (!gameQuizzes.isSubmittableAnswers(quizId)) {
-            throw new BusinessException(GM3.code());
+            throw BusinessException.isNotAQuizCurrentlyInProgress();
         }
 
         if (isAnswerSubmitted(quizId)) {
-            throw new BusinessException(GM2.code());
+            throw BusinessException.hasAlreadyBeenAnswered();
         }
 
         selectedAnswers.put(quizId, answers);
@@ -70,14 +64,14 @@ public class Game {
     public GameReport report(Player player) {
         validatePlayer(player);
         if (gameQuizzes.existsNextQuiz()) {
-            throw new BusinessException(GM4.code());
+            throw BusinessException.quizIsStillInProgress();
         }
         return gameReporter.report(gameQuizzes, selectedAnswers);
     }
 
     private void validatePlayer(Player player) {
         if (!isPlayer(player)) {
-            throw new BusinessException(GM6.code());
+            throw BusinessException.notAGameParticipant();
         }
     }
 
