@@ -33,10 +33,8 @@ public class GameService {
 
     @Transactional
     public GameStatus gameStatus(String gameId) {
-        return gameRepository.findById(gameId)
-                .map(GameStatus::from)
-                .stream()
-                .findAny()
-                .orElseThrow(BusinessException::gameDoesNotExist);
+        Game game = gameRepository.findById(gameId).orElseThrow(BusinessException::gameDoesNotExist);
+
+        return GameStatus.from(game);
     }
 }
