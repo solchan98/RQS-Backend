@@ -4,10 +4,71 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c2b6cd4b-57fe-4f8a-91b9-509292fe84ef" name="Changes" comment="feat: 트랜잭션 적용">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/BusinessException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/ExceptionConstants.java" afterDir="false" />
+    <list default="true" id="c2b6cd4b-57fe-4f8a-91b9-509292fe84ef" name="Changes" comment="feat: 게임 상태 조회 서비스 로직 수정">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuizPicker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SequentialGameQuizPicker.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitAnswers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateAnswer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateQuiz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateQuizPack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Answer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAnswers.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/AnswerEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/CreateQuizRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/QuizGameTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/SequentialGameQuizPickerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/SubmitAnswersTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/QuizTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizAnswersTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizPackTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizGameBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/codestream.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codestream.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/application/GameService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/application/GameStatus.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Answer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Answers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Game.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/GameQuizzes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/GameReport.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/GameReporter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/GameRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/PlayerRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Quiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/QuizContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizContent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/QuizRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/SequentialGameQuizzes.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/BusinessException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/BusinessException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/AnswerEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/InMemoryGameRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/InMemoryPlayerRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/InMemoryQuizRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/InMemoryStorage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/infrastructure/QuizEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/presentation/BasicResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/BasicResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/presentation/GameController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/presentation/exception/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/AnswerBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/GameBuilder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/GameE2ETest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/GameReporterTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/GameTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/QuizBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/QuizBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/QuizTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/domain/SequentialGameQuizzesTest.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,14 +83,41 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
-            <expand />
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="quizbox" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="quizbox" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="quizbox" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
             <select />
           </tree_state>
         </projects_view>
       </state>
     </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,43 +133,175 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build quizbox.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.QuizboxApplication.executor": "Run",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hmc2940243/Desktop/quizbox",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build quizbox.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizAnswersTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizAnswersTest.퀴즈_답변은_최소_2개_이상.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.게임에서_문제_뽑기_가능.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.게임을_시작한다.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.뽑을_문제가_없는_경우_빈_옵셔널_객체를_반환.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩을_통해_게임을_시작한다.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩이_없는_경우_게임_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.현재_문제_답변_미제출_시_다음_문제_뽑기_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.현재_진행중인_퀴즈가_아닌_경우_답_제출_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackTest.동일_퀴즈팩에_퀴즈_이름_중복_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizTest.isMatched1.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SequentialGameQuizPickerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.quizbox [test].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.QuizboxApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hmc2940243/Desktop/quizbox&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="QuizboxApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="quizbox.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.quizbox.QuizboxApplication" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.quizbox.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+}</component>
+  <component name="RunManager" selected="Gradle.quizbox [test]">
+    <configuration name="QuizGameTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.QuizGameTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QuizGameTest.현재_진행중인_퀴즈가_아닌_경우_답_제출_불가" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.QuizGameTest.현재_진행중인_퀴즈가_아닌_경우_답_제출_불가&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QuizTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.quiz.QuizTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="quizbox [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Spring Boot.QuizboxApplication" />
+        <item itemvalue="Gradle.quizbox [test]" />
+        <item itemvalue="Gradle.QuizTest" />
+        <item itemvalue="Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가" />
+        <item itemvalue="Gradle.QuizGameTest.현재_진행중인_퀴즈가_아닌_경우_답_제출_불가" />
+        <item itemvalue="Gradle.QuizGameTest" />
       </list>
     </recent_temporary>
   </component>
@@ -103,7 +323,10 @@
       <workItem from="1721442728372" duration="803000" />
       <workItem from="1721443541126" duration="535000" />
       <workItem from="1721444156420" duration="203000" />
-      <workItem from="1721444366738" duration="1181000" />
+      <workItem from="1721444366738" duration="10567000" />
+      <workItem from="1722215575564" duration="11337000" />
+      <workItem from="1722312064130" duration="10271000" />
+      <workItem from="1722392208184" duration="892000" />
     </task>
     <task id="LOCAL-00001" summary="chore: 작업물 이동">
       <option name="closed" value="true" />
@@ -129,7 +352,23 @@
       <option name="project" value="LOCAL" />
       <updated>1721444530755</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="chore: 예외 처리 방식 수정">
+      <option name="closed" value="true" />
+      <created>1722140301825</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1722140301825</updated>
+    </task>
+    <task id="LOCAL-00005" summary="feat: 게임 상태 조회 서비스 로직 수정">
+      <option name="closed" value="true" />
+      <created>1722140371673</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1722140371673</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -162,6 +401,15 @@
     <MESSAGE value="chore: 작업물 이동" />
     <MESSAGE value="chore: gitignore 적용" />
     <MESSAGE value="feat: 트랜잭션 적용" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 트랜잭션 적용" />
+    <MESSAGE value="chore: 예외 처리 방식 수정" />
+    <MESSAGE value="feat: 게임 상태 조회 서비스 로직 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임 상태 조회 서비스 로직 수정" />
+  </component>
+  <component name="XDebuggerManager">
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="org.example.quizbox.domain.QuizPack" memberName="quizzes" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>
