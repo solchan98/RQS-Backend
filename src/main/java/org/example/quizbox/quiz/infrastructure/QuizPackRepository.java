@@ -1,10 +1,14 @@
 package org.example.quizbox.quiz.infrastructure;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.quiz.domain.IQuizPackRepository;
+import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
@@ -12,6 +16,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class QuizPackRepository implements IQuizPackRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     private final JpaQuizPackRepository jpaQuizPackRepository;
 
@@ -28,5 +35,23 @@ public class QuizPackRepository implements IQuizPackRepository {
     @Override
     public Optional<QuizPack> findById(long quizPackId) {
         return jpaQuizPackRepository.findById(quizPackId).map(QuizPackEntity::toDomain);
+    }
+
+    @Override
+    public Optional<Quiz> findQuizByQuizId(long quizId) {
+        String jpql = "SELECT q FROM QuizEntity q WHERE q.id = :quizId";
+        TypedQuery<QuizEntity> query = entityManager.createQuery(jpql, QuizEntity.class);
+        query.setParameter("quizId", quizId);
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Quiz> findQuizByIdAndQuizId(long quizPackId, long quizId) {
+        String jpql = "SELECT q FROM QuizEntity q WHERE q.quizPackEntity.id = :quizPackId AND q.id = :quizId";
+        TypedQuery<QuizEntity> query = entityManager.createQuery(jpql, QuizEntity.class);
+        query.setParameter("quizPackId", quizPackId);
+        query.setParameter("quizId", quizId);
+
+        return query.getResultStream().findFirst().map(QuizEntity::toDomain);
     }
 }

@@ -7,11 +7,15 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.quizbox.quiz.domain.QuizPack;
+import org.example.quizbox.quiz.domain.QuizPackMembers;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,10 +30,17 @@ public class QuizPackEntity {
     private String title;
 
     @OneToMany(mappedBy = "quizPackEntity", cascade = CascadeType.ALL)
-    private List<QuizEntity> quizzes = new ArrayList<>();
+    private List<QuizEntity> quizEntities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "quizPackEntity", cascade = CascadeType.ALL)
+    private Set<QuizPackMemberEntity> quizPackMemberEntities = new HashSet<>();
 
     public QuizPack toDomain() {
-        return new QuizPack(id, title, new ArrayList<>(quizzes.stream().map(QuizEntity::toDomain).toList()));
+        QuizPackMembers quizPackMembers = new QuizPackMembers(
+                quizPackMemberEntities.stream().map(QuizPackMemberEntity::toDomain).collect(Collectors.toSet()));
+
+        return new QuizPack(id, quizPackMembers, title,
+                new ArrayList<>(quizEntities.stream().map(QuizEntity::toDomain).toList()));
     }
 
     public static QuizPackEntity fromDomain(QuizPack quizPack) {
@@ -38,9 +49,14 @@ public class QuizPackEntity {
         quizPackEntity.id = quizPack.getId();
         quizPackEntity.title = quizPack.getTitle();
         if (quizPack.getQuizzes() != null) {
-            quizPackEntity.quizzes = quizPack.getQuizzes().stream().map(QuizEntity::fromDomain).toList();
-            quizPackEntity.quizzes.forEach(quizEntity -> quizEntity.setQuizPackEntity(quizPackEntity));
+            quizPackEntity.quizEntities = quizPack.getQuizzes().stream().map(QuizEntity::fromDomain).toList();
+            quizPackEntity.quizEntities.forEach(quizEntity -> quizEntity.setQuizPackEntity(quizPackEntity));
         }
+
+        quizPackEntity.quizPackMemberEntities = quizPack.getQuizPackMembers().values().stream()
+                .map(QuizPackMemberEntity::fromDomain).collect(Collectors.toSet());
+        quizPackEntity.quizPackMemberEntities.forEach(
+                quizPackMemberEntity -> quizPackMemberEntity.setQuizPackEntity(quizPackEntity));
 
         return quizPackEntity;
     }

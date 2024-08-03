@@ -1,16 +1,20 @@
 package org.example.quizbox.quiz;
 
+import java.util.Objects;
 import java.util.Set;
 import org.example.quizbox.quiz.domain.Answer;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizAnswers;
 import org.example.quizbox.quiz.domain.QuizContent;
+import org.example.quizbox.quiz.domain.QuizPackMember;
+import org.example.quizbox.quiz.domain.QuizPackMemberRole;
 
 public class QuizBuilder {
 
     private static long DEFAULT_KEY = 0;
 
     private Long id;
+    private QuizPackMember creator;
     private QuizContent content = new QuizContent("default quiz content");
     private QuizAnswers quizAnswers = new QuizAnswers(Set.of(new Answer("A"), new Answer("B")), Set.of());
 
@@ -22,6 +26,11 @@ public class QuizBuilder {
 
     public QuizBuilder id(long id) {
         this.id = id;
+        return this;
+    }
+
+    public QuizBuilder creator(QuizPackMember creator) {
+        this.creator = creator;
         return this;
     }
 
@@ -47,6 +56,10 @@ public class QuizBuilder {
 
 
     public Quiz build() {
-        return new Quiz(id, content, quizAnswers);
+        if (Objects.isNull(creator)) {
+            creator = new QuizPackMember(1L, QuizPackMemberRole.allRoles());
+        }
+
+        return new Quiz(id, creator, content, quizAnswers);
     }
 }

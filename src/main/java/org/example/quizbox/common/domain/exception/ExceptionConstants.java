@@ -8,6 +8,9 @@ public enum ExceptionConstants {
     QP1("QP1", "존재하지 않는 퀴즈팩"),
     QP2("QP2", "퀴즈 생성에 실패"),
     QP3("QP3", "동일한 팩 내에서 퀴즈 이름 중복"),
+    QP4("QP4", "퀴즈팩에 존재하지 않는 멤버"),
+    QP5("QP5", "퀴즈 생성 권한 미보유"),
+    QP6("QP6", "존재하지 않는 퀴즈"),
 
     // QA (Quiz Answer)
     QA1("QA1", "퀴즈 생성 시, 보기는 최소 2개 이상"),
@@ -19,7 +22,10 @@ public enum ExceptionConstants {
     QG3("QG3", "현재 진행중인 퀴즈가 아닌 경우 답 제출 불가"),
     QG4("QG4", "퀴즈의 보기가 아닌 값은 답으로 제출 불가"),
     QG5("QG5", "동일 퀴즈에 대하여 답 중복 제출 불가"),
-    QG6("QG6", "답변은 최소 1개 이상 필수");
+    QG6("QG6", "답변은 최소 1개 이상 필수"),
+    QG7("QG7", "존재하지 않는 퀴즈게임"),
+    QG8("QG8", "QuizGame ID 형식 확인 필요"),
+    QG9("QG9", "참가자가 아닌 경우 답변 제출 불가");
 
 
     private final String code;

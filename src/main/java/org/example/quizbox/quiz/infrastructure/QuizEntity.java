@@ -21,9 +21,10 @@ import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizAnswers;
 import org.example.quizbox.quiz.domain.QuizContent;
 
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Setter
 public class QuizEntity {
 
     @Id
@@ -33,7 +34,9 @@ public class QuizEntity {
     @Column(name = "content", unique = true)
     private String content;
 
-    @Setter
+    @ManyToOne
+    private QuizPackMemberEntity quizPackMemberEntity;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_pack_id")
     private QuizPackEntity quizPackEntity;
@@ -42,7 +45,7 @@ public class QuizEntity {
     private List<AnswerEntity> answerEntities = new ArrayList<>();
 
     public Quiz toDomain() {
-        return new Quiz(id, new QuizContent(content),
+        return new Quiz(id, quizPackMemberEntity.toDomain(), new QuizContent(content),
                 new QuizAnswers(
                         answerEntities.stream().filter(AnswerEntity::isCorrect).map(AnswerEntity::toDomain).collect(
                                 Collectors.toSet()),
@@ -57,6 +60,7 @@ public class QuizEntity {
 
         quizEntity.id = quiz.getId();
         quizEntity.content = quiz.getContent().value();
+        quizEntity.quizPackMemberEntity = QuizPackMemberEntity.fromDomain(quiz.getCreator());
         if (quiz.getQuizAnswers() != null) {
             QuizAnswers quizAnswers = quiz.getQuizAnswers();
             quizEntity.answerEntities = Stream.concat(

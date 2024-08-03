@@ -1,4 +1,4 @@
-package org.example.quizbox.game;
+package org.example.quizbox.game.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -7,6 +7,7 @@ import java.util.Set;
 import org.example.quizbox.game.domain.SequentialGameQuizPicker;
 import org.example.quizbox.quiz.QuizBuilder;
 import org.example.quizbox.quiz.domain.Quiz;
+import org.example.quizbox.tags.QuizGameTag;
 import org.junit.jupiter.api.Test;
 
 class SequentialGameQuizPickerTest {
@@ -14,6 +15,7 @@ class SequentialGameQuizPickerTest {
     final SequentialGameQuizPicker sequentialGameQuizPicker = new SequentialGameQuizPicker();
 
     @Test
+    @QuizGameTag
     void 뽑는_순서는_ID가_가장_작은_퀴즈() {
         Quiz quiz3 = QuizBuilder.quizBuilder().id(3L).build();
         Quiz quiz1 = QuizBuilder.quizBuilder().id(1L).build();
@@ -25,6 +27,7 @@ class SequentialGameQuizPickerTest {
     }
 
     @Test
+    @QuizGameTag
     void 뽑을_퀴즈가_없으면_빈_옵셔널_반환() {
         assertThat(sequentialGameQuizPicker.pick(List.of())).isEmpty();
     }

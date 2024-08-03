@@ -10,9 +10,10 @@ public record CreateQuizRequest(
         Set<CreateAnswerRequest> answers
 ) {
 
-    public CreateQuiz toCreateQuiz(long quizPackId) {
+    public CreateQuiz toCreateQuiz(long memberId, long quizPackId) {
         return new CreateQuiz(
                 quizPackId,
+                memberId,
                 quizContent,
                 answers.stream().map(CreateAnswerRequest::toCreateAnswer).collect(Collectors.toSet())
         );

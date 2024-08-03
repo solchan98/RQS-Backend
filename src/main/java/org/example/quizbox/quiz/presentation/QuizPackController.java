@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
 import org.example.quizbox.quiz.application.QuizPackService;
-import org.example.quizbox.quiz.application.QuizPackStatus;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.http.ResponseEntity;
@@ -23,25 +22,34 @@ public class QuizPackController {
     private final QuizPackService quizPackService;
 
     @GetMapping("/{quiz-pack-id}/status")
-    public ResponseEntity<BasicResponse<QuizPackStatus>> getQuizPackStatus(
+    public ResponseEntity<BasicResponse<QuizPackStatusResponse>> getQuizPackStatus(
             @PathVariable("quiz-pack-id") long quizPackId) {
-        QuizPackStatus quizPackStatus = quizPackService.getQuizPackStatus(quizPackId);
+        QuizPack quizPack = quizPackService.getQuizPack(quizPackId);
 
-        return ResponseEntity.ok(new BasicResponse<>(quizPackStatus));
+        return ResponseEntity.ok(new BasicResponse<>(QuizPackStatusResponse.from(quizPack)));
     }
 
     @PostMapping
     public long createQuizPack(@RequestBody CreateQuizPack createQuizPack) {
-
-        QuizPack quizPack = quizPackService.create(createQuizPack.title());
+        long memberId = 1;
+        QuizPack quizPack = quizPackService.create(createQuizPack.title(), memberId);
 
         return quizPack.getId();
     }
 
     @PostMapping("/{quiz-pack-id}/quiz")
     public long createQuiz(@PathVariable("quiz-pack-id") long quizPackId, @RequestBody CreateQuizRequest request) {
-        Quiz quiz = quizPackService.addQuiz(request.toCreateQuiz(quizPackId));
+        long memberId = 1;
+        Quiz quiz = quizPackService.createQuiz(request.toCreateQuiz(memberId, quizPackId));
 
         return quiz.getId();
+    }
+
+    @GetMapping("/{quiz-pack-id}/quiz/{quiz-id}")
+    public ResponseEntity<BasicResponse<QuizResponse>> getQuiz(@PathVariable("quiz-pack-id") long quizPackId,
+            @PathVariable("quiz-id") long quizId) {
+        Quiz quiz = quizPackService.getQuiz(quizPackId, quizId);
+
+        return ResponseEntity.ok(new BasicResponse<>(QuizResponse.from(quiz)));
     }
 }

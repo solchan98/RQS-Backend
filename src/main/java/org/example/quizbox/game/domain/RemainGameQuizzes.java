@@ -55,4 +55,8 @@ public class RemainGameQuizzes {
     public void clearWaitingQuiz() {
         this.quizWaitingSubmission = null;
     }
+
+    public int remainQuizSize() {
+        return remainQuizzes.size();
+    }
 }

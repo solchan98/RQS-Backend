@@ -3,7 +3,7 @@ package org.example.quizbox.quiz.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.quizbox.common.domain.exception.BusinessException;
@@ -16,28 +16,45 @@ public class QuizPack {
 
     private Long id;
 
+    private final QuizPackMembers quizPackMembers;
+
     private String title;
 
     private Collection<Quiz> quizzes = new ArrayList<>();
 
-    public QuizPack(String title) {
+    public QuizPack(String title, QuizPackMembers quizPackMembers) {
         this.title = title;
+        this.quizPackMembers = quizPackMembers;
     }
 
-    public QuizPack(String title, Collection<Quiz> quizzes) {
+    public QuizPack(String title, QuizPackMembers quizPackMembers, Collection<Quiz> quizzes) {
         this.title = title;
+        this.quizPackMembers = quizPackMembers;
         if (!CollectionUtils.isEmpty(quizzes)) {
             this.quizzes = new ArrayList<>(quizzes);
         }
     }
 
-    public void addQuiz(Quiz newQuiz) {
-        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
+    public void createQuiz(long memberId, QuizContent quizContent, QuizAnswers quizAnswers) {
+        QuizPackMember quizPackMember = getQuizPackMemberById(memberId);
+        validateIsCreatableAQuizzes(quizPackMember);
+        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(quizContent));
         if (duplicateContent) {
             throw new BusinessException(ExceptionConstants.QP3);
         }
 
-        quizzes.add(newQuiz);
+        quizzes.add(Quiz.create(quizPackMember, quizContent, quizAnswers));
+    }
+
+    public QuizPackMember getQuizPackMemberById(long memberId) {
+        return quizPackMembers.findByMemberId(memberId)
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
+    }
+
+    private void validateIsCreatableAQuizzes(QuizPackMember quizPackMember) {
+        if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
+            throw new BusinessException(ExceptionConstants.QP5);
+        }
     }
 
     public Optional<Quiz> findByQuizContent(QuizContent content) {
@@ -52,13 +69,21 @@ public class QuizPack {
         return quizzes.size();
     }
 
-    public Optional<Quiz> findById(long quizId) {
-        return quizzes.stream().filter(quiz -> quiz.getId().equals(quizId)).findAny();
+    public long memberSize() {
+        return quizPackMembers.size();
     }
 
-    public boolean containsQuiz(long quizId) {
-        return quizzes.stream()
-                .map(Quiz::getId).collect(Collectors.toSet())
-                .contains(quizId);
+    public Quiz getQuizByIdAndAnswerIds(long quizId, Set<Long> answerIds) {
+        Quiz quiz = getQuizById(quizId);
+        if (quiz.containsAllAnswers(answerIds)) {
+            return quiz;
+        }
+
+        return null;
+    }
+
+    public Quiz getQuizById(long quizId) {
+        return quizzes.stream().filter(quiz -> quiz.getId().equals(quizId)).findFirst()
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP6));
     }
 }
