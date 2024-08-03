@@ -2,12 +2,13 @@ package org.example.quizbox.game.domain;
 
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG1;
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG3;
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG4;
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG9;
 
 import java.util.Objects;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMember;
@@ -53,14 +54,16 @@ public class QuizGame {
 
     public void submit(SubmitAnswer submitAnswer) {
         QuizPackMember quizPackMember = quizPack.getQuizPackMemberById(submitAnswer.memberId());
-        Quiz quiz = quizPack.getQuizByIdAndAnswerIds(submitAnswer.quizId(), submitAnswer.answersIds());
-
         if (!isParticipant(quizPackMember)) {
-            throw new BusinessException(ExceptionConstants.QG9);
+            throw new BusinessException(QG9);
         }
 
+        Quiz quiz = quizPack.getQuizById(submitAnswer.quizId());
         if (!remainGameQuizzes.isWaitingQuizBeSubmitted(quiz)) {
             throw new BusinessException(QG3);
+        }
+        if (!quiz.containsAllAnswers(submitAnswer.answersIds())) {
+            throw new BusinessException(QG4);
         }
 
         remainGameQuizzes.clearWaitingQuiz();

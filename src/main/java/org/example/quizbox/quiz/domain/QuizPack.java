@@ -3,7 +3,6 @@ package org.example.quizbox.quiz.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.quizbox.common.domain.exception.BusinessException;
@@ -71,15 +70,6 @@ public class QuizPack {
 
     public long memberSize() {
         return quizPackMembers.size();
-    }
-
-    public Quiz getQuizByIdAndAnswerIds(long quizId, Set<Long> answerIds) {
-        Quiz quiz = getQuizById(quizId);
-        if (quiz.containsAllAnswers(answerIds)) {
-            return quiz;
-        }
-
-        return null;
     }
 
     public Quiz getQuizById(long quizId) {

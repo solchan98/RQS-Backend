@@ -56,7 +56,7 @@ class QuizGameTest {
 
     @Test
     @QuizGameTag
-    void 퀴즈팩_멤버가가_아닌_경우_답변_불가() {
+    void 퀴즈팩_멤버가_아닌_경우_답변_불가() {
         Quiz quiz = quizBuilder().id(1L).build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
@@ -94,15 +94,18 @@ class QuizGameTest {
                 .hasMessage(ExceptionConstants.QG9.code());
     }
 
-//
-//    // TODO -> quizGamed
-//    @Test
-//    @QuizGameTag
-//    void 퀴즈의_보기가_아닌_값은_답_제출_불가() {
-//        Quiz quiz = quizBuilder().id(1L).build();
-//        Throwable throwable = catchThrowable(() -> new SubmitAnswer(1L, quiz, Set.of(-999L)));
-//
-//        assertThat(throwable).isInstanceOf(BusinessException.class)
-//                .hasMessage(ExceptionConstants.QG4.code());
-//    }
+    @Test
+    @QuizGameTag
+    void 퀴즈의_보기가_아닌_값은_답_제출_불가() {
+        Quiz quiz = quizBuilder().id(1L).build();
+        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+        SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), Set.of(-999L));
+        quizGame.pick();
+
+        Throwable throwable = catchThrowable(() -> quizGame.submit(submitAnswer));
+
+        assertThat(throwable).isInstanceOf(BusinessException.class)
+                .hasMessage(ExceptionConstants.QG4.code());
+    }
 }
