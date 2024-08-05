@@ -40,7 +40,11 @@ public class QuizGame {
         return id;
     }
 
-    public Optional<Quiz> pick() {
+    public Optional<Quiz> pick(long memberId) {
+        if (!isParticipant(quizPack.getQuizPackMemberById(memberId))) {
+            throw new BusinessException(QG9);
+        }
+
         return remainGameQuizzes.pick();
     }
 

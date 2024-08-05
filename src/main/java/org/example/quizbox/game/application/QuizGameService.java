@@ -48,11 +48,10 @@ public class QuizGameService {
     }
 
     @Transactional
-    public Optional<Quiz> pick(QuizGameId id) {
-        // TODO 뽑을 때, 멤버 정보 받아서 게임 참가자인지 체크 하는 로직필요
-        QuizGame quizGame = getQuizGameById(id);
+    public Optional<Quiz> pick(long memberId, QuizGameId quizGameId) {
+        QuizGame quizGame = getQuizGameById(quizGameId);
 
-        Optional<Quiz> optionalQuiz = quizGame.pick();
+        Optional<Quiz> optionalQuiz = quizGame.pick(memberId);
         quizGameRepository.save(quizGame);
 
         return optionalQuiz;

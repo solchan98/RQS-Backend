@@ -31,7 +31,8 @@ public class QuizGameController {
 
     @PostMapping("/{quiz-game-id}/next-quiz")
     public ResponseEntity<BasicResponse<Quiz>> pick(@PathVariable("quiz-game-id") String quizGameId) {
-        Quiz quiz = quizGameService.pick(QuizGameId.from(quizGameId))
+        long memberId = 1L;
+        Quiz quiz = quizGameService.pick(memberId, QuizGameId.from(quizGameId))
                 .orElseGet(() -> null);
 
         return ResponseEntity.ok(new BasicResponse<>(quiz));

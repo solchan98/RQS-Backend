@@ -44,14 +44,46 @@ class QuizGameTest {
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
 
-        assertThat(quizGame.pick()).contains(quiz);
+        assertThat(quizGame.pick(1L)).contains(quiz);
     }
 
     @Test
     @QuizGameTag
     void 뽑을_문제가_없는_경우_빈_옵셔널_객체를_반환() {
         QuizGame quizGame = new QuizGame(quizPackBuilder().build(), sequentialGameQuizPicker, 1L);
-        assertThat(quizGame.pick()).isEmpty();
+        assertThat(quizGame.pick(1L)).isEmpty();
+    }
+
+    @Test
+    @QuizGameTag
+    void 퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가() {
+        Quiz quiz = quizBuilder().id(1L).build();
+        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+
+        Throwable throwable = catchThrowable(() -> quizGame.pick(-999L));
+
+        assertThat(throwable).isInstanceOf(BusinessException.class)
+                .hasMessage(ExceptionConstants.QP4.code());
+    }
+
+    @Test
+    @QuizGameTag
+    void 퀴즈_참가자가_아닌_경우_문제_뽑기_불가() {
+        Quiz quiz = quizBuilder().id(1L).build();
+        QuizPack quizPack = quizPackBuilder()
+                .quizzes(List.of(quiz))
+                .quizPackMembers(
+                        new QuizPackMembers(
+                                QuizPackMember.createAdmin(1L),
+                                QuizPackMember.createAdmin(2L))
+                ).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+
+        Throwable throwable = catchThrowable(() -> quizGame.pick(2L));
+
+        assertThat(throwable).isInstanceOf(BusinessException.class)
+                .hasMessage(ExceptionConstants.QG9.code());
     }
 
     @Test
@@ -60,7 +92,7 @@ class QuizGameTest {
         Quiz quiz = quizBuilder().id(1L).build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
-        quizGame.pick();
+        quizGame.pick(1L);
         Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(
                 Collectors.toSet());
 
@@ -83,7 +115,7 @@ class QuizGameTest {
                                 QuizPackMember.createAdmin(2L))
                 ).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
-        quizGame.pick();
+        quizGame.pick(1L);
         Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(
                 Collectors.toSet());
 
@@ -101,7 +133,7 @@ class QuizGameTest {
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
         SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), Set.of(-999L));
-        quizGame.pick();
+        quizGame.pick(1L);
 
         Throwable throwable = catchThrowable(() -> quizGame.submit(submitAnswer));
 

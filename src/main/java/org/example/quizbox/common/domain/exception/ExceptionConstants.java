@@ -25,7 +25,7 @@ public enum ExceptionConstants {
     QG6("QG6", "답변은 최소 1개 이상 필수"),
     QG7("QG7", "존재하지 않는 퀴즈게임"),
     QG8("QG8", "QuizGame ID 형식 확인 필요"),
-    QG9("QG9", "참가자가 아닌 경우 답변 제출 불가");
+    QG9("QG9", "참가자가 아닙니다.");
 
 
     private final String code;
