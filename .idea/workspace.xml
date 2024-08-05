@@ -4,27 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 답변 제출 로직 일부 수정 및 테스트 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/aws.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/codestream.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/git_toolbox_blame.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 뽑을 때, 유저 검증 추가">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/StartQuizRequest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/QuizGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/QuizGameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "git-widget-placeholder": "develop"
+    "Gradle.Build quizbox.executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
+    "Spring Boot.QuizboxApplication.executor": "Debug",
+    "git-widget-placeholder": "develop",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
 }]]></component>
   <component name="RunManager">
@@ -57,11 +69,21 @@
     </recent_temporary>
   </component>
   <component name="TaskManager">
+    <task id="LOCAL-00001" summary="feat: 퀴즈 뽑을 때, 유저 검증 추가">
+      <option name="closed" value="true" />
+      <created>1722855606083</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1722855606083</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 퀴즈 답변 제출 로직 일부 수정 및 테스트 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 답변 제출 로직 일부 수정 및 테스트 수정" />
+    <MESSAGE value="feat: 퀴즈 뽑을 때, 유저 검증 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 뽑을 때, 유저 검증 추가" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -3,7 +3,6 @@ package org.example.quizbox.game.presentation;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.QuizGameService;
-import org.example.quizbox.game.application.StartQuiz;
 import org.example.quizbox.game.domain.QuizGame;
 import org.example.quizbox.game.domain.QuizGameId;
 import org.example.quizbox.game.domain.SubmitAnswer;
@@ -23,8 +22,9 @@ public class QuizGameController {
     private final QuizGameService quizGameService;
 
     @PostMapping
-    public ResponseEntity<BasicResponse<QuizGameResponse>> start(@RequestBody StartQuiz startQuiz) {
-        QuizGame quizGame = quizGameService.startGame(startQuiz);
+    public ResponseEntity<BasicResponse<QuizGameResponse>> start(@RequestBody StartQuizRequest request) {
+        long memberId = 1L;
+        QuizGame quizGame = quizGameService.startGame(request.toStartQuiz(memberId));
 
         return ResponseEntity.ok(new BasicResponse<>(QuizGameResponse.from(quizGame)));
     }

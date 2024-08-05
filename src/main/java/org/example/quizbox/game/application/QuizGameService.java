@@ -38,7 +38,7 @@ public class QuizGameService {
     @Transactional
     public QuizGame startGame(StartQuiz startQuiz) {
         GameQuizPicker gameQuizPicker = Optional.ofNullable(gameQuizPickerMap.get(startQuiz.quizPickStrategy()))
-                .orElseThrow(() -> new RuntimeException("지원하지 않는 타입"));
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.QG10));
 
         QuizPack quizPack = quizPackRepository.findById(startQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
