@@ -6,8 +6,8 @@ import org.example.quizbox.game.domain.GameQuizPicker;
 import org.example.quizbox.game.domain.SequentialGameQuizPicker;
 
 public enum QuizPickStrategy {
-    SEQUENCE_PICK("SEQUENCE", new SequentialGameQuizPicker()),
-    RANDOM_PICK("RANDOM", new SequentialGameQuizPicker());
+    SEQUENCE_PICK("SEQUENCE_PICK", new SequentialGameQuizPicker()),
+    RANDOM_PICK("RANDOM_PICK", new SequentialGameQuizPicker());
 
     final String type;
 

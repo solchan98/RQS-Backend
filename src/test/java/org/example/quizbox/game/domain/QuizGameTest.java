@@ -140,4 +140,22 @@ class QuizGameTest {
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG4.code());
     }
+
+    /**
+     * 퀴즈 1개, 퀴즈 1개 뽑고 답변 제출한 상태
+     */
+    @Test
+    @QuizGameTag
+    void 퀴즈게임의_진행_상태롤_알_수_있다() {
+        Quiz quiz = quizBuilder().id(1L).build();
+        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+        Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(Collectors.toSet());
+        SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), answerIds);
+        quizGame.pick(1L);
+        quizGame.submit(submitAnswer);
+        QuizGameStatus expected = new QuizGameStatus(quizGame.id(), quizPack.getId(), 1L, 1, 0, 1);
+
+        assertThat(quizGame.status()).isEqualTo(expected);
+    }
 }

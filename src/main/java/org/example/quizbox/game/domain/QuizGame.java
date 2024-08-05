@@ -48,14 +48,6 @@ public class QuizGame {
         return remainGameQuizzes.pick();
     }
 
-    public int remainQuizSize() {
-        return remainGameQuizzes.remainQuizSize();
-    }
-
-    public int submittedQuizSize() {
-        return submittedAnswers.submittedQuizSize();
-    }
-
     public void submit(SubmitAnswer submitAnswer) {
         QuizPackMember quizPackMember = quizPack.getQuizPackMemberById(submitAnswer.memberId());
         if (!isParticipant(quizPackMember)) {
@@ -76,5 +68,24 @@ public class QuizGame {
 
     public boolean isParticipant(QuizPackMember quizPackMember) {
         return this.creator.equals(quizPackMember);
+    }
+
+    public QuizGameStatus status() {
+        return new QuizGameStatus(
+                id,
+                quizPack.getId(),
+                creator.getMemberId(),
+                (int) quizPack.quizSize(),
+                remainQuizSize(),
+                submittedQuizSize()
+        );
+    }
+
+    public int remainQuizSize() {
+        return remainGameQuizzes.remainQuizSize();
+    }
+
+    public int submittedQuizSize() {
+        return submittedAnswers.submittedQuizSize();
     }
 }

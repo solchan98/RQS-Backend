@@ -14,6 +14,9 @@ public class QuizPackBuilder {
     // TEST 용도
     private static Long quizPackMemberId = 0L;
 
+    // TEST 용도
+    private static Long quizPackId = 0L;
+
     private Long id;
     private String title = "default title";
     private Collection<Quiz> quizzes = new ArrayList<>();
@@ -49,6 +52,10 @@ public class QuizPackBuilder {
         if (Objects.isNull(quizPackMembers)) {
             quizPackMembers = new QuizPackMembers(
                     new QuizPackMember(1L, --quizPackMemberId, QuizPackMemberRole.allRoles()));
+        }
+
+        if (Objects.isNull(id)) {
+            id = --quizPackId;
         }
 
         return new QuizPack(id, quizPackMembers, title, quizzes);

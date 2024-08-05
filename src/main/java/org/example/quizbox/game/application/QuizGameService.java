@@ -10,6 +10,7 @@ import org.example.quizbox.game.domain.GameQuizPicker;
 import org.example.quizbox.game.domain.QuizGame;
 import org.example.quizbox.game.domain.QuizGameId;
 import org.example.quizbox.game.domain.QuizGameRepository;
+import org.example.quizbox.game.domain.QuizGameStatus;
 import org.example.quizbox.game.domain.SubmitAnswer;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
@@ -36,7 +37,7 @@ public class QuizGameService {
     }
 
     @Transactional
-    public QuizGame startGame(StartQuiz startQuiz) {
+    public QuizGameStatus startGame(StartQuiz startQuiz) {
         GameQuizPicker gameQuizPicker = Optional.ofNullable(gameQuizPickerMap.get(startQuiz.quizPickStrategy()))
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QG10));
 
@@ -44,7 +45,7 @@ public class QuizGameService {
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
 
         QuizGame quizGame = new QuizGame(quizPack, gameQuizPicker, startQuiz.memberId());
-        return quizGameRepository.save(quizGame);
+        return quizGameRepository.save(quizGame).status();
     }
 
     @Transactional
@@ -63,6 +64,11 @@ public class QuizGameService {
         quizGame.submit(submitAnswer);
 
         quizGameRepository.save(quizGame);
+    }
+
+    @Transactional(readOnly = true)
+    public QuizGameStatus status(QuizGameId quizGameId) {
+        return getQuizGameById(quizGameId).status();
     }
 
     private QuizGame getQuizGameById(QuizGameId id) {
