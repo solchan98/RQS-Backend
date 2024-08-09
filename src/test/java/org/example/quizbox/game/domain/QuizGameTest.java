@@ -57,7 +57,7 @@ class QuizGameTest {
     @Test
     @QuizGameTag
     void 퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가() {
-        Quiz quiz = quizBuilder().id(1L).build();
+        Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
 
@@ -106,7 +106,7 @@ class QuizGameTest {
     @Test
     @QuizGameTag
     void 참가자가_아닌_경우_답변_불가() {
-        Quiz quiz = quizBuilder().id(1L).build();
+        Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder()
                 .quizzes(List.of(quiz))
                 .quizPackMembers(
@@ -129,7 +129,7 @@ class QuizGameTest {
     @Test
     @QuizGameTag
     void 퀴즈의_보기가_아닌_값은_답_제출_불가() {
-        Quiz quiz = quizBuilder().id(1L).build();
+        Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
         SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), Set.of(-999L));
@@ -147,7 +147,7 @@ class QuizGameTest {
     @Test
     @QuizGameTag
     void 퀴즈게임의_진행_상태롤_알_수_있다() {
-        Quiz quiz = quizBuilder().id(1L).build();
+        Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
         Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(Collectors.toSet());

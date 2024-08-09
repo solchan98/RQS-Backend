@@ -31,8 +31,6 @@ public class QuizPackBuilder {
         return this;
     }
 
-    ;
-
     public QuizPackBuilder title(String title) {
         this.title = title;
         return this;
