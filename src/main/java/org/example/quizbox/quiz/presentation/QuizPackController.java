@@ -57,9 +57,10 @@ public class QuizPackController {
     @GetMapping("/{quiz-pack-id}/quiz/{quiz-id}")
     public ResponseEntity<BasicResponse<QuizResponse>> getQuiz(
             @PathVariable("quiz-pack-id") long quizPackId,
-            @PathVariable("quiz-id") long quizId
+            @PathVariable("quiz-id") long quizId,
+            AccessUser accessUser
     ) {
-        Quiz quiz = quizPackService.getQuiz(quizPackId, quizId);
+        Quiz quiz = quizPackService.getQuiz(quizPackId, quizId, accessUser.getId());
 
         return ResponseEntity.ok(new BasicResponse<>(QuizResponse.from(quiz)));
     }

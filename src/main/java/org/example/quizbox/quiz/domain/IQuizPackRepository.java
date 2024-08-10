@@ -9,7 +9,8 @@ public interface IQuizPackRepository {
 
     Optional<QuizPack> findById(long quizPackId);
 
-    Optional<Quiz> findQuizByQuizId(long quizId);
 
     Optional<Quiz> findQuizByIdAndQuizId(long quizPackId, long quizId);
+
+    Optional<QuizPackMember> findQuizPackMemberByIdAndMemberId(long quizPackId, long memberId);
 }

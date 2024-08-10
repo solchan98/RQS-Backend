@@ -13,6 +13,7 @@ import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMember;
 import org.example.quizbox.quiz.domain.QuizPackMembers;
 import org.example.quizbox.quiz.domain.QuizPackStatus;
+import org.example.quizbox.quiz.domain.QuizPicker;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,8 +64,9 @@ public class QuizPackService {
     }
 
     @Transactional(readOnly = true)
-    public Quiz getQuiz(long quizPackId, long quizId) {
-        return quizPackRepository.findQuizByIdAndQuizId(quizPackId, quizId)
-                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP6));
+    public Quiz getQuiz(long quizPackId, long quizId, long memberId) {
+        QuizPicker quizPicker = new QuizPicker(quizPackRepository);
+
+        return quizPicker.getQuiz(quizPackId, quizId, memberId);
     }
 }
