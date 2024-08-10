@@ -10,7 +10,7 @@ public record CreateQuizRequest(
         Set<CreateAnswerRequest> answers
 ) {
 
-    public CreateQuiz toCreateQuiz(long memberId, long quizPackId) {
+    public CreateQuiz toCreateQuiz(long quizPackId, long memberId) {
         return new CreateQuiz(
                 quizPackId,
                 memberId,

@@ -34,24 +34,31 @@ public class QuizPackController {
     }
 
     @PostMapping
-    public long createQuizPack(@RequestBody CreateQuizPack createQuizPack) {
-        long memberId = 1;
-        QuizPack quizPack = quizPackService.create(createQuizPack.title(), memberId);
+    public long createQuizPack(
+            @RequestBody CreateQuizPack createQuizPack,
+            AccessUser accessUser
+    ) {
+        QuizPack quizPack = quizPackService.create(createQuizPack.title(), accessUser.getId());
 
         return quizPack.getId();
     }
 
     @PostMapping("/{quiz-pack-id}/quiz")
-    public long createQuiz(@PathVariable("quiz-pack-id") long quizPackId, @RequestBody CreateQuizRequest request) {
-        long memberId = 1;
-        Quiz quiz = quizPackService.createQuiz(request.toCreateQuiz(memberId, quizPackId));
+    public long createQuiz(
+            @PathVariable("quiz-pack-id") long quizPackId,
+            @RequestBody CreateQuizRequest request,
+            AccessUser accessUser
+    ) {
+        Quiz quiz = quizPackService.createQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
 
         return quiz.getId();
     }
 
     @GetMapping("/{quiz-pack-id}/quiz/{quiz-id}")
-    public ResponseEntity<BasicResponse<QuizResponse>> getQuiz(@PathVariable("quiz-pack-id") long quizPackId,
-            @PathVariable("quiz-id") long quizId) {
+    public ResponseEntity<BasicResponse<QuizResponse>> getQuiz(
+            @PathVariable("quiz-pack-id") long quizPackId,
+            @PathVariable("quiz-id") long quizId
+    ) {
         Quiz quiz = quizPackService.getQuiz(quizPackId, quizId);
 
         return ResponseEntity.ok(new BasicResponse<>(QuizResponse.from(quiz)));
