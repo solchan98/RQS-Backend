@@ -2,6 +2,7 @@ package org.example.quizbox.common.presentation;
 
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -10,8 +11,17 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException exception) {
-        return ResponseEntity.badRequest()
-                .body(new ErrorResponse(exception.getMessage(), exception.getExceptionConstance().detail()));
+        BodyBuilder bodyBuilder = ResponseEntity.internalServerError();
+
+        if ("BUSINESS".equals(exception.getExceptionConstance().type())) {
+            bodyBuilder = ResponseEntity.badRequest();
+        }
+
+        if ("AUTHORIZATION".equals(exception.getExceptionConstance().type())) {
+            bodyBuilder = ResponseEntity.status(403);
+        }
+
+        return bodyBuilder.body(new ErrorResponse(exception.getMessage(), exception.getExceptionConstance().detail()));
     }
 
     public record ErrorResponse(String errorKey, String message) {

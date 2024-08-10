@@ -1,15 +1,20 @@
 package org.example.quizbox.quiz.presentation;
 
-import org.example.quizbox.quiz.domain.QuizPack;
+import org.example.quizbox.quiz.domain.QuizPackStatus;
 
 public record QuizPackStatusResponse(
         long quizPackId,
         String quizPackTitle,
-        long quizCount,
-        long memberCount
+        long memberCount,
+        long quizCount
 ) {
 
-    public static QuizPackStatusResponse from(QuizPack quizPack) {
-        return new QuizPackStatusResponse(quizPack.getId(), quizPack.getTitle(), quizPack.quizSize(), quizPack.memberSize());
+    public static QuizPackStatusResponse from(QuizPackStatus status) {
+        return new QuizPackStatusResponse(
+                status.quizPackId(),
+                status.quizPackTitle(),
+                status.quizPackMemberCount(),
+                status.quizCount()
+        );
     }
 }

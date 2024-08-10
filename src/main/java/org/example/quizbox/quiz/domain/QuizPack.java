@@ -76,4 +76,10 @@ public class QuizPack {
         return quizzes.stream().filter(quiz -> quiz.getId().equals(quizId)).findFirst()
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP6));
     }
+
+    public QuizPackStatus status(long memberId) {
+        getQuizPackMemberById(memberId);
+
+        return new QuizPackStatus(id, title, memberSize(), quizSize());
+    }
 }

@@ -4,46 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 테스트 시, 불필요 given 제거">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/access/AccessTokenAccessDeniedHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/access/AccessTokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AccessUser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserDetails.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserDetailsService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthenticationFailureHandlerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/BearerAuthenticationConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/BearerAuthenticationToken.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/SampleAuthority.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/SimpleAuthenticationProcessingFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/TokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RequestMatchers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/SecurityConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/InMemoryAuthUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/InMemoryRefreshTokenRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/RedisClient.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/RedisRefreshTokenRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/RoleEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/Storage.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/UserEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/EmailPasswordAuthenticationConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/EmailPasswordAuthenticationSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/SimplePasswordEncoder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/RefreshTokenProvider.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/RefreshTokenRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/TokenRefreshSuccessHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/access/AccessTokenProviderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/access/BearerAuthenticationConverterTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/InMemoryAuthUserRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/InMemoryRefreshTokenRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/RedisClientTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/RedisRefreshTokenRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/login/EmailConverterAuthenticationConverterTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/login/SimplePasswordEncoderTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/refresh/RefreshTokenProviderTest.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 인증/ 인가 처리 모듈 추가">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/Storage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/GlobalExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/GlobalExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,7 +41,13 @@
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="quizbox" type="f1a62948:ProjectNode" />
-                <item name="Run Configurations" type="7b0102dc:RunConfigurationsNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="quizbox" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="verification" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -83,6 +59,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="AnnotationType" />
         <option value="Class" />
       </list>
     </option>
@@ -99,8 +76,8 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="feature/user" />
-                    <option name="lastUsedInstant" value="1723200156" />
+                    <option name="branchName" value="feature/auth" />
+                    <option name="lastUsedInstant" value="1723202830" />
                   </RecentBranch>
                   <RecentBranch>
                     <option name="branchName" value="develop" />
@@ -126,35 +103,39 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build quizbox.executor": "Run",
-    "Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Run",
-    "Gradle.quizbox [test].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.QuizboxApplication.executor": "Debug",
-    "git-widget-placeholder": "feature/user",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hmc2940243/Desktop/quizbox/src/main/java/org/example/quizbox/auth/infrastructure",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build quizbox.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.quizbox [test].executor&quot;: &quot;Debug&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.QuizboxApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/auth&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/hmc2940243/Desktop/quizbox/src/main/java/org/example/quizbox/auth/config&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
+  <component name="ReactorSettings">
+    <option name="notificationShown" value="true" />
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure" />
       <recent name="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/user" />
@@ -163,7 +144,7 @@
       <recent name="org.example.quizbox.auth" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.quizbox [test]">
+  <component name="RunManager" selected="Spring Boot.QuizboxApplication">
     <configuration name="QuizGameTest.참가자가_아닌_경우_답변_불가" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -290,6 +271,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="aws.lambda" factoryName="Remote">
+      <option name="credentialProviderId" />
+      <option name="regionId" />
+      <option name="functionName" />
+      <option name="input" />
+      <option name="inputIsFile" value="false" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.quizbox [test]" />
@@ -340,7 +329,8 @@
       <updated>1723013384442</updated>
       <workItem from="1723013385489" duration="10000" />
       <workItem from="1723013407343" duration="3515000" />
-      <workItem from="1723200080368" duration="2405000" />
+      <workItem from="1723200080368" duration="8002000" />
+      <workItem from="1723265996637" duration="1142000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -350,11 +340,30 @@
       <option name="project" value="LOCAL" />
       <updated>1723200109854</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="feat: 인증/ 인가 처리 모듈 추">
+      <option name="closed" value="true" />
+      <created>1723202781547</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1723202781547</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="feat: 퀴즈 답변 제출 로직 일부 수정 및 테스트 수정" />
@@ -362,7 +371,9 @@
     <MESSAGE value="feat: 지원하지 않는 뽑기 방식에 대한 예외 추가" />
     <MESSAGE value="feat: 퀴즈게임 상태 조회 구현" />
     <MESSAGE value="feat: 테스트 시, 불필요 given 제거" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 테스트 시, 불필요 given 제거" />
+    <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
+    <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 인증/ 인가 처리 모듈 추가" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

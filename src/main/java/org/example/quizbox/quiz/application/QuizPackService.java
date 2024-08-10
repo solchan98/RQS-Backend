@@ -12,6 +12,7 @@ import org.example.quizbox.quiz.domain.QuizContent;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMember;
 import org.example.quizbox.quiz.domain.QuizPackMembers;
+import org.example.quizbox.quiz.domain.QuizPackStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,9 +23,11 @@ public class QuizPackService {
     private final IQuizPackRepository quizPackRepository;
 
     @Transactional(readOnly = true)
-    public QuizPack getQuizPack(long quizPackId) {
-        return quizPackRepository.findById(quizPackId)
+    public QuizPackStatus getQuizPack(long quizPackId, long memberId) {
+        QuizPack quizPack = quizPackRepository.findById(quizPackId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
+
+        return quizPack.status(memberId);
     }
 
     @Transactional
