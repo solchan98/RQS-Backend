@@ -35,7 +35,7 @@ public class QuizPack {
     }
 
     public void createQuiz(long memberId, QuizContent quizContent, QuizAnswers quizAnswers) {
-        QuizPackMember quizPackMember = getQuizPackMemberById(memberId);
+        QuizPackMember quizPackMember = getQuizPackMemberByMemberId(memberId);
         validateIsCreatableAQuizzes(quizPackMember);
         boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(quizContent));
         if (duplicateContent) {
@@ -45,7 +45,7 @@ public class QuizPack {
         quizzes.add(Quiz.create(quizPackMember, quizContent, quizAnswers));
     }
 
-    public QuizPackMember getQuizPackMemberById(long memberId) {
+    public QuizPackMember getQuizPackMemberByMemberId(long memberId) {
         return quizPackMembers.findByMemberId(memberId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
     }
@@ -78,8 +78,18 @@ public class QuizPack {
     }
 
     public QuizPackStatus status(long memberId) {
-        getQuizPackMemberById(memberId);
+        getQuizPackMemberByMemberId(memberId);
 
         return new QuizPackStatus(id, title, memberSize(), quizSize());
+    }
+
+    public void addQuizPackMember(InvitationValidator invitationValidator, Invitation invitation) {
+        boolean valid = invitationValidator.isValid(invitation);
+        if (!valid) {
+            throw new BusinessException(ExceptionConstants.QP7);
+        }
+
+        QuizPackMember quizPackMember = new QuizPackMember(invitation.memberId(), invitation.roles());
+        quizPackMembers.add(quizPackMember);
     }
 }

@@ -52,4 +52,16 @@ class QuizPackTest {
                 .hasMessage(ExceptionConstants.QP4.code());
     }
 
+    @Test
+    void 초대장이_유효하면_새로운_퀴즈팩_멤버_추가_가능() {
+
+    }
+
+
+    @Test
+    void 초대장이_유효하지_않으면_새로운_퀴즈팩_멤버_추가_불가() {
+
+    }
+
+
 }

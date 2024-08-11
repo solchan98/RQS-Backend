@@ -32,7 +32,7 @@ public class QuizGame {
             throw new BusinessException(QG1);
         }
 
-        this.creator = quizPack.getQuizPackMemberById(memberId);
+        this.creator = quizPack.getQuizPackMemberByMemberId(memberId);
         this.remainGameQuizzes = new RemainGameQuizzes(quizPack.getQuizzes(), gameQuizPicker);
     }
 
@@ -41,7 +41,7 @@ public class QuizGame {
     }
 
     public Optional<Quiz> pick(long memberId) {
-        if (!isParticipant(quizPack.getQuizPackMemberById(memberId))) {
+        if (!isParticipant(quizPack.getQuizPackMemberByMemberId(memberId))) {
             throw new BusinessException(QG9);
         }
 
@@ -49,7 +49,7 @@ public class QuizGame {
     }
 
     public void submit(SubmitAnswer submitAnswer) {
-        QuizPackMember quizPackMember = quizPack.getQuizPackMemberById(submitAnswer.memberId());
+        QuizPackMember quizPackMember = quizPack.getQuizPackMemberByMemberId(submitAnswer.memberId());
         if (!isParticipant(quizPackMember)) {
             throw new BusinessException(QG9);
         }

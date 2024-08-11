@@ -27,4 +27,8 @@ public class QuizPackMembers {
     public Set<QuizPackMember> values() {
         return new HashSet<>(values);
     }
+
+    public void add(QuizPackMember quizPackMember) {
+        values.add(quizPackMember);
+    }
 }

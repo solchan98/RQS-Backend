@@ -6,6 +6,9 @@ public enum ExceptionConstants {
     // SE (Server Error)
     SE1("SE1", "서버 에러", "SERVER"),
 
+    // CM (Common Error)
+    CM1("CM1", "요청 인자 확인 필요", "BUSINESS"),
+
     // QP (Quiz Pack)
     QP1("QP1", "존재하지 않는 퀴즈팩", "BUSINESS"),
     QP2("QP2", "퀴즈 생성에 실패", "SERVER"),
@@ -13,6 +16,7 @@ public enum ExceptionConstants {
     QP4("QP4", "퀴즈팩에 존재하지 않는 멤버", "AUTHORIZATION"),
     QP5("QP5", "퀴즈 생성 권한 미보유", "AUTHORIZATION"),
     QP6("QP6", "존재하지 않는 퀴즈", "BUSINESS"),
+    QP7("QP7", "유효하지 않은 초대장", "BUSINESS"),
 
     // QA (Quiz Answer)
     QA1("QA1", "퀴즈 생성 시, 보기는 최소 2개 이상", "BUSINESS"),
