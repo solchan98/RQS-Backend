@@ -4,15 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: Quiz 조회 로직 수정 및 테스트 작성&#10;- 퀴즈팩 유저 검증 로직 추가">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Invitation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/InvitationValidator.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;-">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/OnGoingQuizGameResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/AddedTopicQuizResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/LearningDaysRecommendationQuizPackResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/RecommendationQuizPackResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionTagsResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionsController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/TagResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizPackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizPackTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,17 +40,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="quizbox" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="quizbox" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="quizbox" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="verification" type="c8890929:TasksNode$1" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -59,8 +51,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -103,39 +95,47 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build quizbox.executor": "Run",
-    "Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Run",
-    "Gradle.QuizPickerTest.executor": "Run",
-    "Gradle.QuizPickerTest.없는_퀴즈는_조회_불가.executor": "Run",
-    "Gradle.quizbox [test].executor": "Debug",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.QuizboxApplication.executor": "Debug",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/hmc2940243/Desktop/quizbox/src/main/java/org/example/quizbox/auth/config",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build RQS-Backend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build quizbox.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPickerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPickerTest.없는_퀴즈는_조회_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.quizbox [test].executor&quot;: &quot;Debug&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.QuizboxApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sol/Desktop/RQS-Backend&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="org.example.quizbox.quiz.presentation" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure" />
@@ -146,7 +146,15 @@
       <recent name="org.example.quizbox.auth" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.QuizPickerTest">
+  <component name="RunManager" selected="Spring Boot.QuizboxApplication">
+    <configuration default="true" type="aws.lambda" factoryName="Remote">
+      <option name="credentialProviderId" />
+      <option name="regionId" />
+      <option name="functionName" />
+      <option name="input" />
+      <option name="inputIsFile" value="false" />
+      <method v="2" />
+    </configuration>
     <configuration name="QuizGameTest.참가자가_아닌_경우_답변_불가" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -297,14 +305,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="aws.lambda" factoryName="Remote">
-      <option name="credentialProviderId" />
-      <option name="regionId" />
-      <option name="functionName" />
-      <option name="input" />
-      <option name="inputIsFile" value="false" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.QuizPickerTest" />
@@ -318,7 +318,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-17.0.10-corretto-17.0.10-4caba194b151-53826d6a" />
+        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
+        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
       </set>
     </attachedChunks>
   </component>
@@ -358,6 +359,10 @@
       <workItem from="1723013407343" duration="3515000" />
       <workItem from="1723200080368" duration="8002000" />
       <workItem from="1723265996637" duration="1142000" />
+      <workItem from="1731730598549" duration="2654000" />
+      <workItem from="1732003510746" duration="114000" />
+      <workItem from="1732003630194" duration="9458000" />
+      <workItem from="1732013114291" duration="179000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -426,5 +431,14 @@
         <PinnedItemInfo parentTag="org.example.quizbox.domain.QuizPack" memberName="quizzes" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="&#10;//    LearningDaysRecommendationQuizPackResponse(String quizPackId, int quizCount, int playCount, Collection&lt;TagResponse&gt; tags, LocalDateTime lastLearningDate) {&#10;//        super(&quot;LEARNING_DAYS&quot;, quizPackId, quizCount, playCount, tags);&#10;//        this.lastLearningDate = lastLearningDate;&#10;//    }&#10;//&#10;//    public static Collection&lt;LearningDaysRecommendationQuizPackResponse&gt; dummy() {&#10;//        return Collections.of(&#10;//                new LearningDaysRecommendationQuizPackResponse(&#10;//                        UUID.randomUUID().toString(),&#10;//                        12,&#10;//                        300,&#10;//                        Collections.of(&#10;//                                new TagResponse(UUID.randomUUID().toString(), &quot;Backend&quot;),&#10;//                                new TagResponse(UUID.randomUUID().toString(), &quot;Java&quot;)&#10;//                        ),&#10;//                        LocalDateTime.now().minusDays(5)&#10;//                ),&#10;//                new LearningDaysRecommendationQuizPackResponse(&#10;//                        UUID.randomUUID().toString(),&#10;//                        21,&#10;//                        1003,&#10;//                        Collections.of(&#10;//                                new TagResponse(UUID.randomUUID().toString(), &quot;모니터링&quot;),&#10;//                                new TagResponse(UUID.randomUUID().toString(), &quot;CI/CD&quot;)&#10;//                        ),&#10;//                        LocalDateTime.now().minusDays(12)&#10;//                )&#10;//        );&#10;//    }" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
