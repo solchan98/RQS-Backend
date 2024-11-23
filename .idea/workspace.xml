@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;-">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/OnGoingQuizGameResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/AddedTopicQuizResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/LearningDaysRecommendationQuizPackResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/RecommendationQuizPackResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionTagsResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionsController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/TagResponse.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -362,7 +353,8 @@
       <workItem from="1731730598549" duration="2654000" />
       <workItem from="1732003510746" duration="114000" />
       <workItem from="1732003630194" duration="9458000" />
-      <workItem from="1732013114291" duration="179000" />
+      <workItem from="1732013114291" duration="4364000" />
+      <workItem from="1732356559653" duration="498000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -396,7 +388,15 @@
       <option name="project" value="LOCAL" />
       <updated>1723280350461</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회">
+      <option name="closed" value="true" />
+      <created>1732013745204</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1732013745205</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -423,7 +423,8 @@
     <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
     <MESSAGE value="feat: QuizPack 모듈 memberId 하드 코딩 부분 수정" />
     <MESSAGE value="feat: Quiz 조회 로직 수정 및 테스트 작성&#10;- 퀴즈팩 유저 검증 로직 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Quiz 조회 로직 수정 및 테스트 작성&#10;- 퀴즈팩 유저 검증 로직 추가" />
+    <MESSAGE value="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
