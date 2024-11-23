@@ -39,7 +39,7 @@ public class QuizPackService {
     }
 
     @Transactional
-    public Quiz addQuiz(CreateQuiz createQuiz) {
+    public long addQuiz(CreateQuiz createQuiz) {
         QuizPack quizPack = quizPackRepository.findById(createQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
         QuizPackMember quizPackMember = quizPack.getQuizPackMemberByMemberId(createQuiz.memberId());
@@ -48,8 +48,7 @@ public class QuizPackService {
         quizPack.addQuiz(newQuiz);
         quizPack = quizPackRepository.save(quizPack);
 
-        return quizPack.findByQuiz(newQuiz)
-                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP2));
+        return quizPack.getId();
     }
 
     private static Quiz createQuiz(CreateQuiz createQuiz, QuizPackMember quizPackMember) {

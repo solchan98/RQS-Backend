@@ -59,10 +59,6 @@ public class QuizPack {
         }
     }
 
-    public Optional<Quiz> findByQuiz(Quiz quiz) {
-        return quizzes.stream().filter(v -> v.equals(quiz)).findAny();
-    }
-
     public long quizSize() {
         if (CollectionUtils.isEmpty(quizzes)) {
             return 0;

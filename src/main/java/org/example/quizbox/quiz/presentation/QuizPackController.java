@@ -55,9 +55,7 @@ public class QuizPackController {
             @RequestBody CreateQuizRequest request,
             AccessUser accessUser
     ) {
-        Quiz quiz = quizPackService.addQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
-
-        return quiz.getId();
+        return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
     }
 
     @GetMapping("/{quiz-pack-id}/quiz/{quiz-id}")
