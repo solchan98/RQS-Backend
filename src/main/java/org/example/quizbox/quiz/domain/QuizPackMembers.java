@@ -20,6 +20,10 @@ public class QuizPackMembers {
         return values.stream().filter(quizPackMember -> quizPackMember.getMemberId() == memberId).findFirst();
     }
 
+    public boolean contains(QuizPackMember quizPackMember) {
+        return values.contains(quizPackMember);
+    }
+
     public long size() {
         return values.size();
     }

@@ -1,7 +1,6 @@
 package org.example.quizbox.quiz.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.*;
 import static org.example.quizbox.quiz.QuizBuilder.quizBuilder;
 import static org.example.quizbox.support.QuizAnswersBuilder.quizAnswersBuilder;
 import static org.example.quizbox.support.QuizPackBuilder.quizPackBuilder;
@@ -22,9 +21,10 @@ class QuizPackTest {
                 List.of(quizBuilder().content("same").build())
         );
         QuizContent sameContent = new QuizContent("same");
+        Quiz newQuiz = Quiz.create(quizPackMember, sameContent, quizAnswersBuilder().build());
 
         Throwable throwable = catchThrowable(
-                () -> quizPack.createQuiz(quizPackMember.getMemberId(), sameContent, quizAnswersBuilder().build()));
+                () -> quizPack.addQuiz(newQuiz));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QP3.code());
@@ -33,9 +33,11 @@ class QuizPackTest {
     @Test
     void 퀴즈_생성_불가ㅡ퀴즈팩_멤버_아닌_경우() {
         QuizPack quizPack = quizPackBuilder().build();
+        QuizPackMember invaludQuizPackMember = QuizPackMember.createAdmin(-999L);
+        Quiz newQuiz = Quiz.create(invaludQuizPackMember, new QuizContent("content"), quizAnswersBuilder().build());
 
         Throwable throwable = catchThrowable(
-                () -> quizPack.createQuiz(-999L, new QuizContent("content"), quizAnswersBuilder().build()));
+                () -> quizPack.addQuiz(newQuiz));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QP4.code());
@@ -44,9 +46,10 @@ class QuizPackTest {
     @Test
     void 퀴즈_생성_불가ㅡ생성_권한_미보유() {
         QuizPack quizPack = quizPackBuilder().build();
-
+        QuizPackMember invalidQuizPackMember = QuizPackMember.createAdmin(-999L);
+        Quiz newQuiz = Quiz.create(invalidQuizPackMember, new QuizContent("content"), quizAnswersBuilder().build());
         Throwable throwable = catchThrowable(
-                () -> quizPack.createQuiz(-999L, new QuizContent("content"), quizAnswersBuilder().build()));
+                () -> quizPack.addQuiz(newQuiz));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QP4.code());

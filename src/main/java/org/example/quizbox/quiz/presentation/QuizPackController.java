@@ -55,7 +55,7 @@ public class QuizPackController {
             @RequestBody CreateQuizRequest request,
             AccessUser accessUser
     ) {
-        Quiz quiz = quizPackService.createQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
+        Quiz quiz = quizPackService.addQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
 
         return quiz.getId();
     }

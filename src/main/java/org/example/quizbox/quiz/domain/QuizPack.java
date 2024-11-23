@@ -34,15 +34,14 @@ public class QuizPack {
         }
     }
 
-    public void createQuiz(long memberId, QuizContent quizContent, QuizAnswers quizAnswers) {
-        QuizPackMember quizPackMember = getQuizPackMemberByMemberId(memberId);
-        validateIsCreatableAQuizzes(quizPackMember);
-        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(quizContent));
+    public void addQuiz(Quiz newQuiz) {
+        validateIsCreatableQuizzes(newQuiz.getCreator());
+        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
         if (duplicateContent) {
             throw new BusinessException(ExceptionConstants.QP3);
         }
 
-        quizzes.add(Quiz.create(quizPackMember, quizContent, quizAnswers));
+        quizzes.add(newQuiz);
     }
 
     public QuizPackMember getQuizPackMemberByMemberId(long memberId) {
@@ -50,14 +49,18 @@ public class QuizPack {
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
     }
 
-    private void validateIsCreatableAQuizzes(QuizPackMember quizPackMember) {
+    private void validateIsCreatableQuizzes(QuizPackMember quizPackMember) {
+        if (!quizPackMembers.contains(quizPackMember)) {
+            throw new BusinessException(ExceptionConstants.QP4);
+        }
+
         if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
             throw new BusinessException(ExceptionConstants.QP5);
         }
     }
 
-    public Optional<Quiz> findByQuizContent(QuizContent content) {
-        return quizzes.stream().filter(quiz -> quiz.getContent().equals(content)).findAny();
+    public Optional<Quiz> findByQuiz(Quiz quiz) {
+        return quizzes.stream().filter(v -> v.equals(quiz)).findAny();
     }
 
     public long quizSize() {
@@ -81,15 +84,5 @@ public class QuizPack {
         getQuizPackMemberByMemberId(memberId);
 
         return new QuizPackStatus(id, title, memberSize(), quizSize());
-    }
-
-    public void addQuizPackMember(InvitationValidator invitationValidator, Invitation invitation) {
-        boolean valid = invitationValidator.isValid(invitation);
-        if (!valid) {
-            throw new BusinessException(ExceptionConstants.QP7);
-        }
-
-        QuizPackMember quizPackMember = new QuizPackMember(invitation.memberId(), invitation.roles());
-        quizPackMembers.add(quizPackMember);
     }
 }

@@ -39,18 +39,21 @@ public class QuizPackService {
     }
 
     @Transactional
-    public Quiz createQuiz(CreateQuiz createQuiz) {
+    public Quiz addQuiz(CreateQuiz createQuiz) {
         QuizPack quizPack = quizPackRepository.findById(createQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
+        QuizPackMember quizPackMember = quizPack.getQuizPackMemberByMemberId(createQuiz.memberId());
 
-        QuizContent quizContent = new QuizContent(createQuiz.quizContent());
-        QuizAnswers quizAnswers = createQuizAnswers(createQuiz);
-
-        quizPack.createQuiz(createQuiz.memberId(), quizContent, quizAnswers);
+        Quiz newQuiz = createQuiz(createQuiz, quizPackMember);
+        quizPack.addQuiz(newQuiz);
         quizPack = quizPackRepository.save(quizPack);
 
-        return quizPack.findByQuizContent(quizContent)
+        return quizPack.findByQuiz(newQuiz)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP2));
+    }
+
+    private static Quiz createQuiz(CreateQuiz createQuiz, QuizPackMember quizPackMember) {
+        return Quiz.create(quizPackMember, new QuizContent(createQuiz.quizContent()), createQuizAnswers(createQuiz));
     }
 
     private static QuizAnswers createQuizAnswers(CreateQuiz createQuiz) {

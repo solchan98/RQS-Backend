@@ -12,9 +12,9 @@ public class Quiz {
 
     private final QuizPackMember creator;
 
-    private final QuizContent content;
+    private QuizContent content;
 
-    private final QuizAnswers quizAnswers;
+    private QuizAnswers quizAnswers;
 
     public Quiz(Long id, QuizPackMember creator, QuizContent content, QuizAnswers quizAnswers) {
         this.id = id;
@@ -31,8 +31,8 @@ public class Quiz {
         return quizAnswers.isMatchedCorrectAnswers(submitAnswerIds);
     }
 
-    public boolean isSameContent(QuizContent quizContent) {
-        return this.content.equals(quizContent);
+    public boolean isSameContent(Quiz newQuiz) {
+        return this.content.equals(newQuiz.content);
     }
 
     public boolean containsAllAnswers(Set<Long> answerIds) {
