@@ -1,8 +1,7 @@
 package org.example.quizbox.support;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
+import java.util.*;
+
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMember;
@@ -21,6 +20,7 @@ public class QuizPackBuilder {
     private String title = "default title";
     private Collection<Quiz> quizzes = new ArrayList<>();
     private QuizPackMembers quizPackMembers;
+    private Set<Long> tagIds = new HashSet<>();
 
     public static QuizPackBuilder quizPackBuilder() {
         return new QuizPackBuilder();
@@ -46,6 +46,11 @@ public class QuizPackBuilder {
         return this;
     }
 
+    public QuizPackBuilder tagIds(Set<Long> tagIds) {
+        this.tagIds = new HashSet<>(tagIds);
+        return this;
+    }
+
     public QuizPack build() {
         if (Objects.isNull(quizPackMembers)) {
             quizPackMembers = new QuizPackMembers(
@@ -56,6 +61,6 @@ public class QuizPackBuilder {
             id = --quizPackId;
         }
 
-        return new QuizPack(id, quizPackMembers, title, quizzes);
+        return new QuizPack(id, title, quizPackMembers, quizzes, tagIds);
     }
 }

@@ -6,6 +6,8 @@ import static org.example.quizbox.support.QuizAnswersBuilder.quizAnswersBuilder;
 import static org.example.quizbox.support.QuizPackBuilder.quizPackBuilder;
 
 import java.util.List;
+import java.util.Set;
+
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.junit.jupiter.api.Test;
@@ -18,7 +20,8 @@ class QuizPackTest {
         QuizPack quizPack = new QuizPack(
                 "title",
                 new QuizPackMembers(quizPackMember),
-                List.of(quizBuilder().content("same").build())
+                List.of(quizBuilder().content("same").build()),
+                Set.of()
         );
         QuizContent sameContent = new QuizContent("same");
         Quiz newQuiz = Quiz.create(quizPackMember, sameContent, quizAnswersBuilder().build());

@@ -1,21 +1,17 @@
 package org.example.quizbox.quiz.infrastructure;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMembers;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -35,12 +31,20 @@ public class QuizPackEntity {
     @OneToMany(mappedBy = "quizPackEntity", cascade = CascadeType.ALL)
     private Set<QuizPackMemberEntity> quizPackMemberEntities = new HashSet<>();
 
+    @OneToMany(mappedBy = "quizPackEntity")
+    private Set<QuizPackTagEntity> tags = new HashSet<>();
+
     public QuizPack toDomain() {
         QuizPackMembers quizPackMembers = new QuizPackMembers(
                 quizPackMemberEntities.stream().map(QuizPackMemberEntity::toDomain).collect(Collectors.toSet()));
 
-        return new QuizPack(id, quizPackMembers, title,
-                new ArrayList<>(quizEntities.stream().map(QuizEntity::toDomain).toList()));
+        return new QuizPack(
+                id,
+                title,
+                quizPackMembers,
+                new ArrayList<>(quizEntities.stream().map(QuizEntity::toDomain).toList()),
+                tags.stream().map(QuizPackTagEntity::getTagId).collect(Collectors.toSet())
+        );
     }
 
     public static QuizPackEntity fromDomain(QuizPack quizPack) {

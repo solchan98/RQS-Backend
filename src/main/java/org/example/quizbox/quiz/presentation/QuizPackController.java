@@ -38,13 +38,14 @@ public class QuizPackController {
 
         return ResponseEntity.ok(new BasicResponse<>(QuizPackStatusResponse.from(status)));
     }
-//
+
+    //
     @PostMapping
     public long createQuizPack(
             @RequestBody CreateQuizPack createQuizPack,
             AccessUser accessUser
     ) {
-        QuizPack quizPack = quizPackService.create(createQuizPack.title(), accessUser.getId());
+        QuizPack quizPack = quizPackService.create(accessUser.getId(), createQuizPack.title(), createQuizPack.tagIds());
 
         return quizPack.getId();
     }
