@@ -3,6 +3,8 @@ package org.example.quizbox.tag.infrastructure;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.example.quizbox.common.domain.exception.BusinessException;
+import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.tag.domain.ITagRepository;
 import org.example.quizbox.tag.domain.Tag;
 import org.example.quizbox.tag.domain.Tags;
@@ -10,12 +12,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class TagRepository implements ITagRepository {
+public class H2TagRepository implements ITagRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -34,31 +35,26 @@ public class TagRepository implements ITagRepository {
 
     @Override
     public Optional<Tag> findByName(String name) {
-        return Optional.empty();
+        return jpaTagRepository.findByName(name)
+                .map(TagEntity::toDomain);
+
     }
 
-    @Override
-    public Tags findAllByNames(Collection<String> names) {
-        return null;
-    }
-
+    /**
+     * upsert tag
+     *
+     * @param tag
+     * @return the tag created or updated
+     */
     @Override
     public Tag save(Tag tag) {
-        return null;
-    }
+        String sql = "MERGE INTO tag_entity (name) KEY (name) VALUES (:name)";
 
-    @Override
-    public Tags saveAll(Tags tags) {
-        Set<TagEntity> tagEntities = tags.getValues()
-                .stream()
-                .map(TagEntity::from)
-                .collect(Collectors.toSet());
+        entityManager.createNativeQuery(sql)
+                .setParameter("name", tag.getName())
+                .executeUpdate();
 
-        return new Tags(
-                jpaTagRepository.saveAll(tagEntities)
-                        .stream()
-                        .map(TagEntity::toDomain)
-                        .collect(Collectors.toSet())
-        );
+        return findByName(tag.getName())
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.SE1));
     }
 }
