@@ -12,19 +12,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Random;
+import java.util.Set;
 
 @RestController
-@RequestMapping("/quiz-game")
+@RequestMapping("/quiz-games")
 @RequiredArgsConstructor
 public class QuizGameController {
 
     private final QuizGameService quizGameService;
 
-    @GetMapping("/on-going")
-    public ResponseEntity<BasicResponse<OnGoingQuizGameResponse>> getOnGoingQuizGames() {
+    @GetMapping("/in-progress")
+    public ResponseEntity<BasicResponse<Set<InProgressQuizGameResponse>>> getOnGoingQuizGames() {
         boolean randomBoolean = new Random().nextBoolean();
         if (randomBoolean) {
-            return ResponseEntity.ok(new BasicResponse<>(OnGoingQuizGameResponse.dummy()));
+            return ResponseEntity.ok(new BasicResponse<>(InProgressQuizGameResponse.dummy()));
         }
 
         return ResponseEntity.ok(new BasicResponse<>(null));
@@ -73,5 +74,4 @@ public class QuizGameController {
 
         return ResponseEntity.ok(new BasicResponse<>(QuizGameStatusResponse.from(status)));
     }
-
 }

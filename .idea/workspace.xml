@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: QuizGame Quiz 뽑기 관련 로직 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGameStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedAnswers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedAnswers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameStatusResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +355,7 @@
       <workItem from="1732003510746" duration="114000" />
       <workItem from="1732003630194" duration="9458000" />
       <workItem from="1732013114291" duration="4364000" />
-      <workItem from="1732356559653" duration="22869000" />
+      <workItem from="1732356559653" duration="24781000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -458,7 +453,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732615981749</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가">
+      <option name="closed" value="true" />
+      <created>1732617180410</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1732617180410</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -493,7 +496,8 @@
     <MESSAGE value="feat: Tag 생성(upsert) 로직 구현" />
     <MESSAGE value="feat: QuizPack 생성 시, Tag 로직 수정" />
     <MESSAGE value="feat: QuizGame Quiz 뽑기 관련 로직 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: QuizGame Quiz 뽑기 관련 로직 수정" />
+    <MESSAGE value="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
