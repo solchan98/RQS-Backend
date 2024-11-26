@@ -65,13 +65,13 @@ public class QuizGameController {
 
         return ResponseEntity.ok(new BasicResponse<>(null));
     }
-//
-//    @GetMapping("/{quiz-game-id}")
-//    public ResponseEntity<BasicResponse<QuizGameStatusResponse>> status(
-//            @PathVariable("quiz-game-id") String quizGameId) {
-//        QuizGameStatus status = quizGameService.status(QuizGameId.from(quizGameId));
-//
-//        return ResponseEntity.ok(new BasicResponse<>(QuizGameStatusResponse.from(status)));
-//    }
+
+    @GetMapping("/{quiz-game-id}")
+    public ResponseEntity<BasicResponse<QuizGameStatusResponse>> status(
+            @PathVariable("quiz-game-id") String quizGameId) {
+        QuizGameStatus status = quizGameService.status(QuizGameId.from(quizGameId));
+
+        return ResponseEntity.ok(new BasicResponse<>(QuizGameStatusResponse.from(status)));
+    }
 
 }

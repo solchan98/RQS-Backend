@@ -82,16 +82,9 @@ public class QuizGame {
                 quizPack.getId(),
                 creator.getMemberId(),
                 (int) quizPack.quizSize(),
-                remainQuizSize(),
-                submittedQuizSize()
+                remainGameQuizzes.remainQuizSize(),
+                submittedAnswers.submittedQuizSize(),
+                submittedAnswers.lastSubmittedAt()
         );
-    }
-
-    public int remainQuizSize() {
-        return remainGameQuizzes.remainQuizSize();
-    }
-
-    public int submittedQuizSize() {
-        return submittedAnswers.submittedQuizSize();
     }
 }

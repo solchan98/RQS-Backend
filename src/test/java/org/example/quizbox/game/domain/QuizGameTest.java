@@ -154,9 +154,14 @@ class QuizGameTest {
         SubmitAnswer submitAnswer = new SubmitAnswer(answerIds);
         quizGame.pick(1L);
         quizGame.submit(1L, submitAnswer);
-        QuizGameStatus expected = new QuizGameStatus(quizGame.id(), quizPack.getId(), 1L, 1, 0, 1);
 
-        assertThat(quizGame.status()).isEqualTo(expected);
+        assertThat(quizGame.status())
+                .hasFieldOrPropertyWithValue("quizGameId", quizGame.id())
+                .hasFieldOrPropertyWithValue("quizPackId", quizPack.getId())
+                .hasFieldOrPropertyWithValue("participantId", 1L)
+                .hasFieldOrPropertyWithValue("totalQuizCount", (int) quizPack.quizSize())
+                .hasFieldOrPropertyWithValue("remainQuizCount", (int) quizPack.quizSize() - 1)
+                .hasFieldOrPropertyWithValue("submittedAnswerCount", 1);
     }
 
     @Test
