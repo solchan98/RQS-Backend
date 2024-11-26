@@ -1,7 +1,7 @@
 package org.example.quizbox.quiz.presentation;
 
 import org.example.quizbox.quiz.domain.QuizPackStatus;
-import org.example.quizbox.tag.domain.Tag;
+import org.example.quizbox.subscriptions.TagResponse;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,7 +11,7 @@ public record QuizPackStatusResponse(
         String quizPackTitle,
         long memberCount,
         long quizCount,
-        Set<String> tags
+        Set<TagResponse> tags
 ) {
 
     public static QuizPackStatusResponse from(QuizPackStatus status) {
@@ -20,7 +20,7 @@ public record QuizPackStatusResponse(
                 status.quizPackTitle(),
                 status.quizPackMemberCount(),
                 status.quizCount(),
-                status.tags().getValues().stream().map(Tag::getName).collect(Collectors.toSet())
+                status.tags().getValues().stream().map(TagResponse::from).collect(Collectors.toSet())
         );
     }
 }

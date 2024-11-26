@@ -1,22 +1,15 @@
 package org.example.quizbox.game.presentation;
 
 import lombok.RequiredArgsConstructor;
+import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.QuizGameService;
-import org.example.quizbox.game.domain.QuizGame;
 import org.example.quizbox.game.domain.QuizGameId;
 import org.example.quizbox.game.domain.QuizGameStatus;
-import org.example.quizbox.game.domain.SubmitAnswer;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Random;
 
 @RestController
@@ -36,22 +29,24 @@ public class QuizGameController {
         return ResponseEntity.ok(new BasicResponse<>(null));
     }
 
-//    @PostMapping
-//    public ResponseEntity<BasicResponse<QuizGameStatusResponse>> start(@RequestBody StartQuizRequest request) {
-//        long memberId = 1L;
-//        QuizGameStatus status = quizGameService.startGame(request.toStartQuiz(memberId));
-//
-//        return ResponseEntity.ok(new BasicResponse<>(QuizGameStatusResponse.from(status)));
-//    }
-//
-//    @PostMapping("/{quiz-game-id}/next-quiz")
-//    public ResponseEntity<BasicResponse<Quiz>> pick(@PathVariable("quiz-game-id") String quizGameId) {
-//        long memberId = 1L;
-//        Quiz quiz = quizGameService.pick(memberId, QuizGameId.from(quizGameId))
-//                .orElseGet(() -> null);
-//
-//        return ResponseEntity.ok(new BasicResponse<>(quiz));
-//    }
+    @PostMapping
+    public ResponseEntity<BasicResponse<QuizGameStatusResponse>> start(
+            @RequestBody StartQuizRequest request,
+            AccessUser accessUser
+    ) {
+        QuizGameStatus status = quizGameService.startGame(request.toStartQuiz(accessUser.getId()));
+
+        return ResponseEntity.ok(new BasicResponse<>(QuizGameStatusResponse.from(status)));
+    }
+
+    @PostMapping("/{quiz-game-id}/next-quiz")
+    public ResponseEntity<BasicResponse<Quiz>> pick(@PathVariable("quiz-game-id") String quizGameId) {
+        long memberId = 1L;
+        Quiz quiz = quizGameService.pick(memberId, QuizGameId.from(quizGameId))
+                .orElseGet(() -> null);
+
+        return ResponseEntity.ok(new BasicResponse<>(quiz));
+    }
 //
 //    @PostMapping("/{quiz-game-id}/submission/{quiz-id}")
 //    public ResponseEntity<BasicResponse<Void>> submit(

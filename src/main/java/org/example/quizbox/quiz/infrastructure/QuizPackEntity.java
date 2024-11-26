@@ -31,7 +31,7 @@ public class QuizPackEntity {
     @OneToMany(mappedBy = "quizPackEntity", cascade = CascadeType.ALL)
     private Set<QuizPackMemberEntity> quizPackMemberEntities = new HashSet<>();
 
-    @OneToMany(mappedBy = "quizPackEntity")
+    @OneToMany(mappedBy = "quizPackEntity", cascade = CascadeType.ALL)
     private Set<QuizPackTagEntity> tags = new HashSet<>();
 
     public QuizPack toDomain() {
@@ -61,6 +61,9 @@ public class QuizPackEntity {
                 .map(QuizPackMemberEntity::fromDomain).collect(Collectors.toSet());
         quizPackEntity.quizPackMemberEntities.forEach(
                 quizPackMemberEntity -> quizPackMemberEntity.setQuizPackEntity(quizPackEntity));
+        quizPackEntity.tags = quizPack.getTagIds().stream()
+                .map(tagId -> new QuizPackTagEntity(new QuizPackTagId(quizPack.getId(), tagId), quizPackEntity))
+                .collect(Collectors.toSet());
 
         return quizPackEntity;
     }

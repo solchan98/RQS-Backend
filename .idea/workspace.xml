@@ -4,16 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: QuizPack에 Tag 기능 추가 구현">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/GetOrCreateTagDto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/presentation/CreateTagRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/presentation/TagController.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: Tag 생성(upsert) 로직 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/JpaTagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/JpaTagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/TagEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/TagEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/H2TagRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackTagEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackTagEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/RecommendationQuizPackResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/RecommendationQuizPackResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionTagsResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionTagsResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/TagResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/TagResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -360,7 +359,7 @@
       <workItem from="1732003510746" duration="114000" />
       <workItem from="1732003630194" duration="9458000" />
       <workItem from="1732013114291" duration="4364000" />
-      <workItem from="1732356559653" duration="17142000" />
+      <workItem from="1732356559653" duration="19523000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -434,7 +433,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732450025068</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat: Tag 생성(upsert) 로직 구현">
+      <option name="closed" value="true" />
+      <created>1732525288335</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732525288335</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -466,7 +473,8 @@
     <MESSAGE value="feat: Quiz 생성 로직 수정" />
     <MESSAGE value="feat: Quiz 생성 웅답 로직 수정" />
     <MESSAGE value="feat: QuizPack에 Tag 기능 추가 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: QuizPack에 Tag 기능 추가 구현" />
+    <MESSAGE value="feat: Tag 생성(upsert) 로직 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Tag 생성(upsert) 로직 구현" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

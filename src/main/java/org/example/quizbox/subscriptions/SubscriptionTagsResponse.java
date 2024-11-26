@@ -12,22 +12,22 @@ public record SubscriptionTagsResponse(
 
     public static SubscriptionTagsResponse dummyNewQuizzes() {
         return new SubscriptionTagsResponse("NEW_QUIZZES", Collections.of(
-                new TagResponse(UUID.randomUUID().toString(), "모니터링"),
-                new TagResponse(UUID.randomUUID().toString(), "Backend"),
-                new TagResponse(UUID.randomUUID().toString(), "CI/CD"),
-                new TagResponse(UUID.randomUUID().toString(), "ELK")
+                new TagResponse(1, "모니터링"),
+                new TagResponse(2, "Backend"),
+                new TagResponse(3, "CI/CD"),
+                new TagResponse(4, "ELK")
         ));
     }
 
     public static SubscriptionTagsResponse dummy() {
         return new SubscriptionTagsResponse("NEW_QUIZZES", Collections.of(
-                new TagResponse(UUID.randomUUID().toString(), "모니터링"),
-                new TagResponse(UUID.randomUUID().toString(), "Backend"),
-                new TagResponse(UUID.randomUUID().toString(), "CI/CD"),
-                new TagResponse(UUID.randomUUID().toString(), "ELK"),
-                new TagResponse(UUID.randomUUID().toString(), "FrontEnd"),
-                new TagResponse(UUID.randomUUID().toString(), "AL/ML"),
-                new TagResponse(UUID.randomUUID().toString(), "Cloud")
+                new TagResponse(5, "모니터링"),
+                new TagResponse(6, "Backend"),
+                new TagResponse(7, "CI/CD"),
+                new TagResponse(8, "ELK"),
+                new TagResponse(9, "FrontEnd"),
+                new TagResponse(10, "AL/ML"),
+                new TagResponse(11, "Cloud")
         ));
     }
 }

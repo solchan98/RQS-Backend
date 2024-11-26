@@ -1,8 +1,12 @@
 package org.example.quizbox.quiz.infrastructure;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class QuizPackTagEntity {
 
     @EmbeddedId

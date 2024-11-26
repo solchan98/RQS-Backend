@@ -26,8 +26,8 @@ public record RecommendationQuizPackResponse<T>(String filterType, Collection<T>
                                         12,
                                         300,
                                         Collections.of(
-                                                new TagResponse(UUID.randomUUID().toString(), "Backend"),
-                                                new TagResponse(UUID.randomUUID().toString(), "Java")
+                                                new TagResponse(1L, "Backend"),
+                                                new TagResponse(2L, "Java")
                                         )
                                 ),
                                 LocalDateTime.now().minusDays(5)
@@ -38,8 +38,8 @@ public record RecommendationQuizPackResponse<T>(String filterType, Collection<T>
                                         21,
                                         1003,
                                         Collections.of(
-                                                new TagResponse(UUID.randomUUID().toString(), "모니터링"),
-                                                new TagResponse(UUID.randomUUID().toString(), "CI/CD")
+                                                new TagResponse(3L, "모니터링"),
+                                                new TagResponse(4L, "CI/CD")
                                         )
                                 ),
                                 LocalDateTime.now().minusDays(12)
