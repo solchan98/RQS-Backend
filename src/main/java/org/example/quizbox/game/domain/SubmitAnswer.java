@@ -5,7 +5,7 @@ import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.springframework.util.CollectionUtils;
 
-public record SubmitAnswer(long memberId, long quizId, Set<Long> answersIds) {
+public record SubmitAnswer(Set<Long> answersIds) {
 
     public SubmitAnswer {
         if (CollectionUtils.isEmpty(answersIds)) {

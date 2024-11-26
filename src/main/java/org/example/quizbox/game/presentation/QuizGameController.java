@@ -6,6 +6,7 @@ import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.QuizGameService;
 import org.example.quizbox.game.domain.QuizGameId;
 import org.example.quizbox.game.domain.QuizGameStatus;
+import org.example.quizbox.game.domain.SubmitAnswer;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,29 +41,30 @@ public class QuizGameController {
     }
 
     @PostMapping("/{quiz-game-id}/next-quiz")
-    public ResponseEntity<BasicResponse<Quiz>> pick(@PathVariable("quiz-game-id") String quizGameId) {
-        long memberId = 1L;
-        Quiz quiz = quizGameService.pick(memberId, QuizGameId.from(quizGameId))
+    public ResponseEntity<BasicResponse<Quiz>> pick(
+            @PathVariable("quiz-game-id") String quizGameId,
+            AccessUser accessUser
+    ) {
+        Quiz quiz = quizGameService.pick(accessUser.getId(), QuizGameId.from(quizGameId))
                 .orElseGet(() -> null);
 
         return ResponseEntity.ok(new BasicResponse<>(quiz));
     }
-//
-//    @PostMapping("/{quiz-game-id}/submission/{quiz-id}")
-//    public ResponseEntity<BasicResponse<Void>> submit(
-//            @PathVariable("quiz-game-id") String quizGameId,
-//            @PathVariable("quiz-id") long quizId,
-//            @RequestBody SubmitAnswerRequest submitAnswerRequest
-//    ) {
-//        long memberId = 1L;
-//
-//        quizGameService.submit(
-//                QuizGameId.from(quizGameId),
-//                new SubmitAnswer(memberId, quizId, submitAnswerRequest.answerIds())
-//        );
-//
-//        return ResponseEntity.ok(new BasicResponse<>(null));
-//    }
+
+    @PostMapping("/{quiz-game-id}/submission")
+    public ResponseEntity<BasicResponse<Void>> submit(
+            @PathVariable("quiz-game-id") String quizGameId,
+            @RequestBody SubmitAnswerRequest submitAnswerRequest,
+            AccessUser accessUser
+    ) {
+        quizGameService.submit(
+                accessUser.getId(),
+                QuizGameId.from(quizGameId),
+                new SubmitAnswer(submitAnswerRequest.answerIds())
+        );
+
+        return ResponseEntity.ok(new BasicResponse<>(null));
+    }
 //
 //    @GetMapping("/{quiz-game-id}")
 //    public ResponseEntity<BasicResponse<QuizGameStatusResponse>> status(

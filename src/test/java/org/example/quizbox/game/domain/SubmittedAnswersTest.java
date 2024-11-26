@@ -21,10 +21,10 @@ class SubmittedAnswersTest {
         SubmittedAnswers submittedAnswers = new SubmittedAnswers();
         Quiz quiz = quizBuilder().build();
         Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(Collectors.toSet());
-        SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), answerIds);
-        submittedAnswers.submitAnswers(submitAnswer);
+        SubmitAnswer submitAnswer = new SubmitAnswer(answerIds);
+        submittedAnswers.submitAnswers(quiz.getId(), submitAnswer);
 
-        Throwable throwable = catchThrowable(() -> submittedAnswers.submitAnswers(submitAnswer));
+        Throwable throwable = catchThrowable(() -> submittedAnswers.submitAnswers(quiz.getId(), submitAnswer));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG5.code());

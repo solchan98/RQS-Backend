@@ -1,29 +1,29 @@
 package org.example.quizbox.game.domain;
 
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG1;
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG3;
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG4;
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG9;
-
-import java.util.Objects;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackMember;
 
+import java.util.Objects;
+import java.util.Optional;
+
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.*;
+
 @AllArgsConstructor
 public class QuizGame {
 
-    private QuizGameId id;
+    private final QuizGameId id;
 
-    private QuizPack quizPack;
+    private final QuizPack quizPack;
 
     private final RemainGameQuizzes remainGameQuizzes;
     private final SubmittedAnswers submittedAnswers = new SubmittedAnswers();
 
     private final QuizPackMember creator;
+
+    private Quiz quizWaitingSubmit;
 
     public QuizGame(QuizPack quizPack, GameQuizPicker gameQuizPicker, long memberId) throws BusinessException {
         this.quizPack = quizPack;
@@ -45,25 +45,31 @@ public class QuizGame {
             throw new BusinessException(QG9);
         }
 
-        return remainGameQuizzes.pick();
+        if (quizWaitingSubmit != null) {
+            throw new BusinessException(QG2);
+        }
+        Optional<Quiz> optionalQuiz = remainGameQuizzes.pick();
+        optionalQuiz.ifPresent(quiz -> quizWaitingSubmit = quiz);
+
+        return optionalQuiz;
     }
 
-    public void submit(SubmitAnswer submitAnswer) {
-        QuizPackMember quizPackMember = quizPack.validateIsMember(submitAnswer.memberId());
+    public void submit(long memberId, SubmitAnswer submitAnswer) {
+        QuizPackMember quizPackMember = quizPack.validateIsMember(memberId);
         if (!isParticipant(quizPackMember)) {
             throw new BusinessException(QG9);
         }
 
-        Quiz quiz = quizPack.getQuizById(submitAnswer.quizId());
-        if (!remainGameQuizzes.isWaitingQuizBeSubmitted(quiz)) {
+        if (quizWaitingSubmit == null) {
             throw new BusinessException(QG3);
         }
-        if (!quiz.containsAllAnswers(submitAnswer.answersIds())) {
+
+        if (!quizWaitingSubmit.containsAllAnswers(submitAnswer.answersIds())) {
             throw new BusinessException(QG4);
         }
 
-        remainGameQuizzes.clearWaitingQuiz();
-        submittedAnswers.submitAnswers(submitAnswer);
+        submittedAnswers.submitAnswers(quizWaitingSubmit.getId(), submitAnswer);
+        quizWaitingSubmit = null;
     }
 
     public boolean isParticipant(QuizPackMember quizPackMember) {

@@ -97,7 +97,7 @@ class QuizGameTest {
                 Collectors.toSet());
 
         Throwable throwable = catchThrowable(
-                () -> quizGame.submit(new SubmitAnswer(-999, quiz.getId(), answerIds)));
+                () -> quizGame.submit(-999L, new SubmitAnswer(answerIds)));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QP4.code());
@@ -120,7 +120,7 @@ class QuizGameTest {
                 Collectors.toSet());
 
         Throwable throwable = catchThrowable(
-                () -> quizGame.submit(new SubmitAnswer(2, quiz.getId(), answerIds)));
+                () -> quizGame.submit(2, new SubmitAnswer(answerIds)));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG9.code());
@@ -132,10 +132,10 @@ class QuizGameTest {
         Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
-        SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), Set.of(-999L));
+        SubmitAnswer submitAnswer = new SubmitAnswer(Set.of(-999L));
         quizGame.pick(1L);
 
-        Throwable throwable = catchThrowable(() -> quizGame.submit(submitAnswer));
+        Throwable throwable = catchThrowable(() -> quizGame.submit(1L, submitAnswer));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG4.code());
@@ -151,11 +151,35 @@ class QuizGameTest {
         QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
         QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
         Set<Long> answerIds = quiz.getQuizAnswers().answers().stream().map(Answer::getId).collect(Collectors.toSet());
-        SubmitAnswer submitAnswer = new SubmitAnswer(1L, quiz.getId(), answerIds);
+        SubmitAnswer submitAnswer = new SubmitAnswer(answerIds);
         quizGame.pick(1L);
-        quizGame.submit(submitAnswer);
+        quizGame.submit(1L, submitAnswer);
         QuizGameStatus expected = new QuizGameStatus(quizGame.id(), quizPack.getId(), 1L, 1, 0, 1);
 
         assertThat(quizGame.status()).isEqualTo(expected);
+    }
+
+    @Test
+    @QuizGameTag
+    void 답변_대기중인_경우_다음_문제_뽑기_불가() {
+        Quiz quiz = quizBuilder().build();
+        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+        quizGame.pick(1L);
+
+        Throwable throwable = catchThrowable(() -> quizGame.pick(1L));
+
+        assertThat(throwable).isInstanceOf(BusinessException.class)
+                .hasMessage(ExceptionConstants.QG2.code());
+    }
+
+    @Test
+    @QuizGameTag
+    void 답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능() {
+        Quiz quiz = quizBuilder().build();
+        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizGame quizGame = new QuizGame(quizPack, sequentialGameQuizPicker, 1L);
+
+        assertThat(quizGame.pick(1L)).isNotEmpty();
     }
 }

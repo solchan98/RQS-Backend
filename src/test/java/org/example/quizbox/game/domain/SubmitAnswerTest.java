@@ -17,7 +17,7 @@ class SubmitAnswerTest {
     @Test
     @QuizGameTag
     void 답변은_최소_1개_이상() {
-        Throwable throwable = catchThrowable(() -> new SubmitAnswer(1L, 1L, Set.of()));
+        Throwable throwable = catchThrowable(() -> new SubmitAnswer(Set.of()));
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG6.code());
     }

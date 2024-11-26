@@ -59,9 +59,9 @@ public class QuizGameService {
     }
 
     @Transactional
-    public void submit(QuizGameId quizGameId, SubmitAnswer submitAnswer) {
+    public void submit(long memberId, QuizGameId quizGameId, SubmitAnswer submitAnswer) {
         QuizGame quizGame = getQuizGameById(quizGameId);
-        quizGame.submit(submitAnswer);
+        quizGame.submit(memberId, submitAnswer);
 
         quizGameRepository.save(quizGame);
     }

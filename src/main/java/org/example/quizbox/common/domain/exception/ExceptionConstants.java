@@ -25,7 +25,7 @@ public enum ExceptionConstants {
     // QG(Quiz Game)
     QG1("QG1", "퀴즈게임 시작 시, 퀴즈팩은 필수", "BUSINESS"),
     QG2("QG2", "현재 퀴즈 답변 후 퀴즈 뽑기 가능", "BUSINESS"),
-    QG3("QG3", "현재 진행중인 퀴즈가 아닌 경우 답 제출 불가", "BUSINESS"),
+    QG3("QG3", "퀴즈 뽑기 후 답변 가능", "BUSINESS"),
     QG4("QG4", "퀴즈의 보기가 아닌 값은 답으로 제출 불가", "BUSINESS"),
     QG5("QG5", "동일 퀴즈에 대하여 답 중복 제출 불가", "BUSINESS"),
     QG6("QG6", "답변은 최소 1개 이상 필수", "BUSINESS"),
