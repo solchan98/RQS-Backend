@@ -9,15 +9,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class QuizPackTag {
 
-    @EmbeddedId
-    private QuizPackTagId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("quizPackId")
-    @JoinColumn(name = "quiz_pack_id")
-    private QuizPack quizPack;
+    private Long tagId;
+
+    public QuizPackTag(Long tagId) {
+        this.tagId = tagId;
+    }
 
     public long getTagId() {
-        return id.getTagId();
+        return tagId;
     }
 }

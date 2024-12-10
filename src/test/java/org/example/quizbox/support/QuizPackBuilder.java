@@ -1,12 +1,9 @@
 package org.example.quizbox.support;
 
-import java.util.*;
+import org.example.quizbox.quiz.domain2.*;
 
-import org.example.quizbox.quiz.domain.Quiz;
-import org.example.quizbox.quiz.domain.QuizPack;
-import org.example.quizbox.quiz.domain.QuizPackMember;
-import org.example.quizbox.quiz.domain.QuizPackMemberRole;
-import org.example.quizbox.quiz.domain.QuizPackMembers;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class QuizPackBuilder {
 
@@ -18,9 +15,9 @@ public class QuizPackBuilder {
 
     private Long id;
     private String title = "default title";
-    private Collection<Quiz> quizzes = new ArrayList<>();
-    private QuizPackMembers quizPackMembers;
-    private Set<Long> tagIds = new HashSet<>();
+    private Set<Quiz> quizzes = new HashSet<>();
+    private QuizPackMembers quizPackMembers = new QuizPackMembers();
+    private Set<QuizPackTag> tags = new HashSet<>();
 
     public static QuizPackBuilder quizPackBuilder() {
         return new QuizPackBuilder();
@@ -37,7 +34,7 @@ public class QuizPackBuilder {
     }
 
     public QuizPackBuilder quizzes(Collection<Quiz> quizzes) {
-        this.quizzes = new ArrayList<>(quizzes);
+        this.quizzes = new HashSet<>(quizzes);
         return this;
     }
 
@@ -46,21 +43,25 @@ public class QuizPackBuilder {
         return this;
     }
 
-    public QuizPackBuilder tagIds(Set<Long> tagIds) {
-        this.tagIds = new HashSet<>(tagIds);
+    public QuizPackBuilder quizPackMembers(QuizPackMember... quizPackMembers) {
+        Arrays.stream(quizPackMembers).forEach(quizPackMember -> this.quizPackMembers.add(quizPackMember));
+        return this;
+    }
+
+    public QuizPackBuilder tags(Set<Long> tagIds) {
+        this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
         return this;
     }
 
     public QuizPack build() {
         if (Objects.isNull(quizPackMembers)) {
-            quizPackMembers = new QuizPackMembers(
-                    new QuizPackMember(1L, --quizPackMemberId, QuizPackMemberRole.allRoles()));
+            quizPackMembers = new QuizPackMembers(Set.of(new QuizPackMember(1L, --quizPackMemberId, QuizPackMemberRole.ADMIN)));
         }
 
         if (Objects.isNull(id)) {
             id = --quizPackId;
         }
 
-        return new QuizPack(id, title, quizPackMembers, quizzes, tagIds);
+        return new QuizPack(id, title, quizzes, quizPackMembers, tags);
     }
 }

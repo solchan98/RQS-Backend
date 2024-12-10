@@ -22,8 +22,9 @@ public class QuizPackMember {
     @Enumerated(EnumType.STRING)
     private QuizPackMemberRole role;
 
-    public static QuizPackMember createAdmin(long memberId) {
-        return new QuizPackMember(null, memberId, QuizPackMemberRole.ADMIN);
+    public QuizPackMember(long memberId, QuizPackMemberRole role) {
+        this.memberId = memberId;
+        this.role = role;
     }
 
     public boolean hasRole(QuizPackMemberRole role) {

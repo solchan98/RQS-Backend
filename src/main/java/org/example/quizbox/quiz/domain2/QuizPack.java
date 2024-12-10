@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.example.quizbox.common.domain.exception.BusinessException;
+import org.example.quizbox.common.domain.exception.ExceptionConstants;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -23,57 +25,64 @@ public class QuizPack {
 
     private String title;
 
-    @OneToMany(mappedBy = "quizPack", cascade = CascadeType.ALL)
-    private List<Quiz> quizzes = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
+    private Set<Quiz> quizzes = new HashSet<>();
 
     @Embedded
     private QuizPackMembers quizPackMembers;
 
-    @OneToMany(mappedBy = "quizPack", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackTag> tags = new HashSet<>();
 
-    public void addTags(Set<Long> tagIds) {
-        Set<QuizPackTag> newQuizPackTags = tagIds.stream()
-                .map(tagId -> new QuizPackTag(new QuizPackTagId(id, tagId), this))
-                .collect(Collectors.toSet());
-        tags.addAll(newQuizPackTags);
+
+    public QuizPack(String title, Set<QuizPackMember> members, Set<Long> tagIds) {
+        this.title = title;
+        this.quizPackMembers = new QuizPackMembers(members);
+        this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
     }
 
+
     public void addQuiz(Quiz newQuiz) {
-//        validateIsCreatableQuizzes(newQuiz.getCreator());
-//        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
-//        if (duplicateContent) {
-//            throw new BusinessException(ExceptionConstants.QP3);
-//        }
-//
-//        quizzes.add(newQuiz);
+        validateIsCreatableQuizzes(newQuiz.getQuizPackMember());
+        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
+        if (duplicateContent) {
+            throw new BusinessException(ExceptionConstants.QP3);
+        }
+
+        quizzes.add(newQuiz);
     }
 
     public QuizPackMember validateIsMember(long memberId) {
-//        return quizPackMembers.findByMemberId(memberId)
-//                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
-        return null;
+        return quizPackMembers.findByMemberId(memberId)
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
     }
 
     private void validateIsCreatableQuizzes(QuizPackMember quizPackMember) {
-//        if (!quizPackMembers.contains(quizPackMember)) {
-//            throw new BusinessException(ExceptionConstants.QP4);
-//        }
-//
-//        if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
-//            throw new BusinessException(ExceptionConstants.QP5);
-//        }
+        if (!quizPackMembers.contains(quizPackMember)) {
+            throw new BusinessException(ExceptionConstants.QP4);
+        }
+
+        if (!quizPackMember.hasRole(QuizPackMemberRole.ADMIN)) {
+            throw new BusinessException(ExceptionConstants.QP5);
+        }
+
     }
 
     public long quizSize() {
-        return 0L;
+        return quizzes.size();
     }
 
     public long memberSize() {
-        return 0L;
+        return quizPackMembers.size();
     }
 
     public Quiz getQuizById(long quizId) {
         return null;
+    }
+
+    public Set<Long> getTagIds() {
+        return tags.stream().map(QuizPackTag::getTagId).collect(Collectors.toSet());
     }
 }

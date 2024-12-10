@@ -2,13 +2,13 @@ package org.example.quizbox.quiz.domain2;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
 @Entity
+@Getter
 public class Answer {
 
     @Id
@@ -21,7 +21,16 @@ public class Answer {
     @Column(name = "correct")
     private boolean correct;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
+    public Answer(String content, boolean correct) {
+        this.content = content;
+        this.correct = correct;
+    }
+
+    public static Answer trueOption(String content) {
+        return new Answer(content, true);
+    }
+
+    public static Answer falseOption(String content) {
+        return new Answer(content, false);
+    }
 }

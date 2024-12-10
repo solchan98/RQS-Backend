@@ -63,9 +63,9 @@ public class QuizPack {
             throw new BusinessException(ExceptionConstants.QP4);
         }
 
-        if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
-            throw new BusinessException(ExceptionConstants.QP5);
-        }
+//        if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
+//            throw new BusinessException(ExceptionConstants.QP5);
+//        }
     }
 
     public long quizSize() {

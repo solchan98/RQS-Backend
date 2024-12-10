@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 public class QuizContent {
-    @Column(name = "content", unique = true)
+    @Column(name = "content")
     private String value;
 
     public QuizContent(String value) {

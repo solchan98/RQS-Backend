@@ -1,6 +1,7 @@
 package org.example.quizbox.quiz.domain;
 
 import org.example.quizbox.tag.domain.Tags;
+import org.example.quizbox.quiz.domain2.QuizPack;
 
 public record QuizPackStatus(
         long quizPackId,

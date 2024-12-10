@@ -1,8 +1,6 @@
 package org.example.quizbox.quiz.domain2;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
@@ -13,15 +11,12 @@ import java.util.Set;
 @NoArgsConstructor
 public class QuizPackMembers {
 
-    @OneToMany(mappedBy = "quizPack", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackMember> values = new HashSet<>();
 
     public QuizPackMembers(Set<QuizPackMember> values) {
-        this.values.addAll(values);
-    }
-
-    public QuizPackMembers(QuizPackMember... values) {
-        this.values.addAll(Set.of(values));
+        this.values = values;
     }
 
     public Optional<QuizPackMember> findByMemberId(long memberId) {
