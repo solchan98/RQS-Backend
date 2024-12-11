@@ -11,10 +11,11 @@ public record GameStatusResponse(
         long totalQuizCount,
         long remainQuizCount,
         long submittedQuizCount,
+        GameQuizResponse currentQuiz,
         LocalDateTime lastSubmittedAt
 ) {
 
-    public static GameStatusResponse from(Game game) {
+    public static GameStatusResponse from(Game game, GameQuizResponse currentQuiz) {
         return new GameStatusResponse(
                 game.getId().value(),
                 game.getQuizPackId(),
@@ -22,6 +23,7 @@ public record GameStatusResponse(
                 game.quizSize(),
                 game.remainingQuizSize(),
                 game.submittedQuizSize(),
+                currentQuiz,
                 game.lastSubmittedTime()
         );
     }

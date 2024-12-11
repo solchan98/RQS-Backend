@@ -44,7 +44,7 @@ public class GameService {
         Game game = new Game(quizPack, startQuiz.memberId(), gameQuizPicker);
         gameRepository.save(game);
 
-        return GameStatusResponse.from(game);
+        return GameStatusResponse.from(game, null);
     }
 
     @Transactional
@@ -54,7 +54,7 @@ public class GameService {
         gameRepository.save(game);
         ;
 
-        Quiz quiz = quizQueryRepository.getQuizById(gameQuiz.getQuizId());
+        Quiz quiz = quizQueryRepository.getById(gameQuiz.getQuizId());
 
         return new GameQuizResponse(quiz);
     }
@@ -75,7 +75,14 @@ public class GameService {
     @Transactional(readOnly = true)
     public GameStatusResponse gameStatus(GameId gameId) {
         Game game = getQuizGameById(gameId);
+        if (game.getWaitingGameQuiz() == null) {
+            return GameStatusResponse.from(game, null);
+        }
 
-        return GameStatusResponse.from(game);
+        // TODO: 게임 진행 중도에 퀴즈 삭제 시, 핸들링 처리 설계 추가 필요
+        return GameStatusResponse.from(
+                game,
+                new GameQuizResponse(quizQueryRepository.getById(game.getWaitingGameQuiz().getQuizId()))
+        );
     }
 }

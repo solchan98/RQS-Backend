@@ -26,6 +26,7 @@ public class Game {
     @Getter
     private final long creatorId;
 
+    @Getter
     private GameQuiz waitingGameQuiz;
 
     public Game(QuizPack quizPack, long creatorId, GameQuizPicker quizPicker) {

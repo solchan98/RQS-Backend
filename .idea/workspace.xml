@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="test: 테스트 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 명칭 변경&#10;Answer -&gt; Option">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameStatusResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizQueryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizQueryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizQueryRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +133,7 @@
     "Gradle.QuizTest.executor": "Run",
     "Gradle.QuizTest.isMatched1.executor": "Run",
     "Gradle.RQS-Backend [\"Quiz Game\"].executor": "Run",
-    "Gradle.RQS-Backend [test].executor": "Run",
+    "Gradle.RQS-Backend [test].executor": "Debug",
     "Gradle.RedisClientTest.executor": "Run",
     "Gradle.RemainGameQuizzesTest.executor": "Run",
     "Gradle.RemainGameQuizzesTest.뽑을_문제가_없는_경우_빈_옵셔널_객체를_반환.executor": "Debug",
@@ -182,7 +187,7 @@
       <recent name="org.example.quizbox.quiz.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.RQS-Backend [test]">
+  <component name="RunManager" selected="Spring Boot.QuizboxApplication">
     <configuration default="true" type="aws.lambda" factoryName="Remote">
       <option name="credentialProviderId" />
       <option name="regionId" />
@@ -387,7 +392,7 @@
       <workItem from="1733728924472" duration="597000" />
       <workItem from="1733785999270" duration="4001000" />
       <workItem from="1733803970603" duration="63000" />
-      <workItem from="1733805363774" duration="23716000" />
+      <workItem from="1733805363774" duration="25027000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -541,7 +546,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733912093410</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="feat: 명칭 변경&#10;Answer -&gt; Option">
+      <option name="closed" value="true" />
+      <created>1733913484229</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1733913484229</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -583,7 +596,8 @@
     <MESSAGE value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
     <MESSAGE value="feat: 전체적인 리팩토링&#10;- 도메인, 엔티티 분리 -&gt; 통합&#10;- 일부 클래스 객체 참조 기반 -&gt; id 기반" />
     <MESSAGE value="test: 테스트 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="test: 테스트 수정" />
+    <MESSAGE value="feat: 명칭 변경&#10;Answer -&gt; Option" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 명칭 변경&#10;Answer -&gt; Option" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

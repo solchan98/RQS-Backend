@@ -20,7 +20,7 @@ public class QuizQueryRepository implements IQuizQueryRepository {
     private final JpaQuizRepository jpaQuizRepository;
 
     @Override
-    public Quiz getQuizById(long id) {
+    public Quiz getById(long id) {
         Quiz quiz = jpaQuizRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(QP6));
 
