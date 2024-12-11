@@ -49,11 +49,11 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// 특정 태그를 가진 테스트만 실행하는 작업 추가
-tasks.register('Quiz Game', Test) {
-    useJUnitPlatform {
-        includeTags 'quiz_game' // 'group1' 태그를 가진 테스트만 실행
-    }
-    group = "모듈 별 테스트"
-    description = "퀴즈 게임 관련 테스트"
-}
+//// 특정 태그를 가진 테스트만 실행하는 작업 추가
+//tasks.register('Quiz Game', Test) {
+//    useJUnitPlatform {
+//        includeTags 'quiz_game' // 'group1' 태그를 가진 테스트만 실행
+//    }
+//    group = "모듈 별 테스트"
+//    description = "퀴즈 게임 관련 테스트"
+//}

@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
+
 @Repository
 @RequiredArgsConstructor
 public class QuizPackRepository implements IQuizPackRepository, IQuizPackQueryRepository {
@@ -42,7 +44,7 @@ public class QuizPackRepository implements IQuizPackRepository, IQuizPackQueryRe
     @Override
     public QuizPack getById(long id) {
         QuizPack quizPack = jpaQuizPackRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("QuizPack not found"));
+                .orElseThrow(() -> new BusinessException(QP1));
 
         entityManager.detach(quizPack);
         return quizPack;

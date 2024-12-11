@@ -52,7 +52,7 @@ public class Game {
         }
 
         GameQuiz gameQuiz = remainGameQuizzes.pick()
-                .orElseThrow(() -> new RuntimeException("더 이상 뽑을 퀴즈가 없습니다."));
+                .orElseThrow(() -> new BusinessException(QG11));
         this.waitingGameQuiz = gameQuiz;
 
         return gameQuiz;

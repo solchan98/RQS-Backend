@@ -1,0 +1,77 @@
+package org.example.quizbox.auth.refresh;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.BDDAssertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import java.util.List;
+import java.util.Optional;
+import org.example.quizbox.auth.auth.AuthUserDetails;
+import org.example.quizbox.auth.auth.BearerAuthenticationToken;
+import org.example.quizbox.auth.refresh.RefreshTokenProvider;
+import org.example.quizbox.auth.refresh.RefreshTokenRepository;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+class RefreshTokenProviderTest {
+
+    RefreshTokenRepository refreshTokenRepository = mock();
+    UserDetailsService userDetailsService = mock();
+
+    RefreshTokenProvider refreshTokenProvider = new RefreshTokenProvider(refreshTokenRepository, userDetailsService);
+
+    @Test
+    @DisplayName("Subject가 'refresh token'가 아닌 경우 예외를 발생한다.")
+    void checkSupported_fail_when_not_access_token() {
+        // given
+        Claims mock = Jwts.claims()
+                .subject("access token")
+                .build();
+
+        // when
+        Throwable throwable = catchThrowable(() -> refreshTokenProvider.checkTokenType(mock));
+
+        // then
+        assertThat(throwable).isInstanceOf(BadCredentialsException.class)
+                .hasMessage("인증 정보를 확인하세요.");
+    }
+
+    @Test
+    @DisplayName("Subject가 'refresh token'가 아닌 경우 예외를 발생하지 않는다.")
+    void checkSupported_success() {
+        // given
+        Claims mock = Jwts.claims()
+                .subject("refresh token")
+                .build();
+
+        // when
+        assertThatCode(() -> refreshTokenProvider.checkTokenType(mock)).doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("유효한 토큰인 경우 인증 상태의 AccessUser(Authentication)이 반환된다.")
+    void authenticate() {
+        // given
+        String email = "seller@sol.com";
+        String stringToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyZWZyZXNoIHRva2VuIiwiZW1haWwiOiJzZWxsZXJAc29sLmNvbSIsImlhdCI6MTcxNTc3MDk5OX0.EnIYLNpBSBKxkI1Ylps2jZJlXHMUkaCK_q_mMe4lOqY";
+        Authentication bearerAuthenticationToken = new BearerAuthenticationToken(stringToken, false);
+        given(refreshTokenRepository.findByEmail(email))
+                .willReturn(Optional.of(stringToken));
+        AuthUserDetails mockUserDetails = new AuthUserDetails(1L, email, "seller", "a1234567******", List.of());
+        given(userDetailsService.loadUserByUsername(email))
+                .willReturn(mockUserDetails);
+
+        // when
+        Authentication authenticate = refreshTokenProvider.authenticate(bearerAuthenticationToken);
+
+        // then
+        assertThat(authenticate.isAuthenticated()).isTrue();
+    }
+}

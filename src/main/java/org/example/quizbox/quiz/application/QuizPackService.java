@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.TG1;
+
 @Service
 @RequiredArgsConstructor
 public class QuizPackService {
@@ -36,8 +38,7 @@ public class QuizPackService {
         QuizPackMember quizPackMember = new QuizPackMember(memberId, QuizPackMemberRole.ADMIN);
 
         if (!tagService.existsAll(tagIds)) {
-            // TODO: throw exception tag id not exists
-            throw new RuntimeException("tag not found");
+            throw new BusinessException(TG1);
         }
         QuizPack quizPack = new QuizPack(title, Set.of(quizPackMember), tagIds);
 

@@ -32,7 +32,9 @@ public class QuizAnswers {
     }
 
     public boolean isMatchedCorrectAnswers(Set<Long> submitAnswerIds) {
-        return false;
+        Set<Long> collectOptionIds = correctAnswers().stream().map(Answer::getId).collect(Collectors.toSet());
+
+        return collectOptionIds.containsAll(submitAnswerIds) && collectOptionIds.size() == submitAnswerIds.size();
     }
 
     public Set<Answer> answers() {

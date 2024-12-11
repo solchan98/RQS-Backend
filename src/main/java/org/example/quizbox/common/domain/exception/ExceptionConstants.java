@@ -32,7 +32,11 @@ public enum ExceptionConstants {
     QG7("QG7", "존재하지 않는 퀴즈게임", "BUSINESS"),
     QG8("QG8", "QuizGame ID 형식 확인 필요", "BUSINESS"),
     QG9("QG9", "참가하지 않은 멤버", "AUTHORIZATION"),
-    QG10("QG10", "지원하지 않은 뽑기 방식", "BUSINESS");
+    QG10("QG10", "지원하지 않은 뽑기 방식", "BUSINESS"),
+    QG11("QG11", "더 이상 뽑을 퀴즈가 없음", "BUSINESS"),
+
+    // TG(Tag)
+    TG1("TG1", "존재하지 않는 태그", "BUSINESS");
 
 
     private final String code;
