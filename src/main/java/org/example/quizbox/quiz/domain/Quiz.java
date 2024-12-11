@@ -1,34 +1,41 @@
 package org.example.quizbox.quiz.domain;
 
-import java.util.Set;
-import lombok.EqualsAndHashCode;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.util.Set;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
-@EqualsAndHashCode
+@Setter
 public class Quiz {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private final QuizPackMember creator;
-
+    @Embedded
     private QuizContent content;
 
-    private QuizAnswers quizAnswers;
+    @ManyToOne
+    private QuizPackMember quizPackMember;
 
-    public Quiz(Long id, QuizPackMember creator, QuizContent content, QuizAnswers quizAnswers) {
-        this.id = id;
-        this.creator = creator;
+    @Embedded
+    private QuizAnswers answers = new QuizAnswers();
+
+    public Quiz(QuizPackMember creator, QuizContent content, Set<Answer> answers) {
         this.content = content;
-        this.quizAnswers = quizAnswers;
-    }
-
-    public static Quiz create(QuizPackMember creator, QuizContent content, QuizAnswers quizAnswers) {
-        return new Quiz(null, creator, content, quizAnswers);
+        this.quizPackMember = creator;
+        this.answers = new QuizAnswers(answers);
     }
 
     public boolean isMatched(Set<Long> submitAnswerIds) {
-        return quizAnswers.isMatchedCorrectAnswers(submitAnswerIds);
+        return answers.isMatchedCorrectAnswers(submitAnswerIds);
     }
 
     public boolean isSameContent(Quiz newQuiz) {
@@ -36,6 +43,6 @@ public class Quiz {
     }
 
     public boolean containsAllAnswers(Set<Long> answerIds) {
-        return quizAnswers.containsAll(answerIds);
+        return answers.containsAll(answerIds);
     }
 }

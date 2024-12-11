@@ -1,50 +1,49 @@
 package org.example.quizbox.quiz.domain;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
-import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
-@Getter
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Entity
 public class QuizPack {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String title;
 
-    private final QuizPackMembers quizPackMembers;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
+    private Set<Quiz> quizzes = new HashSet<>();
 
-    private Collection<Quiz> quizzes = new ArrayList<>();
+    @Embedded
+    private QuizPackMembers quizPackMembers;
 
-    private Set<Long> tagIds = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
+    private Set<QuizPackTag> tags = new HashSet<>();
 
 
-    public QuizPack(String title, QuizPackMembers quizPackMembers, Collection<Quiz> quizzes, Set<Long> tagIds) {
+    public QuizPack(String title, Set<QuizPackMember> members, Set<Long> tagIds) {
         this.title = title;
-        this.quizPackMembers = quizPackMembers;
-        this.tagIds = tagIds;
-        if (!CollectionUtils.isEmpty(quizzes)) {
-            this.quizzes = new ArrayList<>(quizzes);
-        }
+        this.quizPackMembers = new QuizPackMembers(members);
+        this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
     }
 
-   public static QuizPack create(String title, QuizPackMembers quizPackMembers, Set<Long> tagIds) {
-        return new QuizPack(title, quizPackMembers, null, tagIds);
-   }
-
-    public void addTags(Set<Long> tagIds) {
-        this.tagIds.addAll(tagIds);
-    }
 
     public void addQuiz(Quiz newQuiz) {
-        validateIsCreatableQuizzes(newQuiz.getCreator());
+        validateIsCreatableQuizzes(newQuiz.getQuizPackMember());
         boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
         if (duplicateContent) {
             throw new BusinessException(ExceptionConstants.QP3);
@@ -63,16 +62,13 @@ public class QuizPack {
             throw new BusinessException(ExceptionConstants.QP4);
         }
 
-//        if (!quizPackMember.hasRole(QuizPackMemberRole.UPDATABLE)) {
-//            throw new BusinessException(ExceptionConstants.QP5);
-//        }
+        if (!quizPackMember.hasRole(QuizPackMemberRole.ADMIN)) {
+            throw new BusinessException(ExceptionConstants.QP5);
+        }
+
     }
 
     public long quizSize() {
-        if (CollectionUtils.isEmpty(quizzes)) {
-            return 0;
-        }
-
         return quizzes.size();
     }
 
@@ -81,7 +77,10 @@ public class QuizPack {
     }
 
     public Quiz getQuizById(long quizId) {
-        return quizzes.stream().filter(quiz -> quiz.getId().equals(quizId)).findFirst()
-                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP6));
+        return null;
+    }
+
+    public Set<Long> getTagIds() {
+        return tags.stream().map(QuizPackTag::getTagId).collect(Collectors.toSet());
     }
 }

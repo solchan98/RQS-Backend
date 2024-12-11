@@ -8,7 +8,7 @@ public record CreateAnswer(
 ) {
 
     public Answer toAnswer() {
-        return new Answer(content);
+        return new Answer(content, correct);
     }
 
 }

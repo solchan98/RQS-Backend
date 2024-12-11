@@ -1,41 +1,36 @@
 package org.example.quizbox.game.domain;
 
-import org.example.quizbox.quiz.domain.Quiz;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 public class RemainGameQuizzes {
 
-    private final List<Quiz> remainQuizzes;
+    private Set<GameQuiz> gameQuizzes = new HashSet<>();
 
     private GameQuizPicker gameQuizPicker;
 
-    public RemainGameQuizzes(Collection<Quiz> quizzes, GameQuizPicker gameQuizPicker) {
-        this.remainQuizzes = new ArrayList<>(quizzes);
+    public RemainGameQuizzes(GameQuizPicker gameQuizPicker) {
         this.gameQuizPicker = gameQuizPicker;
     }
 
-    public Optional<Quiz> pick() {
-//        if (waitingQuizBeSubmitted()) {
-//            throw new BusinessException(QG2);
-//        }
+    public RemainGameQuizzes(Set<GameQuiz> gameQuizzes, GameQuizPicker gameQuizPicker) {
+        this.gameQuizzes = new HashSet<>(gameQuizzes);
+        this.gameQuizPicker = gameQuizPicker;
+    }
 
-        Optional<Quiz> optionalQuiz = gameQuizPicker.pick(remainQuizzes);
-        if (optionalQuiz.isEmpty()) {
+    public Optional<GameQuiz> pick() {
+        Optional<GameQuiz> pick = gameQuizPicker.pick(gameQuizzes);
+        if (pick.isEmpty()) {
             return Optional.empty();
         }
 
-        Quiz quiz = optionalQuiz.get();
-//        this.quizWaitingSubmission = quiz;
-        remainQuizzes.remove(quiz);
+        pick.ifPresent(gameQuiz -> this.gameQuizzes.remove(gameQuiz));
 
-        return optionalQuiz;
+        return pick;
     }
 
-    public int remainQuizSize() {
-        return remainQuizzes.size();
+    public int size() {
+        return gameQuizzes.size();
     }
 }

@@ -1,7 +1,6 @@
 package org.example.quizbox.quiz.presentation;
 
 import org.example.quizbox.quiz.domain.QuizPackStatus;
-import org.example.quizbox.subscriptions.TagResponse;
 
 import java.util.Set;
 import java.util.stream.Collectors;

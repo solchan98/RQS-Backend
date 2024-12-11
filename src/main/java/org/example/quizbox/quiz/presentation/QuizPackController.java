@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
-import org.example.quizbox.quiz.application.QuizPackServiceV2;
-import org.example.quizbox.quiz.domain2.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackStatus;
+import org.example.quizbox.quiz.application.QuizPackService;
+import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,18 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/quiz-packs")
 public class QuizPackController {
 
-    private final QuizPackServiceV2 quizPackService;
-
-    @GetMapping("/recommendation")
-    public ResponseEntity<BasicResponse<RecommendationQuizPackResponse<?>>> getRecommendationQuizPacks(
-            @RequestParam("recommendation-type") String recommendationType
-    ) {
-        if (recommendationType.equals("LEARNING_DAYS")) {
-            return ResponseEntity.ok(new BasicResponse<>(RecommendationQuizPackResponse.dummyLearningDays()));
-        }
-
-        return ResponseEntity.ok(new BasicResponse<>(RecommendationQuizPackResponse.dummyOthers()));
-    }
+    private final QuizPackService quizPackService;
 
     @GetMapping("/{quiz-pack-id}/status")
     public ResponseEntity<BasicResponse<QuizPackStatusResponse>> getQuizPackStatus(

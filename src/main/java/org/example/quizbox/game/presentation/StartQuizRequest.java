@@ -2,8 +2,8 @@ package org.example.quizbox.game.presentation;
 
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
-import org.example.quizbox.game.application.QuizPickStrategy;
 import org.example.quizbox.game.application.StartQuiz;
+import org.example.quizbox.game.domain.QuizPickStrategy;
 
 public record StartQuizRequest(
         String quizPickStrategy,

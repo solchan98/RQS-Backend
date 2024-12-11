@@ -4,31 +4,108 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 도메인 -&gt; 엔티티 통합 작업 중간 커밋">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackServiceV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/IQuizPackRepositoryV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepositoryV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryV2.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: Quiz 도메인 -&gt; 엔티티 통합">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameQuizResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameStatusResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameId.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuiz.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackQueryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizQueryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizQueryRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/QuizboxApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/QuizboxApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/QuizGameService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/QuizPickStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizPickStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/StartQuiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/StartQuiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuizPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuizPicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGameId.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGameRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/QuizGameStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/RemainGameQuizzes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/RemainGameQuizzes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SequentialGameQuizPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SequentialGameQuizPicker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitAnswer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedAnswers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedAnswers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/QuizGameStatusResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/StartQuizRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/StartQuizRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateAnswer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateAnswer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackServiceV2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Answer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Invitation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/InvitationValidator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Quiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAnswers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAnswers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizContent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMemberRole.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMemberRole.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPicker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPicker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Answer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Answer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Quiz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizAnswers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizAnswers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizContent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizContent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMember.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMembers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMembers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPicker.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Answer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/IQuizPackRepositoryV2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/Quiz.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizAnswers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizContent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPack.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMember.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMemberRole.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackMembers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackTag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2/QuizPackTagId.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackTagId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/AnswerEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepositoryV2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackMemberEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryV2.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackTagEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackTagId.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizAnswersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizAnswersTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizPackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizPackTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain/QuizPickerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizPickerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizAnswersBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizAnswersBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackMemberResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackMemberResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/RecommendationQuizPackResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionTagsResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/SubscriptionsController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/subscriptions/TagResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/TagResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/access/AccessTokenProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/access/AccessTokenProviderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/access/BearerAuthenticationConverterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/access/BearerAuthenticationConverterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/InMemoryAuthUserRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/infrastructure/InMemoryAuthUserRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/InMemoryRefreshTokenRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/infrastructure/InMemoryRefreshTokenRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/RedisClientTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/infrastructure/RedisClientTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/infrastructure/RedisRefreshTokenRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/infrastructure/RedisRefreshTokenRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/login/EmailConverterAuthenticationConverterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/login/EmailConverterAuthenticationConverterTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/login/SimplePasswordEncoderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/login/SimplePasswordEncoderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth/refresh/RefreshTokenProviderTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/auth/refresh/RefreshTokenProviderTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/QuizGameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/game/domain/QuizGameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/RemainGameQuizzesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/game/domain/RemainGameQuizzesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SequentialGameQuizPickerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/game/domain/SequentialGameQuizPickerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmitAnswerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/game/domain/SubmitAnswerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmittedAnswersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/game/domain/SubmittedAnswersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/QuizBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/quiz/QuizBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/QuizTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/quiz/QuizTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizAnswersTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/quiz/domain2/QuizAnswersTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizPackTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/quiz/domain2/QuizPackTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/domain2/QuizPickerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/quiz/domain2/QuizPickerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizAnswersBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/support/QuizAnswersBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/support/QuizPackBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/tags/QuizGameTag.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox_deprecated/tags/QuizGameTag.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,7 +214,7 @@
     "Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor": "Debug",
     "Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor": "Run",
     "Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Run",
-    "Gradle.QuizPackTest.executor": "Run",
+    "Gradle.QuizPackTest.executor": "Debug",
     "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ생성_권한_미보유.executor": "Debug",
     "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈_이름_중복.executor": "Run",
     "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈팩_멤버_아닌_경우.executor": "Debug",
@@ -159,7 +236,7 @@
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "develop",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox/quiz/domain2",
+    "last_opened_file_path": "/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox2/quizgame/domain",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -178,21 +255,21 @@
       <recent name="org.example.quizbox.quiz.presentation" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox2/quizgame/domain" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox2/application" />
+      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox2/infrastructure" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain2" />
       <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config" />
-      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure" />
-      <recent name="$PROJECT_DIR$/src/test/java/org/example/quizbox/auth" />
-      <recent name="$PROJECT_DIR$/src/main/java/org/example/quizbox/user" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.quizbox2.quizgame.presentation" />
+      <recent name="org.example.quizbox2.quizgame.domain" />
+      <recent name="org.example.quizbox2.quizgame.application" />
+      <recent name="org.example.quizbox2.domain" />
       <recent name="org.example.quizbox.quiz.domain" />
-      <recent name="org.example.quizbox.quiz.infrastructure" />
-      <recent name="org.example.quizbox.quiz.application" />
-      <recent name="org.example.quizbox.quiz.domain2" />
-      <recent name="org.example.quizbox.auth" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.QuizPackTest">
+  <component name="RunManager" selected="Spring Boot.QuizboxApplication">
     <configuration default="true" type="aws.lambda" factoryName="Remote">
       <option name="credentialProviderId" />
       <option name="regionId" />
@@ -324,7 +401,7 @@
     <configuration name="QuizboxApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="quizbox.main" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.quizbox.QuizboxApplication" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.QuizboxApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -399,7 +476,7 @@
       <workItem from="1733728924472" duration="597000" />
       <workItem from="1733785999270" duration="4001000" />
       <workItem from="1733803970603" duration="63000" />
-      <workItem from="1733805363774" duration="9105000" />
+      <workItem from="1733805363774" duration="21387000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -529,7 +606,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733788059851</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="feat: Quiz 도메인 -&gt; 엔티티 통합">
+      <option name="closed" value="true" />
+      <created>1733815434126</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1733815434126</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -568,7 +653,8 @@
     <MESSAGE value="feat: 진행중인 퀴즈게임 조회 API 수정&#10;- 응답 형식 수정 및 더미 데이터 수정" />
     <MESSAGE value="chore: 임시 cors 설정 추가&#10;- 개발 환경 오픈" />
     <MESSAGE value="feat: 도메인 -&gt; 엔티티 통합 작업 중간 커밋" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 도메인 -&gt; 엔티티 통합 작업 중간 커밋" />
+    <MESSAGE value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

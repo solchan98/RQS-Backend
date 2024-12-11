@@ -9,20 +9,25 @@ import java.util.Map;
 
 public class SubmittedAnswers {
 
-    private final Map<Long, SubmitAnswer> submitAnswers = new HashMap<>();
+    private final Map<GameQuiz, SubmitAnswer> submitAnswers = new HashMap<>();
 
     private LocalDateTime lastSubmittedAt;
 
-    public void submitAnswers(long quizId, SubmitAnswer submitAnswer) {
-        if (submitAnswers.containsKey(quizId)) {
-            throw new BusinessException(ExceptionConstants.QG5);
-        }
+    public void submitAnswers(GameQuiz gameQuiz, SubmitAnswer submitAnswer) {
+        validateDuplicateSubmission(gameQuiz);
 
-        this.submitAnswers.put(quizId, submitAnswer);
+        this.submitAnswers.put(gameQuiz, submitAnswer);
         this.lastSubmittedAt = LocalDateTime.now();
     }
 
-    public int submittedQuizSize() {
+    private void validateDuplicateSubmission(GameQuiz gameQuiz) {
+        boolean contains = submitAnswers.keySet().stream().anyMatch(value -> value.equals(gameQuiz));
+        if (contains) {
+            throw new BusinessException(ExceptionConstants.QG5);
+        }
+    }
+
+    public int size() {
         return submitAnswers.size();
     }
 

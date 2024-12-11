@@ -1,7 +1,5 @@
 package org.example.quizbox.quiz.presentation;
 
-import org.example.quizbox.subscriptions.TagResponse;
-
 import java.util.Collection;
 
 public record QuizPackResponse( // TODO ...

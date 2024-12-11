@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public enum QuizPackMemberRole {
-    UPDATABLE,
-    READABLE;
+    ADMIN,
+    MEMBER;
 
     public static Set<QuizPackMemberRole> allRoles() {
         return Arrays.stream(QuizPackMemberRole.values()).collect(Collectors.toSet());
