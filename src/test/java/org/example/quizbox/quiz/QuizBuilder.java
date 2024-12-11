@@ -13,7 +13,7 @@ public class QuizBuilder {
     private Long id;
     private QuizPackMember creator;
     private QuizContent content = new QuizContent("default quiz content");
-    private QuizAnswers options = new QuizAnswers(Set.of(Answer.falseOption("A"), Answer.trueOption("B")));
+    private Options options = new Options(Set.of(Option.falseOption("A"), Option.trueOption("B")));
 
     public static QuizBuilder quizBuilder() {
         QuizBuilder quizBuilder = new QuizBuilder();
@@ -41,8 +41,8 @@ public class QuizBuilder {
         return this;
     }
 
-    public QuizBuilder options(Answer... options) {
-        this.options = new QuizAnswers(Set.of(options));
+    public QuizBuilder options(Option... options) {
+        this.options = new Options(Set.of(options));
         return this;
     }
 

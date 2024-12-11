@@ -90,10 +90,10 @@ class GameTest {
                 ).build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
         game.pick(1L);
-        Set<Long> answerIds = quiz.getAnswers().answers().stream().map(Answer::getId).collect(Collectors.toSet());
+        Set<Long> optionIds = quiz.getOptions().options().stream().map(Option::getId).collect(Collectors.toSet());
 
         Throwable throwable = catchThrowable(
-                () -> game.submit(2, new SubmitAnswer(answerIds)));
+                () -> game.submit(2, new SubmitOption(optionIds)));
 
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QG9.code());

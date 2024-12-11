@@ -26,23 +26,19 @@ public class Quiz {
     private QuizPackMember quizPackMember;
 
     @Embedded
-    private QuizAnswers answers = new QuizAnswers();
+    private Options options = new Options();
 
-    public Quiz(QuizPackMember creator, QuizContent content, Set<Answer> answers) {
+    public Quiz(QuizPackMember creator, QuizContent content, Set<Option> options) {
         this.content = content;
         this.quizPackMember = creator;
-        this.answers = new QuizAnswers(answers);
+        this.options = new Options(options);
     }
 
-    public boolean isMatched(Set<Long> submitAnswerIds) {
-        return answers.isMatchedCorrectAnswers(submitAnswerIds);
+    public boolean match(Set<Long> submitOptionIds) {
+        return options.match(submitOptionIds);
     }
 
     public boolean isSameContent(Quiz newQuiz) {
         return this.content.equals(newQuiz.content);
-    }
-
-    public boolean containsAllAnswers(Set<Long> answerIds) {
-        return answers.containsAll(answerIds);
     }
 }

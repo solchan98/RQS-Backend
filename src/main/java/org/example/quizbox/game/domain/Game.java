@@ -21,7 +21,7 @@ public class Game {
 
     private final RemainGameQuizzes remainGameQuizzes;
 
-    private final SubmittedAnswers submittedAnswers = new SubmittedAnswers();
+    private final SubmittedGameQuizzes submittedGameQuizzes = new SubmittedGameQuizzes();
 
     @Getter
     private final long creatorId;
@@ -58,14 +58,14 @@ public class Game {
         return gameQuiz;
     }
 
-    public void submit(long creatorId, SubmitAnswer submitAnswer) {
+    public void submit(long creatorId, SubmitOption submitOption) {
         // 게임 생성자인가? QG9
         validateIsCreator(creatorId);
         // 제출 대기 상태인가? QG3
         if (!isWaitingQuiz()) {
             throw new BusinessException(QG3);
         }
-        submittedAnswers.submitAnswers(waitingGameQuiz, submitAnswer);
+        submittedGameQuizzes.submitOptions(waitingGameQuiz, submitOption);
         clearWaitingGameQuiz();
     }
 
@@ -86,10 +86,10 @@ public class Game {
 
     public long quizSize() {
         if (isWaitingQuiz()) {
-            return remainGameQuizzes.size() + submittedAnswers.size() + 1;
+            return remainGameQuizzes.size() + submittedGameQuizzes.size() + 1;
         }
 
-        return remainGameQuizzes.size() + submittedAnswers.size();
+        return remainGameQuizzes.size() + submittedGameQuizzes.size();
     }
 
     public long remainingQuizSize() {
@@ -97,10 +97,10 @@ public class Game {
     }
 
     public long submittedQuizSize() {
-        return submittedAnswers.size();
+        return submittedGameQuizzes.size();
     }
 
     public LocalDateTime lastSubmittedTime() {
-        return submittedAnswers.lastSubmittedAt();
+        return submittedGameQuizzes.lastSubmittedAt();
     }
 }

@@ -1,6 +1,6 @@
 package org.example.quizbox.game.application;
 
-import org.example.quizbox.quiz.domain.Answer;
+import org.example.quizbox.quiz.domain.Option;
 import org.example.quizbox.quiz.domain.Quiz;
 
 import java.util.Set;
@@ -16,8 +16,8 @@ public record GameQuizResponse(
         this(
                 quiz.getId(),
                 quiz.getContent().value(),
-                quiz.getAnswers()
-                        .answers()
+                quiz.getOptions()
+                        .options()
                         .stream()
                         .map(GameQuizOptionResponse::new)
                         .collect(Collectors.toSet())
@@ -29,7 +29,7 @@ record GameQuizOptionResponse(
         long optionId,
         String content
 ) {
-    public GameQuizOptionResponse(Answer answer) {
-        this(answer.getId(), answer.getContent());
+    public GameQuizOptionResponse(Option option) {
+        this(option.getId(), option.getContent());
     }
 }

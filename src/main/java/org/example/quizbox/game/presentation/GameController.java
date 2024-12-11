@@ -7,7 +7,7 @@ import org.example.quizbox.game.application.GameQuizResponse;
 import org.example.quizbox.game.application.GameService;
 import org.example.quizbox.game.application.GameStatusResponse;
 import org.example.quizbox.game.domain.GameId;
-import org.example.quizbox.game.domain.SubmitAnswer;
+import org.example.quizbox.game.domain.SubmitOption;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,13 +54,13 @@ public class GameController {
     @PostMapping("/{game-id}/submission")
     public ResponseEntity<BasicResponse<Void>> submit(
             @PathVariable("game-id") String quizGameId,
-            @RequestBody SubmitAnswerRequest submitAnswerRequest,
+            @RequestBody SubmitOptionRequest submitOptionRequest,
             AccessUser accessUser
     ) {
         gameService.submit(
                 accessUser.getId(),
                 GameId.from(quizGameId),
-                new SubmitAnswer(submitAnswerRequest.answerIds())
+                new SubmitOption(submitOptionRequest.optionIds())
         );
 
         return ResponseEntity.ok(new BasicResponse<>(null));

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 @Getter
-public class Answer {
+public class Option {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,16 +21,16 @@ public class Answer {
     @Column(name = "correct")
     private boolean correct;
 
-    public Answer(String content, boolean correct) {
+    public Option(String content, boolean correct) {
         this.content = content;
         this.correct = correct;
     }
 
-    public static Answer trueOption(String content) {
-        return new Answer(content, true);
+    public static Option trueOption(String content) {
+        return new Option(content, true);
     }
 
-    public static Answer falseOption(String content) {
-        return new Answer(content, false);
+    public static Option falseOption(String content) {
+        return new Option(content, false);
     }
 }

@@ -6,10 +6,10 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.Set;
 
-public record SubmitAnswer(Set<Long> answersIds) {
+public record SubmitOption(Set<Long> optionIds) {
 
-    public SubmitAnswer {
-        if (CollectionUtils.isEmpty(answersIds)) {
+    public SubmitOption {
+        if (CollectionUtils.isEmpty(optionIds)) {
             throw new BusinessException(ExceptionConstants.QG6);
         }
     }

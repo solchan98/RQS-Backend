@@ -51,17 +51,17 @@ public class QuizPackService {
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
         QuizPackMember quizPackMember = quizPack.validateIsMember(createQuiz.memberId());
 
-        Quiz newQuiz = new Quiz(quizPackMember, new QuizContent(createQuiz.quizContent()), createQuizAnswers(createQuiz));
+        Quiz newQuiz = new Quiz(quizPackMember, new QuizContent(createQuiz.quizContent()), createQuizOptions(createQuiz));
         quizPack.addQuiz(newQuiz);
         quizPack = quizPackRepository.save(quizPack);
 
         return quizPack.getId();
     }
 
-    private static Set<Answer> createQuizAnswers(CreateQuiz createQuiz) {
-        return createQuiz.answers()
+    private static Set<Option> createQuizOptions(CreateQuiz createQuiz) {
+        return createQuiz.options()
                 .stream()
-                .map(createAnswer -> new Answer(null, createAnswer.content(), createAnswer.correct()))
+                .map(createOption -> new Option(null, createOption.content(), createOption.correct()))
                 .collect(Collectors.toSet());
     }
 

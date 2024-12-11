@@ -18,7 +18,7 @@ public enum ExceptionConstants {
     QP6("QP6", "존재하지 않는 퀴즈", "BUSINESS"),
     QP7("QP7", "유효하지 않은 초대장", "BUSINESS"),
 
-    // QA (Quiz Answer)
+    // QA (Quiz Option)
     QA1("QA1", "퀴즈 생성 시, 보기는 최소 2개 이상", "BUSINESS"),
     QA2("QA2", "퀴즈 생성 시, 정답은 최소 1개 이상", "BUSINESS"),
 

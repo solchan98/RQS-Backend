@@ -8,7 +8,7 @@ public record GameStatus(
         long participantId,
         int totalQuizCount,
         int remainQuizCount,
-        int submittedAnswerCount,
+        int submittedQuizCount,
         LocalDateTime lastSubmittedAt
 ) {
 

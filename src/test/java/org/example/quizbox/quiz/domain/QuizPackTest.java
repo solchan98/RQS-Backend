@@ -17,7 +17,7 @@ class QuizPackTest {
         QuizPackMember adminMember = new QuizPackMember(1L, QuizPackMemberRole.ADMIN);
         QuizPack quizPack = new QuizPack("title", Set.of(adminMember), Set.of());
 
-        Quiz newQuiz = new Quiz(adminMember, new QuizContent("same"), Set.of(Answer.falseOption("A"), Answer.trueOption("B")));
+        Quiz newQuiz = new Quiz(adminMember, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
         quizPack.addQuiz(newQuiz);
 
         Throwable throwable = catchThrowable(
@@ -32,7 +32,7 @@ class QuizPackTest {
         QuizPack quizPack = quizPackBuilder().build();
         QuizPackMember invalidQuizPackMember = new QuizPackMember(-999L, QuizPackMemberRole.ADMIN);
 
-        Quiz newQuiz = new Quiz(invalidQuizPackMember, new QuizContent("same"), Set.of(Answer.falseOption("A"), Answer.trueOption("B")));
+        Quiz newQuiz = new Quiz(invalidQuizPackMember, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
 
         Throwable throwable = catchThrowable(
                 () -> quizPack.addQuiz(newQuiz));
@@ -48,7 +48,7 @@ class QuizPackTest {
                 .quizPackMembers(quizPackMember)
                 .build();
 
-        Quiz newQuiz = new Quiz(quizPackMember, new QuizContent("same"), Set.of(Answer.falseOption("A"), Answer.trueOption("B")));
+        Quiz newQuiz = new Quiz(quizPackMember, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
 
         Throwable throwable = catchThrowable(
                 () -> quizPack.addQuiz(newQuiz));

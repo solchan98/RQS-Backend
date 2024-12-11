@@ -6,7 +6,7 @@ public record CreateQuiz(
         long quizPackId,
         long memberId,
         String quizContent,
-        Set<CreateAnswer> answers
+        Set<CreateOption> options
 
 ) {
 

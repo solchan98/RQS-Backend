@@ -10,7 +10,7 @@ public record GameStatusResponse(
         long participantId,
         long totalQuizCount,
         long remainQuizCount,
-        long submittedAnswerCount,
+        long submittedQuizCount,
         LocalDateTime lastSubmittedAt
 ) {
 
