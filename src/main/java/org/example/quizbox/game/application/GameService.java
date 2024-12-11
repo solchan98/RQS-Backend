@@ -52,7 +52,6 @@ public class GameService {
         Game game = getQuizGameById(gameId);
         GameQuiz gameQuiz = game.pick(memberId);
         gameRepository.save(game);
-        ;
 
         Quiz quiz = quizQueryRepository.getById(gameQuiz.getQuizId());
 

@@ -68,6 +68,7 @@ public class Game {
         }
         submittedGameQuizzes.submitOptions(waitingGameQuiz, submitOption);
         clearWaitingGameQuiz();
+        // TODO: 게임 종료인 경우, Game 제거 및 리포트 발행 기능 설계 필요
     }
 
     private boolean isWaitingQuiz() {
