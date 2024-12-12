@@ -2,12 +2,15 @@ package org.example.quizbox.quiz.domain;
 
 import org.example.quizbox.tag.domain.Tags;
 
+import java.time.LocalDateTime;
+
 public record QuizPackStatus(
         long quizPackId,
         String quizPackTitle,
         long quizPackMemberCount,
         long quizCount,
-        Tags tags
+        Tags tags,
+        LocalDateTime createdAt
 ) {
 
     public static QuizPackStatus from(QuizPack quizPack, Tags tags) {
@@ -16,7 +19,8 @@ public record QuizPackStatus(
                 quizPack.getTitle(),
                 quizPack.memberSize(),
                 quizPack.quizSize(),
-                tags
+                tags,
+                quizPack.getCreatedAt()
         );
     }
 

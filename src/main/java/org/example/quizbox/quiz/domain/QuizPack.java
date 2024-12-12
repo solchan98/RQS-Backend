@@ -2,20 +2,22 @@ package org.example.quizbox.quiz.domain;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.quizbox.common.domain.Audit;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
 @Entity
-public class QuizPack {
+public class QuizPack extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +41,7 @@ public class QuizPack {
         this.title = title;
         this.quizPackMembers = new QuizPackMembers(members);
         this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
+        this.setCreatedAt(LocalDateTime.now());
     }
 
 
