@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 추가 구현 필요 기능 주석">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/Audit.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/Pagination.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/PaginationResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -391,7 +391,7 @@
       <workItem from="1733728924472" duration="597000" />
       <workItem from="1733785999270" duration="4001000" />
       <workItem from="1733803970603" duration="63000" />
-      <workItem from="1733805363774" duration="28035000" />
+      <workItem from="1733805363774" duration="38138000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -569,7 +569,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733914391444</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)">
+      <option name="closed" value="true" />
+      <created>1733997508831</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1733997508831</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -587,7 +595,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 지원하지 않는 뽑기 방식에 대한 예외 추가" />
     <MESSAGE value="feat: 퀴즈게임 상태 조회 구현" />
     <MESSAGE value="feat: 테스트 시, 불필요 given 제거" />
     <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
@@ -612,7 +619,8 @@
     <MESSAGE value="feat: 명칭 변경&#10;Answer -&gt; Option" />
     <MESSAGE value="feat: 게임 상태 조회 시, 현재 퀴즈 정보 함께 응답하도록 수정" />
     <MESSAGE value="feat: 추가 구현 필요 기능 주석" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 추가 구현 필요 기능 주석" />
+    <MESSAGE value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

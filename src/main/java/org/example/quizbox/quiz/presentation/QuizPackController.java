@@ -3,6 +3,8 @@ package org.example.quizbox.quiz.presentation;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.presentation.BasicResponse;
+import org.example.quizbox.common.presentation.Pagination;
+import org.example.quizbox.common.presentation.PaginationResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
 import org.example.quizbox.quiz.domain.QuizPackStatus;
 import org.example.quizbox.quiz.application.QuizPackService;
@@ -10,12 +12,25 @@ import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/quiz-packs")
 public class QuizPackController {
 
     private final QuizPackService quizPackService;
+
+    @GetMapping
+    public ResponseEntity<PaginationResponse<List<QuizPackStatusResponse>>> getQuizPacks(
+            @RequestParam(value = "lastId", required = false) Long lastId,
+            @RequestParam(value = "chunk") long chunk
+    ) {
+        Pagination pagination = new Pagination(20, 20, true);
+        List<QuizPackStatusResponse> dummy = QuizPackStatusResponse.dummy();
+
+        return ResponseEntity.ok(new PaginationResponse<>(pagination, dummy));
+    }
 
     @GetMapping("/{quiz-pack-id}/status")
     public ResponseEntity<BasicResponse<QuizPackStatusResponse>> getQuizPackStatus(
