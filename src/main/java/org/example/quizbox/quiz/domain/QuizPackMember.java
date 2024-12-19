@@ -17,6 +17,7 @@ public class QuizPackMember {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long quizPackMemberId;
 
+    @Column(name = "member_id")
     private long memberId;
 
     @Enumerated(EnumType.STRING)

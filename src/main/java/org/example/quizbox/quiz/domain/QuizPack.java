@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.example.quizbox.common.domain.Audit;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
@@ -16,6 +17,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Entity
 public class QuizPack extends Audit {
 
@@ -36,14 +38,12 @@ public class QuizPack extends Audit {
     @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackTag> tags = new HashSet<>();
 
-
-    public QuizPack(String title, Set<QuizPackMember> members, Set<Long> tagIds) {
+    public QuizPack(String title, Set<Long> memberIds, Set<Long> tagIds) {
         this.title = title;
-        this.quizPackMembers = new QuizPackMembers(members);
+        this.quizPackMembers = new QuizPackMembers(this, memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
         this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
         this.setCreatedAt(LocalDateTime.now());
     }
-
 
     public void addQuiz(Quiz newQuiz) {
         validateIsCreatableQuizzes(newQuiz.getQuizPackMember());

@@ -14,10 +14,10 @@ class QuizPackTest {
 
     @Test
     void 퀴즈_생성_불가ㅡ퀴즈_이름_중복() {
-        QuizPackMember adminMember = new QuizPackMember(1L, QuizPackMemberRole.ADMIN);
-        QuizPack quizPack = new QuizPack("title", Set.of(adminMember), Set.of());
+        QuizPack quizPack = new QuizPack("title", Set.of(1L), Set.of());
+        QuizPackMember admin = quizPack.getQuizPackMembers().findByMemberId(1L).get();
 
-        Quiz newQuiz = new Quiz(adminMember, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
+        Quiz newQuiz = new Quiz(admin, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
         quizPack.addQuiz(newQuiz);
 
         Throwable throwable = catchThrowable(

@@ -35,12 +35,10 @@ public class QuizPackService {
 
     @Transactional
     public QuizPack create(long memberId, String title, Set<Long> tagIds) {
-        QuizPackMember quizPackMember = new QuizPackMember(memberId, QuizPackMemberRole.ADMIN);
-
         if (!tagService.existsAll(tagIds)) {
             throw new BusinessException(TG1);
         }
-        QuizPack quizPack = new QuizPack(title, Set.of(quizPackMember), tagIds);
+        QuizPack quizPack = new QuizPack(title, Set.of(memberId), tagIds);
 
         return quizPackRepository.save(quizPack);
     }

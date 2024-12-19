@@ -4,12 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/Pagination.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/PaginationResponse.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RequestMatchers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RequestMatchers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/Pagination.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/Pagination.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackQueryRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMember.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMember.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/JpaQuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/QuizPackBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +65,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="AnnotationType" />
+        <option value="Record" />
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -100,70 +111,77 @@
     <option name="autoscrollFromSource" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build RQS-Backend.executor": "Run",
-    "Gradle.Build quizbox.executor": "Run",
-    "Gradle.GameTest.executor": "Run",
-    "Gradle.GameTest.답변_대기중인_경우_다음_문제_뽑기_불가.executor": "Run",
-    "Gradle.GameTest.답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능.executor": "Run",
-    "Gradle.GameTest.참가자가_아닌_경우_답변_불가.executor": "Debug",
-    "Gradle.GameTest.퀴즈_참가자가_아닌_경우_문제_뽑기_불가.executor": "Run",
-    "Gradle.GameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Debug",
-    "Gradle.QuizAnswersTest.executor": "Run",
-    "Gradle.QuizAnswersTest.퀴즈_답변_중_정답은_최소_1개_이상.executor": "Debug",
-    "Gradle.QuizAnswersTest.퀴즈_답변은_최소_2개_이상.executor": "Run",
-    "Gradle.QuizGameTest.executor": "Run",
-    "Gradle.QuizGameTest.게임에서_문제_뽑기_가능.executor": "Run",
-    "Gradle.QuizGameTest.답변_대기중인_경우_다음_문제_뽑기_불가.executor": "Debug",
-    "Gradle.QuizGameTest.뽑을_문제가_없는_경우_예외.executor": "Debug",
-    "Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor": "Debug",
-    "Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈팩을_통해_게임을_시작.executor": "Run",
-    "Gradle.QuizGameTest.퀴즈팩이_없는_경우_게임_불가.executor": "Run",
-    "Gradle.QuizPackTest.executor": "Debug",
-    "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ생성_권한_미보유.executor": "Debug",
-    "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈_이름_중복.executor": "Run",
-    "Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈팩_멤버_아닌_경우.executor": "Debug",
-    "Gradle.QuizPickerTest.executor": "Run",
-    "Gradle.QuizPickerTest.없는_퀴즈는_조회_불가.executor": "Run",
-    "Gradle.QuizTest.executor": "Run",
-    "Gradle.QuizTest.isMatched1.executor": "Run",
-    "Gradle.RQS-Backend [\"Quiz Game\"].executor": "Run",
-    "Gradle.RQS-Backend [test].executor": "Debug",
-    "Gradle.RedisClientTest.executor": "Run",
-    "Gradle.RemainGameQuizzesTest.executor": "Run",
-    "Gradle.RemainGameQuizzesTest.뽑을_문제가_없는_경우_빈_옵셔널_객체를_반환.executor": "Debug",
-    "Gradle.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈.executor": "Debug",
-    "Gradle.SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환.executor": "Run",
-    "Gradle.SubmitAnswerTest.답변은_최소_1개_이상.executor": "Debug",
-    "Gradle.quizbox [test].executor": "Debug",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "SONARLINT_PRECOMMIT_ANALYSIS": "true",
-    "Spring Boot.QuizboxApplication.executor": "Debug",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "develop",
-    "kotlin-language-version-configured": "true",
-    "last_directory_selection": "/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox/game/domain",
-    "last_opened_file_path": "/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox2/quizgame/domain",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build RQS-Backend.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build quizbox.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameTest.답변_대기중인_경우_다음_문제_뽑기_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameTest.답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameTest.참가자가_아닌_경우_답변_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.GameTest.퀴즈_참가자가_아닌_경우_문제_뽑기_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.GameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizAnswersTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizAnswersTest.퀴즈_답변_중_정답은_최소_1개_이상.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizAnswersTest.퀴즈_답변은_최소_2개_이상.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.게임에서_문제_뽑기_가능.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.답변_대기중인_경우_다음_문제_뽑기_불가.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.뽑을_문제가_없는_경우_예외.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.참가자가_아닌_경우_답변_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈게임의_진행_상태롤_알_수_있다.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈의_보기가_아닌_값은_답_제출_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩을_통해_게임을_시작.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizGameTest.퀴즈팩이_없는_경우_게임_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPackQueryRepositoryTest.getAllMyQuizPacks.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackQueryRepositoryTest.getAllQuizPacks.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackRepositoryTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPackRepositoryTest.findAllByMemberId.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackRepositoryTest.findById.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPackRepositoryTest.injection_test.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackRepositoryTest.save.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPackTest.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackTest.퀴즈_생성_불가ㅡ생성_권한_미보유.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈_이름_중복.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPackTest.퀴즈_생성_불가ㅡ퀴즈팩_멤버_아닌_경우.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.QuizPickerTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizPickerTest.없는_퀴즈는_조회_불가.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.QuizTest.isMatched1.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RQS-Backend [\&quot;Quiz Game\&quot;].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RQS-Backend [test].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.RedisClientTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RemainGameQuizzesTest.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.RemainGameQuizzesTest.뽑을_문제가_없는_경우_빈_옵셔널_객체를_반환.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.SubmitAnswerTest.답변은_최소_1개_이상.executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.quizbox [test].executor&quot;: &quot;Debug&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SONARLINT_PRECOMMIT_ANALYSIS&quot;: &quot;true&quot;,
+    &quot;Spring Boot.QuizboxApplication.executor&quot;: &quot;Debug&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_directory_selection&quot;: &quot;/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox/game/domain&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/sol/Desktop/RQS-Backend/src/main/java/org/example/quizbox2/quizgame/domain&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -186,7 +204,7 @@
       <recent name="org.example.quizbox.quiz.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.QuizboxApplication">
+  <component name="RunManager" selected="Gradle.QuizPackRepositoryTest.findAllByMemberId">
     <configuration default="true" type="aws.lambda" factoryName="Remote">
       <option name="credentialProviderId" />
       <option name="regionId" />
@@ -195,29 +213,7 @@
       <option name="inputIsFile" value="false" />
       <method v="2" />
     </configuration>
-    <configuration name="RQS-Backend [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="RemainGameQuizzesTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -230,7 +226,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.RemainGameQuizzesTest&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -241,7 +237,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest.findAllByMemberId" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -254,7 +250,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox_deprecated.game.domain.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.findAllByMemberId&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -265,7 +261,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest.findById" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -278,7 +274,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox_deprecated.game.domain.SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.findById&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -289,7 +285,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SubmitAnswerTest.답변은_최소_1개_이상" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest.injection_test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -302,7 +298,31 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox_deprecated.game.domain.SubmitAnswerTest.답변은_최소_1개_이상&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.injection_test&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QuizPackRepositoryTest.save" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.save&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -323,11 +343,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.RQS-Backend [test]" />
-        <item itemvalue="Gradle.SubmitAnswerTest.답변은_최소_1개_이상" />
-        <item itemvalue="Gradle.RemainGameQuizzesTest" />
-        <item itemvalue="Gradle.SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환" />
-        <item itemvalue="Gradle.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.findAllByMemberId" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.findById" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.save" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.injection_test" />
       </list>
     </recent_temporary>
   </component>
@@ -391,7 +411,7 @@
       <workItem from="1733728924472" duration="597000" />
       <workItem from="1733785999270" duration="4001000" />
       <workItem from="1733803970603" duration="63000" />
-      <workItem from="1733805363774" duration="38138000" />
+      <workItem from="1733805363774" duration="53031000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -577,7 +597,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733997508831</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정">
+      <option name="closed" value="true" />
+      <created>1734181875102</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1734181875102</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -595,7 +623,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 퀴즈게임 상태 조회 구현" />
     <MESSAGE value="feat: 테스트 시, 불필요 given 제거" />
     <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
     <MESSAGE value="feat: 인증/ 인가 처리 모듈 추가" />
@@ -620,9 +647,19 @@
     <MESSAGE value="feat: 게임 상태 조회 시, 현재 퀴즈 정보 함께 응답하도록 수정" />
     <MESSAGE value="feat: 추가 구현 필요 기능 주석" />
     <MESSAGE value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
+    <MESSAGE value="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java</url>
+          <line>60</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="org.example.quizbox.tag.domain.Tags" memberName="values" />

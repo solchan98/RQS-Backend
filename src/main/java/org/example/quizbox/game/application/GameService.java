@@ -3,7 +3,7 @@ package org.example.quizbox.game.application;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.game.domain.*;
-import org.example.quizbox.quiz.domain.IQuizPackQueryRepository;
+import org.example.quizbox.quiz.domain.IQuizPackRepository;
 import org.example.quizbox.quiz.domain.IQuizQueryRepository;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
@@ -14,21 +14,22 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
+
 @Service
 public class GameService {
 
     private final GameRepository gameRepository;
-
+    private final IQuizPackRepository quizPackRepository;
     private final IQuizQueryRepository quizQueryRepository;
-    private final IQuizPackQueryRepository quizPackQueryRepository;
-
     private final Map<QuizPickStrategy, GameQuizPicker> gameQuizPickerMap;
 
-    public GameService(GameRepository gameRepository, IQuizQueryRepository quizQueryRepository, IQuizPackQueryRepository quizPackQueryRepository,
+
+    public GameService(GameRepository gameRepository, IQuizQueryRepository quizQueryRepository, IQuizPackRepository quizPackRepository,
                        Map<String, GameQuizPicker> gameQuizPickerMap) {
         this.gameRepository = gameRepository;
         this.quizQueryRepository = quizQueryRepository;
-        this.quizPackQueryRepository = quizPackQueryRepository;
+        this.quizPackRepository = quizPackRepository;
         this.gameQuizPickerMap = gameQuizPickerMap.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> QuizPickStrategy.valueOf(entry.getKey()), Map.Entry::getValue));
@@ -36,7 +37,8 @@ public class GameService {
 
     @Transactional
     public GameStatusResponse start(StartQuiz startQuiz) {
-        QuizPack quizPack = quizPackQueryRepository.getById(startQuiz.quizPackId());
+        QuizPack quizPack = quizPackRepository.findById(startQuiz.quizPackId())
+                .orElseThrow(() -> new BusinessException(QP1));
         quizPack.validateIsMember(startQuiz.memberId());
         GameQuizPicker gameQuizPicker = Optional.ofNullable(gameQuizPickerMap.get(startQuiz.quizPickStrategy()))
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QG10));

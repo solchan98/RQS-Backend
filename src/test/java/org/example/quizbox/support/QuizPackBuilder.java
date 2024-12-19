@@ -55,13 +55,12 @@ public class QuizPackBuilder {
 
     public QuizPack build() {
         if (Objects.isNull(quizPackMembers)) {
-            quizPackMembers = new QuizPackMembers(Set.of(new QuizPackMember(1L, --quizPackMemberId, QuizPackMemberRole.ADMIN)));
+            quizPackMembers = new QuizPackMembers(null, Set.of(new QuizPackMember(--quizPackMemberId, 1L, QuizPackMemberRole.ADMIN)));
         }
 
         if (Objects.isNull(id)) {
             id = --quizPackId;
         }
-
         return new QuizPack(id, title, quizzes, quizPackMembers, tags);
     }
 }
