@@ -40,7 +40,7 @@ public class QuizPack extends Audit {
 
     public QuizPack(String title, Set<Long> memberIds, Set<Long> tagIds) {
         this.title = title;
-        this.quizPackMembers = new QuizPackMembers(this, memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
+        this.quizPackMembers = new QuizPackMembers(memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
         this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
         this.setCreatedAt(LocalDateTime.now());
     }

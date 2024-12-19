@@ -15,9 +15,8 @@ public class QuizPackMembers {
     @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackMember> values = new HashSet<>();
 
-    public QuizPackMembers(QuizPack quizPack, Set<QuizPackMember> values) {
+    public QuizPackMembers(Set<QuizPackMember> values) {
         this.values = values;
-//        this.values.forEach(quizPackMember -> quizPackMember.setQuizPack(quizPack));
     }
 
     public Optional<QuizPackMember> findByMemberId(long memberId) {
