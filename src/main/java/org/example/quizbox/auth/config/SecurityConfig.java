@@ -18,6 +18,7 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
@@ -99,8 +100,11 @@ public class SecurityConfig {
     }
 
     private void setPermissions(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeHttpRequests(ahr -> ahr.requestMatchers(RequestMatchers.DEFAULT)
-                .authenticated()
+        httpSecurity
+                .headers(a -> a.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // h2 config
+                .authorizeHttpRequests(ahr -> ahr
+                .requestMatchers(RequestMatchers.PERMIT_ALL).permitAll()
+                .requestMatchers(RequestMatchers.DEFAULT).authenticated()
         );
     }
 }

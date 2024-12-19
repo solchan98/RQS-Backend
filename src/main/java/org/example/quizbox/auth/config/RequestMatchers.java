@@ -17,7 +17,8 @@ public final class RequestMatchers {
     public static final OrRequestMatcher PERMIT_ALL = new OrRequestMatcher(
             REFRESH_TOKEN,
             new AntPathRequestMatcher("/permit-all"),
-            new AntPathRequestMatcher("/error")
+            new AntPathRequestMatcher("/error"),
+            new AntPathRequestMatcher("/h2-console/**")
     );
 
     public static final AntPathRequestMatcher DEFAULT = new AntPathRequestMatcher("/**");
