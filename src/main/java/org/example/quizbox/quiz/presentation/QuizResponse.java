@@ -1,12 +1,14 @@
 package org.example.quizbox.quiz.presentation;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.example.quizbox.quiz.domain.Option;
 import org.example.quizbox.quiz.domain.Quiz;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
 @AllArgsConstructor
 public class QuizResponse {
 
@@ -30,6 +32,7 @@ public class QuizResponse {
     }
 }
 
+@Getter
 @AllArgsConstructor
 class OptionResponse {
     private long optionId;
