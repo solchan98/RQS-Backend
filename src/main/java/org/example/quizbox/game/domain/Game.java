@@ -30,7 +30,7 @@ public class Game {
     private GameQuiz waitingGameQuiz;
 
     public Game(QuizPack quizPack, long creatorId, GameQuizPicker quizPicker) {
-        Set<Quiz> quizzes = quizPack.getQuizzes();
+        Set<Quiz> quizzes = quizPack.getQuizzes(quizPack.getQuizPackMemberBy(creatorId));
         Set<GameQuiz> gameQuizzes = quizzes.stream()
                 .map(GameQuiz::new)
                 .collect(Collectors.toSet());

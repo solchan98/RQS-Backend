@@ -21,13 +21,23 @@ class GameTest {
 
     @Test
     void 퀴즈팩을_통해_게임을_시작() {
-        assertThat(new Game(quizPackBuilder().build(), 1L, sequentialGameQuizPicker)).isNotNull();
+        assertThat(
+                new Game(
+                        quizPackBuilder().
+                                quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                                .build(),
+                        1L,
+                        sequentialGameQuizPicker
+                )
+        ).isNotNull();
     }
 
     @Test
     void 게임에서_문제_뽑기_가능() {
         Quiz quiz = quizBuilder().id(1L).build();
-        QuizPack quizPack = quizPackBuilder().quizzes(Set.of(quiz)).build();
+        QuizPack quizPack = quizPackBuilder()
+                .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                .quizzes(Set.of(quiz)).build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
 
         assertThat(game.pick(1L)).isEqualTo(new GameQuiz(quiz));
@@ -35,7 +45,13 @@ class GameTest {
 
     @Test
     void 뽑을_문제가_없는_경우_예외() {
-        Game game = new Game(quizPackBuilder().build(), 1L, sequentialGameQuizPicker);
+        Game game = new Game(
+                quizPackBuilder()
+                        .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                        .build(),
+                1L,
+                sequentialGameQuizPicker
+        );
         Throwable throwable = catchThrowable(() -> game.pick(1L));
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(QG11.code());
@@ -44,7 +60,10 @@ class GameTest {
     @Test
     void 퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가() {
         Quiz quiz = quizBuilder().build();
-        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizPack quizPack = quizPackBuilder()
+                .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                .quizzes(List.of(quiz))
+                .build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
 
         Throwable throwable = catchThrowable(() -> game.pick(-999L));
@@ -103,7 +122,10 @@ class GameTest {
     @Test
     void 답변_대기중인_경우_다음_문제_뽑기_불가() {
         Quiz quiz = quizBuilder().build();
-        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizPack quizPack = quizPackBuilder()
+                .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                .quizzes(List.of(quiz))
+                .build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
         game.pick(1L);
 
@@ -116,7 +138,10 @@ class GameTest {
     @Test
     void 답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능() {
         Quiz quiz = quizBuilder().build();
-        QuizPack quizPack = quizPackBuilder().quizzes(List.of(quiz)).build();
+        QuizPack quizPack = quizPackBuilder()
+                .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
+                .quizzes(List.of(quiz))
+                .build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
 
         assertThatNoException().isThrownBy(() -> game.pick(1L));

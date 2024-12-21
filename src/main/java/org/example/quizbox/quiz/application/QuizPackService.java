@@ -6,6 +6,7 @@ import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.*;
+import org.example.quizbox.quiz.infrastructure.QuizQueryRepository;
 import org.example.quizbox.tag.application.TagService;
 import org.example.quizbox.tag.domain.Tags;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class QuizPackService {
     private final TagService tagService;
 
     private final QuizAutoGenerator quizAutoGenerator;
+    private final QuizQueryRepository quizQueryRepository;
 
     @Transactional(readOnly = true)
     public QuizPackStatus getQuizPack(long quizPackId, long memberId) {
@@ -101,5 +103,13 @@ public class QuizPackService {
         return quizPackRepository.save(quizPack)
                 .getId();
 
+    }
+
+    @Transactional(readOnly = true)
+    public Set<Quiz> getQuizzes(long quizPackId, long memberId) {
+        QuizPack quizPack = quizPackRepository.findById(quizPackId)
+                .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
+
+        return quizPack.getQuizzes(quizPack.getQuizPackMemberBy(memberId));
     }
 }

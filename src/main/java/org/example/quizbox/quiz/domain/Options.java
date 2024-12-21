@@ -31,6 +31,10 @@ public class Options {
         this.values = values;
     }
 
+    public Set<Option> getValues() {
+        return new HashSet<>(values);
+    }
+
     public boolean match(Set<Long> submitOptionIds) {
         Set<Long> collectOptionIds = correctOptions().stream().map(Option::getId).collect(Collectors.toSet());
 

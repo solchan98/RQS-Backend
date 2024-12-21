@@ -15,7 +15,7 @@ class QuizPackTest {
     @Test
     void 퀴즈_생성_불가ㅡ퀴즈_이름_중복() {
         QuizPack quizPack = new QuizPack("title", Set.of(1L), Set.of());
-        QuizPackMember admin = quizPack.getQuizPackMembers().findByMemberId(1L).get();
+        QuizPackMember admin = quizPack.getQuizPackMemberBy(1L);
 
         Quiz newQuiz = new Quiz(admin, new QuizContent("same"), Set.of(Option.falseOption("A"), Option.trueOption("B")));
         quizPack.addQuiz(newQuiz);
@@ -56,17 +56,16 @@ class QuizPackTest {
         assertThat(throwable).isInstanceOf(BusinessException.class)
                 .hasMessage(ExceptionConstants.QP5.code());
     }
-//
-//    @Test
-//    void 초대장이_유효하면_새로운_퀴즈팩_멤버_추가_가능() {
-//
-//    }
-//
-//
-//    @Test
-//    void 초대장이_유효하지_않으면_새로운_퀴즈팩_멤버_추가_불가() {
-//
-//    }
 
+    @Test
+    void 퀴즈_조회_불가ㅡ퀴즈팩_멤버가_아닌_경우() {
+        QuizPack quizPack = quizPackBuilder().build();
 
+        QuizPackMember quizPackMember = new QuizPackMember(-999L, QuizPackMemberRole.MEMBER);
+
+        Throwable throwable = catchThrowable(() -> quizPack.getQuizzes(quizPackMember));
+
+        assertThat(throwable).isInstanceOf(BusinessException.class)
+                .hasMessage(ExceptionConstants.QP4.code());
+    }
 }

@@ -22,7 +22,7 @@ public class QuizQueryRepositoryTest {
     void getById() {
         long adminId = 1L;
         QuizPack quizPack = new QuizPack("pack - QuizQueryRepository test ", Set.of(adminId), Set.of(1L));
-        QuizPackMember admin = quizPack.getQuizPackMembers().findByMemberId(adminId).get();
+        QuizPackMember admin = quizPack.getQuizPackMemberBy(adminId);
         Quiz quiz = new Quiz(admin, new QuizContent("test quiz 1"), Set.of(
                 Option.trueOption("1"), Option.falseOption("2")
         ));

@@ -16,15 +16,16 @@ import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
 @Entity
 public class QuizPack extends Audit {
 
     @Id
+    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     private String title;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -45,6 +46,14 @@ public class QuizPack extends Audit {
         this.quizPackMembers = new QuizPackMembers(memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
         this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
         this.setCreatedAt(LocalDateTime.now());
+    }
+
+    public Set<Quiz> getQuizzes(QuizPackMember quizPackMember) {
+        if (!quizPackMembers.contains(quizPackMember)) {
+            throw new BusinessException(ExceptionConstants.QP4);
+        }
+
+        return new HashSet<>(quizzes);
     }
 
     public void addQuiz(Quiz newQuiz) {

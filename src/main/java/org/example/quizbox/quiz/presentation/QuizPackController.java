@@ -1,12 +1,16 @@
 package org.example.quizbox.quiz.presentation;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
 import org.example.quizbox.quiz.application.QuizPackService;
+import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.quiz.domain.QuizPackStatus;
 import org.springframework.http.ResponseEntity;
@@ -83,14 +87,17 @@ public class QuizPackController {
         return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
     }
 
-//    @GetMapping("/{quiz-pack-id}/quiz/{quiz-id}")
-//    public ResponseEntity<BasicResponse<QuizResponse>> getQuiz(
-//            @PathVariable("quiz-pack-id") long quizPackId,
-//            @PathVariable("quiz-id") long quizId,
-//            AccessUser accessUser
-//    ) {
-//        Quiz quiz = quizPackService.getQuiz(quizPackId, quizId, accessUser.getId());
-//
-//        return ResponseEntity.ok(new BasicResponse<>(QuizResponse.from(quiz)));
-//    }
+    @GetMapping("/{quiz-pack-id}/quizzes")
+    public ResponseEntity<BasicResponse<Set<QuizResponse>>> getQuiz(
+            @PathVariable("quiz-pack-id") long quizPackId,
+            AccessUser accessUser
+    ) {
+        Set<Quiz> quizzes = quizPackService.getQuizzes(quizPackId, accessUser.getId());
+
+        Set<QuizResponse> quizResponses = quizzes.stream()
+                .map(QuizResponse::from)
+                .collect(Collectors.toSet());
+
+        return ResponseEntity.ok(new BasicResponse<>(quizResponses));
+    }
 }
