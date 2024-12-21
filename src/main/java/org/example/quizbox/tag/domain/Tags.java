@@ -1,5 +1,6 @@
 package org.example.quizbox.tag.domain;
 
+import java.util.stream.Collectors;
 import lombok.Getter;
 
 import java.util.HashSet;
@@ -28,5 +29,12 @@ public class Tags {
 
     public long size() {
         return values.size();
+    }
+
+    public Tags getByIds(Set<Long> ids) {
+        return new Tags(values.stream()
+                .filter(tag -> ids.contains(tag.getId()))
+                .collect(Collectors.toSet()));
+
     }
 }

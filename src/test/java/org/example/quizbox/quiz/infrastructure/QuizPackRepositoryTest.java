@@ -1,6 +1,6 @@
 package org.example.quizbox.quiz.infrastructure;
 
-import org.example.quizbox.common.presentation.Pagination;
+import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.support.infrastructure.DBTest;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DBTest
-public class QuizPackRepositoryTest {
+class QuizPackRepositoryTest {
 
     @Autowired
     private QuizPackRepository quizPackRepository;

@@ -23,6 +23,7 @@ public class Quiz {
     private QuizContent content;
 
     @ManyToOne
+    @JoinColumn(name = "quiz_pack_member_id")
     private QuizPackMember quizPackMember;
 
     @Embedded

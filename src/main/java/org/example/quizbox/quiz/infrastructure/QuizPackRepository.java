@@ -1,18 +1,16 @@
 package org.example.quizbox.quiz.infrastructure;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
-import org.example.quizbox.common.presentation.Pagination;
+import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.IQuizPackRepository;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
@@ -55,21 +53,21 @@ public class QuizPackRepository implements IQuizPackRepository {
     public List<QuizPack> findAllBy(Pagination pageable) {
         if (pageable.lastId() != null) {
             return entityManager.createQuery("""
-                SELECT qp
-                FROM QuizPack qp
-                WHERE qp.id < :lastId
-                ORDER BY qp.id DESC
-                """, QuizPack.class)
+                            SELECT qp
+                            FROM QuizPack qp
+                            WHERE qp.id < :lastId
+                            ORDER BY qp.id DESC
+                            """, QuizPack.class)
                     .setParameter("lastId", pageable.lastId())
                     .setMaxResults(pageable.chunk())
                     .getResultList();
         }
 
         return entityManager.createQuery("""
-                SELECT qp
-                FROM QuizPack qp
-                ORDER BY qp.id DESC
-                """, QuizPack.class)
+                        SELECT qp
+                        FROM QuizPack qp
+                        ORDER BY qp.id DESC
+                        """, QuizPack.class)
                 .setMaxResults(pageable.chunk())
                 .getResultList();
     }
@@ -78,13 +76,13 @@ public class QuizPackRepository implements IQuizPackRepository {
     public List<QuizPack> findAllBy(long memberId, Pagination pageable) {
         if (pageable.lastId() != null) {
             return entityManager.createQuery("""
-                SELECT qp
-                FROM QuizPack qp
-                    JOIN qp.quizPackMembers.values qpm
-                WHERE qpm.memberId = :memberId
-                    AND qp.id < :lastId
-                ORDER BY qp.id DESC
-                """, QuizPack.class)
+                            SELECT qp
+                            FROM QuizPack qp
+                                JOIN qp.quizPackMembers.values qpm
+                            WHERE qpm.memberId = :memberId
+                                AND qp.id < :lastId
+                            ORDER BY qp.id DESC
+                            """, QuizPack.class)
                     .setParameter("memberId", memberId)
                     .setParameter("lastId", pageable.lastId())
                     .setMaxResults(pageable.chunk())
@@ -92,12 +90,12 @@ public class QuizPackRepository implements IQuizPackRepository {
         }
 
         return entityManager.createQuery("""
-                SELECT qp
-                FROM QuizPack qp
-                    JOIN qp.quizPackMembers.values qpm
-                WHERE qpm.memberId = :memberId
-                ORDER BY qp.id DESC
-                """, QuizPack.class)
+                        SELECT qp
+                        FROM QuizPack qp
+                            JOIN qp.quizPackMembers.values qpm
+                        WHERE qpm.memberId = :memberId
+                        ORDER BY qp.id DESC
+                        """, QuizPack.class)
                 .setParameter("memberId", memberId)
                 .setMaxResults(pageable.chunk())
                 .getResultList();

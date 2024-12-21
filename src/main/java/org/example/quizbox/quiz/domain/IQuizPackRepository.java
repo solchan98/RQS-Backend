@@ -1,11 +1,11 @@
 package org.example.quizbox.quiz.domain;
 
-import org.example.quizbox.common.presentation.Pagination;
-
 import java.util.List;
 import java.util.Optional;
+import org.example.quizbox.common.infrastructure.Pagination;
 
 public interface IQuizPackRepository {
+
     QuizPack save(QuizPack quizPack);
 
     Optional<QuizPack> findById(long quizPackId);

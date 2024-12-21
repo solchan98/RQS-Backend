@@ -1,8 +1,10 @@
 package org.example.quizbox.quiz.application;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.*;
 import org.example.quizbox.tag.application.TagService;
 import org.example.quizbox.tag.domain.Tags;
@@ -22,6 +24,8 @@ public class QuizPackService {
 
     private final TagService tagService;
 
+    private final QuizAutoGenerator quizAutoGenerator;
+
     @Transactional(readOnly = true)
     public QuizPackStatus getQuizPack(long quizPackId, long memberId) {
         QuizPack quizPack = quizPackRepository.findById(quizPackId)
@@ -31,6 +35,23 @@ public class QuizPackService {
         Tags tags = tagService.getAll(quizPack.getTagIds());
 
         return QuizPackStatus.from(quizPack, tags);
+    }
+
+    @Transactional(readOnly = true)
+    public List<QuizPackStatus> getQuizPacks(Long memberId, Pagination pagination) {
+        List<QuizPack> quizPacks = memberId != null
+                ? quizPackRepository.findAllBy(memberId, pagination)
+                : quizPackRepository.findAllBy(pagination);
+
+        Set<Long> tagIds = quizPacks.stream().map(QuizPack::getTagIds).flatMap(Set::stream).collect(Collectors.toSet());
+        Tags tags = tagService.getAll(tagIds);
+
+        return quizPacks.stream()
+                .map(quizPack -> QuizPackStatus.from(
+                        quizPack,
+                        tags.getByIds(quizPack.getTagIds())
+                ))
+                .toList();
     }
 
     @Transactional
@@ -63,10 +84,22 @@ public class QuizPackService {
                 .collect(Collectors.toSet());
     }
 
-//    @Transactional(readOnly = true)
-//    public Quiz getQuiz(long quizPackId, long quizId, long memberId) {
-//        QuizPicker quizPicker = new QuizPicker(quizPackRepository);
-//
-//        return quizPicker.getQuiz(quizPackId, quizId, memberId);
-//    }
+    @Transactional
+    public long autoGenerator(long memberId, String title, Set<Long> tagIds, int hopeCount) {
+        if (!tagService.existsAll(tagIds)) {
+            throw new BusinessException(TG1);
+        }
+
+        QuizPack quizPack = new QuizPack(title, Set.of(memberId), tagIds);
+        quizPack.cancelPublish();
+        QuizPackMember creator = quizPack.getQuizPackMemberBy(memberId);
+
+        Tags tags = tagService.getAll(tagIds);
+        Set<Quiz> quizzes = quizAutoGenerator.generate(creator, tags, hopeCount);
+        quizzes.forEach(quizPack::addQuiz);
+
+        return quizPackRepository.save(quizPack)
+                .getId();
+
+    }
 }
