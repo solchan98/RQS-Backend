@@ -4,9 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈팩의 퀴즈 전체 조회 로직 구현 및 테스트 작성">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="chore: QuizResponse 및 하위 Dto getter 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackMembers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/Tags.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -404,7 +410,7 @@
       <workItem from="1733785999270" duration="4001000" />
       <workItem from="1733803970603" duration="63000" />
       <workItem from="1733805363774" duration="53031000" />
-      <workItem from="1734599997416" duration="14427000" />
+      <workItem from="1734599997416" duration="16705000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -638,7 +644,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734771264429</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="chore: QuizResponse 및 하위 Dto getter 추가">
+      <option name="closed" value="true" />
+      <created>1734771672322</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1734771672322</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -656,7 +670,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회" />
     <MESSAGE value="feat: 기존 QuizPack &amp; Quiz 관련 로직 주석 제거" />
     <MESSAGE value="feat: Quiz 생성 로직 수정" />
     <MESSAGE value="feat: Quiz 생성 웅답 로직 수정" />
@@ -681,7 +694,8 @@
     <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 QuizQueryRepository 메서드 추가 및 테스트 작성" />
     <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 테스트 케이스 작성" />
     <MESSAGE value="feat: 퀴즈팩의 퀴즈 전체 조회 로직 구현 및 테스트 작성" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈팩의 퀴즈 전체 조회 로직 구현 및 테스트 작성" />
+    <MESSAGE value="chore: QuizResponse 및 하위 Dto getter 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="chore: QuizResponse 및 하위 Dto getter 추가" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

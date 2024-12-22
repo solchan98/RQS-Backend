@@ -66,9 +66,16 @@ public class QuizPack extends Audit {
         quizzes.add(newQuiz);
     }
 
-    public QuizPackMember validateIsMember(long memberId) {
-        return quizPackMembers.findByMemberId(memberId)
+    public void validateIsMember(long memberId) {
+        quizPackMembers.findByMemberId(memberId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
+    }
+
+    public void validateIsMember(QuizPackMember quizPackMember) {
+        boolean contains = quizPackMembers.contains(quizPackMember);
+        if (!contains) {
+            throw new BusinessException(ExceptionConstants.QP4);
+        }
     }
 
     private void validateIsCreatableQuizzes(QuizPackMember quizPackMember) {
@@ -98,10 +105,15 @@ public class QuizPack extends Audit {
         return tags.stream().map(QuizPackTag::getTagId).collect(Collectors.toSet());
     }
 
+    public QuizPackMembers getQuizPackMembersBy(QuizPackMember quizPackMember) {
+        validateIsMember(quizPackMember);
+        return new QuizPackMembers(quizPackMembers.getValues());
+    }
+
     public QuizPackMember getQuizPackMemberBy(long memberId) {
+        validateIsMember(memberId);
         return quizPackMembers.findByMemberId(memberId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
-
     }
 
     public void cancelPublish() {

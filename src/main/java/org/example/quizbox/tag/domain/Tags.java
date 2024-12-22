@@ -2,11 +2,11 @@ package org.example.quizbox.tag.domain;
 
 import java.util.stream.Collectors;
 import lombok.Getter;
+import org.example.quizbox.game.application.GameService;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
 public class Tags {
 
     private final Set<Tag> values;
@@ -35,6 +35,9 @@ public class Tags {
         return new Tags(values.stream()
                 .filter(tag -> ids.contains(tag.getId()))
                 .collect(Collectors.toSet()));
+    }
 
+    public Set<Tag> getValues() {
+        return new HashSet<>(values);
     }
 }

@@ -8,6 +8,7 @@ import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.*;
 import org.example.quizbox.quiz.infrastructure.QuizQueryRepository;
 import org.example.quizbox.tag.application.TagService;
+import org.example.quizbox.tag.domain.Tag;
 import org.example.quizbox.tag.domain.Tags;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,17 +27,18 @@ public class QuizPackService {
     private final TagService tagService;
 
     private final QuizAutoGenerator quizAutoGenerator;
-    private final QuizQueryRepository quizQueryRepository;
 
     @Transactional(readOnly = true)
-    public QuizPackStatus getQuizPack(long quizPackId, long memberId) {
+    public QuizPackResponse getQuizPack(long quizPackId, long memberId) {
         QuizPack quizPack = quizPackRepository.findById(quizPackId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
-        quizPack.validateIsMember(memberId);
+        QuizPackMember quizPackMember = quizPack.getQuizPackMemberBy(memberId);
 
-        Tags tags = tagService.getAll(quizPack.getTagIds());
+        Set<QuizPackMember> quizPackMembers = quizPack.getQuizPackMembersBy(quizPackMember).getValues();
+        Set<Quiz> quizzes = quizPack.getQuizzes(quizPackMember);
+        Set<Tag> tags = tagService.getAll(quizPack.getTagIds()).getValues();
 
-        return QuizPackStatus.from(quizPack, tags);
+        return QuizPackResponse.of(quizPack, quizPackMembers, quizzes, tags);
     }
 
     @Transactional(readOnly = true)
@@ -70,7 +72,7 @@ public class QuizPackService {
     public long addQuiz(CreateQuiz createQuiz) {
         QuizPack quizPack = quizPackRepository.findById(createQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
-        QuizPackMember quizPackMember = quizPack.validateIsMember(createQuiz.memberId());
+        QuizPackMember quizPackMember = quizPack.getQuizPackMemberBy(createQuiz.memberId());
 
         Quiz newQuiz = new Quiz(quizPackMember, new QuizContent(createQuiz.quizContent()), createQuizOptions(createQuiz));
         quizPack.addQuiz(newQuiz);

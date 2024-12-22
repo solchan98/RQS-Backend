@@ -39,7 +39,7 @@ public class GameService {
     public GameStatusResponse start(StartQuiz startQuiz) {
         QuizPack quizPack = quizPackRepository.findById(startQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(QP1));
-        quizPack.validateIsMember(startQuiz.memberId());
+        quizPack.getQuizPackMemberBy(startQuiz.memberId());
         GameQuizPicker gameQuizPicker = Optional.ofNullable(gameQuizPickerMap.get(startQuiz.quizPickStrategy()))
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QG10));
 

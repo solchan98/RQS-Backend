@@ -31,7 +31,7 @@ public class QuizPackMembers {
         return values.size();
     }
 
-    public Set<QuizPackMember> values() {
+    public Set<QuizPackMember> getValues() {
         return new HashSet<>(values);
     }
 

@@ -9,6 +9,7 @@ import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
+import org.example.quizbox.quiz.application.QuizPackResponse;
 import org.example.quizbox.quiz.application.QuizPackService;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
@@ -47,14 +48,13 @@ public class QuizPackController {
         return ResponseEntity.ok(new BasicResponse<>(quizPackStatusResponses));
     }
 
-    @GetMapping("/{quiz-pack-id}/status")
-    public ResponseEntity<BasicResponse<QuizPackStatusResponse>> getQuizPackStatus(
+    @GetMapping("/{quiz-pack-id}")
+    public ResponseEntity<BasicResponse<QuizPackResponse>> getQuizPackStatus(
             @PathVariable("quiz-pack-id") long quizPackId,
             AccessUser accessUser
     ) {
-        QuizPackStatus status = quizPackService.getQuizPack(quizPackId, accessUser.getId());
 
-        return ResponseEntity.ok(new BasicResponse<>(QuizPackStatusResponse.from(status)));
+        return ResponseEntity.ok(new BasicResponse<>(quizPackService.getQuizPack(quizPackId, accessUser.getId())));
     }
 
     //
