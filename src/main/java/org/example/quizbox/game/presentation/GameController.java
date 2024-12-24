@@ -11,7 +11,6 @@ import org.example.quizbox.game.domain.SubmitOption;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Random;
 import java.util.Set;
 
 @RestController
@@ -22,13 +21,10 @@ public class GameController {
     private final GameService gameService;
 
     @GetMapping("/in-progress")
-    public ResponseEntity<BasicResponse<Set<InProgressQuizGameResponse>>> getOnGoingQuizGames() {
-        boolean randomBoolean = new Random().nextBoolean();
-        if (randomBoolean) {
-            return ResponseEntity.ok(new BasicResponse<>(InProgressQuizGameResponse.dummy()));
-        }
-
-        return ResponseEntity.ok(new BasicResponse<>(null));
+    public ResponseEntity<BasicResponse<Set<InProgressQuizGameResponse>>> getOnGoingQuizGames(
+            AccessUser accessUser
+    ) {
+        return ResponseEntity.ok(new BasicResponse<>(gameService.getInProgressQuizGames(accessUser.getId())));
     }
 
     @PostMapping

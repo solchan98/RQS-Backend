@@ -5,6 +5,7 @@ import org.example.quizbox.game.domain.GameId;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public final class InMemoryStorage {
 
@@ -12,5 +13,6 @@ public final class InMemoryStorage {
     }
 
     public static final Map<GameId, Game> quizGameStore = new HashMap<>();
+    public static final Map<Long, Set<Game>> quizGameStoreWithMemberIdKey = new HashMap<>();
 
 }

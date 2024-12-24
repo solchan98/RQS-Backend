@@ -1,6 +1,7 @@
 package org.example.quizbox.game.domain;
 
 import lombok.Getter;
+import org.example.quizbox.common.domain.Audit;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.*;
 
-public class Game {
+public class Game extends Audit {
 
     @Getter
     private final GameId id = GameId.create();
@@ -38,6 +39,10 @@ public class Game {
         this.quizPackId = quizPack.getId();
         this.remainGameQuizzes = new RemainGameQuizzes(gameQuizzes, quizPicker);
         this.creatorId = creatorId;
+        this.setCreatedBy(creatorId);
+        this.setUpdatedBy(creatorId);
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
     }
 
     /**

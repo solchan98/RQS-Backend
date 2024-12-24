@@ -3,6 +3,7 @@ package org.example.quizbox.game.application;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.game.domain.*;
+import org.example.quizbox.game.presentation.InProgressQuizGameResponse;
 import org.example.quizbox.quiz.domain.IQuizPackRepository;
 import org.example.quizbox.quiz.domain.IQuizQueryRepository;
 import org.example.quizbox.quiz.domain.Quiz;
@@ -10,8 +11,10 @@ import org.example.quizbox.quiz.domain.QuizPack;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
@@ -69,7 +72,7 @@ public class GameService {
     }
 
     private Game getQuizGameById(GameId id) {
-        return gameRepository.findById(id)
+        return gameRepository.findBy(id)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QG7));
     }
 
@@ -85,5 +88,21 @@ public class GameService {
                 game,
                 new GameQuizResponse(quizQueryRepository.getById(game.getWaitingGameQuiz().getQuizId()))
         );
+    }
+
+    @Transactional(readOnly = true)
+    public Set<InProgressQuizGameResponse> getInProgressQuizGames(
+            long memberId
+    ) {
+        List<Game> games = gameRepository.findAllBy(memberId);
+
+        return games.stream()
+                .map(game ->
+                        InProgressQuizGameResponse.from(
+                                game,
+                                quizPackRepository.findById(game.getQuizPackId()) // TODO: 진행중인 게임이 있을 때, 퀴즈팩이 제거되면 어떻게 처리할지 고민하기
+                                        .orElseThrow(() -> new BusinessException(QP1))
+                        )
+                ).collect(Collectors.toSet());
     }
 }
