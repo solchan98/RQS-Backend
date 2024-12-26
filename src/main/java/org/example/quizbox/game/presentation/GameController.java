@@ -61,12 +61,4 @@ public class GameController {
 
         return ResponseEntity.ok(new BasicResponse<>(null));
     }
-
-    @GetMapping("/{game-id}")
-    public ResponseEntity<BasicResponse<GameStatusResponse>> status(
-            @PathVariable("game-id") String quizGameId) {
-        GameStatusResponse status = gameService.gameStatus(GameId.from(quizGameId));
-
-        return ResponseEntity.ok(new BasicResponse<>(status));
-    }
 }

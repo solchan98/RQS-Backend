@@ -8,6 +8,7 @@ import org.example.quizbox.quiz.domain.IQuizPackRepository;
 import org.example.quizbox.quiz.domain.IQuizQueryRepository;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
+import org.example.quizbox.quiz.presentation.QuizResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,7 +61,7 @@ public class GameService {
 
         Quiz quiz = quizQueryRepository.getById(gameQuiz.getQuizId());
 
-        return new GameQuizResponse(quiz);
+        return new GameQuizResponse(game, QuizResponse.from(quiz));
     }
 
     @Transactional
@@ -74,20 +75,6 @@ public class GameService {
     private Game getQuizGameById(GameId id) {
         return gameRepository.findBy(id)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QG7));
-    }
-
-    @Transactional(readOnly = true)
-    public GameStatusResponse gameStatus(GameId gameId) {
-        Game game = getQuizGameById(gameId);
-        if (game.getWaitingGameQuiz() == null) {
-            return GameStatusResponse.from(game, null);
-        }
-
-        // TODO: 게임 진행 중도에 퀴즈 삭제 시, 핸들링 처리 설계 추가 필요
-        return GameStatusResponse.from(
-                game,
-                new GameQuizResponse(quizQueryRepository.getById(game.getWaitingGameQuiz().getQuizId()))
-        );
     }
 
     @Transactional(readOnly = true)

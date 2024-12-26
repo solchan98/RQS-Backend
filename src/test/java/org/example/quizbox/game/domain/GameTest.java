@@ -120,30 +120,32 @@ class GameTest {
 
 
     @Test
-    void 답변_대기중인_경우_다음_문제_뽑기_불가() {
+    void 답변_대기중인_경우_대기_중인_퀴즈_응답() {
         Quiz quiz = quizBuilder().build();
         QuizPack quizPack = quizPackBuilder()
                 .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
                 .quizzes(List.of(quiz))
                 .build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
-        game.pick(1L);
+        GameQuiz gameQuiz = game.pick(1L);
 
-        Throwable throwable = catchThrowable(() -> game.pick(1L));
+        assertThat(game.pick(1L)).isEqualTo(gameQuiz);
 
-        assertThat(throwable).isInstanceOf(BusinessException.class)
-                .hasMessage(ExceptionConstants.QG2.code());
     }
 
     @Test
     void 답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능() {
-        Quiz quiz = quizBuilder().build();
+        Quiz quiz2 = quizBuilder().build(); // id : -1
+        Quiz quiz1 = quizBuilder().build(); // id : -2
         QuizPack quizPack = quizPackBuilder()
                 .quizPackMembers(new QuizPackMember(1L, QuizPackMemberRole.ADMIN))
-                .quizzes(List.of(quiz))
+                .quizzes(List.of(quiz1, quiz2))
                 .build();
         Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
+        game.pick(1L);
+        Set<Long> quiz1OptionIds = quiz2.getOptions().options().stream().map(Option::getId).collect(Collectors.toSet());
+        game.submit(1L, new SubmitOption(quiz1OptionIds));
 
-        assertThatNoException().isThrownBy(() -> game.pick(1L));
+        assertThat(game.pick(1L).getQuizId()).isEqualTo(quiz2.getId());
     }
 }

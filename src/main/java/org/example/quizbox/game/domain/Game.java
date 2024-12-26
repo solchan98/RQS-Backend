@@ -54,7 +54,7 @@ public class Game extends Audit {
         validateIsCreator(creatorId);
         // 제출 대기 상태가 아닌가? QG2
         if (isWaitingQuiz()) {
-            throw new BusinessException(QG2);
+            return waitingGameQuiz;
         }
 
         GameQuiz gameQuiz = remainGameQuizzes.pick()
