@@ -4,13 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 진행중인 퀴즈게임 조회 기능 구현">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/IGameHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/GameHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/JpaGameHistoryRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/GameQuizTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameQuizResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameQuizResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedGameQuizzes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedGameQuizzes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/GameTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/GameTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmittedGameQuizzesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmittedGameQuizzesTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,8 +79,8 @@
       <list>
         <option value="AnnotationType" />
         <option value="Record" />
-        <option value="Interface" />
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -122,6 +131,7 @@
   "keyToString": {
     "Gradle.Build RQS-Backend.executor": "Run",
     "Gradle.Build quizbox.executor": "Run",
+    "Gradle.GameQuizTest.executor": "Run",
     "Gradle.GameTest.executor": "Run",
     "Gradle.GameTest.게임에서_문제_뽑기_가능.executor": "Run",
     "Gradle.GameTest.답변_대기중인_경우_다음_문제_뽑기_불가.executor": "Run",
@@ -176,6 +186,7 @@
     "Gradle.SequentialGameQuizPickerTest.뽑는_순서는_ID가_가장_작은_퀴즈.executor": "Debug",
     "Gradle.SequentialGameQuizPickerTest.뽑을_퀴즈가_없으면_빈_옵셔널_반환.executor": "Run",
     "Gradle.SubmitAnswerTest.답변은_최소_1개_이상.executor": "Debug",
+    "Gradle.SubmittedGameQuizzesTest.정답_개수_확인_가능.executor": "Debug",
     "Gradle.quizbox [test].executor": "Debug",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
@@ -243,6 +254,30 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="GameQuizTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.domain.GameQuizTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="GameTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -257,54 +292,6 @@
             <option value=":test" />
             <option value="--tests" />
             <option value="&quot;org.example.quizbox.game.domain.GameTest&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="GameTest.답변_대기중인_경우_대기_중인_퀴즈_응답" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.GameTest.답변_대기중인_경우_대기_중인_퀴즈_응답&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="GameTest.답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.GameTest.답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -337,6 +324,30 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="SubmittedGameQuizzesTest.정답_개수_확인_가능" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.domain.SubmittedGameQuizzesTest.정답_개수_확인_가능&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="QuizboxApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="quizbox.main" />
@@ -347,11 +358,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.SubmittedGameQuizzesTest.정답_개수_확인_가능" />
+        <item itemvalue="Gradle.GameQuizTest" />
         <item itemvalue="Application.QuizboxApplication" />
         <item itemvalue="Gradle.RQS-Backend [test]" />
         <item itemvalue="Gradle.GameTest" />
-        <item itemvalue="Gradle.GameTest.답변_대기중인_문제가_없는_경우_새로운_퀴즈_뽑기_가능" />
-        <item itemvalue="Gradle.GameTest.답변_대기중인_경우_대기_중인_퀴즈_응답" />
       </list>
     </recent_temporary>
   </component>
@@ -669,7 +680,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734850829334</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답">
+      <option name="closed" value="true" />
+      <created>1735198298683</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1735198298683</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -687,7 +706,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Quiz 생성 웅답 로직 수정" />
     <MESSAGE value="feat: QuizPack에 Tag 기능 추가 구현" />
     <MESSAGE value="feat: Tag 생성(upsert) 로직 구현" />
     <MESSAGE value="feat: QuizPack 생성 시, Tag 로직 수정" />
@@ -712,7 +730,8 @@
     <MESSAGE value="chore: QuizResponse 및 하위 Dto getter 추가" />
     <MESSAGE value="feat: 퀴즈팩 상세 조회 API 수정" />
     <MESSAGE value="feat: 진행중인 퀴즈게임 조회 기능 구현" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 진행중인 퀴즈게임 조회 기능 구현" />
+    <MESSAGE value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

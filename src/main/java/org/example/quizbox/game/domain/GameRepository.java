@@ -11,4 +11,5 @@ public interface GameRepository {
 
     List<Game> findAllBy(long memberId);
 
+    void deleteBy(GameId id);
 }

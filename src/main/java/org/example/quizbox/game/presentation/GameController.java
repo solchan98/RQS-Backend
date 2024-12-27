@@ -6,6 +6,8 @@ import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.GameQuizResponse;
 import org.example.quizbox.game.application.GameService;
 import org.example.quizbox.game.application.GameStatusResponse;
+import org.example.quizbox.game.domain.Game;
+import org.example.quizbox.game.domain.GameHistory;
 import org.example.quizbox.game.domain.GameId;
 import org.example.quizbox.game.domain.SubmitOption;
 import org.springframework.http.ResponseEntity;
@@ -60,5 +62,15 @@ public class GameController {
         );
 
         return ResponseEntity.ok(new BasicResponse<>(null));
+    }
+
+    @GetMapping("/{game-id}/result")
+    public ResponseEntity<BasicResponse<GameHistory>> getGameResult(
+            @PathVariable("game-id") String quizGameId,
+            AccessUser accessUser
+    ) {
+        GameHistory gameResult = gameService.getGameResult(GameId.from(quizGameId));
+
+        return ResponseEntity.ok(new BasicResponse<>(gameResult));
     }
 }

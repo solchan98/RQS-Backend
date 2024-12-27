@@ -5,10 +5,7 @@ import org.example.quizbox.game.domain.GameId;
 import org.example.quizbox.game.domain.GameRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.example.quizbox.game.infrastructure.InMemoryStorage.quizGameStore;
@@ -44,5 +41,21 @@ public class InMemoryQuizGameRepository implements GameRepository {
     @Override
     public List<Game> findAllBy(long memberId) {
         return new ArrayList<>(quizGameStoreWithMemberIdKey.getOrDefault(memberId, Set.of()));
+    }
+
+    @Override
+    public void deleteBy(GameId id) {
+        Game game = quizGameStore.remove(id);
+
+        Optional<Map.Entry<Long, Set<Game>>> find = quizGameStoreWithMemberIdKey.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().contains(game))
+                .findFirst();
+
+        if (find.isPresent()) {
+            Map.Entry<Long, Set<Game>> entry = find.get();
+            entry.getValue().remove(game);
+            quizGameStoreWithMemberIdKey.put(entry.getKey(), entry.getValue());
+        }
     }
 }

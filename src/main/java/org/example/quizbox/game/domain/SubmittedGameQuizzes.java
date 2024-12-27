@@ -6,6 +6,8 @@ import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SubmittedGameQuizzes {
 
@@ -35,4 +37,10 @@ public class SubmittedGameQuizzes {
         return lastSubmittedAt;
     }
 
+    public int matchCount() {
+        return (int) submitGameQuizzes.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().match(entry.getValue()))
+                .count();
+    }
 }

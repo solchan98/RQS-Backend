@@ -12,10 +12,7 @@ import org.example.quizbox.quiz.presentation.QuizResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
@@ -26,14 +23,16 @@ public class GameService {
     private final GameRepository gameRepository;
     private final IQuizPackRepository quizPackRepository;
     private final IQuizQueryRepository quizQueryRepository;
+    private final IGameHistoryRepository gameHistoryRepository;
     private final Map<QuizPickStrategy, GameQuizPicker> gameQuizPickerMap;
 
 
-    public GameService(GameRepository gameRepository, IQuizQueryRepository quizQueryRepository, IQuizPackRepository quizPackRepository,
+    public GameService(GameRepository gameRepository, IQuizQueryRepository quizQueryRepository, IQuizPackRepository quizPackRepository, IGameHistoryRepository gameHistoryRepository,
                        Map<String, GameQuizPicker> gameQuizPickerMap) {
         this.gameRepository = gameRepository;
         this.quizQueryRepository = quizQueryRepository;
         this.quizPackRepository = quizPackRepository;
+        this.gameHistoryRepository = gameHistoryRepository;
         this.gameQuizPickerMap = gameQuizPickerMap.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> QuizPickStrategy.valueOf(entry.getKey()), Map.Entry::getValue));
@@ -70,6 +69,18 @@ public class GameService {
         game.submit(memberId, submitOption);
 
         gameRepository.save(game);
+        if (game.isEnd()) {
+            GameHistory gameHistory = game.getGameHistory();
+            gameHistoryRepository.save(gameHistory);
+            gameRepository.deleteBy(gameId);
+        }
+    }
+
+    @Transactional(readOnly = true)
+    public GameHistory getGameResult(GameId gameId) {
+        return gameHistoryRepository.findBy(gameId)
+                .orElseThrow(() -> new RuntimeException("게임 결과가 존재하지 않습니다."));
+
     }
 
     private Game getQuizGameById(GameId id) {

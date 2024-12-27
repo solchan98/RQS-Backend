@@ -13,4 +13,12 @@ public record SubmitOption(Set<Long> optionIds) {
             throw new BusinessException(ExceptionConstants.QG6);
         }
     }
+
+    public int size() {
+        return optionIds.size();
+    }
+
+    public boolean containsAll(Set<Long> ids) {
+        return optionIds.containsAll(ids);
+    }
 }

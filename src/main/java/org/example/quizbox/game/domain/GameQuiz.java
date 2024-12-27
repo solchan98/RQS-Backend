@@ -32,7 +32,9 @@ public class GameQuiz {
     }
 
     public boolean match(SubmitOption submitOption) {
-        // match correct option
-        return false;
+        boolean sameCount = correctOptionIds.size() == submitOption.size();
+        boolean containsAll = submitOption.containsAll(correctOptionIds);
+
+        return sameCount && containsAll;
     }
 }
