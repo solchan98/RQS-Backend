@@ -16,7 +16,7 @@ public class Options {
     private static final long MIN_SIZE_OF_OPTION = 2;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "option_id")
+    @JoinColumn(name = "quiz_id")
     private Set<Option> values = new HashSet<>();
 
     public Options(Set<Option> values) {
