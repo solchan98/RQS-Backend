@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "quiz_option")
 @Getter
 public class Option {
 

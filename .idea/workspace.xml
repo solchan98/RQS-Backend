@@ -4,22 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/IGameHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/GameHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/JpaGameHistoryRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/GameQuizTest.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: Option Entity 스키마 정의 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameQuiz.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmitOption.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedGameQuizzes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/SubmittedGameQuizzes.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/InMemoryQuizGameRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmittedGameQuizzesTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/SubmittedGameQuizzesTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/EmbeddedRedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/EmbeddedRedisConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Option.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -176,7 +166,7 @@
     "Gradle.QuizTest.executor": "Run",
     "Gradle.QuizTest.isMatched1.executor": "Run",
     "Gradle.RQS-Backend [\"Quiz Game\"].executor": "Run",
-    "Gradle.RQS-Backend [:org.example.QuizboxApplication.main()].executor": "Run",
+    "Gradle.RQS-Backend [:org.example.QuizboxApplication.main()].executor": "Debug",
     "Gradle.RQS-Backend [build].executor": "Run",
     "Gradle.RQS-Backend [clean].executor": "Run",
     "Gradle.RQS-Backend [test].executor": "Debug",
@@ -210,7 +200,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "show.migrate.to.gradle.popup": "false",
     "vue.rearranger.settings.migration": "true"
   }
@@ -431,6 +421,8 @@
       <workItem from="1735024821761" duration="68000" />
       <workItem from="1735025001498" duration="55000" />
       <workItem from="1735030001484" duration="2153000" />
+      <workItem from="1737190763139" duration="11000" />
+      <workItem from="1737353933720" duration="3000" />
     </task>
     <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
       <option name="closed" value="true" />
@@ -688,7 +680,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735198298683</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="feat: 게임 결과 히스토리 생성 및 결과 조회 로직 구현">
+      <option name="closed" value="true" />
+      <created>1735289585262</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1735289585262</updated>
+    </task>
+    <task id="LOCAL-00037" summary="feat: Option Entity 스키마 정의 수정">
+      <option name="closed" value="true" />
+      <created>1735289681404</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1735289681404</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -706,8 +714,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: QuizPack에 Tag 기능 추가 구현" />
-    <MESSAGE value="feat: Tag 생성(upsert) 로직 구현" />
     <MESSAGE value="feat: QuizPack 생성 시, Tag 로직 수정" />
     <MESSAGE value="feat: QuizGame Quiz 뽑기 관련 로직 수정" />
     <MESSAGE value="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가" />
@@ -731,7 +737,9 @@
     <MESSAGE value="feat: 퀴즈팩 상세 조회 API 수정" />
     <MESSAGE value="feat: 진행중인 퀴즈게임 조회 기능 구현" />
     <MESSAGE value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
+    <MESSAGE value="feat: 게임 결과 히스토리 생성 및 결과 조회 로직 구현" />
+    <MESSAGE value="feat: Option Entity 스키마 정의 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: Option Entity 스키마 정의 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
