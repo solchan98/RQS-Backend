@@ -6,7 +6,7 @@ import java.io.IOException;
 import org.springframework.context.annotation.Configuration;
 import redis.embedded.RedisServer;
 
-@Configuration
+//@Configuration
 public class EmbeddedRedisConfig {
 
     private RedisServer redisServer;
