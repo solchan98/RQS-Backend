@@ -6,17 +6,17 @@ import java.time.LocalDate;
 import java.util.Collection;
 
 @Getter
-public class TodayGameRecord {
+public class TodayGameContributions {
     private final LocalDate localDate;
 
     private final int count;
 
-    public TodayGameRecord(LocalDate localDate, int count) {
+    public TodayGameContributions(LocalDate localDate, int count) {
         this.localDate = localDate;
         this.count = count;
     }
 
-    public TodayGameRecord(LocalDate localDate, Collection<GameHistory> gameHistories) {
+    public TodayGameContributions(LocalDate localDate, Collection<GameHistory> gameHistories) {
         this.localDate = localDate;
         this.count = gameHistories.size();
     }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class Audit {
 
-    @Column(name = "created_at", updatable = false, nullable = false)
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Column(name = "created_by")

@@ -6,13 +6,14 @@ import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.GameQuizResponse;
 import org.example.quizbox.game.application.GameService;
 import org.example.quizbox.game.application.GameStatusResponse;
-import org.example.quizbox.game.domain.Game;
 import org.example.quizbox.game.domain.GameHistory;
 import org.example.quizbox.game.domain.GameId;
 import org.example.quizbox.game.domain.SubmitOption;
+import org.example.quizbox.game.domain.TodayGameContributions;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -72,5 +73,12 @@ public class GameController {
         GameHistory gameResult = gameService.getGameResult(GameId.from(quizGameId));
 
         return ResponseEntity.ok(new BasicResponse<>(gameResult));
+    }
+
+    @GetMapping("/contributions")
+    public ResponseEntity<BasicResponse<List<TodayGameContributions>>> getGameContributions(
+            AccessUser accessUser
+    ) {
+        return ResponseEntity.ok(new BasicResponse<>(gameService.getGameContributions(accessUser.getId())));
     }
 }

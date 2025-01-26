@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.example.quizbox.common.domain.Audit;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Entity
 @NoArgsConstructor
@@ -28,5 +30,7 @@ public class GameHistory extends Audit {
         this.playerId = playerId;
         this.totalQuizSize = totalQuizSize;
         this.matchQuizSize = matchQuizSize;
+        this.setCreatedAt(LocalDateTime.now());
+        this.setUpdatedAt(LocalDateTime.now());
     }
 }

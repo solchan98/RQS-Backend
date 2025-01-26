@@ -109,15 +109,15 @@ public class GameService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodayGameRecord> getGameHistories(long memberId) {
+    public List<TodayGameContributions> getGameContributions(long memberId) {
         LocalDate now = LocalDate.now();
         long periodOfMonths = 6;
         return gameHistoryRepository.findAllBy(memberId, now.minusMonths(periodOfMonths), now)
                 .stream()
-                .collect(Collectors.groupingBy(GameHistory::getCreatedAt))
+                .collect(Collectors.groupingBy(history -> history.getCreatedAt().toLocalDate()))
                 .entrySet()
                 .stream()
-                .map(entry -> new TodayGameRecord(entry.getKey().toLocalDate(), entry.getValue()))
+                .map(entry -> new TodayGameContributions(entry.getKey(), entry.getValue()))
                 .toList();
     }
 
