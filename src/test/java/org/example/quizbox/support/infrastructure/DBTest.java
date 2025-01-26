@@ -8,6 +8,6 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
 @DataJpaTest(showSql = false)
-@ComponentScan(basePackages = "org.example.quizbox.quiz.infrastructure")
+@ComponentScan(basePackages = {"org.example.quizbox.quiz.infrastructure", "org.example.quizbox.game.infrastructure"})
 public @interface DBTest {
 }

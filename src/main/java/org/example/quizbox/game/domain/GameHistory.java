@@ -4,14 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.example.quizbox.common.domain.Audit;
 
 @Getter
 @Entity
 @NoArgsConstructor
-public class GameHistory {
+public class GameHistory extends Audit {
 
     @Id
-    private String gameid;
+    private String gameId;
 
     private long quizPackId;
 
@@ -21,8 +22,8 @@ public class GameHistory {
 
     private int matchQuizSize;
 
-    public GameHistory(GameId gameid, long quizPackId, long playerId, int totalQuizSize, int matchQuizSize) {
-        this.gameid = gameid.value();
+    public GameHistory(GameId gameId, long quizPackId, long playerId, int totalQuizSize, int matchQuizSize) {
+        this.gameId = gameId.value();
         this.quizPackId = quizPackId;
         this.playerId = playerId;
         this.totalQuizSize = totalQuizSize;

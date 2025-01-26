@@ -4,12 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: Option Entity 스키마 정의 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 인메모리 redis 설정 disable">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameHistoriesResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/A.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/infrastructure/GameHistoryRepositoryTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/EmbeddedRedisConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/EmbeddedRedisConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Option.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/Option.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/IGameHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/IGameHistoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/GameHistoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/infrastructure/GameHistoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -121,6 +125,7 @@
   "keyToString": {
     "Gradle.Build RQS-Backend.executor": "Run",
     "Gradle.Build quizbox.executor": "Run",
+    "Gradle.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate.executor": "Debug",
     "Gradle.GameQuizTest.executor": "Run",
     "Gradle.GameTest.executor": "Run",
     "Gradle.GameTest.게임에서_문제_뽑기_가능.executor": "Run",
@@ -230,7 +235,7 @@
       <recent name="org.example.quizbox.quiz.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.QuizboxApplication">
+  <component name="RunManager" selected="Gradle.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate">
     <configuration name="QuizboxApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.QuizboxApplication" />
       <module name="quizbox.main" />
@@ -243,6 +248,30 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
+    </configuration>
+    <configuration name="GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.game.infrastructure.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="GameQuizTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -268,7 +297,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="GameTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -281,7 +310,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.GameTest&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -290,28 +319,6 @@
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
       <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="RQS-Backend [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="SubmittedGameQuizzesTest.정답_개수_확인_가능" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
@@ -348,21 +355,13 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest" />
         <item itemvalue="Gradle.SubmittedGameQuizzesTest.정답_개수_확인_가능" />
         <item itemvalue="Gradle.GameQuizTest" />
         <item itemvalue="Application.QuizboxApplication" />
-        <item itemvalue="Gradle.RQS-Backend [test]" />
-        <item itemvalue="Gradle.GameTest" />
       </list>
     </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-fdfe4dae3a2d-intellij.indexing.shared.core-IU-243.21565.193" />
-        <option value="bundled-js-predefined-d6986cc7102b-e768b9ed790e-JavaScript-IU-243.21565.193" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -696,7 +695,23 @@
       <option name="project" value="LOCAL" />
       <updated>1735289681404</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="chore: mysql 설정 추가 및 Option 테이블 명 적용(option =&gt; mysql keywords)">
+      <option name="closed" value="true" />
+      <created>1737449243421</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1737449243421</updated>
+    </task>
+    <task id="LOCAL-00039" summary="feat: 인메모리 redis 설정 disable">
+      <option name="closed" value="true" />
+      <created>1737449259006</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1737449259006</updated>
+    </task>
+    <option name="localTasksCounter" value="40" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -714,8 +729,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: QuizPack 생성 시, Tag 로직 수정" />
-    <MESSAGE value="feat: QuizGame Quiz 뽑기 관련 로직 수정" />
     <MESSAGE value="feat: QuizGame 상태 조회 로직 수정&#10;- 마지막 제출 시간 응답 필드 추가" />
     <MESSAGE value="feat: 진행중인 퀴즈게임 조회 API 수정&#10;- 응답 형식 수정 및 더미 데이터 수정" />
     <MESSAGE value="chore: 임시 cors 설정 추가&#10;- 개발 환경 오픈" />
@@ -739,7 +752,9 @@
     <MESSAGE value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
     <MESSAGE value="feat: 게임 결과 히스토리 생성 및 결과 조회 로직 구현" />
     <MESSAGE value="feat: Option Entity 스키마 정의 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: Option Entity 스키마 정의 수정" />
+    <MESSAGE value="chore: mysql 설정 추가 및 Option 테이블 명 적용(option =&gt; mysql keywords)" />
+    <MESSAGE value="feat: 인메모리 redis 설정 disable" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 인메모리 redis 설정 disable" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
