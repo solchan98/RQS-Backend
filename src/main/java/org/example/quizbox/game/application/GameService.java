@@ -12,7 +12,11 @@ import org.example.quizbox.quiz.presentation.QuizResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
@@ -103,4 +107,18 @@ public class GameService {
                         )
                 ).collect(Collectors.toSet());
     }
+
+    @Transactional(readOnly = true)
+    public List<TodayGameRecord> getGameHistories(long memberId) {
+        LocalDate now = LocalDate.now();
+        long periodOfMonths = 6;
+        return gameHistoryRepository.findAllBy(memberId, now.minusMonths(periodOfMonths), now)
+                .stream()
+                .collect(Collectors.groupingBy(GameHistory::getCreatedAt))
+                .entrySet()
+                .stream()
+                .map(entry -> new TodayGameRecord(entry.getKey().toLocalDate(), entry.getValue()))
+                .toList();
+    }
+
 }
