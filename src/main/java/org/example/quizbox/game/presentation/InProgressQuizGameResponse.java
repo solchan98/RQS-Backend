@@ -13,8 +13,7 @@ public record InProgressQuizGameResponse(
         String quizPackTitle,
         int submittedQuizCount,
         int quizCount,
-        LocalDateTime startedAt,
-        LocalDateTime lastSubmittedAt
+        LocalDateTime lastUpdatedAt
 ) {
 
     public static InProgressQuizGameResponse from(Game game, QuizPack quizPack) {
@@ -23,30 +22,7 @@ public record InProgressQuizGameResponse(
                 quizPack.getTitle(),
                 (int) game.submittedQuizSize(),
                 (int) game.quizSize(),
-                game.getCreatedAt(),
-                game.lastSubmittedTime()
+                game.lastSubmittedTime() != null ? game.lastSubmittedTime() : game.getCreatedAt()
         );
     };
-
-    public static Set<InProgressQuizGameResponse> dummy() {
-        return Set.of(
-                new InProgressQuizGameResponse(
-                        GameId.create().value(),
-                        "Dummy Quiz Pack Title",
-                        5,
-                        12,
-                        LocalDateTime.now().minusDays(10),
-                        LocalDateTime.now().minusHours(2)
-                ),
-                new InProgressQuizGameResponse(
-                        GameId.create().value(),
-                        "Dummy Quiz Pack Title",
-                        3,
-                        20,
-                        LocalDateTime.now().minusDays(8),
-                        LocalDateTime.now().minusHours(3)
-                )
-
-        );
-    }
 }

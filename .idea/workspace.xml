@@ -4,14 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 게임수에 따른 잔디 레벨 도메인 로직 작성 및 테스트 작성">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/Audit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/Audit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/GameHistory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/TodayGameRecord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/domain/TodayGameContributions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/TodayGameRecordTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/game/domain/TodayGameContributionsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -726,7 +721,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737882621402</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정">
+      <option name="closed" value="true" />
+      <created>1737883852237</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1737883852237</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -744,7 +747,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: 임시 cors 설정 추가&#10;- 개발 환경 오픈" />
     <MESSAGE value="feat: 도메인 -&gt; 엔티티 통합 작업 중간 커밋" />
     <MESSAGE value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
     <MESSAGE value="feat: 전체적인 리팩토링&#10;- 도메인, 엔티티 분리 -&gt; 통합&#10;- 일부 클래스 객체 참조 기반 -&gt; id 기반" />
@@ -769,7 +771,8 @@
     <MESSAGE value="feat: 인메모리 redis 설정 disable" />
     <MESSAGE value="feat: 기간별 게임 히스토리 조회 메서드 및 테스트 작성" />
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 작성 및 테스트 작성" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임수에 따른 잔디 레벨 도메인 로직 작성 및 테스트 작성" />
+    <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
