@@ -14,8 +14,9 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Repository
 @RequiredArgsConstructor
-public class H2TagRepository implements ITagRepository {
+public class TagRepository implements ITagRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -39,17 +40,16 @@ public class H2TagRepository implements ITagRepository {
 
     }
 
-    /**
-     * save tag
-     *
-     * @param tag
-     * @return the tag created or updated
-     */
     @Override
     public Tag save(Tag tag) {
-        String sql = "MERGE INTO tag_entity (name) KEY (name) VALUES (:name)";
+        String sql = """
+                INSERT INTO tag_entity (id, name)
+                VALUES (:id, :name)
+                ON DUPLICATE KEY UPDATE name = :name
+                """;
 
         entityManager.createNativeQuery(sql)
+                .setParameter("id", tag.getId())
                 .setParameter("name", tag.getName())
                 .executeUpdate();
 

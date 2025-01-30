@@ -1,27 +1,25 @@
 package org.example.quizbox.quiz.presentation;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.CreateQuizPack;
+import org.example.quizbox.quiz.application.CreateQuizPackV2;
 import org.example.quizbox.quiz.application.QuizPackResponse;
 import org.example.quizbox.quiz.application.QuizPackService;
+import org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
-import org.example.quizbox.quiz.domain.QuizPackStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult.AddTaskStatus.FAILED;
 
 @RequiredArgsConstructor
 @RestController
@@ -57,7 +55,6 @@ public class QuizPackController {
         return ResponseEntity.ok(new BasicResponse<>(quizPackService.getQuizPack(quizPackId, accessUser.getId())));
     }
 
-    //
     @PostMapping
     public long createQuizPack(
             @RequestBody CreateQuizPack createQuizPack,
@@ -69,13 +66,18 @@ public class QuizPackController {
     }
 
     @PostMapping("/auto")
-    public long createQuizPackAuto(
-            @RequestBody CreateQuizPack createQuizPack,
-            @RequestParam("hopeCount") int hopeCount,
-            AccessUser accessUser
+    public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult>> createQuizPackAuto(
+            AccessUser accessUser,
+            @RequestBody CreateQuizPackV2 createQuizPack
     ) {
-        return quizPackService.autoGenerator(accessUser.getId(), createQuizPack.title(), createQuizPack.tagIds(),
-                hopeCount);
+        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(accessUser.getId(), createQuizPack);
+
+        HttpStatus httpStatus = HttpStatus.CREATED;
+        if (addQuizAutoCreateTaskResult.getStatus() == FAILED) {
+            httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
+        }
+
+        return ResponseEntity.status(httpStatus).body(new BasicResponse<>(addQuizAutoCreateTaskResult));
     }
 
     @PostMapping("/{quiz-pack-id}/quiz")

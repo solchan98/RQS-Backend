@@ -29,7 +29,7 @@ public class TagService {
         return tagRepository.findAllByIds(tagIds);
     }
 
-    @Transactional(propagation = Propagation.NESTED)
+    @Transactional(propagation = Propagation.REQUIRED)
     public Tag create(GetOrCreateTagDto createTagDto) {
         try {
             Tag newTag = new Tag(createTagDto.tagName());

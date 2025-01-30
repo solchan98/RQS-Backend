@@ -4,9 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 진행중인 퀴즈 응답 스펙 수정">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/CorsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateQuizPackV2.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAutoCreateTaskManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/TagRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/InProgressQuizGameResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAutoGenerator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/H2TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/H2TagRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,11 +234,11 @@
       <recent name="$PROJECT_DIR$/src/test/resources/sql" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="org.example.quizbox.quiz.application" />
       <recent name="org.example.quizbox2.quizgame.presentation" />
       <recent name="org.example.quizbox2.quizgame.domain" />
       <recent name="org.example.quizbox2.quizgame.application" />
       <recent name="org.example.quizbox2.domain" />
-      <recent name="org.example.quizbox.quiz.domain" />
     </key>
   </component>
   <component name="RunManager" selected="Application.QuizboxApplication">
@@ -729,7 +741,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737883852237</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="feat: 진행중인 퀴즈 응답 스펙 수정">
+      <option name="closed" value="true" />
+      <created>1737983851663</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1737983851663</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -747,7 +767,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 도메인 -&gt; 엔티티 통합 작업 중간 커밋" />
     <MESSAGE value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
     <MESSAGE value="feat: 전체적인 리팩토링&#10;- 도메인, 엔티티 분리 -&gt; 통합&#10;- 일부 클래스 객체 참조 기반 -&gt; id 기반" />
     <MESSAGE value="test: 테스트 수정" />
@@ -772,7 +791,8 @@
     <MESSAGE value="feat: 기간별 게임 히스토리 조회 메서드 및 테스트 작성" />
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 작성 및 테스트 작성" />
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
+    <MESSAGE value="feat: 진행중인 퀴즈 응답 스펙 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 진행중인 퀴즈 응답 스펙 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

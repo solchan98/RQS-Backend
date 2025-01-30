@@ -10,4 +10,5 @@ public interface ITagRepository {
     Optional<Tag> findByName(String name);
 
     Tag save(Tag tag);
+
 }

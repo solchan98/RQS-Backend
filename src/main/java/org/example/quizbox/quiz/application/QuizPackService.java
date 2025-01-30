@@ -1,18 +1,18 @@
 package org.example.quizbox.quiz.application;
 
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.domain.exception.BusinessException;
 import org.example.quizbox.common.domain.exception.ExceptionConstants;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.quiz.domain.*;
-import org.example.quizbox.quiz.infrastructure.QuizQueryRepository;
+import org.example.quizbox.tag.application.GetOrCreateTagDto;
 import org.example.quizbox.tag.application.TagService;
 import org.example.quizbox.tag.domain.Tag;
 import org.example.quizbox.tag.domain.Tags;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ public class QuizPackService {
 
     private final TagService tagService;
 
-    private final QuizAutoGenerator quizAutoGenerator;
+    private final QuizAutoCreateTaskManager quizAutoCreateTaskManager;
 
     @Transactional(readOnly = true)
     public QuizPackResponse getQuizPack(long quizPackId, long memberId) {
@@ -89,22 +89,17 @@ public class QuizPackService {
     }
 
     @Transactional
-    public long autoGenerator(long memberId, String title, Set<Long> tagIds, int hopeCount) {
-        if (!tagService.existsAll(tagIds)) {
-            throw new BusinessException(TG1);
-        }
+    public AddQuizAutoCreateTaskResult addAutoCreateTask(long memberId, CreateQuizPackV2 createQuizPackV2) {
+        String title = createQuizPackV2.getTitle();
+        Set<Tag> tags = getOrCreateTags(createQuizPackV2.getKeywords());
 
-        QuizPack quizPack = new QuizPack(title, Set.of(memberId), tagIds);
-        quizPack.cancelPublish();
-        QuizPackMember creator = quizPack.getQuizPackMemberBy(memberId);
+        return quizAutoCreateTaskManager.addTask(memberId, title, tags);
+    }
 
-        Tags tags = tagService.getAll(tagIds);
-        Set<Quiz> quizzes = quizAutoGenerator.generate(creator, tags, hopeCount);
-        quizzes.forEach(quizPack::addQuiz);
-
-        return quizPackRepository.save(quizPack)
-                .getId();
-
+    private Set<Tag> getOrCreateTags(Set<String> tags) {
+        return tags.stream()
+                .map(tag -> tagService.create(new GetOrCreateTagDto(tag)))
+                .collect(Collectors.toSet());
     }
 
     @Transactional(readOnly = true)
