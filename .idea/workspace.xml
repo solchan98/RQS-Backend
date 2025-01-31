@@ -4,21 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 진행중인 퀴즈 응답 스펙 수정">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/CorsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateQuizPackV2.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAutoCreateTaskManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/TagRepository.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RestClientConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/ExternalExceptionResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/domain/exception/ExceptionConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizAutoGenerator.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/application/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/domain/ITagRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/H2TagRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/infrastructure/H2TagRepository.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -142,6 +134,8 @@
     "Gradle.GameTest.퀴즈_참가자가_아닌_경우_문제_뽑기_불가.executor": "Run",
     "Gradle.GameTest.퀴즈팩_멤버가_아닌_경우_문제_뽑기_불가.executor": "Run",
     "Gradle.GameTest.퀴즈팩을_통해_게임을_시작.executor": "Debug",
+    "Gradle.NodeServerQuizAutoCreateTaskManagerTest.executor": "Debug",
+    "Gradle.NodeServerQuizAutoCreateTaskManagerTest.test.executor": "Debug",
     "Gradle.QuizAnswersTest.executor": "Run",
     "Gradle.QuizAnswersTest.퀴즈_답변_중_정답은_최소_1개_이상.executor": "Debug",
     "Gradle.QuizAnswersTest.퀴즈_답변은_최소_2개_이상.executor": "Run",
@@ -241,7 +235,7 @@
       <recent name="org.example.quizbox2.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.QuizboxApplication">
+  <component name="RunManager" selected="Gradle.NodeServerQuizAutoCreateTaskManagerTest">
     <configuration name="QuizboxApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.QuizboxApplication" />
       <module name="quizbox.main" />
@@ -279,7 +273,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="QuizPackRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NodeServerQuizAutoCreateTaskManagerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -292,7 +286,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.NodeServerQuizAutoCreateTaskManagerTest&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -303,7 +297,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="SubmittedGameQuizzesTest.정답_개수_확인_가능" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="NodeServerQuizAutoCreateTaskManagerTest.test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -316,7 +310,7 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.SubmittedGameQuizzesTest.정답_개수_확인_가능&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.NodeServerQuizAutoCreateTaskManagerTest.test&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -361,11 +355,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest" />
+        <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest.test" />
         <item itemvalue="Application.QuizboxApplication" />
         <item itemvalue="Gradle.TodayGameRecordTest.level" />
         <item itemvalue="Gradle.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate" />
-        <item itemvalue="Gradle.QuizPackRepositoryTest" />
-        <item itemvalue="Gradle.SubmittedGameQuizzesTest.정답_개수_확인_가능" />
       </list>
     </recent_temporary>
   </component>
@@ -749,7 +743,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737983851663</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정">
+      <option name="closed" value="true" />
+      <created>1738224113763</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1738224113763</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -767,7 +769,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: Quiz 도메인 -&gt; 엔티티 통합" />
     <MESSAGE value="feat: 전체적인 리팩토링&#10;- 도메인, 엔티티 분리 -&gt; 통합&#10;- 일부 클래스 객체 참조 기반 -&gt; id 기반" />
     <MESSAGE value="test: 테스트 수정" />
     <MESSAGE value="feat: 명칭 변경&#10;Answer -&gt; Option" />
@@ -792,7 +793,8 @@
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 작성 및 테스트 작성" />
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
     <MESSAGE value="feat: 진행중인 퀴즈 응답 스펙 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 진행중인 퀴즈 응답 스펙 수정" />
+    <MESSAGE value="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
