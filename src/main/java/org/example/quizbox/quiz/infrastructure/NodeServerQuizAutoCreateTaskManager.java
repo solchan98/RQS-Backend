@@ -34,6 +34,7 @@ public class NodeServerQuizAutoCreateTaskManager implements QuizAutoCreateTaskMa
     public AddQuizAutoCreateTaskResult addTask(long memberId, String title, Set<Tag> tags) {
         Map<String, Object> body = Map.of(
                 "userId", memberId,
+                "title", title,
                 "keywords", tags.stream().map(Tag::getName)
         );
 
