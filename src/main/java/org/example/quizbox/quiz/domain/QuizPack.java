@@ -39,6 +39,7 @@ public class QuizPack extends Audit {
     @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackTag> tags = new HashSet<>();
 
+    @Getter
     private boolean published = true;
 
     public QuizPack(String title, Set<Long> memberIds, Set<Long> tagIds) {

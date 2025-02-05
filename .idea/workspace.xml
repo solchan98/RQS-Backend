@@ -4,13 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RestClientConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/ExternalExceptionResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 자동생성 작업 등록 시, title 전달하도록 수정">
       <change afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManagerTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/FakeQuizAutoGenerator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/QuizPackStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackStatusResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +234,7 @@
       <recent name="org.example.quizbox2.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.NodeServerQuizAutoCreateTaskManagerTest">
+  <component name="RunManager" selected="Application.QuizboxApplication">
     <configuration name="QuizboxApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.QuizboxApplication" />
       <module name="quizbox.main" />
@@ -751,7 +750,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738224113763</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="feat: 퀴즈 자동생성 작업 등록 기능 구현(리팩토링 필요)">
+      <option name="closed" value="true" />
+      <created>1738303822431</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1738303822431</updated>
+    </task>
+    <task id="LOCAL-00046" summary="feat: 퀴즈 자동생성 작업 등록 시, title 전달하도록 수정">
+      <option name="closed" value="true" />
+      <created>1738304350756</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1738304350756</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -769,8 +784,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 전체적인 리팩토링&#10;- 도메인, 엔티티 분리 -&gt; 통합&#10;- 일부 클래스 객체 참조 기반 -&gt; id 기반" />
-    <MESSAGE value="test: 테스트 수정" />
     <MESSAGE value="feat: 명칭 변경&#10;Answer -&gt; Option" />
     <MESSAGE value="feat: 게임 상태 조회 시, 현재 퀴즈 정보 함께 응답하도록 수정" />
     <MESSAGE value="feat: 추가 구현 필요 기능 주석" />
@@ -794,7 +807,9 @@
     <MESSAGE value="feat: 게임수에 따른 잔디 레벨 도메인 로직 수정" />
     <MESSAGE value="feat: 진행중인 퀴즈 응답 스펙 수정" />
     <MESSAGE value="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 자동생성 요청 로직 틀 작성 및 TagRepository save 로직 수정" />
+    <MESSAGE value="feat: 퀴즈 자동생성 작업 등록 기능 구현(리팩토링 필요)" />
+    <MESSAGE value="feat: 퀴즈 자동생성 작업 등록 시, title 전달하도록 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 자동생성 작업 등록 시, title 전달하도록 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
