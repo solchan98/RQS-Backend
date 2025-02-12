@@ -44,8 +44,8 @@ public class QuizPackService {
     @Transactional(readOnly = true)
     public List<QuizPackStatus> getQuizPacks(Long memberId, Pagination pagination) {
         List<QuizPack> quizPacks = memberId != null
-                ? quizPackRepository.findAllBy(memberId, pagination)
-                : quizPackRepository.findAllBy(pagination);
+                ? quizPackRepository.findAllBy(memberId, pagination, true)
+                : quizPackRepository.findAllBy(pagination, true);
 
         Set<Long> tagIds = quizPacks.stream().map(QuizPack::getTagIds).flatMap(Set::stream).collect(Collectors.toSet());
         Tags tags = tagService.getAll(tagIds);

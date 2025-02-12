@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 자동생성 로직 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈생성 요청 dto 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateQuizPackV2.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/AddQuizAutoCreateTask.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,7 +235,7 @@
       <recent name="org.example.quizbox2.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.QuizboxApplication">
+  <component name="RunManager" selected="Gradle.QuizPackRepositoryTest">
     <configuration name="QuizboxApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.QuizboxApplication" />
       <module name="quizbox.main" />
@@ -246,30 +248,6 @@
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
-    </configuration>
-    <configuration name="GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.infrastructure.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
     </configuration>
     <configuration name="NodeServerQuizAutoCreateTaskManagerTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -319,6 +297,30 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="QuizPackRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="TodayGameRecordTest.level" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -353,11 +355,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.QuizPackRepositoryTest" />
         <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest" />
         <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest.test" />
         <item itemvalue="Application.QuizboxApplication" />
         <item itemvalue="Gradle.TodayGameRecordTest.level" />
-        <item itemvalue="Gradle.GameHistoryRepositoryTest.findAllByPlayerIdAndBetweenStartDateAndEndDate" />
       </list>
     </recent_temporary>
   </component>
@@ -781,7 +783,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739347632229</updated>
     </task>
-    <option name="localTasksCounter" value="49" />
+    <task id="LOCAL-00049" summary="feat: 퀴즈생성 요청 dto 수정">
+      <option name="closed" value="true" />
+      <created>1739348131616</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1739348131616</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -799,7 +809,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 추가 구현 필요 기능 주석" />
     <MESSAGE value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
     <MESSAGE value="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정" />
     <MESSAGE value="chore: 정2 security 설" />
@@ -824,7 +833,8 @@
     <MESSAGE value="feat: 퀴즈 자동생성 작업 등록 시, title 전달하도록 수정" />
     <MESSAGE value="feat: 퀴즈팩 조회 시, 발행 여부 응답 (도메인 로직 추가 구현 필요)&#10;-" />
     <MESSAGE value="feat: 퀴즈 자동생성 로직 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 자동생성 로직 수정" />
+    <MESSAGE value="feat: 퀴즈생성 요청 dto 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈생성 요청 dto 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
