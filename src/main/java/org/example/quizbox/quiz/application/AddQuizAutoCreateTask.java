@@ -9,7 +9,7 @@ import lombok.Getter;
  * TODO: BeanValidation 적용하기
  */
 @Getter
-public class CreateQuizPackV2 {
+public class AddQuizAutoCreateTask {
 
     private String quizPackTitle;
 
@@ -18,7 +18,7 @@ public class CreateQuizPackV2 {
     private String fileMineType;
 
     @JsonCreator
-    public CreateQuizPackV2(
+    public AddQuizAutoCreateTask(
             @JsonProperty("quizPackTitle") String quizPackTitle,
             @JsonProperty("base64File") String base64File,
             @JsonProperty("fileMineType") String fileMineType

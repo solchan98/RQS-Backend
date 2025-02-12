@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
+import org.example.quizbox.quiz.application.AddQuizAutoCreateTask;
 import org.example.quizbox.quiz.application.CreateQuizPack;
-import org.example.quizbox.quiz.application.CreateQuizPackV2;
 import org.example.quizbox.quiz.application.QuizPackResponse;
 import org.example.quizbox.quiz.application.QuizPackService;
 import org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult;
@@ -68,9 +68,10 @@ public class QuizPackController {
     @PostMapping("/auto")
     public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult>> createQuizPackAuto(
             AccessUser accessUser,
-            @RequestBody CreateQuizPackV2 createQuizPack
+            @RequestBody AddQuizAutoCreateTask addQuizAutoCreateTask
     ) {
-        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(accessUser.getId(), createQuizPack);
+        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(accessUser.getId(),
+                addQuizAutoCreateTask);
 
         HttpStatus httpStatus = HttpStatus.CREATED;
         if (addQuizAutoCreateTaskResult.getStatus() == FAILED) {
