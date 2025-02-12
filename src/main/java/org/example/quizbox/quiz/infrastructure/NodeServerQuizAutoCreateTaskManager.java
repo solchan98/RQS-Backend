@@ -5,7 +5,6 @@ import lombok.Getter;
 import org.example.quizbox.common.presentation.ExternalExceptionResponse;
 import org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult;
 import org.example.quizbox.quiz.domain.QuizAutoCreateTaskManager;
-import org.example.quizbox.tag.domain.Tag;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -17,7 +16,6 @@ import org.springframework.web.client.RestClient;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Set;
 
 import static org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult.AddTaskStatus.FAILED;
 
@@ -31,11 +29,12 @@ public class NodeServerQuizAutoCreateTaskManager implements QuizAutoCreateTaskMa
     }
 
     @Override
-    public AddQuizAutoCreateTaskResult addTask(long memberId, String title, Set<Tag> tags) {
+    public AddQuizAutoCreateTaskResult addTask(long memberId, String quizPackTitle, String base64File, String fileMineType) {
         Map<String, Object> body = Map.of(
                 "userId", memberId,
-                "title", title,
-                "keywords", tags.stream().map(Tag::getName)
+                "quizPackTitle", quizPackTitle,
+                "base64File", base64File,
+                "fileMineType", fileMineType
         );
 
         try {

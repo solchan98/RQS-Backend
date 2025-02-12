@@ -3,11 +3,6 @@ package org.example.quizbox.quiz.application;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import org.example.quizbox.common.domain.exception.BusinessException;
-
-import java.util.Set;
-
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP8;
 
 
 /**
@@ -16,19 +11,25 @@ import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP8
 @Getter
 public class CreateQuizPackV2 {
 
-    private String title;
+    private String quizPackTitle;
 
-    private Set<String> keywords; // keyword == tag
+    private String base64File;
+
+    private String fileMineType;
 
     @JsonCreator
     public CreateQuizPackV2(
-            @JsonProperty("title") String title,
-            @JsonProperty("keywords") Set<String> keywords
+            @JsonProperty("quizPackTitle") String quizPackTitle,
+            @JsonProperty("base64File") String base64File,
+            @JsonProperty("fileMineType") String fileMineType
     ) {
-        if (keywords == null || keywords.isEmpty() || keywords.size() > 3) {
-            throw new BusinessException(QP8);
-        }
-        this.keywords = keywords;
-        this.title = title;
+        /**
+         * TODO
+         *  1. base64File만 받도록 수정
+         *  2. base64 검증 및 mine_type 추추하여 사용
+         */
+        this.quizPackTitle = quizPackTitle;
+        this.base64File = base64File;
+        this.fileMineType = fileMineType;
     }
 }

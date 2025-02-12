@@ -90,10 +90,8 @@ public class QuizPackService {
 
     @Transactional
     public AddQuizAutoCreateTaskResult addAutoCreateTask(long memberId, CreateQuizPackV2 createQuizPackV2) {
-        String title = createQuizPackV2.getTitle();
-        Set<Tag> tags = getOrCreateTags(createQuizPackV2.getKeywords());
-
-        return quizAutoCreateTaskManager.addTask(memberId, title, tags);
+        return quizAutoCreateTaskManager.addTask(memberId, createQuizPackV2.getQuizPackTitle(),
+                createQuizPackV2.getBase64File(), createQuizPackV2.getFileMineType());
     }
 
     private Set<Tag> getOrCreateTags(Set<String> tags) {
