@@ -14,7 +14,7 @@ public class RestClientConfig {
     /*
      * TODO: 상세 설정 추가 필요
      * */
-    @Bean(name = "nodeClient")
+    @Bean(name = "autoQuizClient")
     public RestClient getNodeServerRestClient() {
 
 
@@ -25,7 +25,6 @@ public class RestClientConfig {
         return RestClient.builder()
                 .baseUrl("http://localhost:5001")
                 .defaultRequest(request -> request
-                        .header("Authorization", "Bearer hello")
                         .header("Content-Type", "application/json"))
                 .requestFactory(ClientHttpRequestFactories.get(clientHttpRequestFactorySettings))
                 .build();

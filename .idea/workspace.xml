@@ -4,13 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈생성 요청 dto 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/IQuizPackRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/QuizPackRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/quiz/infrastructure/QuizPackRepositoryTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/quizbox/support/infrastructure/DBTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,6 +154,7 @@
     "Gradle.QuizPackRepositoryTest.findAllByMemberId.executor": "Debug",
     "Gradle.QuizPackRepositoryTest.findAllByMemberIdAndPagination.executor": "Run",
     "Gradle.QuizPackRepositoryTest.findAllByPagination.executor": "Debug",
+    "Gradle.QuizPackRepositoryTest.findAllByPaginationAndPublishedIsFalse.executor": "Run",
     "Gradle.QuizPackRepositoryTest.findById.executor": "Run",
     "Gradle.QuizPackRepositoryTest.injection_test.executor": "Debug",
     "Gradle.QuizPackRepositoryTest.save.executor": "Run",
@@ -235,7 +234,7 @@
       <recent name="org.example.quizbox2.domain" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.QuizPackRepositoryTest">
+  <component name="RunManager" selected="Application.QuizboxApplication">
     <configuration name="QuizboxApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="org.example.QuizboxApplication" />
       <module name="quizbox.main" />
@@ -273,30 +272,6 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="NodeServerQuizAutoCreateTaskManagerTest.test" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-            <option value="--tests" />
-            <option value="&quot;org.example.quizbox.quiz.infrastructure.NodeServerQuizAutoCreateTaskManagerTest.test&quot;" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>true</RunAsTest>
-      <method v="2" />
-    </configuration>
     <configuration name="QuizPackRepositoryTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -321,7 +296,7 @@
       <RunAsTest>true</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="TodayGameRecordTest.level" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="QuizPackRepositoryTest.findAllByMemberIdAndPagination" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -334,7 +309,31 @@
           <list>
             <option value=":test" />
             <option value="--tests" />
-            <option value="&quot;org.example.quizbox.game.domain.TodayGameRecordTest.level&quot;" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.findAllByMemberIdAndPagination&quot;" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>false</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>true</RunAsTest>
+      <method v="2" />
+    </configuration>
+    <configuration name="QuizPackRepositoryTest.findAllByPaginationAndPublishedIsFalse" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+            <option value="--tests" />
+            <option value="&quot;org.example.quizbox.quiz.infrastructure.QuizPackRepositoryTest.findAllByPaginationAndPublishedIsFalse&quot;" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -355,24 +354,16 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.QuizPackRepositoryTest" />
-        <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest" />
-        <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest.test" />
         <item itemvalue="Application.QuizboxApplication" />
-        <item itemvalue="Gradle.TodayGameRecordTest.level" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.findAllByMemberIdAndPagination" />
+        <item itemvalue="Gradle.QuizPackRepositoryTest.findAllByPaginationAndPublishedIsFalse" />
+        <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00001" summary="feat: 퀴즈 뽑을 때, 유저 검증 추가">
-      <option name="closed" value="true" />
-      <created>1722855606083</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1722855606083</updated>
-    </task>
     <task id="LOCAL-00002" summary="feat: 지원하지 않는 뽑기 방식에 대한 예외 추가">
       <option name="closed" value="true" />
       <created>1722856216329</created>
@@ -791,7 +782,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739348131616</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가">
+      <option name="closed" value="true" />
+      <created>1739349019292</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1739349019292</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -809,7 +808,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 간단하게 QuizPack에 audit 정보 추가하기(추가 작업 필요)" />
     <MESSAGE value="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정" />
     <MESSAGE value="chore: 정2 security 설" />
     <MESSAGE value="chore: 설정 파일 수정" />
@@ -834,7 +832,8 @@
     <MESSAGE value="feat: 퀴즈팩 조회 시, 발행 여부 응답 (도메인 로직 추가 구현 필요)&#10;-" />
     <MESSAGE value="feat: 퀴즈 자동생성 로직 수정" />
     <MESSAGE value="feat: 퀴즈생성 요청 dto 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈생성 요청 dto 수정" />
+    <MESSAGE value="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

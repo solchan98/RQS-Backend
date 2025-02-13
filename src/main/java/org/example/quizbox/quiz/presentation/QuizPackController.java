@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult.AddTaskStatus.FAILED;
-
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/quiz-packs")
@@ -66,7 +64,7 @@ public class QuizPackController {
     }
 
     @PostMapping("/auto")
-    public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult>> createQuizPackAuto(
+    public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult.Data>> createQuizPackAuto(
             AccessUser accessUser,
             @RequestBody AddQuizAutoCreateTask addQuizAutoCreateTask
     ) {
@@ -74,11 +72,11 @@ public class QuizPackController {
                 addQuizAutoCreateTask);
 
         HttpStatus httpStatus = HttpStatus.CREATED;
-        if (addQuizAutoCreateTaskResult.getStatus() == FAILED) {
+        if (addQuizAutoCreateTaskResult.getData().getTaskResult().equals("FAIL")) {
             httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
         }
 
-        return ResponseEntity.status(httpStatus).body(new BasicResponse<>(addQuizAutoCreateTaskResult));
+        return ResponseEntity.status(httpStatus).body(new BasicResponse<>(addQuizAutoCreateTaskResult.getData()));
     }
 
     @PostMapping("/{quiz-pack-id}/quiz")

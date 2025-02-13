@@ -17,14 +17,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-import static org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult.AddTaskStatus.FAILED;
-
 @Component
-public class NodeServerQuizAutoCreateTaskManager implements QuizAutoCreateTaskManager {
+public class QuizAutoCreateTaskManagerImpl implements QuizAutoCreateTaskManager {
 
     private final RestClient restClient;
 
-    public NodeServerQuizAutoCreateTaskManager(@Qualifier(value = "nodeClient") RestClient restClient) {
+    public QuizAutoCreateTaskManagerImpl(@Qualifier(value = "autoQuizClient") RestClient restClient) {
         this.restClient = restClient;
     }
 
@@ -33,13 +31,13 @@ public class NodeServerQuizAutoCreateTaskManager implements QuizAutoCreateTaskMa
         Map<String, Object> body = Map.of(
                 "userId", memberId,
                 "quizPackTitle", quizPackTitle,
-                "base64File", base64File,
-                "fileMineType", fileMineType
+                "base64", base64File,
+                "mineType", fileMineType
         );
 
         try {
             return restClient.post()
-                    .uri(uriBuilder -> uriBuilder.path("/quiz-queue")
+                    .uri(uriBuilder -> uriBuilder.path("/auto")
                             .build())
                     .body(body)
                     .retrieve()
@@ -48,10 +46,12 @@ public class NodeServerQuizAutoCreateTaskManager implements QuizAutoCreateTaskMa
                     })
                     .toEntity(AddQuizAutoCreateTaskResult.class)
                     .getBody();
-        } catch (ResourceAccessException e) {
-            return new AddQuizAutoCreateTaskResult(memberId, null, FAILED, "현재 작업 등록 불가능 상태");
-        } catch (AddQuizAutoCreateTaskException e) {
-            return new AddQuizAutoCreateTaskResult(memberId, null, FAILED, e.getMessage());
+        } catch (ResourceAccessException | AddQuizAutoCreateTaskException e) {
+            return new AddQuizAutoCreateTaskResult(
+                    new AddQuizAutoCreateTaskResult.Data(
+                            null, memberId, "FINISH", "FAIL",
+                            e.getMessage(), null, null)
+            );
         }
     }
 
