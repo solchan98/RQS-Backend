@@ -4,12 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="chore: 인증/인가 관련 부분 제거">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/application/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/QuizPackResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizResponse.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -399,22 +395,6 @@
       <workItem from="1737190763139" duration="11000" />
       <workItem from="1737353933720" duration="3000" />
     </task>
-    <task id="LOCAL-00006" summary="feat: QuizPack 모듈 memberId 하드 코딩 부분 수정">
-      <option name="closed" value="true" />
-      <created>1723267526909</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1723267526909</updated>
-    </task>
-    <task id="LOCAL-00007" summary="feat: Quiz 조회 로직 수정 및 테스트 작성&#10;- 퀴즈팩 유저 검증 로직 추가">
-      <option name="closed" value="true" />
-      <created>1723280350461</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1723280350461</updated>
-    </task>
     <task id="LOCAL-00008" summary="feat: mock api 작성&#10;- 추천-타입에 따른 퀴즈팩 조회&#10;- 진행중인 퀴즈게임 조회&#10;- 타입별 구독중인 태그 조회&#10;- 타입별 구독중인 태그들의 퀴즈 조회">
       <option name="closed" value="true" />
       <created>1732013745204</created>
@@ -791,7 +771,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739527558532</updated>
     </task>
-    <option name="localTasksCounter" value="55" />
+    <task id="LOCAL-00055" summary="feat: 퀴즈팩 및 퀴즈 조회 시, 옵션의 정답 유무 응답하도록 수정">
+      <option name="closed" value="true" />
+      <created>1739529513055</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1739529513055</updated>
+    </task>
+    <task id="LOCAL-00056" summary="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auth quiz 관련 비즈니스 core에서 분리">
+      <option name="closed" value="true" />
+      <created>1739529634432</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
+      <option name="project" value="LOCAL" />
+      <updated>1739529634432</updated>
+    </task>
+    <option name="localTasksCounter" value="57" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -809,9 +805,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 테스트 케이스 작성" />
-    <MESSAGE value="feat: 퀴즈팩의 퀴즈 전체 조회 로직 구현 및 테스트 작성" />
-    <MESSAGE value="chore: QuizResponse 및 하위 Dto getter 추가" />
     <MESSAGE value="feat: 퀴즈팩 상세 조회 API 수정" />
     <MESSAGE value="feat: 진행중인 퀴즈게임 조회 기능 구현" />
     <MESSAGE value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
@@ -834,7 +827,10 @@
     <MESSAGE value="feat: quizpack published 제거" />
     <MESSAGE value="feat: simple quiz 생성 로직 추가 구현" />
     <MESSAGE value="chore: 인증/인가 관련 부분 제거" />
-    <option name="LAST_COMMIT_MESSAGE" value="chore: 인증/인가 관련 부분 제거" />
+    <MESSAGE value="feat: 퀴즈팩 및 퀴즈 조회 시, 옵션의 정답 유무 응답하도록 수정" />
+    <MESSAGE value="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리" />
+    <MESSAGE value="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

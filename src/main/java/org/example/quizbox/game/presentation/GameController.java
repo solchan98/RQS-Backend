@@ -24,16 +24,15 @@ public class GameController {
 
     @GetMapping("/in-progress")
     public ResponseEntity<BasicResponse<Set<InProgressQuizGameResponse>>> getOnGoingQuizGames(
-            @RequestParam(value = "user-id") Long userId
-
+            @RequestHeader("X-USER-ID") long userId
     ) {
         return ResponseEntity.ok(new BasicResponse<>(gameService.getInProgressQuizGames(userId)));
     }
 
     @PostMapping
     public ResponseEntity<BasicResponse<GameStatusResponse>> start(
-            @RequestBody StartQuizRequest request,
-            @RequestParam(value = "user-id") Long userId
+            @RequestHeader("X-USER-ID") long userId,
+            @RequestBody StartQuizRequest request
 
     ) {
         GameStatusResponse status = gameService.start(request.toStartQuiz(userId));
@@ -43,8 +42,8 @@ public class GameController {
 
     @PostMapping("/{game-id}/next-quiz")
     public ResponseEntity<BasicResponse<GameQuizResponse>> pick(
-            @PathVariable("game-id") String quizGameId,
-            @RequestParam(value = "user-id") Long userId
+            @RequestHeader("X-USER-ID") long userId,
+            @PathVariable("game-id") String quizGameId
 
     ) {
         GameQuizResponse pick = gameService.pick(userId, GameId.from(quizGameId));
@@ -54,9 +53,9 @@ public class GameController {
 
     @PostMapping("/{game-id}/submission")
     public ResponseEntity<BasicResponse<Void>> submit(
+            @RequestHeader("X-USER-ID") long userId,
             @PathVariable("game-id") String quizGameId,
-            @RequestBody SubmitOptionRequest submitOptionRequest,
-            @RequestParam(value = "user-id") Long userId
+            @RequestBody SubmitOptionRequest submitOptionRequest
 
     ) {
         gameService.submit(
@@ -70,9 +69,8 @@ public class GameController {
 
     @GetMapping("/{game-id}/result")
     public ResponseEntity<BasicResponse<GameHistory>> getGameResult(
-            @PathVariable("game-id") String quizGameId,
-            @RequestParam(value = "user-id") Long userId
-
+            @RequestHeader("X-USER-ID") long userId,
+            @PathVariable("game-id") String quizGameId
     ) {
         GameHistory gameResult = gameService.getGameResult(GameId.from(quizGameId));
 
@@ -81,8 +79,7 @@ public class GameController {
 
     @GetMapping("/contributions")
     public ResponseEntity<BasicResponse<List<TodayGameContributions>>> getGameContributions(
-            @RequestParam(value = "user-id") Long userId
-
+            @RequestHeader("X-USER-ID") long userId
     ) {
         return ResponseEntity.ok(new BasicResponse<>(gameService.getGameContributions(userId)));
     }
