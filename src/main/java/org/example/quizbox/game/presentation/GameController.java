@@ -1,7 +1,6 @@
 package org.example.quizbox.game.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.game.application.GameQuizResponse;
 import org.example.quizbox.game.application.GameService;
@@ -25,17 +24,19 @@ public class GameController {
 
     @GetMapping("/in-progress")
     public ResponseEntity<BasicResponse<Set<InProgressQuizGameResponse>>> getOnGoingQuizGames(
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        return ResponseEntity.ok(new BasicResponse<>(gameService.getInProgressQuizGames(accessUser.getId())));
+        return ResponseEntity.ok(new BasicResponse<>(gameService.getInProgressQuizGames(userId)));
     }
 
     @PostMapping
     public ResponseEntity<BasicResponse<GameStatusResponse>> start(
             @RequestBody StartQuizRequest request,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        GameStatusResponse status = gameService.start(request.toStartQuiz(accessUser.getId()));
+        GameStatusResponse status = gameService.start(request.toStartQuiz(userId));
 
         return ResponseEntity.ok(new BasicResponse<>(status));
     }
@@ -43,9 +44,10 @@ public class GameController {
     @PostMapping("/{game-id}/next-quiz")
     public ResponseEntity<BasicResponse<GameQuizResponse>> pick(
             @PathVariable("game-id") String quizGameId,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        GameQuizResponse pick = gameService.pick(accessUser.getId(), GameId.from(quizGameId));
+        GameQuizResponse pick = gameService.pick(userId, GameId.from(quizGameId));
 
         return ResponseEntity.ok(new BasicResponse<>(pick));
     }
@@ -54,10 +56,11 @@ public class GameController {
     public ResponseEntity<BasicResponse<Void>> submit(
             @PathVariable("game-id") String quizGameId,
             @RequestBody SubmitOptionRequest submitOptionRequest,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
         gameService.submit(
-                accessUser.getId(),
+                userId,
                 GameId.from(quizGameId),
                 new SubmitOption(submitOptionRequest.optionIds())
         );
@@ -68,7 +71,8 @@ public class GameController {
     @GetMapping("/{game-id}/result")
     public ResponseEntity<BasicResponse<GameHistory>> getGameResult(
             @PathVariable("game-id") String quizGameId,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
         GameHistory gameResult = gameService.getGameResult(GameId.from(quizGameId));
 
@@ -77,8 +81,9 @@ public class GameController {
 
     @GetMapping("/contributions")
     public ResponseEntity<BasicResponse<List<TodayGameContributions>>> getGameContributions(
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        return ResponseEntity.ok(new BasicResponse<>(gameService.getGameContributions(accessUser.getId())));
+        return ResponseEntity.ok(new BasicResponse<>(gameService.getGameContributions(userId)));
     }
 }

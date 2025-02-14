@@ -1,7 +1,6 @@
 package org.example.quizbox.quiz.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
 import org.example.quizbox.quiz.application.*;
@@ -28,10 +27,10 @@ public class QuizPackController {
             @RequestParam(value = "lastId", required = false) Long lastId,
             @RequestParam(value = "chunk") int chunk,
             @RequestParam(value = "searchType") QuizPackSearchType searchType,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
     ) {
         Pagination pagination = new Pagination(lastId, chunk, false);
-        Long memberId = searchType == QuizPackSearchType.MY ? accessUser.getId() : null;
+        Long memberId = searchType == QuizPackSearchType.MY ? userId : null;
         List<QuizPackStatusResponse> quizPackStatusResponses = quizPackService.getQuizPacks(memberId,
                         pagination)
                 .stream()
@@ -44,18 +43,19 @@ public class QuizPackController {
     @GetMapping("/{quiz-pack-id}")
     public ResponseEntity<BasicResponse<QuizPackResponse>> getQuizPackStatus(
             @PathVariable("quiz-pack-id") long quizPackId,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
     ) {
 
-        return ResponseEntity.ok(new BasicResponse<>(quizPackService.getQuizPack(quizPackId, accessUser.getId())));
+        return ResponseEntity.ok(new BasicResponse<>(quizPackService.getQuizPack(quizPackId, userId)));
     }
 
     @PostMapping
     public long createQuizPack(
             @RequestBody CreateQuizPack createQuizPack,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        QuizPack quizPack = quizPackService.create(accessUser.getId(), createQuizPack.title(), createQuizPack.tagIds());
+        QuizPack quizPack = quizPackService.create(userId, createQuizPack.title(), createQuizPack.tagIds());
 
         return quizPack.getId();
     }
@@ -63,19 +63,21 @@ public class QuizPackController {
     @PostMapping("/simple")
     public long createSimpleQuizPack(
             @RequestBody CreateSimpleQuizPack simpleQuizPack,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        QuizPack quizPack = quizPackService.create(accessUser.getId(), simpleQuizPack);
+        QuizPack quizPack = quizPackService.create(userId, simpleQuizPack);
 
         return quizPack.getId();
     }
 
     @PostMapping("/auto")
     public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult.Data>> createQuizPackAuto(
-            AccessUser accessUser,
+            @RequestParam(value = "user-id") Long userId,
+
             @RequestBody AddQuizAutoCreateTask addQuizAutoCreateTask
     ) {
-        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(accessUser.getId(),
+        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(userId,
                 addQuizAutoCreateTask);
 
         HttpStatus httpStatus = HttpStatus.CREATED;
@@ -90,17 +92,18 @@ public class QuizPackController {
     public long createQuiz(
             @PathVariable("quiz-pack-id") long quizPackId,
             @RequestBody CreateQuizRequest request,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
+
     ) {
-        return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, accessUser.getId()));
+        return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, userId));
     }
 
     @GetMapping("/{quiz-pack-id}/quizzes")
     public ResponseEntity<BasicResponse<Set<QuizResponse>>> getQuiz(
             @PathVariable("quiz-pack-id") long quizPackId,
-            AccessUser accessUser
+            @RequestParam(value = "user-id") Long userId
     ) {
-        Set<Quiz> quizzes = quizPackService.getQuizzes(quizPackId, accessUser.getId());
+        Set<Quiz> quizzes = quizPackService.getQuizzes(quizPackId, userId);
 
         Set<QuizResponse> quizResponses = quizzes.stream()
                 .map(QuizResponse::from)

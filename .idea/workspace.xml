@@ -4,8 +4,41 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: simple quiz 생성 로직 추가 구현">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/access/AccessTokenAccessDeniedHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/access/AccessTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AccessUser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserDetails.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserDetailsService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthUserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/AuthenticationFailureHandlerImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/BearerAuthenticationConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/BearerAuthenticationToken.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/SampleAuthority.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/SimpleAuthenticationProcessingFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/auth/TokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/EmbeddedRedisConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/RequestMatchers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/config/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/InMemoryAuthUserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/InMemoryRefreshTokenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/RedisRefreshTokenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/RoleEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/Storage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/infrastructure/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/EmailPasswordAuthenticationConverter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/EmailPasswordAuthenticationSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/login/SimplePasswordEncoder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/RefreshTokenProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/RefreshTokenRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/auth/refresh/TokenRefreshSuccessHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/AddedTopicQuizResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/AddedTopicQuizResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +179,7 @@
     "Gradle.QuizGameTest.퀴즈팩이_없는_경우_게임_불가.executor": "Run",
     "Gradle.QuizPackQueryRepositoryTest.getAllMyQuizPacks.executor": "Debug",
     "Gradle.QuizPackQueryRepositoryTest.getAllQuizPacks.executor": "Debug",
-    "Gradle.QuizPackRepositoryTest.executor": "Run",
+    "Gradle.QuizPackRepositoryTest.executor": "Debug",
     "Gradle.QuizPackRepositoryTest.findAll.executor": "Run",
     "Gradle.QuizPackRepositoryTest.findAllByMemberId.executor": "Debug",
     "Gradle.QuizPackRepositoryTest.findAllByMemberIdAndPagination.executor": "Run",
@@ -198,7 +231,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.pluginManager",
@@ -351,8 +384,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.QuizboxApplication" />
         <item itemvalue="Gradle.QuizPackRepositoryTest" />
+        <item itemvalue="Application.QuizboxApplication" />
         <item itemvalue="Gradle.QuizPackRepositoryTest.findAllByMemberIdAndPagination" />
         <item itemvalue="Gradle.QuizPackRepositoryTest.findAllByPaginationAndPublishedIsFalse" />
         <item itemvalue="Gradle.NodeServerQuizAutoCreateTaskManagerTest" />
@@ -361,14 +394,6 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00003" summary="feat: 퀴즈게임 상태 조회 구현">
-      <option name="closed" value="true" />
-      <created>1722858205568</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1722858205568</updated>
-    </task>
     <task active="true" id="Default" summary="Default task">
       <changelist id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈게임 상태 조회 구현" />
       <created>1723013384442</created>
@@ -402,14 +427,6 @@
       <workItem from="1735030001484" duration="2153000" />
       <workItem from="1737190763139" duration="11000" />
       <workItem from="1737353933720" duration="3000" />
-    </task>
-    <task id="LOCAL-00004" summary="feat: 테스트 시, 불필요 given 제거">
-      <option name="closed" value="true" />
-      <created>1723200109854</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1723200109854</updated>
     </task>
     <task id="LOCAL-00005" summary="feat: 인증/ 인가 처리 모듈 추">
       <option name="closed" value="true" />
@@ -787,7 +804,23 @@
       <option name="project" value="LOCAL" />
       <updated>1739454790709</updated>
     </task>
-    <option name="localTasksCounter" value="52" />
+    <task id="LOCAL-00052" summary="feat: quizpack published 제거">
+      <option name="closed" value="true" />
+      <created>1739510797006</created>
+      <option name="number" value="00052" />
+      <option name="presentableId" value="LOCAL-00052" />
+      <option name="project" value="LOCAL" />
+      <updated>1739510797006</updated>
+    </task>
+    <task id="LOCAL-00053" summary="feat: simple quiz 생성 로직 추가 구현">
+      <option name="closed" value="true" />
+      <created>1739517538199</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1739517538199</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -805,8 +838,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="chore: 정2 security 설" />
-    <MESSAGE value="chore: 설정 파일 수정" />
     <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 QuizQueryRepository 메서드 추가 및 테스트 작성" />
     <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 테스트 케이스 작성" />
     <MESSAGE value="feat: 퀴즈팩의 퀴즈 전체 조회 로직 구현 및 테스트 작성" />
@@ -830,7 +861,9 @@
     <MESSAGE value="feat: 퀴즈생성 요청 dto 수정" />
     <MESSAGE value="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가" />
     <MESSAGE value="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정" />
+    <MESSAGE value="feat: quizpack published 제거" />
+    <MESSAGE value="feat: simple quiz 생성 로직 추가 구현" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: simple quiz 생성 로직 추가 구현" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
