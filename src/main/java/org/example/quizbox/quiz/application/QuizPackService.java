@@ -69,6 +69,12 @@ public class QuizPackService {
     }
 
     @Transactional
+    public QuizPack create(long memberId, CreateSimpleQuizPack simpleQuizPack) {
+        QuizPack quizPack = simpleQuizPack.toQuizPack(memberId);
+        return quizPackRepository.save(quizPack);
+    }
+
+    @Transactional
     public long addQuiz(CreateQuiz createQuiz) {
         QuizPack quizPack = quizPackRepository.findById(createQuiz.quizPackId())
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));

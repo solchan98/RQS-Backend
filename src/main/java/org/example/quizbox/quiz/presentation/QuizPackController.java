@@ -4,10 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.quizbox.auth.auth.AccessUser;
 import org.example.quizbox.common.infrastructure.Pagination;
 import org.example.quizbox.common.presentation.BasicResponse;
-import org.example.quizbox.quiz.application.AddQuizAutoCreateTask;
-import org.example.quizbox.quiz.application.CreateQuizPack;
-import org.example.quizbox.quiz.application.QuizPackResponse;
-import org.example.quizbox.quiz.application.QuizPackService;
+import org.example.quizbox.quiz.application.*;
 import org.example.quizbox.quiz.domain.AddQuizAutoCreateTaskResult;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
@@ -59,6 +56,16 @@ public class QuizPackController {
             AccessUser accessUser
     ) {
         QuizPack quizPack = quizPackService.create(accessUser.getId(), createQuizPack.title(), createQuizPack.tagIds());
+
+        return quizPack.getId();
+    }
+
+    @PostMapping("/simple")
+    public long createSimpleQuizPack(
+            @RequestBody CreateSimpleQuizPack simpleQuizPack,
+            AccessUser accessUser
+    ) {
+        QuizPack quizPack = quizPackService.create(accessUser.getId(), simpleQuizPack);
 
         return quizPack.getId();
     }

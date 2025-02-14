@@ -28,6 +28,7 @@ public class QuizPack extends Audit {
     @Getter
     private String title;
 
+    @Setter
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "quiz_pack_id")
     private Set<Quiz> quizzes = new HashSet<>();
