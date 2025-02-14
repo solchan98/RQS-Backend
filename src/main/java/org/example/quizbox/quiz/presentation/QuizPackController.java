@@ -106,7 +106,7 @@ public class QuizPackController {
         Set<Quiz> quizzes = quizPackService.getQuizzes(quizPackId, userId);
 
         Set<QuizResponse> quizResponses = quizzes.stream()
-                .map(QuizResponse::from)
+                .map(quiz -> QuizResponse.from(quiz, true))
                 .collect(Collectors.toSet());
 
         return ResponseEntity.ok(new BasicResponse<>(quizResponses));

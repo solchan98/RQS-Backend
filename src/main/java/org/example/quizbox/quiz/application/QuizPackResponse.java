@@ -28,7 +28,7 @@ public record QuizPackResponse(
                         .map(QuizPackMemberResponse::from)
                         .collect(Collectors.toSet()),
                 quizzes.stream()
-                        .map(QuizResponse::from)
+                        .map(quiz -> QuizResponse.from(quiz, true))
                         .collect(Collectors.toSet()),
                 tags.stream()
                         .map(TagResponse::from)

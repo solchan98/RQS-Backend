@@ -64,7 +64,7 @@ public class GameService {
 
         Quiz quiz = quizQueryRepository.getById(gameQuiz.getQuizId());
 
-        return new GameQuizResponse(game, QuizResponse.from(quiz));
+        return new GameQuizResponse(game, QuizResponse.from(quiz, false));
     }
 
     @Transactional

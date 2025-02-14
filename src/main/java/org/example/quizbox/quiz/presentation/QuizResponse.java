@@ -20,14 +20,22 @@ public class QuizResponse {
 
     private Set<OptionResponse> options;
 
-    public static QuizResponse from(Quiz quiz) {
+    public static QuizResponse from(Quiz quiz, boolean withOptionCorrect) {
+        Set<OptionResponse> optionResponses = quiz.getOptions().getValues().stream()
+                .map(option -> {
+                    if (withOptionCorrect) {
+                        return OptionResponse.from(option);
+                    }
+
+                    return OptionResponse.fromOptionWithoutCorrect(option);
+                })
+                .collect(Collectors.toSet());
+
         return new QuizResponse(
                 quiz.getId(),
                 quiz.getContent().value(),
                 QuizPackMemberResponse.from(quiz.getQuizPackMember()),
-                quiz.getOptions().getValues().stream()
-                        .map(OptionResponse::from)
-                        .collect(Collectors.toSet())
+                optionResponses
         );
     }
 }
@@ -35,14 +43,24 @@ public class QuizResponse {
 @Getter
 @AllArgsConstructor
 class OptionResponse {
-    private long optionId;
 
+    private long optionId;
     private String content;
+    private Boolean correct;
 
     public static OptionResponse from(Option option) {
         return new OptionResponse(
                 option.getId(),
-                option.getContent()
+                option.getContent(),
+                option.isCorrect()
+        );
+    }
+
+    public static OptionResponse fromOptionWithoutCorrect(Option option) {
+        return new OptionResponse(
+                option.getId(),
+                option.getContent(),
+                null
         );
     }
 }
