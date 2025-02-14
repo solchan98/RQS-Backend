@@ -71,23 +71,6 @@ public class QuizPackController {
         return quizPack.getId();
     }
 
-    @PostMapping("/auto")
-    public ResponseEntity<BasicResponse<AddQuizAutoCreateTaskResult.Data>> createQuizPackAuto(
-            @RequestParam(value = "user-id") Long userId,
-
-            @RequestBody AddQuizAutoCreateTask addQuizAutoCreateTask
-    ) {
-        AddQuizAutoCreateTaskResult addQuizAutoCreateTaskResult = quizPackService.addAutoCreateTask(userId,
-                addQuizAutoCreateTask);
-
-        HttpStatus httpStatus = HttpStatus.CREATED;
-        if (addQuizAutoCreateTaskResult.getData().getTaskResult().equals("FAIL")) {
-            httpStatus = HttpStatus.SERVICE_UNAVAILABLE;
-        }
-
-        return ResponseEntity.status(httpStatus).body(new BasicResponse<>(addQuizAutoCreateTaskResult.getData()));
-    }
-
     @PostMapping("/{quiz-pack-id}/quiz")
     public long createQuiz(
             @PathVariable("quiz-pack-id") long quizPackId,

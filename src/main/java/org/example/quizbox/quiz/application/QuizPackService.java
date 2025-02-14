@@ -26,8 +26,6 @@ public class QuizPackService {
 
     private final TagService tagService;
 
-    private final QuizAutoCreateTaskManager quizAutoCreateTaskManager;
-
     @Transactional(readOnly = true)
     public QuizPackResponse getQuizPack(long quizPackId, long memberId) {
         QuizPack quizPack = quizPackRepository.findById(quizPackId)
@@ -92,12 +90,6 @@ public class QuizPackService {
                 .stream()
                 .map(createOption -> new Option(null, createOption.content(), createOption.correct()))
                 .collect(Collectors.toSet());
-    }
-
-    @Transactional
-    public AddQuizAutoCreateTaskResult addAutoCreateTask(long memberId, AddQuizAutoCreateTask addQuizAutoCreateTask) {
-        return quizAutoCreateTaskManager.addTask(memberId, addQuizAutoCreateTask.getQuizPackTitle(),
-                addQuizAutoCreateTask.getBase64File(), addQuizAutoCreateTask.getFileMineType());
     }
 
     private Set<Tag> getOrCreateTags(Set<String> tags) {
