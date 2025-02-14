@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가">
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/domain/AddQuizAutoCreateTaskResult.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/infrastructure/NodeServerQuizAutoCreateTaskManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -364,14 +361,6 @@
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task id="LOCAL-00002" summary="feat: 지원하지 않는 뽑기 방식에 대한 예외 추가">
-      <option name="closed" value="true" />
-      <created>1722856216329</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1722856216329</updated>
-    </task>
     <task id="LOCAL-00003" summary="feat: 퀴즈게임 상태 조회 구현">
       <option name="closed" value="true" />
       <created>1722858205568</created>
@@ -790,7 +779,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739349019292</updated>
     </task>
-    <option name="localTasksCounter" value="51" />
+    <task id="LOCAL-00051" summary="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정">
+      <option name="closed" value="true" />
+      <created>1739454790709</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1739454790709</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,7 +805,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 테스트용 퀴즈팩 조회 API 작성&#10;- 상세 스펙은 변경 예정" />
     <MESSAGE value="chore: 정2 security 설" />
     <MESSAGE value="chore: 설정 파일 수정" />
     <MESSAGE value="feat: QuizPackRepository 메서드 추가 및 QuizQueryRepository 메서드 추가 및 테스트 작성" />
@@ -833,7 +829,8 @@
     <MESSAGE value="feat: 퀴즈 자동생성 로직 수정" />
     <MESSAGE value="feat: 퀴즈생성 요청 dto 수정" />
     <MESSAGE value="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 조건 조회 쿼리 조건 수정&#10;- 발행 여부 추가" />
+    <MESSAGE value="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈 생성 서버 url 및 요청 응답 스펙 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -50,17 +50,15 @@ public class QuizPackRepository implements IQuizPackRepository {
     }
 
     @Override
-    public List<QuizPack> findAllBy(Pagination pageable, boolean published) {
+    public List<QuizPack> findAllBy(Pagination pageable) {
         if (pageable.lastId() != null) {
             return entityManager.createQuery("""
                             SELECT qp
                             FROM QuizPack qp
                             WHERE qp.id < :lastId
-                                AND qp.published = :published
                             ORDER BY qp.id DESC
                             """, QuizPack.class)
                     .setParameter("lastId", pageable.lastId())
-                    .setParameter("published", published)
                     .setMaxResults(pageable.chunk())
                     .getResultList();
         }
@@ -68,16 +66,14 @@ public class QuizPackRepository implements IQuizPackRepository {
         return entityManager.createQuery("""
                         SELECT qp
                         FROM QuizPack qp
-                        WHERE qp.published = :published
                         ORDER BY qp.id DESC
                         """, QuizPack.class)
-                .setParameter("published", published)
                 .setMaxResults(pageable.chunk())
                 .getResultList();
     }
 
     @Override
-    public List<QuizPack> findAllBy(long memberId, Pagination pageable, boolean published) {
+    public List<QuizPack> findAllBy(long memberId, Pagination pageable) {
         if (pageable.lastId() != null) {
             return entityManager.createQuery("""
                             SELECT qp
@@ -85,12 +81,10 @@ public class QuizPackRepository implements IQuizPackRepository {
                                 JOIN qp.quizPackMembers.values qpm
                             WHERE qpm.memberId = :memberId
                                 AND qp.id < :lastId
-                                AND qp.published = :published
                             ORDER BY qp.id DESC
                             """, QuizPack.class)
                     .setParameter("memberId", memberId)
                     .setParameter("lastId", pageable.lastId())
-                    .setParameter("published", published)
                     .setMaxResults(pageable.chunk())
                     .getResultList();
         }
@@ -100,11 +94,9 @@ public class QuizPackRepository implements IQuizPackRepository {
                         FROM QuizPack qp
                             JOIN qp.quizPackMembers.values qpm
                         WHERE qpm.memberId = :memberId
-                            AND qp.published = :published
                         ORDER BY qp.id DESC
                         """, QuizPack.class)
                 .setParameter("memberId", memberId)
-                .setParameter("published", published)
                 .setMaxResults(pageable.chunk())
                 .getResultList();
     }

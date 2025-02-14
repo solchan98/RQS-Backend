@@ -9,7 +9,6 @@ public record QuizPackStatus(
         String quizPackTitle,
         long quizPackMemberCount,
         long quizCount,
-        boolean published,
         Tags tags,
         LocalDateTime createdAt
 ) {
@@ -20,7 +19,6 @@ public record QuizPackStatus(
                 quizPack.getTitle(),
                 quizPack.memberSize(),
                 quizPack.quizSize(),
-                quizPack.isPublished(),
                 tags,
                 quizPack.getCreatedAt()
         );

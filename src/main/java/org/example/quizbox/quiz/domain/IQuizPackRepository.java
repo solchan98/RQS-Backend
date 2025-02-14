@@ -12,9 +12,9 @@ public interface IQuizPackRepository {
 
     List<QuizPack> findAllBy(long memberId);
 
-    List<QuizPack> findAllBy(Pagination pageable, boolean published);
+    List<QuizPack> findAllBy(Pagination pageable);
 
-    List<QuizPack> findAllBy(long memberId, Pagination pageable, boolean published);
+    List<QuizPack> findAllBy(long memberId, Pagination pageable);
 
     List<QuizPack> findAll();
 }

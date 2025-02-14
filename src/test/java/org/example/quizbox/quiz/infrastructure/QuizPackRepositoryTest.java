@@ -101,8 +101,8 @@ class QuizPackRepositoryTest {
         Pagination firstRequestPagination = new Pagination(null, 20, false);
         Pagination secondRequestPagination = new Pagination(expectedLastId, 20, false);
 
-        assertThat(quizPackRepository.findAllBy(firstRequestPagination, true)).hasSize(20);
-        assertThat(quizPackRepository.findAllBy(secondRequestPagination, true)).hasSize(10);
+        assertThat(quizPackRepository.findAllBy(firstRequestPagination)).hasSize(20);
+        assertThat(quizPackRepository.findAllBy(secondRequestPagination)).hasSize(10);
     }
 
     @Test
@@ -110,7 +110,6 @@ class QuizPackRepositoryTest {
         long admin1Id = 1L;
         IntStream.range(nextQuizPackId, getNextQuizPackId(10))
                 .mapToObj(index -> new QuizPack("test".concat(String.valueOf(index)), Set.of(admin1Id), Set.of(1L)))
-                .peek(QuizPack::cancelPublish)
                 .forEach(quizPackRepository::save);
         long admin2Id = 2L;
         IntStream.range(nextQuizPackId, getNextQuizPackId(20))
@@ -119,23 +118,6 @@ class QuizPackRepositoryTest {
 
         Pagination firstRequestPagination = new Pagination(null, 20, false);
 
-        assertThat(quizPackRepository.findAllBy(firstRequestPagination, false)).hasSize(10);
-    }
-
-    @Test
-    void findAllByMemberIdAndPagination() {
-        long admin1Id = 1L;
-        IntStream.range(nextQuizPackId, getNextQuizPackId(20))
-                .mapToObj(index -> new QuizPack("test".concat(String.valueOf(index)), Set.of(admin1Id), Set.of(1L)))
-                .peek(QuizPack::cancelPublish)
-                .forEach(quizPackRepository::save);
-        long admin2Id = 2L;
-        IntStream.range(nextQuizPackId, getNextQuizPackId(10))
-                .mapToObj(index -> new QuizPack("test".concat(String.valueOf(index)), Set.of(admin2Id), Set.of(2L)))
-                .forEach(quizPackRepository::save);
-        Pagination firstRequestPagination = new Pagination(null, 10, false);
-
-        assertThat(quizPackRepository.findAllBy(admin1Id, firstRequestPagination, false)).hasSize(10);
-        assertThat(quizPackRepository.findAllBy(-999L, firstRequestPagination, true)).isEmpty();
+        assertThat(quizPackRepository.findAllBy(firstRequestPagination)).hasSize(20);
     }
 }

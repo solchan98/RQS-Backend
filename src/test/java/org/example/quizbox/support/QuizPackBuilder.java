@@ -61,6 +61,6 @@ public class QuizPackBuilder {
         if (Objects.isNull(id)) {
             id = --quizPackId;
         }
-        return new QuizPack(id, title, quizzes, quizPackMembers, tags, true);
+        return new QuizPack(id, title, quizzes, quizPackMembers, tags);
     }
 }

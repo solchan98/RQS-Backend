@@ -11,7 +11,6 @@ public record QuizPackStatusResponse(
         String quizPackTitle,
         long memberCount,
         long quizCount,
-        boolean published,
         Set<TagResponse> tags,
         LocalDateTime createdAt
 ) {
@@ -22,7 +21,6 @@ public record QuizPackStatusResponse(
                 status.quizPackTitle(),
                 status.quizPackMemberCount(),
                 status.quizCount(),
-                status.published(),
                 status.tags().getValues().stream().map(TagResponse::from).collect(Collectors.toSet()),
                 status.createdAt()
         );

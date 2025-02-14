@@ -39,9 +39,6 @@ public class QuizPack extends Audit {
     @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackTag> tags = new HashSet<>();
 
-    @Getter
-    private boolean published = true;
-
     public QuizPack(String title, Set<Long> memberIds, Set<Long> tagIds) {
         this.title = title;
         this.quizPackMembers = new QuizPackMembers(memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
@@ -115,9 +112,5 @@ public class QuizPack extends Audit {
         validateIsMember(memberId);
         return quizPackMembers.findByMemberId(memberId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP4));
-    }
-
-    public void cancelPublish() {
-        this.published = false;
     }
 }
