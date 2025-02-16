@@ -1,8 +1,8 @@
 package org.example.quizbox.game.domain;
 
 import lombok.Getter;
-import org.example.quizbox.common.domain.Audit;
-import org.example.quizbox.common.domain.exception.BusinessException;
+import org.example.quizbox.common.Audit;
+import org.example.quizbox.common.BusinessException;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
 
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.*;
+import static org.example.quizbox.common.ExceptionConstants.*;
 
 public class Game extends Audit {
 

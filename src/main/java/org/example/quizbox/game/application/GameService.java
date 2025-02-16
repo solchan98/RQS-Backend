@@ -1,7 +1,7 @@
 package org.example.quizbox.game.application;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.game.domain.*;
 import org.example.quizbox.game.presentation.InProgressQuizGameResponse;
 import org.example.quizbox.quiz.domain.IQuizPackRepository;
@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QP1;
+import static org.example.quizbox.common.ExceptionConstants.QP1;
 
 @Service
 public class GameService {

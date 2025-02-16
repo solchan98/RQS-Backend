@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 
 import java.time.Duration;
 
-import org.example.quizbox.auth.infrastructure.RedisClient;
+import org.example.quizbox.common.config.RedisClient;
 import org.example.quizbox.auth.infrastructure.RedisRefreshTokenRepository;
 import org.junit.jupiter.api.Test;
 

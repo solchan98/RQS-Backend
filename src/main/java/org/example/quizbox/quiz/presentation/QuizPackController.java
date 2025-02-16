@@ -1,8 +1,8 @@
 package org.example.quizbox.quiz.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.common.infrastructure.Pagination;
-import org.example.quizbox.common.presentation.CommonResponse;
+import org.example.quizbox.common.Pagination;
+import org.example.quizbox.common.CommonResponse;
 import org.example.quizbox.quiz.application.CreateSimpleQuizPack;
 import org.example.quizbox.quiz.application.QuizPackResponse;
 import org.example.quizbox.quiz.application.QuizPackService;

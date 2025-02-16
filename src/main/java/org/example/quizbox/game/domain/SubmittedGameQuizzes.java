@@ -1,13 +1,11 @@
 package org.example.quizbox.game.domain;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 public class SubmittedGameQuizzes {
 

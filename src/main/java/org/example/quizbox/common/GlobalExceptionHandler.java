@@ -1,6 +1,5 @@
-package org.example.quizbox.common.presentation;
+package org.example.quizbox.common;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -1,7 +1,7 @@
 package org.example.quizbox.game.domain;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.quiz.domain.*;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.QG11;
+import static org.example.quizbox.common.ExceptionConstants.QG11;
 import static org.example.quizbox.quiz.QuizBuilder.quizBuilder;
 import static org.example.quizbox.support.QuizPackBuilder.quizPackBuilder;
 

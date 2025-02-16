@@ -1,6 +1,6 @@
 package org.example.quizbox.quiz.infrastructure;
 
-import org.example.quizbox.common.infrastructure.Pagination;
+import org.example.quizbox.common.Pagination;
 import org.example.quizbox.quiz.domain.QuizPack;
 import org.example.quizbox.support.infrastructure.DBTest;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package org.example.quizbox.common.infrastructure;
+package org.example.quizbox.common;
 
 public record Pagination(
         Long lastId,

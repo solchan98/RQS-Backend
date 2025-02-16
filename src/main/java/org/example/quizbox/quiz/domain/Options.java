@@ -2,8 +2,8 @@ package org.example.quizbox.quiz.domain;
 
 import jakarta.persistence.*;
 import lombok.NoArgsConstructor;
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -1,7 +1,7 @@
 package org.example.quizbox.game.presentation;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.common.presentation.CommonResponse;
+import org.example.quizbox.common.CommonResponse;
 import org.example.quizbox.game.application.GameQuizResponse;
 import org.example.quizbox.game.application.GameService;
 import org.example.quizbox.game.application.GameStatusResponse;

@@ -4,7 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.example.quizbox.common.domain.Audit;
+import org.example.quizbox.common.Audit;
 
 import java.time.LocalDateTime;
 

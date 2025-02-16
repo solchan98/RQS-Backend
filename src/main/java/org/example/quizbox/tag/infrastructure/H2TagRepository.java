@@ -3,12 +3,11 @@ package org.example.quizbox.tag.infrastructure;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.tag.domain.ITagRepository;
 import org.example.quizbox.tag.domain.Tag;
 import org.example.quizbox.tag.domain.Tags;
-import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Optional;

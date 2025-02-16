@@ -1,7 +1,7 @@
 package org.example.quizbox.game.domain;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 
 import java.util.UUID;
 

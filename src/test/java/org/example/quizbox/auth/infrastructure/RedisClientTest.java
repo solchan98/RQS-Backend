@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.Duration;
 import org.example.quizbox.auth.config.EmbeddedRedisConfig;
-import org.example.quizbox.auth.config.RedisConfig;
-import org.example.quizbox.auth.infrastructure.RedisClient;
+import org.example.quizbox.common.config.RedisClient;
+import org.example.quizbox.common.config.RedisConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest;

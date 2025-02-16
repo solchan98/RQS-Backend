@@ -2,7 +2,7 @@ package org.example.quizbox.quiz.domain;
 
 import java.util.List;
 import java.util.Optional;
-import org.example.quizbox.common.infrastructure.Pagination;
+import org.example.quizbox.common.Pagination;
 
 public interface IQuizPackRepository {
 

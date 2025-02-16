@@ -1,4 +1,4 @@
-package org.example.quizbox.auth.config;
+package org.example.quizbox.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

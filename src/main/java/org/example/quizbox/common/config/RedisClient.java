@@ -1,4 +1,4 @@
-package org.example.quizbox.auth.infrastructure;
+package org.example.quizbox.common.config;
 
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;

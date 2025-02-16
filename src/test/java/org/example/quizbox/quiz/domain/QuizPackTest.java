@@ -1,7 +1,7 @@
 package org.example.quizbox.quiz.domain;
 
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 import org.junit.jupiter.api.Test;
 
 import java.util.Set;

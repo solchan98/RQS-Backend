@@ -1,4 +1,4 @@
-package org.example.quizbox.common.domain.exception;
+package org.example.quizbox.common;
 
 public enum ExceptionConstants {
 

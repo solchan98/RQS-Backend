@@ -1,4 +1,4 @@
-package org.example.quizbox.common.domain;
+package org.example.quizbox.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.MappedSuperclass;

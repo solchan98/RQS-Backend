@@ -1,9 +1,9 @@
 package org.example.quizbox.quiz.application;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
-import org.example.quizbox.common.infrastructure.Pagination;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
+import org.example.quizbox.common.Pagination;
 import org.example.quizbox.quiz.domain.*;
 import org.example.quizbox.tag.application.GetOrCreateTagDto;
 import org.example.quizbox.tag.application.TagService;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.example.quizbox.common.domain.exception.ExceptionConstants.TG1;
+import static org.example.quizbox.common.ExceptionConstants.TG1;
 
 @Service
 @RequiredArgsConstructor

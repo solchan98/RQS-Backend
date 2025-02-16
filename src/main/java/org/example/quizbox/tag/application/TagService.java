@@ -1,8 +1,8 @@
 package org.example.quizbox.tag.application;
 
 import lombok.RequiredArgsConstructor;
-import org.example.quizbox.common.domain.exception.BusinessException;
-import org.example.quizbox.common.domain.exception.ExceptionConstants;
+import org.example.quizbox.common.BusinessException;
+import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.tag.domain.ITagRepository;
 import org.example.quizbox.tag.domain.Tag;
 import org.example.quizbox.tag.domain.Tags;
