@@ -2,13 +2,13 @@ package org.example.quizbox.quiz.presentation;
 
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.infrastructure.Pagination;
-import org.example.quizbox.common.presentation.BasicResponse;
-import org.example.quizbox.quiz.application.CreateQuizPack;
+import org.example.quizbox.common.presentation.CommonResponse;
 import org.example.quizbox.quiz.application.CreateSimpleQuizPack;
 import org.example.quizbox.quiz.application.QuizPackResponse;
 import org.example.quizbox.quiz.application.QuizPackService;
 import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ public class QuizPackController {
     private final QuizPackService quizPackService;
 
     @GetMapping
-    public ResponseEntity<BasicResponse<List<QuizPackStatusResponse>>> getQuizPacks(
+    public ResponseEntity<CommonResponse<List<QuizPackStatusResponse>>> getQuizPacks(
             @RequestHeader("X-USER-ID") long userId,
             @RequestParam(value = "lastId", required = false) Long lastId,
             @RequestParam(value = "chunk") int chunk,
@@ -38,52 +38,72 @@ public class QuizPackController {
                 .map(QuizPackStatusResponse::from)
                 .toList();
 
-        return ResponseEntity.ok(new BasicResponse<>(quizPackStatusResponses));
+        return ResponseEntity.ok(new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "퀴즈팩 리스트 조회 성공",
+                        quizPackStatusResponses
+                )
+        );
     }
 
     @GetMapping("/{quiz-pack-id}")
-    public ResponseEntity<BasicResponse<QuizPackResponse>> getQuizPackStatus(
+    public ResponseEntity<CommonResponse<QuizPackResponse>> getQuizPackStatus(
             @RequestHeader("X-USER-ID") long userId,
             @PathVariable("quiz-pack-id") long quizPackId
     ) {
 
-        return ResponseEntity.ok(new BasicResponse<>(quizPackService.getQuizPack(quizPackId, userId)));
+        return ResponseEntity.ok(new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "퀴즈팩 상세 조회 성공",
+                        quizPackService.getQuizPack(quizPackId, userId)
+                )
+        );
     }
 
-    @PostMapping
-    public long createQuizPack(
-            @RequestHeader("X-USER-ID") long userId,
-            @RequestBody CreateQuizPack createQuizPack
+    /**
+     * TODO: 퀴즈팩 수동 생성 기능 오픈 시, 사용
+     */
+//    @PostMapping
+//    public long createQuizPack(
+//            @RequestHeader("X-USER-ID") long userId,
+//            @RequestBody CreateQuizPack createQuizPack
+//
+//    ) {
+//        QuizPack quizPack = quizPackService.create(userId, createQuizPack.title(), createQuizPack.tagIds());
+//
+//        return quizPack.getId();
+//    }
 
-    ) {
-        QuizPack quizPack = quizPackService.create(userId, createQuizPack.title(), createQuizPack.tagIds());
-
-        return quizPack.getId();
-    }
-
+    /**
+     * TODO: 퀴즈팩 수동 생성 기능 오픈 시, 사용
+     */
+//    @PostMapping("/{quiz-pack-id}/quiz")
+//    public long createQuiz(
+//            @RequestHeader("X-USER-ID") long userId,
+//            @PathVariable("quiz-pack-id") long quizPackId,
+//            @RequestBody CreateQuizRequest request
+//
+//    ) {
+//        return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, userId));
+//    }
     @PostMapping("/simple")
-    public ResponseEntity<BasicResponse<Long>> createSimpleQuizPack(
+    public ResponseEntity<CommonResponse<Long>> createSimpleQuizPack(
             @RequestHeader("X-USER-ID") long userId,
             @RequestBody CreateSimpleQuizPack simpleQuizPack
 
     ) {
         QuizPack quizPack = quizPackService.create(userId, simpleQuizPack);
 
-        return ResponseEntity.ok(new BasicResponse<>(quizPack.getId()));
-    }
-
-    @PostMapping("/{quiz-pack-id}/quiz")
-    public long createQuiz(
-            @RequestHeader("X-USER-ID") long userId,
-            @PathVariable("quiz-pack-id") long quizPackId,
-            @RequestBody CreateQuizRequest request
-
-    ) {
-        return quizPackService.addQuiz(request.toCreateQuiz(quizPackId, userId));
+        return ResponseEntity.ok(new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "퀴즈팩 발행 성공",
+                        quizPack.getId()
+                )
+        );
     }
 
     @GetMapping("/{quiz-pack-id}/quizzes")
-    public ResponseEntity<BasicResponse<Set<QuizResponse>>> getQuiz(
+    public ResponseEntity<CommonResponse<Set<QuizResponse>>> getQuiz(
             @RequestHeader("X-USER-ID") long userId,
             @PathVariable("quiz-pack-id") long quizPackId
     ) {
@@ -93,6 +113,11 @@ public class QuizPackController {
                 .map(quiz -> QuizResponse.from(quiz, true))
                 .collect(Collectors.toSet());
 
-        return ResponseEntity.ok(new BasicResponse<>(quizResponses));
+        return ResponseEntity.ok(new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "퀴즈 리스트 조회",
+                        quizResponses
+                )
+        );
     }
 }

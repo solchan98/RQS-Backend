@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: userId 전달 방식 수정&#10;- query param -&gt; header">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateSimpleQuizPack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/application/CreateSimpleQuizPack.java" afterDir="false" />
+    <list default="true" id="bd1e3ab3-94b0-42ce-a5ba-02f2340232e7" name="Changes" comment="feat: 퀴즈팩 simple 생성 스펙 및 응답 스펙 수정">
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/BasicResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/common/presentation/CommonResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/game/presentation/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/quiz/presentation/QuizPackController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/presentation/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/quizbox/tag/presentation/TagController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -398,14 +398,6 @@
       <workItem from="1737190763139" duration="11000" />
       <workItem from="1737353933720" duration="3000" />
     </task>
-    <task id="LOCAL-00009" summary="feat: 기존 QuizPack &amp; Quiz 관련 로직 주석 제거">
-      <option name="closed" value="true" />
-      <created>1732357130061</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1732357130061</updated>
-    </task>
     <task id="LOCAL-00010" summary="feat: Quiz 생성 로직 수정">
       <option name="closed" value="true" />
       <created>1732359992124</created>
@@ -790,7 +782,15 @@
       <option name="project" value="LOCAL" />
       <updated>1739531158046</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="feat: 퀴즈팩 simple 생성 스펙 및 응답 스펙 수정">
+      <option name="closed" value="true" />
+      <created>1739696444036</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1739696444036</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -808,7 +808,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: 진행중인 퀴즈게임 조회 기능 구현" />
     <MESSAGE value="feat: 게임 퀴즈 뽑기 로직 및 API 응답 스펙 수정&#10;- 답변 대기중인 게임에 퀴즈 뽑기 진행 시, 답변 대기중인 퀴즈 응답&#10;- 퀴즈 뽑기 진행 시, 현재 게임의 상태 정보 추가 응답" />
     <MESSAGE value="feat: 게임 결과 히스토리 생성 및 결과 조회 로직 구현" />
     <MESSAGE value="feat: Option Entity 스키마 정의 수정" />
@@ -833,7 +832,8 @@
     <MESSAGE value="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리" />
     <MESSAGE value="feat: 퀴즈 자동생성 작업 추가 기능 제거&#10;- auto quiz 관련 비즈니스 core에서 분리" />
     <MESSAGE value="feat: userId 전달 방식 수정&#10;- query param -&gt; header" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: userId 전달 방식 수정&#10;- query param -&gt; header" />
+    <MESSAGE value="feat: 퀴즈팩 simple 생성 스펙 및 응답 스펙 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 퀴즈팩 simple 생성 스펙 및 응답 스펙 수정" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
