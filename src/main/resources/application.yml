@@ -1,6 +1,6 @@
 server:
   shutdown: graceful
-  port: 8081
+  port: 8001
 
 spring:
   application:

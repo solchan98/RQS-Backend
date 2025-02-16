@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 @Getter
 public class CreateSimpleQuizPack {
 
-    private String quizPackTitle;
+    private String title;
     private List<CreateSimpleQuiz> quizzes;
 
     public QuizPack toQuizPack(long memberId) {
-        QuizPack quizPack = new QuizPack(quizPackTitle, Set.of(memberId), Set.of());
+        QuizPack quizPack = new QuizPack(title, Set.of(memberId), Set.of());
         QuizPackMember quizPackMember = quizPack.getQuizPackMemberBy(memberId);
         quizPack.setQuizzes(
                 this.quizzes.stream().map(quiz -> quiz.toQuiz(quizPackMember)).collect(Collectors.toSet())

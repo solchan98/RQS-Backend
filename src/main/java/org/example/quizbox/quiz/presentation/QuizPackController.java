@@ -62,14 +62,14 @@ public class QuizPackController {
     }
 
     @PostMapping("/simple")
-    public long createSimpleQuizPack(
+    public ResponseEntity<BasicResponse<Long>> createSimpleQuizPack(
             @RequestHeader("X-USER-ID") long userId,
             @RequestBody CreateSimpleQuizPack simpleQuizPack
 
     ) {
         QuizPack quizPack = quizPackService.create(userId, simpleQuizPack);
 
-        return quizPack.getId();
+        return ResponseEntity.ok(new BasicResponse<>(quizPack.getId()));
     }
 
     @PostMapping("/{quiz-pack-id}/quiz")
