@@ -1,0 +1,48 @@
+package com.example.autoquizbox.entities;
+
+import com.example.autoquizbox.common.BusinessException;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
+
+@Getter
+@Entity
+@NoArgsConstructor
+public class AutoQuizPack {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "task_id", nullable = false)
+    private Long taskId;
+
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
+    @Column(name = "title")
+    private String title;
+
+    @Setter
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "quiz_pack_id")
+    private List<AutoQuiz> quizzes;
+
+    public AutoQuizPack(long taskId, long userId, String title) {
+        this.taskId = taskId;
+        this.userId = userId;
+        this.title = title;
+    }
+
+    public void update(long userId, AutoQuizPack autoQuizPack) {
+        if (userId != this.userId) {
+            throw new BusinessException(404, "오토 퀴즈팩을 찾을 수 없습니다.(03)"); // 본인 퀴즈팩이 아닌 경우, 403이 아닌 404 예외
+        }
+
+        this.title = autoQuizPack.getTitle();
+        this.quizzes = autoQuizPack.quizzes;
+    }
+}

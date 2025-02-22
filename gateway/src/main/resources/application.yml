@@ -1,0 +1,3 @@
+server:
+  shutdown: graceful
+  port: 8000

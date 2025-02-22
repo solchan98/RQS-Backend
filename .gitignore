@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+
+auto/src/main/java/com/example/autoquizbox/infrastructure/gemini/**
+auto/src/main/java/com/example/autoquizbox/service/AutoQuizService.java

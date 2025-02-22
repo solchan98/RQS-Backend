@@ -1,0 +1,33 @@
+server:
+  shutdown: graceful
+  port: 8002
+
+spring:
+  application:
+    name: auto_quizbox
+  datasource:
+    #    url: jdbc:h2:mem:quizbox;MODE=MySQL;DATABASE_TO_LOWER=TRUE
+    #    username: sa
+    #    password: sa
+    #    driverClassName: org.h2.Driver
+    url: jdbc:mysql://localhost:3306/auto_quizbox
+    username: root
+    password: 1234
+    driverClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true          # SQL ???
+        highlight_sql: true       # SQL ?? ??
+  h2:
+    console:
+      enabled: true
+  lifecycle:
+    timeout-per-shutdown-phase: 1m
+logging:
+  level:
+    org.hibernate.SQL: debug
+    org.hibernate.orm.jdbc.bind: trace
