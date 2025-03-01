@@ -12,4 +12,5 @@ public class CommandAutoQuizPackUpdateRequest {
     private Long id;
     private String title;
     private List<AutoQuiz> quizzes;
+    private List<String> keywords;
 }

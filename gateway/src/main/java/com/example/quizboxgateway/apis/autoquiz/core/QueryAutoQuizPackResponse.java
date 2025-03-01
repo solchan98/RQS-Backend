@@ -11,6 +11,7 @@ public class QueryAutoQuizPackResponse {
     private Long userId;
     private String title;
     private List<AutoQuiz> quizzes;
+    private List<String> keywords;
 
     @Getter
     public static class AutoQuiz {
