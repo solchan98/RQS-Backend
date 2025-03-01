@@ -7,6 +7,7 @@ import org.example.quizbox.common.Pagination;
 import org.example.quizbox.keyword.application.KeywordService;
 import org.example.quizbox.keyword.domain.Keyword;
 import org.example.quizbox.keyword.domain.Keywords;
+import org.example.quizbox.keyword.presentation.CreateKeyword;
 import org.example.quizbox.quiz.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,7 +73,7 @@ public class QuizPackService {
     public QuizPack create(long memberId, CreateSimpleQuizPack simpleQuizPack) {
         Set<Keyword> keywords = simpleQuizPack.getKeywords()
                 .stream()
-                .map(createKeyword -> keywordService.save(createKeyword.toKeyword()))
+                .map(keyword -> keywordService.save(new CreateKeyword(keyword).toKeyword()))
                 .collect(Collectors.toSet());
 
         QuizPack quizPack = simpleQuizPack.toQuizPack(memberId);

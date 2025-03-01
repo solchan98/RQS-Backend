@@ -2,7 +2,6 @@ package org.example.quizbox.quiz.application;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.example.quizbox.keyword.domain.Keyword;
 import org.example.quizbox.quiz.domain.*;
 
 import java.util.List;
@@ -14,7 +13,7 @@ public class CreateSimpleQuizPack {
 
     private String title;
     private List<CreateSimpleQuiz> quizzes;
-    private List<CreateKeyword> keywords;
+    private List<String> keywords;
 
     public QuizPack toQuizPack(long memberId) {
         QuizPack quizPack = new QuizPack(title, Set.of(memberId), Set.of());
@@ -51,18 +50,6 @@ public class CreateSimpleQuizPack {
 
         public Option toOption() {
             return new Option(content, correct);
-        }
-    }
-
-    @Getter
-    @AllArgsConstructor
-    public static class CreateKeyword {
-        private Long id;
-        private String name;
-
-
-        public Keyword toKeyword() {
-            return new Keyword(id, name);
         }
     }
 }

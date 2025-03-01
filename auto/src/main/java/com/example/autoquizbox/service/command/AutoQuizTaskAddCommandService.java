@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AutoQuizTaskAddCommandService {
@@ -29,7 +31,12 @@ public class AutoQuizTaskAddCommandService {
     }
 
     private void saveSimpleAutoQuizPack(AddTaskRequest addTaskRequest, long userId, AutoQuizTaskHistory autoQuizTaskHistory) {
-        AutoQuizPack autoQuizPack = new AutoQuizPack(autoQuizTaskHistory.getId(), userId, addTaskRequest.getQuizPackTitle());
+        AutoQuizPack autoQuizPack = new AutoQuizPack(
+                autoQuizTaskHistory.getId(),
+                userId,
+                addTaskRequest.getQuizPackTitle(),
+                List.of()
+        );
         autoQuizPackRepository.save(autoQuizPack);
     }
 

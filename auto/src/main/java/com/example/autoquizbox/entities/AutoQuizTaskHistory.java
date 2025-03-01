@@ -28,7 +28,7 @@ public class AutoQuizTaskHistory {
     @Column(name = "task_result", nullable = false)
     private TaskResult taskResult;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "createdAt")
