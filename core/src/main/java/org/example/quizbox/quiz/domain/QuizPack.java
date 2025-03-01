@@ -37,7 +37,7 @@ public class QuizPack extends Audit {
     @Embedded
     private QuizPackMembers quizPackMembers;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "quiz_pack_id")
     private Set<QuizPackKeywords> keywords = new HashSet<>();
 

@@ -44,8 +44,11 @@ public class QuizPackService {
                 ? quizPackRepository.findAllBy(memberId, pagination)
                 : quizPackRepository.findAllBy(pagination);
 
-        Set<Long> tagIds = quizPacks.stream().map(QuizPack::getKeywordIds).flatMap(Set::stream).collect(Collectors.toSet());
-        Keywords keywords = keywordService.getAll(tagIds);
+        Set<Long> keywordIds = quizPacks.stream()
+                .map(QuizPack::getKeywordIds)
+                .flatMap(Set::stream)
+                .collect(Collectors.toSet());
+        Keywords keywords = keywordService.getAll(keywordIds);
 
         return quizPacks.stream()
                 .map(quizPack -> QuizPackStatus.from(

@@ -45,7 +45,7 @@ public class QuizPacksApi extends CoreApi {
                     handleError(res);
                 })
                 .toEntity(new ParameterizedTypeReference<CoreApiResponse<List<QueryQuizPacksResponse>>>() {
-                }) // 제네릭 타입을 명시적으로 처리
+                })
                 .getBody();
     }
 

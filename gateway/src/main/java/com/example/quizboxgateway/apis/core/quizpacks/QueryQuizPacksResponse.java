@@ -1,8 +1,10 @@
 package com.example.quizboxgateway.apis.core.quizpacks;
 
+import com.example.quizboxgateway.apis.core.keywords.QueryKeywordResponse;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class QueryQuizPacksResponse {
@@ -11,19 +13,6 @@ public class QueryQuizPacksResponse {
     private String quizPackTitle;
     private long memberCount;
     private long quizCount;
+    private List<QueryKeywordResponse> keywords;
     private LocalDateTime createdAt;
-
-    public QueryQuizPacksResponse(
-            long quizPackId,
-            String quizPackTitle,
-            long memberCount,
-            long quizCount,
-            LocalDateTime createdAt
-    ) {
-        this.quizPackId = quizPackId;
-        this.quizPackTitle = quizPackTitle;
-        this.memberCount = memberCount;
-        this.quizCount = quizCount;
-        this.createdAt = createdAt;
-    }
 }

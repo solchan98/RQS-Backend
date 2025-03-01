@@ -1,5 +1,6 @@
 package org.example.quizbox.quiz.presentation;
 
+import org.example.quizbox.keyword.presentation.KeywordResponse;
 import org.example.quizbox.quiz.domain.QuizPackStatus;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public record QuizPackStatusResponse(
         String quizPackTitle,
         long memberCount,
         long quizCount,
-        Set<TagResponse> tags,
+        Set<KeywordResponse> keywords,
         LocalDateTime createdAt
 ) {
 
@@ -21,7 +22,7 @@ public record QuizPackStatusResponse(
                 status.quizPackTitle(),
                 status.quizPackMemberCount(),
                 status.quizCount(),
-                status.keywords().getValues().stream().map(TagResponse::from).collect(Collectors.toSet()),
+                status.keywords().getValues().stream().map(KeywordResponse::from).collect(Collectors.toSet()),
                 status.createdAt()
         );
     }

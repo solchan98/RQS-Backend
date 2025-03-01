@@ -1,5 +1,6 @@
 package com.example.quizboxgateway.apis.core.quizpacks;
 
+import com.example.quizboxgateway.apis.core.keywords.QueryKeywordResponse;
 import lombok.Getter;
 
 import java.util.List;
@@ -11,6 +12,7 @@ public class QueryQuizPackDetailResponse {
     private String quizPackTitle;
     private List<QuizPackMember> quizPackMembers;
     private List<Quiz> quizzes;
+    private List<QueryKeywordResponse> keywords;
 
     @Getter
     public static class Quiz {
