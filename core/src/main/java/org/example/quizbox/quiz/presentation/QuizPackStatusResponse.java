@@ -21,7 +21,7 @@ public record QuizPackStatusResponse(
                 status.quizPackTitle(),
                 status.quizPackMemberCount(),
                 status.quizCount(),
-                status.tags().getValues().stream().map(TagResponse::from).collect(Collectors.toSet()),
+                status.keywords().getValues().stream().map(TagResponse::from).collect(Collectors.toSet()),
                 status.createdAt()
         );
     }

@@ -4,11 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.BusinessException;
 import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.common.Pagination;
+import org.example.quizbox.keyword.application.KeywordService;
+import org.example.quizbox.keyword.domain.Keyword;
+import org.example.quizbox.keyword.domain.Keywords;
 import org.example.quizbox.quiz.domain.*;
-import org.example.quizbox.tag.application.GetOrCreateTagDto;
-import org.example.quizbox.tag.application.TagService;
-import org.example.quizbox.tag.domain.Tag;
-import org.example.quizbox.tag.domain.Tags;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,7 @@ public class QuizPackService {
 
     private final IQuizPackRepository quizPackRepository;
 
-    private final TagService tagService;
+    private final KeywordService keywordService;
 
     @Transactional(readOnly = true)
     public QuizPackResponse getQuizPack(long quizPackId, long memberId) {
@@ -34,9 +33,9 @@ public class QuizPackService {
 
         Set<QuizPackMember> quizPackMembers = quizPack.getQuizPackMembersBy(quizPackMember).getValues();
         Set<Quiz> quizzes = quizPack.getQuizzes(quizPackMember);
-        Set<Tag> tags = tagService.getAll(quizPack.getTagIds()).getValues();
+        Set<Keyword> keywords = keywordService.getAll(quizPack.getKeywordIds()).getValues();
 
-        return QuizPackResponse.of(quizPack, quizPackMembers, quizzes, tags);
+        return QuizPackResponse.of(quizPack, quizPackMembers, quizzes, keywords);
     }
 
     @Transactional(readOnly = true)
@@ -45,20 +44,20 @@ public class QuizPackService {
                 ? quizPackRepository.findAllBy(memberId, pagination)
                 : quizPackRepository.findAllBy(pagination);
 
-        Set<Long> tagIds = quizPacks.stream().map(QuizPack::getTagIds).flatMap(Set::stream).collect(Collectors.toSet());
-        Tags tags = tagService.getAll(tagIds);
+        Set<Long> tagIds = quizPacks.stream().map(QuizPack::getKeywordIds).flatMap(Set::stream).collect(Collectors.toSet());
+        Keywords keywords = keywordService.getAll(tagIds);
 
         return quizPacks.stream()
                 .map(quizPack -> QuizPackStatus.from(
                         quizPack,
-                        tags.getByIds(quizPack.getTagIds())
+                        keywords.getByIds(quizPack.getKeywordIds())
                 ))
                 .toList();
     }
 
     @Transactional
     public QuizPack create(long memberId, String title, Set<Long> tagIds) {
-        if (!tagService.existsAll(tagIds)) {
+        if (!keywordService.existsAll(tagIds)) {
             throw new BusinessException(TG1);
         }
         QuizPack quizPack = new QuizPack(title, Set.of(memberId), tagIds);
@@ -68,7 +67,14 @@ public class QuizPackService {
 
     @Transactional
     public QuizPack create(long memberId, CreateSimpleQuizPack simpleQuizPack) {
+        Set<Keyword> keywords = simpleQuizPack.getKeywords()
+                .stream()
+                .map(createKeyword -> keywordService.save(createKeyword.toKeyword()))
+                .collect(Collectors.toSet());
+
         QuizPack quizPack = simpleQuizPack.toQuizPack(memberId);
+        quizPack.addKeywords(keywords);
+
         return quizPackRepository.save(quizPack);
     }
 
@@ -89,12 +95,6 @@ public class QuizPackService {
         return createQuiz.options()
                 .stream()
                 .map(createOption -> new Option(null, createOption.content(), createOption.correct()))
-                .collect(Collectors.toSet());
-    }
-
-    private Set<Tag> getOrCreateTags(Set<String> tags) {
-        return tags.stream()
-                .map(tag -> tagService.create(new GetOrCreateTagDto(tag)))
                 .collect(Collectors.toSet());
     }
 

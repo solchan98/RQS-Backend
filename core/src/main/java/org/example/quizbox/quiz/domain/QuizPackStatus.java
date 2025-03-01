@@ -1,6 +1,6 @@
 package org.example.quizbox.quiz.domain;
 
-import org.example.quizbox.tag.domain.Tags;
+import org.example.quizbox.keyword.domain.Keywords;
 
 import java.time.LocalDateTime;
 
@@ -9,17 +9,17 @@ public record QuizPackStatus(
         String quizPackTitle,
         long quizPackMemberCount,
         long quizCount,
-        Tags tags,
+        Keywords keywords,
         LocalDateTime createdAt
 ) {
 
-    public static QuizPackStatus from(QuizPack quizPack, Tags tags) {
+    public static QuizPackStatus from(QuizPack quizPack, Keywords keywords) {
         return new QuizPackStatus(
                 quizPack.getId(),
                 quizPack.getTitle(),
                 quizPack.memberSize(),
                 quizPack.quizSize(),
-                tags,
+                keywords,
                 quizPack.getCreatedAt()
         );
     }

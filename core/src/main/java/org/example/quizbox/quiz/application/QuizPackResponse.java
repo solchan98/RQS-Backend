@@ -6,7 +6,7 @@ import org.example.quizbox.quiz.domain.QuizPackMember;
 import org.example.quizbox.quiz.presentation.QuizPackMemberResponse;
 import org.example.quizbox.quiz.presentation.QuizResponse;
 import org.example.quizbox.quiz.presentation.TagResponse;
-import org.example.quizbox.tag.domain.Tag;
+import org.example.quizbox.keyword.domain.Keyword;
 
 import java.util.Collection;
 import java.util.Set;
@@ -20,7 +20,7 @@ public record QuizPackResponse(
         Collection<TagResponse> tags
 ) {
 
-    public static QuizPackResponse of(QuizPack quizPack, Set<QuizPackMember> quizPackMembers, Set<Quiz> quizzes, Collection<Tag> tags) {
+    public static QuizPackResponse of(QuizPack quizPack, Set<QuizPackMember> quizPackMembers, Set<Quiz> quizzes, Collection<Keyword> keywords) {
         return new QuizPackResponse(
                 quizPack.getId(),
                 quizPack.getTitle(),
@@ -30,7 +30,7 @@ public record QuizPackResponse(
                 quizzes.stream()
                         .map(quiz -> QuizResponse.from(quiz, true))
                         .collect(Collectors.toSet()),
-                tags.stream()
+                keywords.stream()
                         .map(TagResponse::from)
                         .collect(Collectors.toSet())
         );

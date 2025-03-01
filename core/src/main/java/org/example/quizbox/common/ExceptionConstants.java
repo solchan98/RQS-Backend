@@ -35,7 +35,7 @@ public enum ExceptionConstants {
     QG10("QG10", "지원하지 않은 뽑기 방식", "BUSINESS"),
     QG11("QG11", "더 이상 뽑을 퀴즈가 없음", "BUSINESS"),
 
-    // TG(Tag)
+    // TG(Keyword)
     TG1("TG1", "존재하지 않는 태그", "BUSINESS");
 
 

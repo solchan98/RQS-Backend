@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.example.quizbox.common.Audit;
 import org.example.quizbox.common.BusinessException;
 import org.example.quizbox.common.ExceptionConstants;
+import org.example.quizbox.keyword.domain.Keyword;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -38,12 +39,12 @@ public class QuizPack extends Audit {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "quiz_pack_id")
-    private Set<QuizPackTag> tags = new HashSet<>();
+    private Set<QuizPackKeywords> keywords = new HashSet<>();
 
-    public QuizPack(String title, Set<Long> memberIds, Set<Long> tagIds) {
+    public QuizPack(String title, Set<Long> memberIds, Set<Long> keywordIds) {
         this.title = title;
         this.quizPackMembers = new QuizPackMembers(memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
-        this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
+        this.keywords = keywordIds.stream().map(QuizPackKeywords::new).collect(Collectors.toSet());
         this.setCreatedAt(LocalDateTime.now());
     }
 
@@ -63,6 +64,12 @@ public class QuizPack extends Audit {
         }
 
         quizzes.add(newQuiz);
+    }
+
+    public void addKeywords(Set<Keyword> keywords) {
+        this.keywords = keywords.stream()
+                .map((keyword -> new QuizPackKeywords(id, keyword.getId())))
+                .collect(Collectors.toSet());
     }
 
     public void validateIsMember(long memberId) {
@@ -100,8 +107,8 @@ public class QuizPack extends Audit {
         return null;
     }
 
-    public Set<Long> getTagIds() {
-        return tags.stream().map(QuizPackTag::getTagId).collect(Collectors.toSet());
+    public Set<Long> getKeywordIds() {
+        return keywords.stream().map(QuizPackKeywords::getKeywordId).collect(Collectors.toSet());
     }
 
     public QuizPackMembers getQuizPackMembersBy(QuizPackMember quizPackMember) {

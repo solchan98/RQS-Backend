@@ -18,7 +18,7 @@ public final class Storage {
     public static final Map<String, LocalDateTime> refreshTokenTtl = new HashMap<>();
 
     static {
-        initUser(new UserEntity(1L, "sol1@sol.com", "sol", "a1234567******", List.of(String.valueOf(Role.USER))));
+        initUser(new UserEntity(1L, "sol1", "sol", "a1******", List.of(String.valueOf(Role.USER))));
         initUser(new UserEntity(2L, "sol2@sol.com", "chan", "a1234567******", List.of(String.valueOf(Role.USER))));
     }
 

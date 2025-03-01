@@ -69,7 +69,7 @@ public class QuizPackController {
 //            @RequestBody CreateQuizPack createQuizPack
 //
 //    ) {
-//        QuizPack quizPack = quizPackService.create(userId, createQuizPack.title(), createQuizPack.tagIds());
+//        QuizPack quizPack = quizPackService.save(userId, createQuizPack.title(), createQuizPack.tagIds());
 //
 //        return quizPack.getId();
 //    }

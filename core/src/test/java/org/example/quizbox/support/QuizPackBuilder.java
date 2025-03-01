@@ -17,7 +17,7 @@ public class QuizPackBuilder {
     private String title = "default title";
     private Set<Quiz> quizzes = new HashSet<>();
     private QuizPackMembers quizPackMembers = new QuizPackMembers();
-    private Set<QuizPackTag> tags = new HashSet<>();
+    private Set<QuizPackKeywords> tags = new HashSet<>();
 
     public static QuizPackBuilder quizPackBuilder() {
         return new QuizPackBuilder();
@@ -49,7 +49,7 @@ public class QuizPackBuilder {
     }
 
     public QuizPackBuilder tags(Set<Long> tagIds) {
-        this.tags = tagIds.stream().map(QuizPackTag::new).collect(Collectors.toSet());
+        this.tags = tagIds.stream().map(QuizPackKeywords::new).collect(Collectors.toSet());
         return this;
     }
 
