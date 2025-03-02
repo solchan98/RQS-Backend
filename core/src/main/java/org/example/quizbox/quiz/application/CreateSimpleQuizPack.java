@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
+@AllArgsConstructor
 public class CreateSimpleQuizPack {
 
     private String title;
