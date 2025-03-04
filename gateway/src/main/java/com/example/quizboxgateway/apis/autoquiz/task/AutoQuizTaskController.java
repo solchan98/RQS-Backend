@@ -11,47 +11,48 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("api/auto-quiz")
+@RequestMapping("api/auto-task")
 @RequiredArgsConstructor
 public class AutoQuizTaskController {
 
     private final AutoQuizTaskApi autoQuizTaskApi;
 
     @PostMapping
-    public ResponseEntity<CommonResponse<CommandAddAutoQuizTaskResponse>> commandAddTask(
+    public ResponseEntity<CommonResponse<QueryAutoTaskStatusResponse
+            >> commandAddTask(
             AccessUser accessUser,
             @RequestBody CommandAddAutoQuizTaskRequest request
     ) {
         return ResponseEntity.ok(new CommonResponse<>(
                         HttpStatus.OK.name(),
-                        "퀴즈 생성 작업 추가 성공",
+                        "퀴즈팩 자동 생성 작업 추가 성공",
                         autoQuizTaskApi.commandAddAutoQuizTask(accessUser.getId(), request).getData()
                 )
         );
     }
 
-    @GetMapping("/task")
-    public ResponseEntity<CommonResponse<List<QueryAutoQuizTaskStatusResponse>>> queryTaskStatus(
+    @GetMapping
+    public ResponseEntity<CommonResponse<List<QueryAutoTaskStatusResponse>>> queryTaskStatus(
             AccessUser accessUser,
-            @RequestParam("task-statuses") Set<String> taskStatuses
+            @RequestParam(value = "task-statuses", required = false) Set<String> taskStatuses
     ) {
         return ResponseEntity.ok(new CommonResponse<>(
                         HttpStatus.OK.name(),
-                        "작업 상태 조회 성공",
+                        "퀴즈팩 자동 생성 작업 조회 성공",
                         autoQuizTaskApi.queryAutoQuizTaskStatuses(accessUser.getId(), taskStatuses).getData()
                 )
         );
     }
 
     @PostMapping("/task/{task-id}/check")
-    public ResponseEntity<CommonResponse<Boolean>> commandTaskCheck(
+    public ResponseEntity<CommonResponse<CommandTaskConfirmResponse>> commandTaskCheck(
             AccessUser accessUser,
             @PathVariable("task-id") long taskId
     ) {
         return ResponseEntity.ok(new CommonResponse<>(
                         HttpStatus.OK.name(),
-                        "작업 리뷰 성공",
-                        autoQuizTaskApi.commandTaskCheck(accessUser.getId(), taskId).getData()
+                        "퀴즈팩 작업 확인 성공",
+                        autoQuizTaskApi.commandTaskConfirm(accessUser.getId(), taskId).getData()
                 )
         );
 

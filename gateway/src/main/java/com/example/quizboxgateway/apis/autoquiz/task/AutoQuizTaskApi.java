@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
@@ -24,17 +25,18 @@ public class AutoQuizTaskApi extends AutoQuizApi {
         this.autoQuizClient = autoQuizClient;
     }
 
-    public AutoQuizApiResponse<List<QueryAutoQuizTaskStatusResponse>> queryAutoQuizTaskStatuses(
+    public AutoQuizApiResponse<List<QueryAutoTaskStatusResponse>> queryAutoQuizTaskStatuses(
             long userId,
             Set<String> taskStatuses
     ) {
         MultiValueMap<String, String> taskStatusesQueryParams = new LinkedMultiValueMap<>();
-        taskStatuses.forEach(taskStatus -> taskStatusesQueryParams.add("task-statuses", taskStatus));
+        if (!CollectionUtils.isEmpty(taskStatuses)) {
+            taskStatuses.forEach(taskStatus -> taskStatusesQueryParams.add("task-statuses", taskStatus));
+        }
 
         return autoQuizClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/auto/task/user/")
-                        .path(String.valueOf(userId))
+                        .path("/auto-task")
                         .queryParams(taskStatusesQueryParams)
                         .build())
                 .header(AUTHORIZATION_HEADER, String.valueOf(userId))
@@ -42,34 +44,49 @@ public class AutoQuizTaskApi extends AutoQuizApi {
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
                     handleError(res);
                 })
-                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<List<QueryAutoQuizTaskStatusResponse>>>() {
+                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<List<QueryAutoTaskStatusResponse>>>() {
                 })
                 .getBody();
     }
 
-    public AutoQuizApiResponse<CommandAddAutoQuizTaskResponse> commandAddAutoQuizTask(
+
+    /**
+     * 퀴즈팩 자동 생성 작업 추가
+     *
+     * @param userId  유저 아이디
+     * @param request 퀴즈팩 자동 생성 데이터
+     */
+    public AutoQuizApiResponse<QueryAutoTaskStatusResponse> commandAddAutoQuizTask(
             long userId,
             CommandAddAutoQuizTaskRequest request
     ) {
         return autoQuizClient.post()
-                .uri("/auto")
+                .uri("/auto-task")
                 .header(AUTHORIZATION_HEADER, String.valueOf(userId))
                 .body(request)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
                     handleError(res);
                 })
-                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<CommandAddAutoQuizTaskResponse>>() {
+                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<QueryAutoTaskStatusResponse>>() {
                 })
                 .getBody();
     }
 
-    public AutoQuizApiResponse<Boolean> commandTaskCheck(long userId, long taskId) {
+    /**
+     * 퀴즈팩 작업 확인
+     * PENDING_REVIEW : 에러 확인
+     * WAITING_TO_BE_PUBLISHED : 프리뷰 퀴즈팩 생성
+     *
+     * @param userId 유저 아이디
+     * @param taskId 작업 id
+     */
+    public AutoQuizApiResponse<CommandTaskConfirmResponse> commandTaskConfirm(long userId, long taskId) {
         return autoQuizClient.post()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/auto/task/")
+                        .path("/auto-task/")
+                        .path("/confirm")
                         .path(String.valueOf(taskId))
-                        .path("/check")
                         .build()
                 )
                 .header(AUTHORIZATION_HEADER, String.valueOf(userId))
@@ -77,7 +94,7 @@ public class AutoQuizTaskApi extends AutoQuizApi {
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
                     handleError(res);
                 })
-                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<Boolean>>() {
+                .toEntity(new ParameterizedTypeReference<AutoQuizApiResponse<CommandTaskConfirmResponse>>() {
                 })
                 .getBody();
     }

@@ -72,4 +72,8 @@ public class AutoTask {
         this.updatedAt = LocalDateTime.now();
         this.detailResult.update(quizzes, keywords, description);
     }
+
+    public void updateState(TaskStatus taskStatus) {
+        this.taskStatus = taskStatus;
+    }
 }

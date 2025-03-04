@@ -1,6 +1,8 @@
 package com.example.autoquizbox.presentation;
 
 import com.example.autoquizbox.application.AutoTaskAddService;
+import com.example.autoquizbox.application.AutoTaskConfirmResponse;
+import com.example.autoquizbox.application.AutoTaskConfirmService;
 import com.example.autoquizbox.application.AutoTaskReadAllService;
 import com.example.autoquizbox.common.CommonResponse;
 import com.example.autoquizbox.domain.AutoTask;
@@ -23,15 +25,17 @@ public class AutoTaskController {
 
     private final AutoTaskAddService autoTaskAddService;
 
+    private final AutoTaskConfirmService autoTaskConfirmService;
+
     @GetMapping
     public ResponseEntity<CommonResponse<List<AutoTask>>> readAllAutoTasks(
             @RequestHeader("X-USER-ID") long userId,
-            @RequestParam(value = "statuses", required = false) Set<TaskStatus> statuses
+            @RequestParam(value = "task-statuses", required = false) Set<TaskStatus> taskStatuses
     ) {
         return ResponseEntity.ok(new CommonResponse<>(
                         HttpStatus.OK.name(),
                         "퀴즈팩 자동 생성 작업 조회 성공",
-                        autoTaskReadAllService.query(userId, statuses)
+                        autoTaskReadAllService.query(userId, taskStatuses)
                 )
         );
     }
@@ -45,6 +49,19 @@ public class AutoTaskController {
                         HttpStatus.OK.name(),
                         "퀴즈팩 자동 생성 작업 추가 성공",
                         autoTaskAddService.command(userId, autoTaskRequest)
+                )
+        );
+    }
+
+    @PostMapping("/confirm/{task-id}")
+    public ResponseEntity<CommonResponse<AutoTaskConfirmResponse>> confirm(
+            @RequestHeader("X-USER-ID") Long userId,
+            @PathVariable("task-id") Long taskId
+    ) {
+        return ResponseEntity.ok(new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "퀴즈팩 작업 확인 성공",
+                        autoTaskConfirmService.command(userId, taskId)
                 )
         );
     }

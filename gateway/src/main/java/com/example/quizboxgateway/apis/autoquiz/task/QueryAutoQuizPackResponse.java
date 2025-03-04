@@ -1,4 +1,4 @@
-package com.example.quizboxgateway.apis.autoquiz.core;
+package com.example.quizboxgateway.apis.autoquiz.task;
 
 import lombok.Getter;
 
@@ -6,9 +6,6 @@ import java.util.List;
 
 @Getter
 public class QueryAutoQuizPackResponse {
-    private Long id;
-    private Long taskId;
-    private Long userId;
     private String title;
     private List<AutoQuiz> quizzes;
     private List<String> keywords;

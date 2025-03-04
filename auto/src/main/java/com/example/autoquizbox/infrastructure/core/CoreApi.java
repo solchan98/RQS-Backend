@@ -1,5 +1,6 @@
 package com.example.autoquizbox.infrastructure.core;
 
+import com.example.autoquizbox.application.PreviewResponse;
 import com.example.autoquizbox.domain.vo.AutoQuizPack;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +13,7 @@ import org.springframework.web.client.RestClient;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @Component
 public class CoreApi {
@@ -27,19 +29,25 @@ public class CoreApi {
         this.objectMapper = objectMapper;
     }
 
-    public CoreApiResponse<Long> commandCreateSimpleQuizPack(
-            long userId,
-            AutoQuizPack autoQuizPack
-    ) {
+    public CoreApiResponse<PreviewResponse> commandPreviewQuizPack(long userId, long taskId, AutoQuizPack autoQuizPack) {
+        Map<String, Object> requestBody = Map.of(
+                "taskId", taskId,
+                "userId", userId,
+                "title", autoQuizPack.getTitle(),
+                "keywords", autoQuizPack.getKeywords(),
+                "quizzes", autoQuizPack.getQuizzes()
+        );
+
         return restClient.post()
-                .uri("/quiz-packs/simple")
-                .header("X-USER-ID", String.valueOf(userId))
-                .body(autoQuizPack)
+                .uri("preview")
+                .header(AUTHORIZATION_HEADER, String.valueOf(userId))
+                .body(requestBody)
                 .retrieve()
                 .onStatus(HttpStatusCode::isError, (req, res) -> {
                     handleError(res);
                 })
-                .toEntity(new ParameterizedTypeReference<CoreApiResponse<Long>>() {})
+                .toEntity(new ParameterizedTypeReference<CoreApiResponse<PreviewResponse>>() {
+                })
                 .getBody();
     }
 

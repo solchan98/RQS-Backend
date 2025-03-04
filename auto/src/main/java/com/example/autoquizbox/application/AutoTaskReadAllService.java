@@ -18,11 +18,11 @@ public class AutoTaskReadAllService {
 
     private final AutoTaskRepository autoTaskRepository;
 
-    public List<AutoTask> query(long userId, Set<TaskStatus> statuses) {
-        if (CollectionUtils.isEmpty(statuses)) {
+    public List<AutoTask> query(long userId, Set<TaskStatus> taskStatuses) {
+        if (CollectionUtils.isEmpty(taskStatuses)) {
             return autoTaskRepository.findAllByUserId(userId);
         }
 
-        return autoTaskRepository.findAllByUserIdAndTaskStatusIn(userId, statuses);
+        return autoTaskRepository.findAllByUserIdAndTaskStatusIn(userId, taskStatuses);
     }
 }

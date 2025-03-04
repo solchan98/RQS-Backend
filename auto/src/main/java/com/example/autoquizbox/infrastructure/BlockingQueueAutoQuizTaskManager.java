@@ -1,11 +1,12 @@
 package com.example.autoquizbox.infrastructure;
 
 import com.example.autoquizbox.common.ServiceUnavailableException;
-import com.example.autoquizbox.domain.AutoTaskManager;
-import com.example.autoquizbox.domain.CreateAutoQuizPack;
 import com.example.autoquizbox.domain.AutoTask;
+import com.example.autoquizbox.domain.AutoTaskManager;
 import com.example.autoquizbox.domain.AutoTaskRepository;
+import com.example.autoquizbox.domain.CreateAutoQuizPack;
 import com.example.autoquizbox.domain.vo.TaskStatus;
+import com.example.autoquizbox.infrastructure.core.CoreApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,8 @@ public class BlockingQueueAutoQuizTaskManager implements AutoTaskManager {
     private final PausableThreadPoolExecutor executorService;
 
     private final CreateAutoQuizPack createAutoQuizPack;
+
+    private final CoreApi coreApi;
 
     private final AutoTaskRepository autoTaskRepository;
 

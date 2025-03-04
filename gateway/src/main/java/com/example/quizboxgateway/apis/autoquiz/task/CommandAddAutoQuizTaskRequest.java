@@ -7,7 +7,6 @@ import java.util.List;
 @Getter
 public class CommandAddAutoQuizTaskRequest {
     private String quizPackTitle;
-    private String base64;
-    private String mineType;
-    private List<String> previousQuizzes;
+    private String content;
+    private List<String> keywords;
 }
