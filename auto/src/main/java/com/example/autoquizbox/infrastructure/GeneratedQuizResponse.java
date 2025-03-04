@@ -1,6 +1,6 @@
 package com.example.autoquizbox.infrastructure;
 
-import com.example.autoquizbox.entities.AutoQuiz;
+import com.example.autoquizbox.domain.vo.AutoQuiz;
 import lombok.Getter;
 
 import java.util.List;

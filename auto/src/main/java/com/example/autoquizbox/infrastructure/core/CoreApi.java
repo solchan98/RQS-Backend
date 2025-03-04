@@ -1,6 +1,6 @@
 package com.example.autoquizbox.infrastructure.core;
 
-import com.example.autoquizbox.entities.AutoQuizPack;
+import com.example.autoquizbox.domain.vo.AutoQuizPack;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;

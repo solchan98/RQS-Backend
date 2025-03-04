@@ -1,6 +1,5 @@
 package com.example.autoquizbox.infrastructure;
 
-import java.security.PublicKey;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
