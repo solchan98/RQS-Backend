@@ -29,6 +29,9 @@ public class PreviewQuizPack {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
+    private String description;
+
     @Setter
     @Column(name = "keywords")
     @Convert(converter = StringListConverter.class)
@@ -53,9 +56,10 @@ public class PreviewQuizPack {
 //            throw new BusinessException(404, "오토 퀴즈팩을 찾을 수 없습니다.(03)"); // 본인 퀴즈팩이 아닌 경우, 403이 아닌 404 예외
         }
 
-        this.title = previewQuizPack.getTitle();
+        this.title = previewQuizPack.title;
+        this.description = previewQuizPack.description;
         this.quizzes = previewQuizPack.quizzes;
-        this.keywords = previewQuizPack.getKeywords();
+        this.keywords = previewQuizPack.keywords;
     }
 
     // TODO: 테스트 작성
