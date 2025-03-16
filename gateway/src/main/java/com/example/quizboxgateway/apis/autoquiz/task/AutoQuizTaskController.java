@@ -18,8 +18,7 @@ public class AutoQuizTaskController {
     private final AutoQuizTaskApi autoQuizTaskApi;
 
     @PostMapping
-    public ResponseEntity<CommonResponse<QueryAutoTaskStatusResponse
-            >> commandAddTask(
+    public ResponseEntity<CommonResponse<QueryAutoTaskStatusResponse>> commandAddTask(
             AccessUser accessUser,
             @RequestBody CommandAddAutoQuizTaskRequest request
     ) {
@@ -44,7 +43,7 @@ public class AutoQuizTaskController {
         );
     }
 
-    @PostMapping("/task/{task-id}/check")
+    @PostMapping("confirm/{task-id}")
     public ResponseEntity<CommonResponse<CommandTaskConfirmResponse>> commandTaskCheck(
             AccessUser accessUser,
             @PathVariable("task-id") long taskId

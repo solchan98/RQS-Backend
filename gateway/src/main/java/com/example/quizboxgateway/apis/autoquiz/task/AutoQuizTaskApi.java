@@ -85,7 +85,7 @@ public class AutoQuizTaskApi extends AutoQuizApi {
         return autoQuizClient.post()
                 .uri(uriBuilder -> uriBuilder
                         .path("/auto-task/")
-                        .path("/confirm")
+                        .path("/confirm/")
                         .path(String.valueOf(taskId))
                         .build()
                 )
