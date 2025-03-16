@@ -10,6 +10,7 @@ public class CommandPreviewRequest {
     private Long taskId;
     private Long userId;
     private String title;
+    private String description;
     private List<String> keywords;
     private List<QueryPreviewResponse.PreviewQuiz> quizzes;
 }
