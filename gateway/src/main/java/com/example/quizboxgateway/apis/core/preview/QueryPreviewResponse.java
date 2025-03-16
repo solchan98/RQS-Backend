@@ -11,6 +11,7 @@ public class QueryPreviewResponse {
     private Long taskId;
     private Long userId;
     private String title;
+    private String description;
     private List<String> keywords;
     private List<PreviewQuiz> quizzes;
 

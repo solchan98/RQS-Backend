@@ -16,24 +16,15 @@ public class PreviewQuizPackSaveService {
     private final PreviewQuizPackRepository previewQuizPackRepository;
 
     public PreviewQuizPack command(Long userId, final PreviewQuizPack previewQuizPack) {
-        PreviewQuizPack findOrSavedPreviewQuizPack = getFindOrSavedPreviewQuizPack(previewQuizPack);
-
-        if (Objects.isNull(findOrSavedPreviewQuizPack.getId())) {
-            findOrSavedPreviewQuizPack.setUserId(userId);
-        }
-        findOrSavedPreviewQuizPack.update(userId, previewQuizPack);
-
-        return previewQuizPackRepository.save(findOrSavedPreviewQuizPack);
-    }
-
-    private PreviewQuizPack getFindOrSavedPreviewQuizPack(PreviewQuizPack previewQuizPack) {
-        PreviewQuizPack findOrSavedPreviewQuizPack = previewQuizPack;
-
-        if (!Objects.isNull(previewQuizPack.getId())) {
-            findOrSavedPreviewQuizPack = previewQuizPackRepository.findById(previewQuizPack.getId())
-                    .orElseThrow(() -> new RuntimeException("프리뷰 퀴즈팩 없음"));
+        if (Objects.isNull(previewQuizPack.getId())) {
+            previewQuizPack.setUserId(userId);
+            return previewQuizPackRepository.save(previewQuizPack);
         }
 
-        return findOrSavedPreviewQuizPack;
+        PreviewQuizPack savedPreviewQuizPack = previewQuizPackRepository.findById(previewQuizPack.getId())
+                .orElseThrow(() -> new RuntimeException("프리뷰 퀴즈팩 없음"));
+        savedPreviewQuizPack.update(userId, previewQuizPack);
+
+        return previewQuizPackRepository.save(savedPreviewQuizPack);
     }
 }
