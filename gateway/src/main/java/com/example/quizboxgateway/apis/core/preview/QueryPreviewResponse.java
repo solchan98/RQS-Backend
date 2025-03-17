@@ -16,6 +16,7 @@ public class QueryPreviewResponse {
     private List<String> keywords;
     private List<PreviewQuiz> quizzes;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     record PreviewQuiz(
             Long id,
