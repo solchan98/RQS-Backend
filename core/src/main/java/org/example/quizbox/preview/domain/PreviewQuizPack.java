@@ -65,6 +65,13 @@ public class PreviewQuizPack extends Audit {
         this.updateAudit(userId);
     }
 
+    // TODO: audit 설정 로직 고민해보기
+    @Override
+    public void initAudit(long createdBy) {
+        super.initAudit(createdBy);
+        this.userId = createdBy;
+    }
+
     // TODO: 테스트 작성
     public PreviewQuizPackType getPreviewQuizPackType() {
         return Objects.isNull(taskId)

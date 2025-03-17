@@ -17,7 +17,7 @@ public class PreviewQuizPackSaveService {
 
     public PreviewQuizPack command(Long userId, final PreviewQuizPack previewQuizPack) {
         if (Objects.isNull(previewQuizPack.getId())) {
-            previewQuizPack.setUserId(userId);
+            previewQuizPack.initAudit(userId);
             return previewQuizPackRepository.save(previewQuizPack);
         }
 
