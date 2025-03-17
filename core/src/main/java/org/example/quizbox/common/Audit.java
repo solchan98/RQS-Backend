@@ -16,11 +16,21 @@ public abstract class Audit {
     private LocalDateTime createdAt;
 
     @Column(name = "created_by")
-    private long createdBy;
+    private Long createdBy;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @Column(name = "updated_by")
-    private long updatedBy;
+    private Long updatedBy;
+
+    public void initAudit(long createdBy) {
+        this.createdAt = LocalDateTime.now();
+        this.createdBy = createdBy;
+    }
+
+    public void updateAudit(long updatedBy) {
+        this.updatedAt = LocalDateTime.now();
+        this.updatedBy = updatedBy;
+    }
 }

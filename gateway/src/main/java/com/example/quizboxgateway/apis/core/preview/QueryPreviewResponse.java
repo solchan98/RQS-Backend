@@ -2,6 +2,7 @@ package com.example.quizboxgateway.apis.core.preview;
 
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -14,6 +15,7 @@ public class QueryPreviewResponse {
     private String description;
     private List<String> keywords;
     private List<PreviewQuiz> quizzes;
+    private LocalDateTime createdAt;
 
     record PreviewQuiz(
             Long id,

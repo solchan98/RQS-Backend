@@ -8,6 +8,7 @@ import java.util.Set;
 
 public interface PreviewQuizPackRepository extends JpaRepository<PreviewQuizPack, Long> {
 
+    Optional<PreviewQuizPack> findByIdAndUserId(long id, long userId);
     List<PreviewQuizPack> findAllByUserId(long userId);
     List<PreviewQuizPack> findAllByUserIdAndTaskIdIsNull(long userId);
     List<PreviewQuizPack> findAllByUserIdAndTaskIdIsNotNull(long userId);

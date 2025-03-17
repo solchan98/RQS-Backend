@@ -22,11 +22,33 @@ public class PreviewApi extends CoreApi {
     }
 
     /**
+     * 프리뷰 조회
+     *
+     * @param userId            유저 아이디
+     * @param previewQuizPackId 프리뷰 퀴즈팩 아이디
+     */
+    public CoreApiResponse<QueryPreviewResponse> queryPreviewResponse(long userId, long previewQuizPackId) {
+        return coreClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/preview/")
+                        .path(String.valueOf(previewQuizPackId))
+                        .build())
+                .header(AUTHORIZATION_HEADER, String.valueOf(userId))
+                .retrieve()
+                .onStatus(HttpStatusCode::isError, (req, res) -> {
+                    handleError(res);
+                })
+                .toEntity(new ParameterizedTypeReference<CoreApiResponse<QueryPreviewResponse>>() {
+                })
+                .getBody();
+    }
+
+    /**
      * 프리뷰 리스트 조회
      *
      * @param userId 유저 아이디
      */
-    public CoreApiResponse<List<QueryPreviewResponse>> queryPreviewResponse(long userId) {
+    public CoreApiResponse<List<QueryPreviewResponse>> queryAllPreviewResponse(long userId) {
         return coreClient.get()
                 .uri(uriBuilder -> uriBuilder
                         .path("/preview")

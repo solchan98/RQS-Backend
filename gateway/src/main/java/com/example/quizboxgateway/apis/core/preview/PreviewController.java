@@ -17,10 +17,27 @@ public class PreviewController {
 
     private final PreviewApi previewApi;
 
+    @GetMapping("/{preview-quiz-pack-id}")
+    public ResponseEntity<CommonResponse<QueryPreviewResponse>> getPreview(
+            AccessUser accessUser,
+            @PathVariable("preview-quiz-pack-id") Long previewQuizPackId
+    ) {
+        CoreApiResponse<QueryPreviewResponse> result =
+                previewApi.queryPreviewResponse(accessUser.getId(), previewQuizPackId);
+
+        return ResponseEntity.ok(
+                new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "프리뷰 조회 성공",
+                        result.getData()
+                )
+        );
+    }
+
     @GetMapping
     public ResponseEntity<CommonResponse<List<QueryPreviewResponse>>> getAllPreview(AccessUser accessUser) {
         CoreApiResponse<List<QueryPreviewResponse>> result =
-                previewApi.queryPreviewResponse(accessUser.getId());
+                previewApi.queryAllPreviewResponse(accessUser.getId());
 
         return ResponseEntity.ok(
                 new CommonResponse<>(

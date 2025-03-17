@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.quizbox.common.Audit;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class PreviewQuizPack {
+public class PreviewQuizPack extends Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +48,7 @@ public class PreviewQuizPack {
         this.userId = userId;
         this.title = title;
         this.keywords = keywords;
+        this.initAudit(userId);
     }
 
     public void update(long userId, PreviewQuizPack previewQuizPack) {
@@ -60,6 +62,7 @@ public class PreviewQuizPack {
         this.description = previewQuizPack.description;
         this.quizzes = previewQuizPack.quizzes;
         this.keywords = previewQuizPack.keywords;
+        this.updateAudit(userId);
     }
 
     // TODO: 테스트 작성

@@ -13,11 +13,17 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PreviewQuizPackReadAllService {
+public class PreviewQuizPackReadService {
 
     private final PreviewQuizPackRepository previewQuizPackRepository;
 
-    public List<PreviewQuizPack> query(long userId, PreviewQuizPackType previewQuizPackType) {
+    public PreviewQuizPack query(long userId, long previewQuizPackId) {
+        return previewQuizPackRepository.findByIdAndUserId(previewQuizPackId, userId)
+                // TODO
+                .orElseThrow(() -> new RuntimeException("오토 퀴즈팩을 찾을 수 없습니다."));
+    }
+
+    public List<PreviewQuizPack> queryAll(long userId, PreviewQuizPackType previewQuizPackType) {
         if (Objects.isNull(previewQuizPackType)) {
             return previewQuizPackRepository.findAllByUserId(userId);
         }

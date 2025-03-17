@@ -3,7 +3,7 @@ package org.example.quizbox.preview.presentation;
 import lombok.RequiredArgsConstructor;
 import org.example.quizbox.common.CommonResponse;
 import org.example.quizbox.preview.application.PreviewQuizPackPublishService;
-import org.example.quizbox.preview.application.PreviewQuizPackReadAllService;
+import org.example.quizbox.preview.application.PreviewQuizPackReadService;
 import org.example.quizbox.preview.application.PreviewQuizPackSaveService;
 import org.example.quizbox.preview.domain.PreviewQuizPack;
 import org.example.quizbox.preview.domain.PreviewQuizPackType;
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class PreviewController {
 
-    private final PreviewQuizPackReadAllService previewQuizPackReadAllService;
+    private final PreviewQuizPackReadService previewQuizPackReadService;
 
     private final PreviewQuizPackSaveService previewQuizPackSaveService;
     private final PreviewQuizPackPublishService previewQuizPackPublishService;
@@ -32,7 +32,21 @@ public class PreviewController {
                 new CommonResponse<>(
                         HttpStatus.OK.name(),
                         "프리뷰 퀴즈팩 전체 조회 성공",
-                        previewQuizPackReadAllService.query(userId, previewQuizPackType)
+                        previewQuizPackReadService.queryAll(userId, previewQuizPackType)
+                )
+        );
+    }
+
+    @GetMapping("/{preview-quiz-pack-id}")
+    public ResponseEntity<CommonResponse<PreviewQuizPack>> query(
+            @RequestHeader("X-USER-ID") Long userId,
+            @PathVariable("preview-quiz-pack-id") Long previewQuizPackId
+    ) {
+        return ResponseEntity.ok(
+                new CommonResponse<>(
+                        HttpStatus.OK.name(),
+                        "프리뷰 퀴즈팩 조회 성공",
+                        previewQuizPackReadService.query(userId, previewQuizPackId)
                 )
         );
     }
