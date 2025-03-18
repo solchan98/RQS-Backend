@@ -56,21 +56,22 @@ public class AutoTask {
         );
     }
 
-    public void updateDetail(TaskStatus taskStatus, String description) {
+    public void updateDetail(TaskStatus taskStatus, String taskDescription) {
         this.taskStatus = taskStatus;
         this.updatedAt = LocalDateTime.now();
-        this.detailResult.update(List.of(), List.of(), description);
+        this.detailResult.update(List.of(), "", List.of(), taskDescription);
     }
 
     public void updateDetail(
-            TaskStatus taskStatus,
-            String description,
             List<AutoQuiz> quizzes,
-            List<String> keywords
+            String quizPackDescription,
+            List<String> keywords,
+            TaskStatus taskStatus,
+            String taskDescription
     ) {
         this.taskStatus = taskStatus;
         this.updatedAt = LocalDateTime.now();
-        this.detailResult.update(quizzes, keywords, description);
+        this.detailResult.update(quizzes, quizPackDescription, keywords, taskDescription);
     }
 
     public void updateState(TaskStatus taskStatus) {

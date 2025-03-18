@@ -7,6 +7,7 @@ import java.util.List;
 
 @Getter
 public class GeneratedQuizResponse {
+    private String description;
     private List<String> keywords;
     private List<AutoQuiz> quizzes;
 }

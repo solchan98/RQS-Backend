@@ -43,10 +43,11 @@ public class PreviewQuizPack extends Audit {
     @JoinColumn(name = "quiz_pack_id")
     private List<PreviewQuiz> quizzes;
 
-    public PreviewQuizPack(long taskId, long userId, String title, List<String> keywords) {
+    public PreviewQuizPack(long taskId, long userId, String title, String description, List<String> keywords) {
         this.taskId = taskId;
         this.userId = userId;
         this.title = title;
+        this.description = description;
         this.keywords = keywords;
         this.initAudit(userId);
     }

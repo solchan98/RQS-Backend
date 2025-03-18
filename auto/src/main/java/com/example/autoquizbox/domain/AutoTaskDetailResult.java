@@ -17,13 +17,13 @@ public class AutoTaskDetailResult {
 
     public static AutoTaskDetailResult from(String quizPackTitle) {
         return new AutoTaskDetailResult(
-                new AutoQuizPack(quizPackTitle, List.of()),
+                new AutoQuizPack(quizPackTitle, "", List.of()),
                 ""
         );
     }
 
-    public void update(List<AutoQuiz> quizzes, List<String> keywords, String description) {
-        autoQuizPack.update(quizzes, keywords);
+    public void update(List<AutoQuiz> quizzes, String quizPackDescription, List<String> keywords, String taskDescription) {
+        autoQuizPack.update(quizzes, quizPackDescription, keywords);
         this.description = description;
     }
 

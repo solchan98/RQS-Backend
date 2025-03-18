@@ -34,6 +34,7 @@ public class CoreApi {
                 "taskId", taskId,
                 "userId", userId,
                 "title", autoQuizPack.getTitle(),
+                "description", autoQuizPack.getDescription(),
                 "keywords", autoQuizPack.getKeywords(),
                 "quizzes", autoQuizPack.getQuizzes()
         );
