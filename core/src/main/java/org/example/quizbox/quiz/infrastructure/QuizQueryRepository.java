@@ -21,10 +21,7 @@ public class QuizQueryRepository implements IQuizQueryRepository {
 
     @Override
     public Quiz getById(long id) {
-        Quiz quiz = jpaQuizRepository.findById(id)
+        return jpaQuizRepository.findById(id)
                 .orElseThrow(() -> new BusinessException(QP6));
-
-        entityManager.detach(quiz);
-        return quiz;
     }
 }

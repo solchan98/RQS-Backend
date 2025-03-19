@@ -1,6 +1,7 @@
 package org.example.quizbox.quiz.infrastructure;
 
 import org.example.quizbox.quiz.domain.*;
+import org.example.quizbox.support.QuizPackBuilder;
 import org.example.quizbox.support.infrastructure.DBTest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.example.quizbox.support.QuizPackBuilder.quizPackBuilder;
 
 @DBTest
 public class QuizQueryRepositoryTest {
@@ -21,7 +23,9 @@ public class QuizQueryRepositoryTest {
     @Test
     void getById() {
         long adminId = 1L;
-        QuizPack quizPack = new QuizPack("pack - QuizQueryRepository test ", Set.of(adminId), Set.of(1L));
+        QuizPack quizPack = quizPackBuilder()
+                .quizPackMembers(new QuizPackMember(adminId, QuizPackMemberRole.ADMIN))
+                .build();
         QuizPackMember admin = quizPack.getQuizPackMemberBy(adminId);
         Quiz quiz = new Quiz(admin, new QuizContent("test quiz 1"), Set.of(
                 Option.trueOption("1"), Option.falseOption("2")

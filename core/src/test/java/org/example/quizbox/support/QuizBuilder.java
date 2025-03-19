@@ -1,14 +1,11 @@
-package org.example.quizbox.quiz;
+package org.example.quizbox.support;
 
 import org.example.quizbox.quiz.domain.*;
 
-import java.util.Objects;
 import java.util.Set;
 
 
 public class QuizBuilder {
-
-    private static long DEFAULT_KEY = 0;
 
     private Long id;
     private QuizPackMember creator;
@@ -16,9 +13,7 @@ public class QuizBuilder {
     private Options options = new Options(Set.of(Option.falseOption("A"), Option.trueOption("B")));
 
     public static QuizBuilder quizBuilder() {
-        QuizBuilder quizBuilder = new QuizBuilder();
-        quizBuilder.id = --DEFAULT_KEY;
-        return quizBuilder;
+        return new QuizBuilder();
     }
 
     public QuizBuilder id(long id) {
@@ -28,11 +23,6 @@ public class QuizBuilder {
 
     public QuizBuilder creator(QuizPackMember creator) {
         this.creator = creator;
-        return this;
-    }
-
-    public QuizBuilder content(String content) {
-        this.content = new QuizContent(content);
         return this;
     }
 
@@ -46,11 +36,7 @@ public class QuizBuilder {
         return this;
     }
 
-    public Quiz build() {
-        if (Objects.isNull(creator)) {
-            creator = new QuizPackMember(1L, QuizPackMemberRole.ADMIN);
-        }
-
+    public Quiz build(QuizPackMember creator) {
         return new Quiz(id, content, creator, options);
     }
 }

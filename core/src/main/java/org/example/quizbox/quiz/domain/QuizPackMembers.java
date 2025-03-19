@@ -1,6 +1,7 @@
 package org.example.quizbox.quiz.domain;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
@@ -8,7 +9,7 @@ import java.util.Optional;
 import java.util.Set;
 
 @Embeddable
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class QuizPackMembers {
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -16,7 +17,7 @@ public class QuizPackMembers {
     private Set<QuizPackMember> values = new HashSet<>();
 
     public QuizPackMembers(Set<QuizPackMember> values) {
-        this.values = values;
+        this.values = new HashSet<>(values);
     }
 
     public Optional<QuizPackMember> findByMemberId(long memberId) {
@@ -31,7 +32,7 @@ public class QuizPackMembers {
         return values.size();
     }
 
-    public Set<QuizPackMember> getValues() {
+    public Set<QuizPackMember> readonlyValues() {
         return new HashSet<>(values);
     }
 

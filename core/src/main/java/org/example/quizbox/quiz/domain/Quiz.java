@@ -22,7 +22,7 @@ public class Quiz {
     @Embedded
     private QuizContent content;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "quiz_pack_member_id")
     private QuizPackMember quizPackMember;
 

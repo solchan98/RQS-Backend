@@ -22,7 +22,7 @@ public record QuizPackStatusResponse(
                 status.quizPackTitle(),
                 status.quizPackMemberCount(),
                 status.quizCount(),
-                status.keywords().getValues().stream().map(KeywordResponse::from).collect(Collectors.toSet()),
+                status.keywords().readonlyValues().stream().map(KeywordResponse::from).collect(Collectors.toSet()),
                 status.createdAt()
         );
     }

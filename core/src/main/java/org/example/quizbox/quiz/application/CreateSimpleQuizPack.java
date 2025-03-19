@@ -2,6 +2,7 @@ package org.example.quizbox.quiz.application;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.quizbox.keyword.domain.Keyword;
 import org.example.quizbox.quiz.domain.*;
 
 import java.util.List;
@@ -16,16 +17,19 @@ public class CreateSimpleQuizPack {
     private List<CreateSimpleQuiz> quizzes;
     private List<String> keywords;
 
-    public QuizPack toQuizPack(long memberId) {
-        QuizPack quizPack = new QuizPack(title, Set.of(memberId), Set.of());
-        QuizPackMember quizPackMember = quizPack.getQuizPackMemberBy(memberId);
-        quizPack.setQuizzes(
-                this.quizzes.stream()
-                        .map(quiz -> quiz.toQuiz(quizPackMember))
+    public QuizPack toQuizPack(long memberId, Set<Keyword> keywords) {
+        QuizPackMember quizPackMember = new QuizPackMember(memberId, QuizPackMemberRole.ADMIN);
+        QuizPackMembers quizPackMembers = new QuizPackMembers(Set.of(quizPackMember));
+        Quizzes quizPackQuizzes = new Quizzes(
+                quizzes.stream()
+                        .map(createSimpleQuiz -> createSimpleQuiz.toQuiz(quizPackMember))
                         .collect(Collectors.toSet())
         );
+        QuizPackKeywords quizPackKeywords = new QuizPackKeywords(keywords.stream()
+                .map(keyword -> new QuizPackKeyword(keyword.getId()))
+                .collect(Collectors.toSet()));
 
-        return quizPack;
+        return QuizPack.of(title, quizPackMembers, quizPackQuizzes, quizPackKeywords);
     }
 
     @Getter

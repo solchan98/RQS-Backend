@@ -3,8 +3,8 @@ package org.example.quizbox.game.domain;
 import lombok.Getter;
 import org.example.quizbox.common.Audit;
 import org.example.quizbox.common.BusinessException;
-import org.example.quizbox.quiz.domain.Quiz;
 import org.example.quizbox.quiz.domain.QuizPack;
+import org.example.quizbox.quiz.domain.Quizzes;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -31,8 +31,9 @@ public class Game extends Audit {
     private GameQuiz waitingGameQuiz;
 
     public Game(QuizPack quizPack, long creatorId, GameQuizPicker quizPicker) {
-        Set<Quiz> quizzes = quizPack.getQuizzes(quizPack.getQuizPackMemberBy(creatorId));
-        Set<GameQuiz> gameQuizzes = quizzes.stream()
+        Quizzes quizzes = quizPack.getQuizzes(quizPack.getQuizPackMemberBy(creatorId));
+        Set<GameQuiz> gameQuizzes = quizzes.readonlyValues()
+                .stream()
                 .map(GameQuiz::new)
                 .collect(Collectors.toSet());
 

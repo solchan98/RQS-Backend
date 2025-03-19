@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.example.quizbox.common.ExceptionConstants.TG1;
-
 @Service
 @RequiredArgsConstructor
 public class QuizPackService {
@@ -32,9 +30,9 @@ public class QuizPackService {
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
         QuizPackMember quizPackMember = quizPack.getQuizPackMemberBy(memberId);
 
-        Set<QuizPackMember> quizPackMembers = quizPack.getQuizPackMembersBy(quizPackMember).getValues();
-        Set<Quiz> quizzes = quizPack.getQuizzes(quizPackMember);
-        Set<Keyword> keywords = keywordService.getAll(quizPack.getKeywordIds()).getValues();
+        Set<QuizPackMember> quizPackMembers = quizPack.getQuizPackMembersBy(quizPackMember).readonlyValues();
+        Set<Quiz> quizzes = quizPack.getQuizzes(quizPackMember).readonlyValues();
+        Set<Keyword> keywords = keywordService.getAll(quizPack.getKeywordIds()).readonlyValues();
 
         return QuizPackResponse.of(quizPack, quizPackMembers, quizzes, keywords);
     }
@@ -60,24 +58,13 @@ public class QuizPackService {
     }
 
     @Transactional
-    public QuizPack create(long memberId, String title, Set<Long> tagIds) {
-        if (!keywordService.existsAll(tagIds)) {
-            throw new BusinessException(TG1);
-        }
-        QuizPack quizPack = new QuizPack(title, Set.of(memberId), tagIds);
-
-        return quizPackRepository.save(quizPack);
-    }
-
-    @Transactional
     public QuizPack create(long memberId, CreateSimpleQuizPack simpleQuizPack) {
         Set<Keyword> keywords = simpleQuizPack.getKeywords()
                 .stream()
                 .map(keyword -> keywordService.save(new CreateKeyword(keyword).toKeyword()))
                 .collect(Collectors.toSet());
 
-        QuizPack quizPack = simpleQuizPack.toQuizPack(memberId);
-        quizPack.addKeywords(keywords);
+        QuizPack quizPack = simpleQuizPack.toQuizPack(memberId, keywords);
 
         return quizPackRepository.save(quizPack);
     }
@@ -107,6 +94,7 @@ public class QuizPackService {
         QuizPack quizPack = quizPackRepository.findById(quizPackId)
                 .orElseThrow(() -> new BusinessException(ExceptionConstants.QP1));
 
-        return quizPack.getQuizzes(quizPack.getQuizPackMemberBy(memberId));
+        return quizPack.getQuizzes(quizPack.getQuizPackMemberBy(memberId))
+                .readonlyValues();
     }
 }

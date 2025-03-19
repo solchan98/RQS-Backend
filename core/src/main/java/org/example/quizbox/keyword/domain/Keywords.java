@@ -31,7 +31,7 @@ public class Keywords {
         );
     }
 
-    public Set<Keyword> getValues() {
+    public Set<Keyword> readonlyValues() {
         return new HashSet<>(values);
     }
 }

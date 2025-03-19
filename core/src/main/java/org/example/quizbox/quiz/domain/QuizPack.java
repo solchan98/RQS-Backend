@@ -10,10 +10,7 @@ import org.example.quizbox.common.BusinessException;
 import org.example.quizbox.common.ExceptionConstants;
 import org.example.quizbox.keyword.domain.Keyword;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,47 +26,39 @@ public class QuizPack extends Audit {
     @Getter
     private String title;
 
-    @Setter
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "quiz_pack_id")
-    private Set<Quiz> quizzes = new HashSet<>();
+    @Embedded
+    private Quizzes quizzes;
 
     @Embedded
     private QuizPackMembers quizPackMembers;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_pack_id")
-    private Set<QuizPackKeywords> keywords = new HashSet<>();
+    @Embedded
+    private QuizPackKeywords keywords;
 
-    public QuizPack(String title, Set<Long> memberIds, Set<Long> keywordIds) {
-        this.title = title;
-        this.quizPackMembers = new QuizPackMembers(memberIds.stream().map(memberId -> new QuizPackMember(memberId, QuizPackMemberRole.ADMIN)).collect(Collectors.toSet()));
-        this.keywords = keywordIds.stream().map(QuizPackKeywords::new).collect(Collectors.toSet());
-        this.setCreatedAt(LocalDateTime.now());
+    public static QuizPack of(
+            String title,
+            QuizPackMembers quizPackMembers,
+            Quizzes quizzes,
+            QuizPackKeywords quizPackKeywords
+    ) {
+        return new QuizPack(null, title, quizzes, quizPackMembers, quizPackKeywords);
     }
 
-    public Set<Quiz> getQuizzes(QuizPackMember quizPackMember) {
+    public Quizzes getQuizzes(QuizPackMember quizPackMember) {
         if (!quizPackMembers.contains(quizPackMember)) {
             throw new BusinessException(ExceptionConstants.QP4);
         }
 
-        return new HashSet<>(quizzes);
+        return quizzes;
     }
 
     public void addQuiz(Quiz newQuiz) {
         validateIsCreatableQuizzes(newQuiz.getQuizPackMember());
-        boolean duplicateContent = quizzes.stream().anyMatch(quiz -> quiz.isSameContent(newQuiz));
-        if (duplicateContent) {
-            throw new BusinessException(ExceptionConstants.QP3);
-        }
-
         quizzes.add(newQuiz);
     }
 
     public void addKeywords(Set<Keyword> keywords) {
-        this.keywords = keywords.stream()
-                .map((keyword -> new QuizPackKeywords(id, keyword.getId())))
-                .collect(Collectors.toSet());
+        this.keywords.addAll(keywords);
     }
 
     public void validateIsMember(long memberId) {
@@ -103,17 +92,13 @@ public class QuizPack extends Audit {
         return quizPackMembers.size();
     }
 
-    public Quiz getQuizById(long quizId) {
-        return null;
-    }
-
     public Set<Long> getKeywordIds() {
-        return keywords.stream().map(QuizPackKeywords::getKeywordId).collect(Collectors.toSet());
+        return keywords.keywordIds();
     }
 
     public QuizPackMembers getQuizPackMembersBy(QuizPackMember quizPackMember) {
         validateIsMember(quizPackMember);
-        return new QuizPackMembers(quizPackMembers.getValues());
+        return new QuizPackMembers(quizPackMembers.readonlyValues());
     }
 
     public QuizPackMember getQuizPackMemberBy(long memberId) {

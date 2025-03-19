@@ -1,23 +1,33 @@
 package org.example.quizbox.support;
 
+import org.example.quizbox.keyword.domain.Keyword;
 import org.example.quizbox.quiz.domain.*;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
+
+import static org.example.quizbox.support.QuizBuilder.quizBuilder;
 
 public class QuizPackBuilder {
 
-    // TEST 용도
-    private static Long quizPackMemberId = 0L;
+    private final QuizPackMember defaultMember = new QuizPackMember(-1, QuizPackMemberRole.ADMIN);
 
-    // TEST 용도
-    private static Long quizPackId = 0L;
 
     private Long id;
     private String title = "default title";
-    private Set<Quiz> quizzes = new HashSet<>();
-    private QuizPackMembers quizPackMembers = new QuizPackMembers();
-    private Set<QuizPackKeywords> tags = new HashSet<>();
+    private Quizzes quizzes = new Quizzes(
+            Set.of(
+                    quizBuilder().build(defaultMember)
+            )
+    );
+    private QuizPackMembers quizPackMembers = new QuizPackMembers(
+            Set.of(
+                    defaultMember
+            )
+    );
+    private QuizPackKeywords keywords;
 
     public static QuizPackBuilder quizPackBuilder() {
         return new QuizPackBuilder();
@@ -34,7 +44,7 @@ public class QuizPackBuilder {
     }
 
     public QuizPackBuilder quizzes(Collection<Quiz> quizzes) {
-        this.quizzes = new HashSet<>(quizzes);
+        this.quizzes = new Quizzes(new HashSet<>(quizzes));
         return this;
     }
 
@@ -44,23 +54,20 @@ public class QuizPackBuilder {
     }
 
     public QuizPackBuilder quizPackMembers(QuizPackMember... quizPackMembers) {
-        Arrays.stream(quizPackMembers).forEach(quizPackMember -> this.quizPackMembers.add(quizPackMember));
+        this.quizPackMembers = new QuizPackMembers(Set.of(quizPackMembers));
         return this;
     }
 
-    public QuizPackBuilder tags(Set<Long> tagIds) {
-        this.tags = tagIds.stream().map(QuizPackKeywords::new).collect(Collectors.toSet());
+    public QuizPackBuilder keywords(Set<Long> keywordIds) {
+        this.keywords.addAll(
+                keywordIds.stream()
+                        .map(keywordId -> new Keyword(keywordId, ""))
+                        .collect(Collectors.toSet())
+        );
         return this;
     }
 
     public QuizPack build() {
-        if (Objects.isNull(quizPackMembers)) {
-            quizPackMembers = new QuizPackMembers(Set.of(new QuizPackMember(--quizPackMemberId, 1L, QuizPackMemberRole.ADMIN)));
-        }
-
-        if (Objects.isNull(id)) {
-            id = --quizPackId;
-        }
-        return new QuizPack(id, title, quizzes, quizPackMembers, tags);
+        return QuizPack.of(title, quizPackMembers, quizzes, keywords);
     }
 }

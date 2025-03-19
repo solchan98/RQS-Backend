@@ -2,7 +2,6 @@ package org.example.quizbox.common;
 
 public enum ExceptionConstants {
 
-
     // SE (Server Error)
     SE1("SE1", "서버 에러", "SERVER"),
 
@@ -17,6 +16,7 @@ public enum ExceptionConstants {
     QP5("QP5", "퀴즈 생성 권한 미보유", "AUTHORIZATION"),
     QP6("QP6", "존재하지 않는 퀴즈", "BUSINESS"),
     QP7("QP7", "유효하지 않은 초대장", "BUSINESS"),
+    QP_MIN_QUIZ("QP_MIN_QUIZ", "퀴즈팩의 퀴즈는 최소 1개 이상", "BUSINESS"),
 
     // QA (Quiz Option)
     QA1("QA1", "퀴즈 생성 시, 보기는 최소 2개 이상", "BUSINESS"),
@@ -37,7 +37,6 @@ public enum ExceptionConstants {
 
     // TG(Keyword)
     TG1("TG1", "존재하지 않는 태그", "BUSINESS");
-
 
     private final String code;
 
