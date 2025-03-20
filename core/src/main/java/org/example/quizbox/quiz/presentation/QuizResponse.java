@@ -21,7 +21,7 @@ public class QuizResponse {
     private Set<OptionResponse> options;
 
     public static QuizResponse from(Quiz quiz, boolean withOptionCorrect) {
-        Set<OptionResponse> optionResponses = quiz.getOptions().getValues().stream()
+        Set<OptionResponse> optionResponses = quiz.getOptions().readonlyValues().stream()
                 .map(option -> {
                     if (withOptionCorrect) {
                         return OptionResponse.from(option);

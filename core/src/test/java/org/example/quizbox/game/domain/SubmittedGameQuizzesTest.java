@@ -8,7 +8,7 @@ class SubmittedGameQuizzesTest {
 //    void 동일_퀴즈에_대하여_중복_제출_불가() {
 //        SubmittedGameQuizzes submittedGameQuizzes = new SubmittedGameQuizzes();
 //        Quiz quiz = quizBuilder().build();
-//        Set<Long> optionIds = quiz.getOptions().options().stream().map(Option::getId).collect(Collectors.toSet());
+//        Set<Long> optionIds = quiz.getOptions().readonlyValues().stream().map(Option::getId).collect(Collectors.toSet());
 //        SubmitOption submitOption = new SubmitOption(optionIds);
 //        submittedGameQuizzes.submitOptions(new GameQuiz(quiz), submitOption);
 //
@@ -22,7 +22,7 @@ class SubmittedGameQuizzesTest {
 //    void 정답_개수_확인_가능() {
 //        SubmittedGameQuizzes submittedGameQuizzes = new SubmittedGameQuizzes();
 //        Quiz quiz1 = quizBuilder()
-//                .options(
+//                .readonlyValues(
 //                        new Option(1L, "A", true),
 //                        new Option(2L, "B", true),
 //                        new Option(3L, "C", false)
@@ -30,7 +30,7 @@ class SubmittedGameQuizzesTest {
 //                .build();
 //        Set<Long> quiz1CorrectOptionIds = quiz1.getOptions().correctOptions().stream().map(Option::getId).collect(Collectors.toSet());
 //        Quiz quiz2 = quizBuilder()
-//                .options(
+//                .readonlyValues(
 //                        new Option(4L, "E", true),
 //                        new Option(5L, "F", false)
 //                ).build();

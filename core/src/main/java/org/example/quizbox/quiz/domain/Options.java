@@ -31,22 +31,18 @@ public class Options {
         this.values = values;
     }
 
-    public Set<Option> getValues() {
-        return new HashSet<>(values);
-    }
-
     public boolean match(Set<Long> submitOptionIds) {
         Set<Long> collectOptionIds = correctOptions().stream().map(Option::getId).collect(Collectors.toSet());
 
         return collectOptionIds.containsAll(submitOptionIds) && collectOptionIds.size() == submitOptionIds.size();
     }
 
-    public Set<Option> options() {
+    public Set<Option> readonlyValues() {
         return new HashSet<>(values);
     }
 
     public boolean containsAll(Set<Long> submitOptionIds) {
-        Set<Long> quizOptionIds = options().stream()
+        Set<Long> quizOptionIds = readonlyValues().stream()
                 .map(Option::getId)
                 .collect(Collectors.toSet());
 

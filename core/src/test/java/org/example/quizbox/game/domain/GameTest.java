@@ -95,7 +95,7 @@ class GameTest {
 //                ).build();
 //        Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
 //        game.pick(1L);
-//        Set<Long> optionIds = quiz.getOptions().options().stream().map(Option::getId).collect(Collectors.toSet());
+//        Set<Long> optionIds = quiz.getOptions().readonlyValues().stream().map(Option::getId).collect(Collectors.toSet());
 //
 //        Throwable throwable = catchThrowable(
 //                () -> game.submit(2, new SubmitOption(optionIds)));
@@ -129,7 +129,7 @@ class GameTest {
 //                .build();
 //        Game game = new Game(quizPack, 1L, sequentialGameQuizPicker);
 //        game.pick(1L);
-//        Set<Long> quiz1OptionIds = quiz2.getOptions().options().stream().map(Option::getId).collect(Collectors.toSet());
+//        Set<Long> quiz1OptionIds = quiz2.getOptions().readonlyValues().stream().map(Option::getId).collect(Collectors.toSet());
 //        game.submit(1L, new SubmitOption(quiz1OptionIds));
 //
 //        assertThat(game.pick(1L).getQuizId()).isEqualTo(quiz2.getId());
