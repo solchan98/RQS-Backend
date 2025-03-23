@@ -1,7 +1,7 @@
 package com.example.quizboxgateway.apis.core.quizpacks;
 
 import com.example.quizboxgateway.apis.core.CoreApiResponse;
-import com.example.quizboxgateway.auth.auth.AccessUser;
+import com.example.quizboxgateway.auth.domain.AccessUser;
 import com.example.quizboxgateway.common.CommonResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

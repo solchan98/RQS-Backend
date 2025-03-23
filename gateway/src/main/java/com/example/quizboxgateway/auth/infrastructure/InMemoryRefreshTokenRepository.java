@@ -1,6 +1,6 @@
 package com.example.quizboxgateway.auth.infrastructure;
 
-import com.example.quizboxgateway.auth.refresh.RefreshTokenRepository;
+import com.example.quizboxgateway.auth.domain.RefreshTokenRepository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

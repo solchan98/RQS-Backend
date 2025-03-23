@@ -40,4 +40,20 @@ public class RestClientConfig {
                 .build();
     }
 
+    @Bean(name = "kakaoOauthClient")
+    public RestClient getKakaoOauthRestClient() {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(Duration.ofMinutes(2).toMillisPart());
+        requestFactory.setReadTimeout(Duration.ofMinutes(2).toMillisPart());
+
+
+        return RestClient.builder()
+                .baseUrl("https://kapi.kakao.com")
+                .defaultRequest(request -> request
+                        .header("Content-Type", "application/x-www-form-urlencoded;charset=utf-8"))
+                .requestFactory(requestFactory)
+                .build();
+    }
+
+
 }

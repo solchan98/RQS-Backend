@@ -1,0 +1,61 @@
+package com.example.quizboxgateway.auth.provider;
+
+import com.example.quizboxgateway.auth.domain.AccessUser;
+import com.example.quizboxgateway.auth.token.BearerAuthenticationToken;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.MalformedJwtException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.stereotype.Component;
+
+import java.util.Map;
+
+@Component(value = "accessTokenProvider")
+@RequiredArgsConstructor
+public class AccessTokenProvider implements AuthenticationProvider {
+
+    private final TokenProvider tokenProvider;
+
+    private static final String TOKEN_SUBJECT = "access token";
+
+    private final ObjectMapper objectMapper;
+
+    @Override
+    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+        try {
+            Claims payload = tokenProvider.verify(authentication.getName(), TOKEN_SUBJECT);
+
+            AccessUser accessUser = objectMapper.readValue(payload.get("userInfo", String.class), AccessUser.class);
+            accessUser.setAuthenticated(true);
+
+            return accessUser;
+        } catch (MalformedJwtException | JsonProcessingException mje) {
+            throw new BadCredentialsException("인증 정보를 확인하세요.", mje);
+        } catch (JwtException je) {
+            throw new BadCredentialsException(je.getMessage(), je);
+        }
+    }
+
+    @Override
+    public boolean supports(Class<?> authentication) {
+        return (BearerAuthenticationToken.class.isAssignableFrom(authentication));
+    }
+
+    public BearerAuthenticationToken createToken(AccessUser accessUser) {
+        try {
+            long tokenLive = 1000L * 60L * 60L; // 1h
+            String userInfo = objectMapper.writeValueAsString(accessUser);
+
+            return tokenProvider.createToken(TOKEN_SUBJECT, Map.of("userInfo", userInfo), tokenLive);
+        } catch (JsonProcessingException e) {
+            // TODO 서버에러 예외 처리
+            throw new RuntimeException(e);
+        }
+    }
+}

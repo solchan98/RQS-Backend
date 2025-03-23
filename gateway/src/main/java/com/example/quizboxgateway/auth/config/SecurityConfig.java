@@ -1,15 +1,21 @@
 package com.example.quizboxgateway.auth.config;
 
-import com.example.quizboxgateway.auth.access.AccessTokenAccessDeniedHandler;
-import com.example.quizboxgateway.auth.access.AccessTokenProvider;
-import com.example.quizboxgateway.auth.auth.AuthenticationFailureHandlerImpl;
-import com.example.quizboxgateway.auth.auth.BearerAuthenticationConverter;
-import com.example.quizboxgateway.auth.auth.SimpleAuthenticationProcessingFilter;
-import com.example.quizboxgateway.auth.login.EmailPasswordAuthenticationConverter;
-import com.example.quizboxgateway.auth.login.EmailPasswordAuthenticationSuccessHandler;
-import com.example.quizboxgateway.auth.login.SimplePasswordEncoder;
-import com.example.quizboxgateway.auth.refresh.RefreshTokenProvider;
-import com.example.quizboxgateway.auth.refresh.TokenRefreshSuccessHandler;
+import com.example.quizboxgateway.auth.converter.BearerAuthenticationConverter;
+import com.example.quizboxgateway.auth.converter.EmailPasswordAuthenticationConverter;
+import com.example.quizboxgateway.auth.converter.OauthAuthenticationConverter;
+import com.example.quizboxgateway.auth.converter.SimplePasswordEncoder;
+import com.example.quizboxgateway.auth.deniedhandler.AccessTokenAccessDeniedHandler;
+import com.example.quizboxgateway.auth.domain.OauthService;
+import com.example.quizboxgateway.auth.domain.Role;
+import com.example.quizboxgateway.auth.domain.SampleAuthority;
+import com.example.quizboxgateway.auth.failurehandler.AuthenticationFailureHandlerImpl;
+import com.example.quizboxgateway.auth.filter.SimpleAuthenticationProcessingFilter;
+import com.example.quizboxgateway.auth.infrastructure.oauth.kakao.KakaoOauthApi;
+import com.example.quizboxgateway.auth.provider.AccessTokenProvider;
+import com.example.quizboxgateway.auth.provider.KakaoOauthProvider;
+import com.example.quizboxgateway.auth.provider.RefreshTokenProvider;
+import com.example.quizboxgateway.auth.successhandler.LoginSuccessHandler;
+import com.example.quizboxgateway.auth.successhandler.TokenRefreshSuccessHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -19,6 +25,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFilter;
@@ -38,12 +45,17 @@ public class SecurityConfig {
 
     private final RefreshTokenProvider refreshTokenProvider;
 
+    private final OauthService oauthService;
+    private final KakaoOauthApi kakaoOauthApi;
+
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable);
 
         setLoginFilter(httpSecurity);
+        setOauthFilter(httpSecurity);
         setAccessTokenFilter(httpSecurity);
         setTokenRefreshFilter(httpSecurity);
         setPermissions(httpSecurity);
@@ -59,7 +71,7 @@ public class SecurityConfig {
                 new EmailPasswordAuthenticationConverter(objectMapper)
         );
         emailPasswordAuthenticationFilter.setAuthenticationSuccessHandler(
-                new EmailPasswordAuthenticationSuccessHandler(objectMapper, accessTokenProvider, refreshTokenProvider));
+                new LoginSuccessHandler(objectMapper, accessTokenProvider, refreshTokenProvider));
         emailPasswordAuthenticationFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandlerImpl(objectMapper));
 
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
@@ -69,6 +81,20 @@ public class SecurityConfig {
         emailPasswordAuthenticationFilter.setAuthenticationManager(new ProviderManager(daoAuthenticationProvider));
 
         httpSecurity.addFilterBefore(emailPasswordAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    private void setOauthFilter(HttpSecurity httpSecurity) {
+        SimpleAuthenticationProcessingFilter oauthAuthenticationFilter = new SimpleAuthenticationProcessingFilter(
+                RequestMatchers.OAUTH,
+                new OauthAuthenticationConverter()
+        );
+        oauthAuthenticationFilter.setAuthenticationSuccessHandler(
+                new LoginSuccessHandler(objectMapper, accessTokenProvider, refreshTokenProvider));
+        oauthAuthenticationFilter.setAuthenticationFailureHandler(new AuthenticationFailureHandlerImpl(objectMapper));
+        KakaoOauthProvider kakaoOauthProvider = new KakaoOauthProvider(kakaoOauthApi, oauthService);
+        oauthAuthenticationFilter.setAuthenticationManager(new ProviderManager(kakaoOauthProvider));
+
+        httpSecurity.addFilterBefore(oauthAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
 
@@ -105,7 +131,8 @@ public class SecurityConfig {
                 .headers(a -> a.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable)) // h2 config
                 .authorizeHttpRequests(ahr -> ahr
                         .requestMatchers(RequestMatchers.PERMIT_ALL).permitAll()
-                        .requestMatchers(RequestMatchers.DEFAULT).authenticated()
+                        .requestMatchers(RequestMatchers.DEFAULT)
+                        .hasAnyAuthority(Role.USER.name())
                 );
     }
 }

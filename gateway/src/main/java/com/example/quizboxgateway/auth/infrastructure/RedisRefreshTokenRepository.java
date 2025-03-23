@@ -1,6 +1,7 @@
 package com.example.quizboxgateway.auth.infrastructure;
 
-import com.example.quizboxgateway.auth.refresh.RefreshTokenRepository;
+import com.example.quizboxgateway.auth.config.RedisClient;
+import com.example.quizboxgateway.auth.domain.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

@@ -29,7 +29,7 @@ public class CreateSimpleQuizPack {
                 .map(keyword -> new QuizPackKeyword(keyword.getId()))
                 .collect(Collectors.toSet()));
 
-        return QuizPack.of(title, quizPackMembers, quizPackQuizzes, quizPackKeywords);
+        return QuizPack.of(title, quizPackMembers, quizPackQuizzes, quizPackKeywords, memberId);
     }
 
     @Getter

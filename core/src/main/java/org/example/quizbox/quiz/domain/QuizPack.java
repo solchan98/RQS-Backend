@@ -1,10 +1,7 @@
 package org.example.quizbox.quiz.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.example.quizbox.common.Audit;
 import org.example.quizbox.common.BusinessException;
 import org.example.quizbox.common.ExceptionConstants;
@@ -12,8 +9,8 @@ import org.example.quizbox.keyword.domain.Keyword;
 
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Setter
 @Entity
 public class QuizPack extends Audit {
@@ -39,9 +36,12 @@ public class QuizPack extends Audit {
             String title,
             QuizPackMembers quizPackMembers,
             Quizzes quizzes,
-            QuizPackKeywords quizPackKeywords
+            QuizPackKeywords quizPackKeywords,
+            long creatorId
     ) {
-        return new QuizPack(null, title, quizzes, quizPackMembers, quizPackKeywords);
+        QuizPack quizPack = new QuizPack(null, title, quizzes, quizPackMembers, quizPackKeywords);
+        quizPack.initAudit(creatorId);
+        return quizPack;
     }
 
     public Quizzes getQuizzes(QuizPackMember quizPackMember) {
